@@ -2,6 +2,7 @@
 {% include head.html %}
 
 <body class="home-template">
+  {% include navigation.html %}
   {% include header.html %}
   <main class="content" role="main">
     {{ content | expand_urls: root_url }}
