@@ -3,7 +3,7 @@
 		{% assign is_first_post = false %}
 	{% endif %}
 	<header class="post-header">
-		<span class="post-meta">{{ post.date | date: "%d %b %Y" }}</span>
+		<span class="post-meta">{{ post.date | localize: "%d de %B de %Y" }}</span>
 		<h2 class="post-title">
 			{% if post.external-url %}
 			<a href="{{ post.external-url }}">
