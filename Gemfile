@@ -14,6 +14,7 @@ group :development do
   gem 'rb-fsevent', '~> 0.9'
   gem 'stringex', '~> 1.4.0'
   gem 'i18n'
+  gem 'jekyll-multiple-languages'
 end
 
 gem 'sinatra', '~> 1.4.2'
