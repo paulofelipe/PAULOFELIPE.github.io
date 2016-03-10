@@ -4,7 +4,7 @@
   <title><![CDATA[Datability]]></title>
   <link href="http://paulofelipe.github.io/atom.xml" rel="self"/>
   <link href="http://paulofelipe.github.io/"/>
-  <updated>2016-03-09T23:45:13-03:00</updated>
+  <updated>2016-03-09T23:59:55-03:00</updated>
   <id>http://paulofelipe.github.io/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -12,6 +12,15 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Hello World 2]]></title>
+    <link href="http://paulofelipe.github.io/blog/2016/03/09/hello-world-2/"/>
+    <updated>2016-03-09T23:59:43-03:00</updated>
+    <id>http://paulofelipe.github.io/blog/2016/03/09/hello-world-2</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Hello World]]></title>
