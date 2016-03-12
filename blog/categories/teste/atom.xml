@@ -4,7 +4,7 @@
   <title><![CDATA[Category: teste | Full Join]]></title>
   <link href="http://paulofelipe.github.io/blog/categories/teste/atom.xml" rel="self"/>
   <link href="http://paulofelipe.github.io/"/>
-  <updated>2016-03-12T17:10:04-03:00</updated>
+  <updated>2016-03-12T17:11:19-03:00</updated>
   <id>http://paulofelipe.github.io/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -12,15 +12,6 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
-  
-  <entry>
-    <title type="html"><![CDATA[mais um teste]]></title>
-    <link href="http://paulofelipe.github.io/blog/2016/03/10/mais-um-teste/"/>
-    <updated>2016-03-10T00:04:55-03:00</updated>
-    <id>http://paulofelipe.github.io/blog/2016/03/10/mais-um-teste</id>
-    <content type="html"><![CDATA[<p>opa</p>
-]]></content>
-  </entry>
   
   <entry>
     <title type="html"><![CDATA[hello world]]></title>
