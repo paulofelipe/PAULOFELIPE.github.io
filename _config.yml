@@ -3,7 +3,7 @@
 # ----------------------- #
 
 url: http://paulofelipe.github.io
-title: Datability
+title: Full Join
 subtitle: Um blog sobre Data Science.
 author: Your Name
 simple_search: https://www.google.com/search
@@ -48,7 +48,7 @@ highlighter: pygments # default python pygments have been replaced by pygments.r
 paginate: 10          # Posts per page on the blog index
 paginate_path: "/:num"  # Directory base for pagination URLs eg. /posts/2/
 recent_posts: 5       # Posts in the sidebar Recent Posts section
-excerpt_link: "Read on &rarr;"  # "Continue reading" link text at the bottom of excerpted articles
+excerpt_link: "Continuar lendo &rarr;"  # "Continue reading" link text at the bottom of excerpted articles
 excerpt_separator: "<!--more-->"
 
 titlecase: true       # Converts page and post titles to titlecase
