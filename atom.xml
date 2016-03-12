@@ -4,7 +4,7 @@
   <title><![CDATA[Full Join]]></title>
   <link href="http://paulofelipe.github.io/atom.xml" rel="self"/>
   <link href="http://paulofelipe.github.io/"/>
-  <updated>2016-03-12T17:11:19-03:00</updated>
+  <updated>2016-03-12T17:57:30-03:00</updated>
   <id>http://paulofelipe.github.io/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Hello World]]></title>
-    <link href="http://paulofelipe.github.io/blog/2016/03/09/hello-world/"/>
-    <updated>2016-03-09T23:27:00-03:00</updated>
-    <id>http://paulofelipe.github.io/blog/2016/03/09/hello-world</id>
+    <link href="http://paulofelipe.github.io/blog/2016/03/12/hello-world/"/>
+    <updated>2016-03-12T23:27:00-03:00</updated>
+    <id>http://paulofelipe.github.io/blog/2016/03/12/hello-world</id>
     <content type="html"><![CDATA[<p>E nasce hoje o <strong>Full Join</strong>!</p>
 
 <p>Um blog sobre data science e tudo mais que envolva a arte de trabalhar com dados.</p>
@@ -36,12 +36,19 @@
 <blockquote><p>Wikipedia:
 Data Science is an interdisciplinary field about processes and systems to extract knowledge or insights from data in various forms, either structured or unstructured,[1][2] which is a continuation of some of the data analysis fields such as statistics, data mining, and predictive analytics, similar to Knowledge Discovery in Databases (KDD).</p></blockquote>
 
-<p>Talvez o aspecto mais interessante e &ldquo;novo&rdquo; em relação à cência dos dados seja a capacidade de produção de dados e obtenção de dados.</p>
+<p>Talvez o aspecto mais interessante e &ldquo;novo&rdquo; em relação à ciência dos dados seja a capacidade de produção de dados e obtenção de dados.</p>
 
-<p>Explicações?
-Links?</p>
+<p>Aqui vão alguns links que são úteis para quem deseja começar, praticar e se manter atualizado sobre ciência de dados:</p>
 
-<p>O <strong>Full Join</strong> será mantido por dois entusiastas da ciência dos dados, Saulo Guerra e Paulo Felipe.</p>
+<ul>
+<li><a href="https://www.datacamp.com/">Datacamp</a></li>
+<li><a href="https://www.kaggle.com">Kaggle</a></li>
+<li><a href="http://www.kdnuggets.com/">KDnuggets</a></li>
+<li><a href="http://www.r-bloggers.com/">R-Bloggers</a></li>
+</ul>
+
+
+<p>O <strong>Full Join</strong> será mantido por dois entusiastas da ciência dos dados, Saulo Guerra e Paulo Felipe. Esperamos que pos</p>
 ]]></content>
   </entry>
   
