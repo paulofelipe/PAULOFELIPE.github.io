@@ -4,7 +4,7 @@
   <title><![CDATA[Category: conceito | Full Join]]></title>
   <link href="http://paulofelipe.github.io/blog/categories/conceito/atom.xml" rel="self"/>
   <link href="http://paulofelipe.github.io/"/>
-  <updated>2016-03-12T19:35:36-03:00</updated>
+  <updated>2016-03-13T13:06:49-03:00</updated>
   <id>http://paulofelipe.github.io/</id>
   <author>
     <name><![CDATA[Full Join]]></name>
@@ -14,41 +14,54 @@
 
   
   <entry>
-    <title type="html"><![CDATA[hello world]]></title>
+    <title type="html"><![CDATA[Hello World]]></title>
     <link href="http://paulofelipe.github.io/blog/2016/03/12/hello-world/"/>
     <updated>2016-03-12T23:27:00-03:00</updated>
     <id>http://paulofelipe.github.io/blog/2016/03/12/hello-world</id>
     <content type="html"><![CDATA[<p>E nasce hoje o <strong>Full Join</strong>!</p>
 
-<p>Um blog sobre data science e tudo mais que envolva a arte de trabalhar com dados.</p>
+<p>Um blog sobre data science e tudo mais que envolve a arte de trabalhar com dados.</p>
 
-<p>A ideia é postar sobre programação, estatística, machine learning e análise de dados, buscando consolidar nosso conhecimento e ajudar quem está começando (ou evoluindo!) na carreira de analista de dados.</p>
+<p>A ideia é postar sobre programação, estatística, machine learning e análise de dados, buscando consolidar nosso conhecimento e ajudar quem está começando (ou evoluindo!) na carreira de Analista de Dados.</p>
 
 <!-- More -->
 
 
 <p>Sempre que possível os posts serão em formatos de tutoriais, com exemplos práticos, explicações teóricas e links de referência.</p>
 
-<p>Mas, afinal, o que é data science? Apesar de ser um termo que vem ganhando bastante relevância, não se trata de uma atividade completamente nova. Basicamente todas as áreas do conhecimento já praticavam a tão famosa ciência dos dados muito antes do termo ganhar popularidade. Sendo bem simplista, data science nada mais é do que extrair algum tipo de conhecimento, interpretar informações ou realizar descobertas, tudo isso utilizando massas de dados. Normalmente essa atividade é multidisciplinar e envolve matemática, estatística, computação, e, principalmente, capacidade de entender e explorar os dados com os quais se vai trabalhar.</p>
+<p>Mas, afinal, o que é data science? Apesar de ser um termo que vem ganhando bastante relevância, não se trata de uma atividade completamente nova. Basicamente todas as áreas do conhecimento já praticavam a tão famosa ciência dos dados muito antes do termo ganhar popularidade.</p>
 
-<p>Mas, se não é novidade, porque o tema vem ganhando cada vez mais relevância? É inquestionável que a capacidade de produção de dados e a capacidade de processamento de dados aumentou muito nas últimas décadas (internet!). Aplicar ciência dos dados em um arquivo com 2 toneladas de papel é bem menos viável do que aplicar em 2 petabytes de dados em um servidor. O aumento da capacidade computacional e a quantidade de dados eletrônicos sendo produzidos proporcionou o cenário perfeito para o desenvolvimento de técnicas computacionais para explorar os dados, descobrir coisas, explicar e até prever situações.</p>
+<p>Sendo bem simplista, data science nada mais é do que extrair algum tipo de conhecimento, interpretar informações ou realizar descobertas, tudo isso utilizando massas de dados. Normalmente essa atividade é multidisciplinar e envolve matemática, estatística, computação, e, principalmente, capacidade de entender e explorar os dados com os quais se vai trabalhar.</p>
 
-<blockquote><p>Wikipedia:
+<p>Então, se não é novidade, porque o tema vem ganhando cada vez mais relevância? É inquestionável que a capacidade de produção de dados e a capacidade de processamento de dados aumentou muito nas últimas décadas (internet!).</p>
+
+<p>Aplicar ciência dos dados em um arquivo com 2 toneladas de papel é bem menos viável do que aplicar em 2 peta bytes de dados em um servidor. O aumento da capacidade computacional e a quantidade de dados eletrônicos sendo produzidos proporcionou o cenário perfeito para o desenvolvimento de técnicas computacionais para explorar os dados, descobrir coisas, explicar e até prever situações.</p>
+
+<blockquote><p><a href="https://en.wikipedia.org/wiki/Data_science">Wikipedia:</a>
 Data Science is an interdisciplinary field about processes and systems to extract knowledge or insights from data in various forms, either structured or unstructured,[1][2] which is a continuation of some of the data analysis fields such as statistics, data mining, and predictive analytics, similar to Knowledge Discovery in Databases (KDD).</p></blockquote>
 
-<p>Talvez o aspecto mais interessante e &ldquo;novo&rdquo; em relação à ciência dos dados seja a capacidade de produção de dados e obtenção de dados.</p>
+<p>Talvez o aspecto mais intrigante sobre a popularização da ciência dos dados tenha sido a expectativa criada em torno do Analista de Dados, o profissional chave da tal ciência dos dados.</p>
 
-<p>Aqui vão alguns links que são úteis para quem deseja começar, praticar e se manter atualizado sobre ciência de dados:</p>
+<p>Muito se fala hoje de um Analista de Dados ideal: um expert em estatística, com habilidades hackers, conhecedor de infraestrutura e banco de dados, poliglota em linguagens de programação e com capacidade de explicar com clareza todas as conclusões de uma análise bem sucedida.</p>
+
+<p>Dominar essa quantidade de habilidades certamente não é fácil, e sequer é requisito mínimo para trabalhar na área, já que é mais fácil e eficiente montar uma equipe de 3 ou 4 pessoas que reúnam, juntas, todo esse conhecimento. Porém, um profissional que busca se aprimorar em todas essas habilidades sem dúvidas se tornará um Analista de Dados melhor (e mais valioso $$$)!</p>
+
+<p>Esse é o objetivo dos autores desse blog, aprofundar cada vez mais na busca desses conhecimentos e repassar tais conhecimentos para quem também deseja trilhar esse caminho !</p>
+
+<p>Para o primeiro post não passar batido, aqui vão alguns links bastante úteis para quem deseja começar, praticar e se manter atualizado sobre ciência de dados:</p>
 
 <ul>
 <li><a href="https://www.datacamp.com/">Datacamp</a></li>
 <li><a href="https://www.kaggle.com">Kaggle</a></li>
 <li><a href="http://www.kdnuggets.com/">KDnuggets</a></li>
 <li><a href="http://www.r-bloggers.com/">R-Bloggers</a></li>
+<li><a href="http://pca.st/dataskeptic">Data Skpetic Podcast</a></li>
+<li><a href="https://www.reddit.com/r/datascience/">/r/datascience (Reddit)</a></li>
+<li><a href="https://www.coursera.org/specializations/jhu-data-science">Data Science Specialization</a></li>
 </ul>
 
 
-<p>O <strong>Full Join</strong> será mantido por dois entusiastas da ciência dos dados, Saulo Guerra e Paulo Felipe. Esperamos que pos</p>
+<p>O <strong>Full Join</strong> será mantido por dois entusiastas da ciência dos dados, Saulo Guerra e Paulo Felipe.</p>
 ]]></content>
   </entry>
   
