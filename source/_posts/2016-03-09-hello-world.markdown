@@ -13,29 +13,37 @@ Um blog sobre data science e tudo mais que envolve a arte de trabalhar com dados
 
 A ideia é postar sobre programação, estatística, machine learning e análise de dados, buscando consolidar nosso conhecimento e ajudar quem está começando (ou evoluindo!) na carreira de Analista de Dados.
 
+
 <!-- More -->
 
 
 Sempre que possível os posts serão em formatos de tutoriais, com exemplos práticos, explicações teóricas e links de referência. 
 
 
-Mas, afinal, o que é data science? Apesar de ser um termo que vem ganhando bastante relevância, não se trata de uma atividade completamente nova. Basicamente todas as áreas do conhecimento já praticavam a tão famosa ciência dos dados muito antes do termo ganhar popularidade. 
+##Mas, afinal, o que é data science? 
+
+Apesar de ser um termo que vem ganhando bastante relevância, não se trata de uma atividade completamente nova. Basicamente todas as áreas do conhecimento já praticavam a tão famosa ciência dos dados muito antes do termo ganhar popularidade. 
 
 
 Sendo bem simplista, data science nada mais é do que extrair algum tipo de conhecimento, interpretar informações ou realizar descobertas, tudo isso utilizando massas de dados. Normalmente essa atividade é multidisciplinar e envolve matemática, estatística, computação, e, principalmente, capacidade de entender e explorar os dados com os quais se vai trabalhar. 
 
 
-Então, se não é novidade, porque o tema vem ganhando cada vez mais relevância? É inquestionável que a capacidade de produção de dados e a capacidade de processamento de dados aumentou muito nas últimas décadas (internet!). 
+##Se não é novidade, porque o tema está tão relevante? 
+
+É inquestionável que a capacidade de produção de dados e a capacidade de processamento de dados aumentou muito nas últimas décadas (internet!). 
 
 
 Aplicar ciência dos dados em um arquivo com 2 toneladas de papel é bem menos viável do que aplicar em 2 peta bytes de dados em um servidor. O aumento da capacidade computacional e a quantidade de dados eletrônicos sendo produzidos proporcionou o cenário perfeito para o desenvolvimento de técnicas computacionais para explorar os dados, descobrir coisas, explicar e até prever situações.
 
 
->[Wikipedia:](https://en.wikipedia.org/wiki/Data_science)
->Data Science is an interdisciplinary field about processes and systems to extract knowledge or insights from data in various forms, either structured or unstructured,[1][2] which is a continuation of some of the data analysis fields such as statistics, data mining, and predictive analytics, similar to Knowledge Discovery in Databases (KDD).
+{% blockquote Wikipedia https://en.wikipedia.org/wiki/Data_science Data Science %}
+Data Science is an interdisciplinary field about processes and systems to extract knowledge or insights from data in various forms, either structured or unstructured, which is a continuation of some of the data analysis fields such as statistics, data mining, and predictive analytics, similar to Knowledge Discovery in Databases (KDD).
+{% endblockquote %}
 
 
-Talvez o aspecto mais intrigante sobre a popularização da ciência dos dados tenha sido a expectativa criada em torno do Analista de Dados, o profissional chave da tal ciência dos dados. 
+##O Analista de Dados
+
+Talvez o aspecto mais intrigante sobre a popularização da ciência dos dados tenha sido a expectativa criada em torno do Analista de Dados (ou Cientista de Dados, como preferirem), o profissional chave da tal ciência dos dados. 
 
 
 Muito se fala hoje de um Analista de Dados ideal: um expert em estatística, com habilidades hackers, conhecedor de infraestrutura e banco de dados, poliglota em linguagens de programação e com capacidade de explicar com clareza todas as conclusões de uma análise bem sucedida. 
