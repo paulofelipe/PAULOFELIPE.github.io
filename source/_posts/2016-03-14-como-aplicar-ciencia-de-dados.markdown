@@ -5,7 +5,6 @@ date: 2016-03-14 00:11:56 -0300
 comments: true
 categories: [conceito, workflow]
 published: false
----
 
 
 No geral, atividades envolvendo aplicação da ciência de dados assumem o formato de projeto: empreendimentos de esforços durante um tempo (início e fim), usando recursos (pessoas e ferramentas) para alcançar um objetivo específico. 
@@ -69,7 +68,7 @@ Obtenção dos dados também pode ser um momento um pouco traumático, pois nem 
 ##Explore os dados:
 
 
-Nessa fase é importante começar a investigar os dados em busca de insights, padrões e [outliers](https://en.wikipedia.org/wiki/Outlier), com o objetivo de aprofundar o conhecimento sobre os dadados, entendendo melhor como eles se comportam.
+Nessa fase é importante começar a investigar os dados em busca de insights, padrões e [outliers](https://en.wikipedia.org/wiki/Outlier), com o objetivo de aprofundar o conhecimento sobre os dados, entendendo melhor como eles se comportam.
 
 
 Esse exercício muitas vezes exige a habilidade de plotar diferentes gráficos, extrair amostras e realizar análises estatísticas mais básicas.
@@ -77,9 +76,17 @@ Esse exercício muitas vezes exige a habilidade de plotar diferentes gráficos, 
 
 ##Escolha os modelos necessários:
 
+A escolha dos modelos é um momento crucial no desenvolvimento do projeto. É aqui que a estatística e o aprendizado de máquina poderão ser utilizados mais consistentemente. 
+
+Como muitas vezes os beneficiários do projeto não serão pessoas especializadas nesse tipo de abordagem, o analista terá uma difícil missão de escolher um modelo que seja útil para o objetivo do projeto, mas que também que seja, de certa forma, passível de explicação dos seus principais elementos. Por exemplo, em um caso de desenvolvimento de um modelo de classificação, haverá um _trade-off_ entre a melhoria da acurácia e a complexidade do modelo.
+
+
 
 ##Apresente os resultados:
 
+Na apresentação dos resultados, é preciso ter em mente qual é a audiência que você enfrentará. A sua apresentação deve levar em consideração isso. Como na fase de exploração, a visualização pode ter um papel fundamental. Um bom gráfico, pode conseguir passar a mesma informação de dez tabelas diferentes. 
+
+Outro ponto importante, é deixar claro o que a análise realizada permite e o que ela não permite. É fundamental que os usuários tenham o mínimo de conhecimento sobre a capacidade do produto que estará sendo entregue.
 
 ##Faça loops entre as fases:
 
