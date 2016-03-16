@@ -89,7 +89,7 @@ Tenha em mente que todas as fases são iterativas, parcialmente sobrepostas, e c
 
 
 
-Referência:
+Referências:
 
 * Parte 1 - Capítulo 1 "The data science process" - Practical Data Science with R
 * Wikipedia - Cross Industry Standard Process for Data Mining - https://en.wikipedia.org/wiki/
