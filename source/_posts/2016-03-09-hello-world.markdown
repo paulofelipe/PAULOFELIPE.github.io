@@ -11,7 +11,7 @@ E nasce hoje o **Full Join**!
 
 Um blog sobre data science e tudo mais que envolve a arte de trabalhar com dados.
 
-A ideia é postar sobre programação, estatística, machine learning e análise de dados, buscando consolidar nosso conhecimento e ajudar quem está começando (ou evoluindo!) na carreira de Analista de Dados.
+A ideia é postar sobre programação, estatística, machine learning e análise de dados, buscando consolidar nosso conhecimento e ajudar quem está começando (ou evoluindo!) na carreira de Cientista de Dados.
 
 
 <!-- More -->
@@ -41,15 +41,15 @@ Data Science is an interdisciplinary field about processes and systems to extrac
 {% endblockquote %}
 
 
-##O Analista de Dados
+##O Cientista de Dados
 
-Talvez o aspecto mais intrigante sobre a popularização da ciência dos dados tenha sido a expectativa criada em torno do Analista de Dados (ou Cientista de Dados, como preferirem), o profissional chave da tal ciência dos dados. 
-
-
-Muito se fala hoje de um Analista de Dados ideal: um expert em estatística, com habilidades hackers, conhecedor de infraestrutura e banco de dados, poliglota em linguagens de programação e com capacidade de explicar com clareza todas as conclusões de uma análise bem sucedida. 
+Talvez o aspecto mais intrigante sobre a popularização da ciência dos dados tenha sido a expectativa criada em torno do Cientista de Dados (ou Analista de Dados, como preferirem), o profissional chave da tal ciência dos dados. 
 
 
-Dominar essa quantidade de habilidades certamente não é fácil, e sequer é requisito mínimo para trabalhar na área, já que é mais fácil e eficiente montar uma equipe de 3 ou 4 pessoas que reúnam, juntas, todo esse conhecimento. Porém, um profissional que busca se aprimorar em todas essas habilidades sem dúvidas se tornará um Analista de Dados melhor (e mais valioso $$$)! 
+Muito se fala hoje de um Cientista de Dados ideal: um expert em estatística, com habilidades hackers, conhecedor de infraestrutura e banco de dados, poliglota em linguagens de programação e com capacidade de explicar com clareza todas as conclusões de uma análise bem sucedida. 
+
+
+Dominar essa quantidade de habilidades certamente não é fácil, e sequer é requisito mínimo para trabalhar na área, já que é mais fácil e eficiente montar uma equipe de 3 ou 4 pessoas que reúnam, juntas, todo esse conhecimento. Porém, um profissional que busca se aprimorar em todas essas habilidades sem dúvidas se tornará um Cientista de Dados melhor (e mais valioso $$$)! 
 
 
 Esse é o objetivo dos autores desse blog, aprofundar cada vez mais na busca desses conhecimentos e repassar tais conhecimentos para quem também deseja trilhar esse caminho !
