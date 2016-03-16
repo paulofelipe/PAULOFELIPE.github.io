@@ -48,7 +48,7 @@ Ok, então devemos pegar todos essas fases e estágios e delimitar cada momento 
 Tentaremos fazer um resumo do que é importante ter e mente antes de começar (e durante!) um projeto com aplicação de ciência de dados.
 
 
-##Tenha perguntas bem definidas:
+##Tenha perguntas bem definidas
 
 
 O objetivo de um projeto desse tipo geralmente é responder uma pergunta (ou várias), descobrir ou prever algo, confirmar uma hipótese ou solucionar um problema. Se antes de começar o projeto você conseguir resumir seu objetivo em uma pergunta clara e objetiva, você já vai começar muito bem! Se começar o projeto sem uma pergunta clara, então seus objetivos também não serão claros, com isso o projeto correrá sérios riscos de não obter sucesso.
@@ -57,7 +57,7 @@ O objetivo de um projeto desse tipo geralmente é responder uma pergunta (ou vá
 Nesse momento é importante conhecer bem sobre o assunto do projeto. Conversas com os interessados e "donos do problema" são muito bem vindas. Habilidades em [levantamento de requisitos](https://pt.wikipedia.org/wiki/An%C3%A1lise_de_requerimento_de_software) ajudam bastante a elucidar e entender bem o que se espera do projeto e o impacto do problema para o cliente. Entender verdadeiramente o problema é crucial para o sucesso do projeto.
 
 
-##Obtenha os dados necessários:
+##Obtenha os dados necessários
 
 
 Esse momento é muito interessante, pois o projeto pode terminar aqui mesmo se não for possível obter os dados necessários. Nem sempre é fácil observar se os dados obtidos são adequados para atingir o objetivo. Eventualmente, somente ao final do processo é possível concluir que os dados foram insuficientes ou inadequados.
@@ -66,7 +66,7 @@ Esse momento é muito interessante, pois o projeto pode terminar aqui mesmo se n
 Obtenção dos dados também pode ser um momento um pouco traumático, pois nem sempre os dados estão dispostos da melhor forma possível ou nem sempre é fácil obtê-los. Por isso essa fase pode exigir alguns conhecimentos mais específicos, como entender de bancos de dados, dominar alguma linguagem de manipulação de dados, conhecer técnicas de limpeza e modelagem de dados, e eventualmente entender de [web scraping](https://en.wikipedia.org/wiki/Web_scraping) ou usar APIs específicas para consumo de dados.
 
 
-##Explore os dados:
+##Explore os dados
 
 
 Nessa fase é importante começar a investigar os dados em busca de insights, padrões e [outliers](https://en.wikipedia.org/wiki/Outlier), com o objetivo de aprofundar o conhecimento sobre os dados, entendendo melhor como eles se comportam.
@@ -75,7 +75,7 @@ Nessa fase é importante começar a investigar os dados em busca de insights, pa
 Esse exercício muitas vezes exige a habilidade de plotar diferentes gráficos, extrair amostras e realizar análises estatísticas mais básicas.
 
 
-##Escolha os modelos necessários:
+##Escolha os modelos necessários
 
 
 A escolha dos modelos é um momento crucial no desenvolvimento do projeto. É aqui que serão utilizados conhecimentos mais robusto em estatística e aprendizado de máquina. É fundamental conhecer as estratégias e os tipos de modelos para escolher bem os que podem ajudar a alcançar o objetivo do projeto.
@@ -83,7 +83,7 @@ A escolha dos modelos é um momento crucial no desenvolvimento do projeto. É aq
 Outro aspecto importante é saber balancear "complexidade e simplicidade". Como muitas vezes os beneficiários do projeto não serão pessoas especializadas nesse tipo de abordagem, o analista terá uma difícil missão de escolher um modelo que seja útil para o objetivo do projeto, mas que seja também, de certa forma, passível de explicação dos seus principais elementos. Por exemplo, em um caso de desenvolvimento de um modelo de classificação, haverá um trade-off entre a melhoria da acurácia e a complexidade do modelo. Ou seja, pode ser que valha a pena escolher um modelo mais simples e mais fácil de explicar do que um modelo super complexo com resultados melhores, porém difícil de entender. O bom entendimento dos objetivos do projeto e das necessidades do cliente vai repercutir positivamente na escolha correta dos modelos.
 
 
-##Apresente os resultados:
+##Apresente os resultados
 
 
 Na apresentação dos resultados, é preciso ter em mente qual é a audiência que você enfrentará, ou que tipo de uso os clientes do projeto farão com o resultado. Como na fase de exploração, a visualização pode ter um papel fundamental. Um bom gráfico, pode conseguir passar a mesma informação de dez tabelas diferentes. Ou, dependendo do objetivo, um dashboard dinâmico para o cliente "explorar" os resultados. Em algumas situações, o resultado poderá ser um algorítmo de uso mais amplo (um sistema de recomendação, um motor de previsões em tempo real, um robô que monitora redes sociais, etc).
@@ -93,7 +93,7 @@ Outro ponto importante, é sempre deixar claro o que a análise realizada permit
 Para apresentar bem os resultados não basta um bom trabalho analítico e bons modelos, é desejável uma boa habilidade de escrita, produzir gráficos interessantes, ["story telling"](https://hbr.org/2013/03/a-data-scientists-real-job-sto/), saber apresentar dados de maneira concisa e objetiva, habilidades interperssoais e, em alguns casos, até uma boa noção de design e interfaces gráficas.
 
 
-##Faça loops entre as fases:
+##Faça loops entre as fases
 
 
 Em qualquer fase e a qualquer momento, é normal que se retorne a fases anteriores ou se avance a fases posteriores. Por exemplo: redefinir os objetivos após a fase de exploração; necessidade de se obter mais dados ou explorar melhor os dados após a apresentação dos resultados; repensar os objetivos do projeto após o cliente usar o produto final; etc. Esse exercícios do loop é saudável para o projeto.
