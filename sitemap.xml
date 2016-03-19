@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
-<loc>http://fulljoin.com.br/blog/2016/03/16/como-aplicar-ciencia-dos-dados-parte-2-a-equipe/</loc>
-<lastmod>2016-03-16T18:35:38-03:00</lastmod>
-</url>
-<url>
-<loc>http://fulljoin.com.br/blog/2016/03/14/como-aplicar-ciencia-de-dados/</loc>
-<lastmod>2016-03-14T00:11:56-03:00</lastmod>
-</url>
-<url>
 <loc>http://fulljoin.com.br/blog/2016/03/12/hello-world/</loc>
 <lastmod>2016-03-12T23:27:00-03:00</lastmod>
 </url>
@@ -32,11 +24,5 @@
 </url>
 <url>
 <loc>http://fulljoin.com.br/blog/categories/conceito/</loc>
-</url>
-<url>
-<loc>http://fulljoin.com.br/blog/categories/workflow/</loc>
-</url>
-<url>
-<loc>http://fulljoin.com.br/blog/categories/equipe/</loc>
 </url>
 </urlset>
