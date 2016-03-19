@@ -4,14 +4,15 @@
       <h1 class="entry-title"><a href="{{ root_url }}{{ post.url }}">{% if site.titlecase %}{{ post.title | titlecase }}{% else %}{{ post.title }}{% endif %}</a></h1>
     {% else %}
       <h1 class="entry-title">{% if site.titlecase %}{{ page.title | titlecase }}{% else %}{{ page.title }}{% endif %}</h1>
-    {% endif %}
-    {% unless page.meta == false %}
-      <p class="meta">
-        {% include post/date.html %}{{ time }}
+    {% endif %}    
+    {% unless page.meta == false %}      
+    <p class="meta">
+    {% include post/date.html %}{{ time }}{% if updated %} {{ updated }}{% endif %}
         {% if site.disqus_short_name and page.comments != false and post.comments != false and site.disqus_show_comment_count == true %}
-           | <a href="{% if index %}{{ root_url }}{{ post.url }}{% endif %}#disqus_thread"
-             data-disqus-identifier="{% if post.meta.disqus_id %}{{ post.meta.disqus_id }}{% else %}{{ site.url }}{{ post.url }}{% endif %}">Comments</a>
+             <a href="{% if index %}{{ root_url }}{{ post.url }}{% endif %}#disqus_thread"
+             data-disqus-identifier="{% if post.meta.disqus_id %}{{ post.meta.disqus_id }}{% else %}{{ site.url }}{{ post.url }}{% endif %}">Comentários</a>              
         {% endif %}
+        | {% include post/categories.html %}
       </p>
     {% endunless %}
   </header>
