@@ -2,6 +2,7 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <<<<<<< HEAD
+<<<<<<< HEAD
 <loc>http://paulofelipe.github.io/blog/2016/03/12/hello-world/</loc>
 <lastmod>2016-03-12T23:27:00-03:00</lastmod>
 </url>
@@ -31,6 +32,8 @@
 <lastmod>2016-03-14T00:11:56-03:00</lastmod>
 </url>
 <url>
+=======
+>>>>>>> f672233c7a87735961793186fb68e8c5eef6221e
 <loc>http://fulljoin.com.br/blog/2016/03/12/hello-world/</loc>
 <lastmod>2016-03-12T23:27:00-03:00</lastmod>
 </url>
@@ -55,6 +58,7 @@
 <url>
 <loc>http://fulljoin.com.br/blog/categories/conceito/</loc>
 </url>
+<<<<<<< HEAD
 <url>
 <loc>http://fulljoin.com.br/blog/categories/workflow/</loc>
 </url>
@@ -62,4 +66,6 @@
 <loc>http://fulljoin.com.br/blog/categories/equipe/</loc>
 >>>>>>> 1f73b4d5645131218933df93404664f3a5d5a721
 </url>
+=======
+>>>>>>> f672233c7a87735961793186fb68e8c5eef6221e
 </urlset>
