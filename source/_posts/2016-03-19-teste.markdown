@@ -1,7 +1,0 @@
----
-layout: post
-title: "Teste"
-date: 2016-03-19 11:58:06 -0300
-comments: true
-categories: 
----
