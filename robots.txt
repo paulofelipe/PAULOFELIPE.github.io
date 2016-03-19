@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: 
 
-Sitemap: http://paulofelipe.github.io/sitemap.xml 
+Sitemap: http://fulljoin.com.br/sitemap.xml 
