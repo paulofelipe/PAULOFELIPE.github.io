@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Full Join]]></title>
-  <link href="http://paulofelipe.github.io/atom.xml" rel="self"/>
+  <title><![CDATA[Category: conceito | Full Join]]></title>
+  <link href="http://paulofelipe.github.io/blog/categories/conceito/atom.xml" rel="self"/>
   <link href="http://paulofelipe.github.io/"/>
   <updated>2016-03-19T12:05:43-03:00</updated>
   <id>http://paulofelipe.github.io/</id>
@@ -12,15 +12,6 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
-  
-  <entry>
-    <title type="html"><![CDATA[Teste]]></title>
-    <link href="http://paulofelipe.github.io/blog/2016/03/19/teste/"/>
-    <updated>2016-03-19T11:58:06-03:00</updated>
-    <id>http://paulofelipe.github.io/blog/2016/03/19/teste</id>
-    <content type="html"><![CDATA[
-]]></content>
-  </entry>
   
   <entry>
     <title type="html"><![CDATA[Hello World]]></title>
@@ -50,8 +41,7 @@
 
 <p>Aplicar ciência dos dados em um arquivo com 2 toneladas de papel é bem menos viável do que aplicar em 2 peta bytes de dados em um servidor. O aumento da capacidade computacional e a quantidade de dados eletrônicos sendo produzidos proporcionou o cenário perfeito para o desenvolvimento de técnicas computacionais para explorar os dados, descobrir coisas, explicar e até prever situações.</p>
 
-<blockquote><p>Data Science is an interdisciplinary field about processes and systems to extract knowledge or insights from data in various forms, either structured or unstructured, which is a continuation of some of the data analysis fields such as statistics, data mining, and predictive analytics, similar to Knowledge Discovery in Databases (KDD).</p><footer><strong>Wikipedia</strong> <cite><a href='https://en.wikipedia.org/wiki/Data_science'>Data Science</a></cite></footer></blockquote>
-
+<p><blockquote><p>Data Science is an interdisciplinary field about processes and systems to extract knowledge or insights from data in various forms, either structured or unstructured, which is a continuation of some of the data analysis fields such as statistics, data mining, and predictive analytics, similar to Knowledge Discovery in Databases (KDD).</p><footer><strong>Wikipedia <a href="https://en.wikipedia.org/wiki/Data_science">https://en.wikipedia.org/wiki/Data_science</a> Data Science</strong></footer></blockquote></p>
 
 <h2>O Cientista de Dados</h2>
 
