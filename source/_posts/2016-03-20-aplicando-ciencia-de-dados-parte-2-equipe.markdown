@@ -55,9 +55,10 @@ Também é quem mais atua com banco de dados, SQL, estrutura de dados, cargas, i
 
 Para ilustrar esse papel, segue os requisitos para se candidatar a uma vaga de Engenheiro de Dados no Facebook, retirado do [Linkedin](https://www.linkedin.com/jobs2/view/108924276?trk=job_view_browse_map)
 
-{% imgcap center /images/img_data_engineer_facebook.png caption="My cat, Robert Downey Jr." %}
-*image caption*
-
+<table class="image">
+<caption align="bottom">Requerimentos - Engenheiro de Dados</caption>
+<tr><td><img src="/images/img_data_engineer_facebook.png" alt="Requerimentos - Engenheiro de Dados"/></td></tr>
+</table>
 
 ## Cientista de Dados
 

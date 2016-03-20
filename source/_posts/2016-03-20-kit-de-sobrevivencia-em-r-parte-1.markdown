@@ -23,8 +23,10 @@ O [RStudio](https://www.rstudio.com/) é uma interface muito útil pra quem dese
 
 Então, considere fortemente começar usando R + RStudio.
 
-![](/images/rstudio.png)
-*Uma visão geral do RStudio*
+<table class="image">
+<caption align="bottom">Uma visão geral do RStudio</caption>
+<tr><td><img src="/images/rstudio.png" alt="Uma visão geral do RStudio"/></td></tr>
+</table>
 
 ## Instalando o R e o RStudio
 
