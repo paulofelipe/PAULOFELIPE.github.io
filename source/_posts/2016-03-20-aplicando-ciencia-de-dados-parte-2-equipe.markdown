@@ -53,16 +53,33 @@ Costuma ser o papel que entende melhor de engenharia de software e contribui mui
 Também é quem mais atua com banco de dados, SQL, estrutura de dados, cargas, integrações e extrações de dados, limpeza de dados.
 
 
-Para ilustrar esse papel, segue os requisitos para se candidatar a uma vaga de Engenheiro de Dados no Facebook, retirado do [Linkedin](https://www.linkedin.com/jobs2/view/108924276?trk=job_view_browse_map)
+Para ilustrar esse papel, segue os requisitos para se candidatar a uma vaga de Engenheiro de Dados, retirado do [Linkedin do Facebook](https://www.linkedin.com/jobs2/view/108924276?trk=job_view_browse_map)
 
 <table class="image">
-<caption align="bottom">Requerimentos - Engenheiro de Dados</caption>
+<caption align="bottom">Requisitos para Engenheiro de Dados do Facebook</caption>
 <tr><td><img src="/images/img_data_engineer_facebook.png" alt="Requerimentos - Engenheiro de Dados"/></td></tr>
 </table>
 
 ## Cientista de Dados
 
 
+Esse papel possui habilidades mais volatadas para matemática, estatística e economia, e precisa ter uma ótima capacidade analítica para aplicar essas habilidades em estratégias buscando descobrir soluções para os desafios de um projeto em ciência de dados.
+
+
+Costuma ser um perfil mais acadêmico, pois o processo de análise de dados exige um pouco do rigor ciêntifico para que se prove consistênte, satisfatório e robusto. É preciso saber fazer as perguntas certas, e percorrer os caminhos certos para uma resposta convicente.
+
+
+Intimidade com grandes quantidades de dado, saber aplicar módelos de machine learning e modelos de classificação, mineração de dados, analise de séries temporais e até econometria são conhecimentos que ajudam nas atividades do cientista de dados.
+
+
+Portanto, dominar alguma linguagem para processamento estatístico é essencial: R, python, Matlab, etc. Também é importante saber se expressar com clareza e confeccionar bons relatórios e produtos finais.
+
+
+Para ilustrar, segue os requisitos para uma vaga de cientista de dados, retirado do [Linkedin do Facebook](https://www.linkedin.com/jobs2/view/104818439)
+<table class="image">
+<caption align="bottom">Requisitos para Cientista de Dados da Apple</caption>
+<tr><td><img src="/images/img_data_scientist_apple.png" alt="Requerimentos - Engenheiro de Dados"/></td></tr>
+</table>
 
 
 ## Gerente de Dados
@@ -71,12 +88,19 @@ Para ilustrar esse papel, segue os requisitos para se candidatar a uma vaga de E
 
 ## CDO
 
+Esse é um papel que talvez só 
 
+<table class="image">
+<caption align="bottom">Requisitos para Cientista de Dados da Apple</caption>
+<tr><td><img src="/images/img_data_scientist_apple.png" alt="Requerimentos - Engenheiro de Dados"/></td></tr>
+</table>
 
 ## Cliente
 
 
+
 ## Conclusão
+
 
 
 ## Referências
