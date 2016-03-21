@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: rstudio | Full Join]]></title>
+  <link href="http://fulljoin.com.br/blog/categories/rstudio/atom.xml" rel="self"/>
+  <link href="http://fulljoin.com.br/"/>
+  <updated>2016-03-20T15:55:00-03:00</updated>
+  <id>http://fulljoin.com.br/</id>
+  <author>
+    <name><![CDATA[Full Join]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Kit de sobrevivência em R - Parte 1]]></title>
+    <link href="http://fulljoin.com.br/blog/2016/03/18/kit-de-sobrevivencia-em-r-parte-1/"/>
+    <updated>2016-03-18T21:14:06-03:00</updated>
+    <id>http://fulljoin.com.br/blog/2016/03/18/kit-de-sobrevivencia-em-r-parte-1</id>
+    <content type="html"><![CDATA[<p>Nesta sequênciade posts, iremos tratar o básico necessário para quem deseja iniciar o aprendizado em R. Serão quatros posts em que serão discutidos tópicos como instalação, importação de dados, tipos de dados etc. A nossa expectativa é que com essa sequência seja quebrada a barreira inicial para aqueles que prentendem entrar nesse mundo (cuidado que esse é um caminho sem volta).</p>
+
+<!-- More -->
+
+
+<h2>Por que o R?</h2>
+
+<p>Um motivo básico é que o R é <strong>livre</strong>. Em circustâncias de restrição orçamentária, isso pode ser um fator determimante. No entanto, a escolha do R ultrapassa a questão dos custos. Algumas pessoas têm o costume de pensar que soluções livres são geralmente inferiores às proprietárias. Todavia, no caso de ciência de dados, os softwares livres parecem que vieram para ficar em posição dominante. O grande &ldquo;concorrente&rdquo; do R é o Python, outro software livre.</p>
+
+<p>E qual seria o melhor? Depende. Como tudo na vida, cada um apresenta vantagens e desvantagens. Talvez a sua necessidade dirá qual é o software mais adequado. Se a sua necessidade é de realização de estudos e análises que não serão diretamente ligada a outras plataformas, como uma aplicação web, o R é o ideal para você. O Python parece ser mais indicado em casos de análises serão utilizadas em produção. Este post <a href="http://www.kdnuggets.com/2015/05/r-vs-python-data-science.html">aqui</a> pode ser útil se você desejar saber mais sobre esse ponto.</p>
+
+<h2>Sobre o RStudio</h2>
+
+<p>O <a href="https://www.rstudio.com/">RStudio</a> é uma interface muito útil pra quem deseja usar o R. Com certeza, a maioria dos usuários de R utilizam o RStudio como IDE (integrated development environment). Nele, você terá um editor de código, um console, um dispositivo para gráficos, além de outras funcionalidades.</p>
+
+<p>Então, considere fortemente começar usando R + RStudio.</p>
+
+<table class="image">
+<caption align="bottom">Uma visão geral do RStudio</caption>
+<tr><td><img src="http://fulljoin.com.br/images/rstudio.png" alt="Uma visão geral do RStudio"/></td></tr>
+</table>
+
+
+<h2>Instalando o R e o RStudio</h2>
+
+<h3>Windows</h3>
+
+<p>Para instalar o R no windows basta realizar o download do executável <a href="https://cran.r-project.org/bin/windows/base/">aqui</a> e proceder a instalação como qualquer outro software.</p>
+
+<p>O Rstudio pode ser baixado <a href="https://www.rstudio.com/products/rstudio/download/">neste link</a>. Novamente, a instalação deve ser tranquila, sem a necessidade de maiores detalhes.</p>
+]]></content>
+  </entry>
+  
+</feed>

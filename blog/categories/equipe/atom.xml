@@ -4,7 +4,7 @@
   <title><![CDATA[Category: equipe | Full Join]]></title>
   <link href="http://fulljoin.com.br/blog/categories/equipe/atom.xml" rel="self"/>
   <link href="http://fulljoin.com.br/"/>
-  <updated>2016-03-20T11:04:48-03:00</updated>
+  <updated>2016-03-20T15:55:00-03:00</updated>
   <id>http://fulljoin.com.br/</id>
   <author>
     <name><![CDATA[Full Join]]></name>
@@ -14,7 +14,65 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Como aplicar ciência de dados? Parte 1: workflow]]></title>
+    <title type="html"><![CDATA[Aplicando ciencia de dados parte 2 - Equipe]]></title>
+    <link href="http://fulljoin.com.br/blog/2016/03/19/aplicando-ciencia-de-dados-parte-2-equipe/"/>
+    <updated>2016-03-19T23:05:00-03:00</updated>
+    <id>http://fulljoin.com.br/blog/2016/03/19/aplicando-ciencia-de-dados-parte-2-equipe</id>
+    <content type="html"><![CDATA[<p>Para aplicação da Ciência de Dados em um projeto, não basta ter uma ótima fonte de dados disponível e os melhores quipamentos e ferramentas prontos para uso. É necessário uma equipe.</p>
+
+<!-- More -->
+
+
+<p>E, tal qual foi dito no post &ldquo;link pro post&rdquo;, aqui também não há uma estrutura de equipe certa ou errada. A natureza dos problemas, a forma de trabalho, a disponibilidade de recursos humanso e o próprio estilo da organização que vai ditar a melhor maneira de se montar uma equipe.</p>
+
+<p>Portanto, esse post não vai se atrever a dizer o que é bom ou o que é ruim para uma equipe trabalhar com ciência de dados. Trataremos apenas de falar um pouco sobre os principais papeis atuantes em projetos de ciência de dados, de forma não exaustiva, baseado em nossas observações do dia a dia e em leituras de blogs e artigos sobre o assunto.</p>
+
+<p>Vale ressaltar que, assim como as fases de um projeto em ciência dos dados, os papéis de uma equipe se sobrepõe e se complementam, sendo bem difícil limitar precisamente as atuações de cada papel. Essa sobreposição costuma ser muito saudável, uma vez que os membros da equipe acabam aprendendo, uns com os outros cada vez mais mais sobre todos os papeis envolvidos em um projeto.</p>
+
+<p>Portanto, a divisão da equipe em papeis é muito pouco rigorosa e os nomes e títulos a seguir são apenas para tentar entender um pouco mais das atividades que são realizadas em um projeto com aplicação de ciência de dados.</p>
+
+<h2>Herói</h2>
+
+<p>Imagine se apenas uma pessoa tivesse que lidar com todas as fases e problemas em um projeto de ciência de dados? Esse cara é um Herói.</p>
+
+<p>Ele se vira mais que o suficiente com ferramentas e linguagens de programação para manipular dados, entende mais que o suficiente de estatística e machine learning para escolher boas estratégias e modelar soluções, e sabe se expressar claramente e desenhar um bom produto final para apresentar suas soluções ou análise para o cliente.</p>
+
+<p>Parece ser algo bem raro, mas esse papel de herói poderia ser facilmente exercido por alguns participantes do <a href="https://www.kaggle.com/">Kaggle</a>, um portal com desafios (com prêmios $$) em ciência de dados que consegue reunir pessoas capazes de descobrir soluções e otimizar resultados de forma impressionante.</p>
+
+<p>Será que é possível montar uma equipe inteira só de heróis?</p>
+
+<h2>Engenheiro de Dados</h2>
+
+<p>Trata-se de um perfil mais voltado para a área de ciência da computação. Normalmente é quem cuida da infraestrutura e arquitetura dos dados, ajudando com suporte às plataformas, processos de <a href="https://pt.wikipedia.org/wiki/Extract,_transform,_load">ETL</a>, sistemas operacionais e softwares envolvidos no processo.</p>
+
+<p>Costuma ser o papel que entende melhor de engenharia de software e contribui muito na hora de estruturar um produto final com complexidade maior, como um dashboard, um sistema ou um algoritmo.</p>
+
+<p>Também é quem mais atua com banco de dados, SQL, estrutura de dados, cargas, integrações e extrações de dados, limpeza de dados.</p>
+
+<p>Para ilustrar esse papel, segue os requisitos para se candidatar a uma vaga de Engenheiro de Dados no Facebook, retirado do <a href="https://www.linkedin.com/jobs2/view/108924276?trk=job_view_browse_map">Linkedin</a></p>
+
+<table class="image">
+<caption align="bottom">Requerimentos - Engenheiro de Dados</caption>
+<tr><td><img src="http://fulljoin.com.br/images/img_data_engineer_facebook.png" alt="Requerimentos - Engenheiro de Dados"/></td></tr>
+</table>
+
+
+<h2>Cientista de Dados</h2>
+
+<h2>Gerente de Dados</h2>
+
+<h2>CDO</h2>
+
+<h2>Cliente</h2>
+
+<h2>Conclusão</h2>
+
+<h2>Referências</h2>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Aplicando ciencia de dados parte 1 - Workflow]]></title>
     <link href="http://fulljoin.com.br/blog/2016/03/14/como-aplicar-ciencia-de-dados/"/>
     <updated>2016-03-14T00:11:56-03:00</updated>
     <id>http://fulljoin.com.br/blog/2016/03/14/como-aplicar-ciencia-de-dados</id>
