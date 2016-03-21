@@ -4,7 +4,7 @@
   <title><![CDATA[Category: workflow | Full Join]]></title>
   <link href="http://fulljoin.com.br/blog/categories/workflow/atom.xml" rel="self"/>
   <link href="http://fulljoin.com.br/"/>
-  <updated>2016-03-20T15:55:00-03:00</updated>
+  <updated>2016-03-20T23:06:31-03:00</updated>
   <id>http://fulljoin.com.br/</id>
   <author>
     <name><![CDATA[Full Join]]></name>
@@ -12,64 +12,6 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
-  
-  <entry>
-    <title type="html"><![CDATA[Aplicando ciencia de dados parte 2 - Equipe]]></title>
-    <link href="http://fulljoin.com.br/blog/2016/03/19/aplicando-ciencia-de-dados-parte-2-equipe/"/>
-    <updated>2016-03-19T23:05:00-03:00</updated>
-    <id>http://fulljoin.com.br/blog/2016/03/19/aplicando-ciencia-de-dados-parte-2-equipe</id>
-    <content type="html"><![CDATA[<p>Para aplicação da Ciência de Dados em um projeto, não basta ter uma ótima fonte de dados disponível e os melhores quipamentos e ferramentas prontos para uso. É necessário uma equipe.</p>
-
-<!-- More -->
-
-
-<p>E, tal qual foi dito no post &ldquo;link pro post&rdquo;, aqui também não há uma estrutura de equipe certa ou errada. A natureza dos problemas, a forma de trabalho, a disponibilidade de recursos humanso e o próprio estilo da organização que vai ditar a melhor maneira de se montar uma equipe.</p>
-
-<p>Portanto, esse post não vai se atrever a dizer o que é bom ou o que é ruim para uma equipe trabalhar com ciência de dados. Trataremos apenas de falar um pouco sobre os principais papeis atuantes em projetos de ciência de dados, de forma não exaustiva, baseado em nossas observações do dia a dia e em leituras de blogs e artigos sobre o assunto.</p>
-
-<p>Vale ressaltar que, assim como as fases de um projeto em ciência dos dados, os papéis de uma equipe se sobrepõe e se complementam, sendo bem difícil limitar precisamente as atuações de cada papel. Essa sobreposição costuma ser muito saudável, uma vez que os membros da equipe acabam aprendendo, uns com os outros cada vez mais mais sobre todos os papeis envolvidos em um projeto.</p>
-
-<p>Portanto, a divisão da equipe em papeis é muito pouco rigorosa e os nomes e títulos a seguir são apenas para tentar entender um pouco mais das atividades que são realizadas em um projeto com aplicação de ciência de dados.</p>
-
-<h2>Herói</h2>
-
-<p>Imagine se apenas uma pessoa tivesse que lidar com todas as fases e problemas em um projeto de ciência de dados? Esse cara é um Herói.</p>
-
-<p>Ele se vira mais que o suficiente com ferramentas e linguagens de programação para manipular dados, entende mais que o suficiente de estatística e machine learning para escolher boas estratégias e modelar soluções, e sabe se expressar claramente e desenhar um bom produto final para apresentar suas soluções ou análise para o cliente.</p>
-
-<p>Parece ser algo bem raro, mas esse papel de herói poderia ser facilmente exercido por alguns participantes do <a href="https://www.kaggle.com/">Kaggle</a>, um portal com desafios (com prêmios $$) em ciência de dados que consegue reunir pessoas capazes de descobrir soluções e otimizar resultados de forma impressionante.</p>
-
-<p>Será que é possível montar uma equipe inteira só de heróis?</p>
-
-<h2>Engenheiro de Dados</h2>
-
-<p>Trata-se de um perfil mais voltado para a área de ciência da computação. Normalmente é quem cuida da infraestrutura e arquitetura dos dados, ajudando com suporte às plataformas, processos de <a href="https://pt.wikipedia.org/wiki/Extract,_transform,_load">ETL</a>, sistemas operacionais e softwares envolvidos no processo.</p>
-
-<p>Costuma ser o papel que entende melhor de engenharia de software e contribui muito na hora de estruturar um produto final com complexidade maior, como um dashboard, um sistema ou um algoritmo.</p>
-
-<p>Também é quem mais atua com banco de dados, SQL, estrutura de dados, cargas, integrações e extrações de dados, limpeza de dados.</p>
-
-<p>Para ilustrar esse papel, segue os requisitos para se candidatar a uma vaga de Engenheiro de Dados no Facebook, retirado do <a href="https://www.linkedin.com/jobs2/view/108924276?trk=job_view_browse_map">Linkedin</a></p>
-
-<table class="image">
-<caption align="bottom">Requerimentos - Engenheiro de Dados</caption>
-<tr><td><img src="http://fulljoin.com.br/images/img_data_engineer_facebook.png" alt="Requerimentos - Engenheiro de Dados"/></td></tr>
-</table>
-
-
-<h2>Cientista de Dados</h2>
-
-<h2>Gerente de Dados</h2>
-
-<h2>CDO</h2>
-
-<h2>Cliente</h2>
-
-<h2>Conclusão</h2>
-
-<h2>Referências</h2>
-]]></content>
-  </entry>
   
   <entry>
     <title type="html"><![CDATA[Aplicando ciencia de dados parte 1 - Workflow]]></title>
@@ -149,7 +91,7 @@
 
 <p>Outro aspecto importante é saber balancear &ldquo;complexidade e simplicidade&rdquo;. Como muitas vezes os beneficiários do projeto não serão pessoas especializadas nesse tipo de abordagem, o analista terá uma difícil missão de escolher um modelo que seja útil para o objetivo do projeto, mas que seja também, de certa forma, passível de explicação dos seus principais elementos.</p>
 
-<p>Por exemplo, em um caso de desenvolvimento de um modelo de classificação, haverá um trade-off entre a melhoria da acurácia e a complexidade do modelo. Ou seja, pode ser que valha a pena escolher um modelo mais simples e mais fácil de explicar do que um modelo super complexo com resultados melhores, porém difícil de entender.</p>
+<p>Por exemplo, em um caso de desenvolvimento de um modelo de classificação, haverá um trade-off entre a melhoria da acurácia e a complexidade do modelo. Ou seja, pode ser que valha a pena escolher um modelo mais simples e mais fácil de explicar do que um modelo super complexo com resultados marginalmente melhores.</p>
 
 <p>O bom entendimento dos objetivos do projeto e das necessidades do cliente vai repercutir positivamente na escolha correta dos modelos.</p>
 
@@ -157,9 +99,9 @@
 
 <p>Na apresentação dos resultados, é preciso ter em mente qual é a audiência que você enfrentará, ou que tipo de uso os clientes do projeto farão com o resultado.</p>
 
-<p>Como na fase de exploração, a visualização pode ter um papel fundamental. Um bom gráfico, pode conseguir passar a mesma informação de dez tabelas diferentes. Ou, dependendo do objetivo, um dashboard dinâmico para o cliente &ldquo;explorar&rdquo; os resultados. Em algumas situações, o resultado poderá ser um algorítmo de uso mais amplo (sistema de recomendação, motor de previsões em tempo real, robô que monitora redes sociais, etc).</p>
+<p>Como na fase de exploração, a visualização pode ter um papel fundamental. Um bom gráfico, pode conseguir passar a mesma informação de dez tabelas diferentes. Ou, dependendo do objetivo, um dashboard dinâmico para o cliente &ldquo;explorar&rdquo; os resultados. Em algumas situações, o resultado poderá ser um algoritmo de uso mais amplo (sistema de recomendação, motor de previsões em tempo real, robô que monitora redes sociais, etc).</p>
 
-<p>Outro ponto importante, é sempre deixar claro o que a análise realizada permite e o que ela não permite, aprensetando assim os resultados e suas limitações. É fundamental que os clientes tenham o mínimo de conhecimento sobre a capacidade do produto (relatório, dashboard, algorítmo&hellip;) que será entregue para que não haja mal entendidos ou frustrações.</p>
+<p>Outro ponto importante, é sempre deixar claro o que a análise realizada permite e o que ela não permite, aprensetando assim os resultados e suas limitações. É fundamental que os clientes tenham o mínimo de conhecimento sobre a capacidade do produto (relatório, dashboard, algoritmo&hellip;) que será entregue para que não haja mal entendidos ou frustrações.</p>
 
 <p>Para apresentar bem os resultados não basta um bom trabalho analítico e bons modelos, é desejável uma boa habilidade de escrita, produzir gráficos interessantes, <a href="https://hbr.org/2013/03/a-data-scientists-real-job-sto/">&ldquo;story telling&rdquo;</a>, saber apresentar dados de maneira concisa e objetiva, habilidades interperssoais e, em alguns casos, até uma boa noção de design e interfaces gráficas.</p>
 
