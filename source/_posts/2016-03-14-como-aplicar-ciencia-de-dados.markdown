@@ -100,7 +100,7 @@ A escolha dos modelos é um momento crucial no desenvolvimento do projeto. É aq
 Outro aspecto importante é saber balancear "complexidade e simplicidade". Como muitas vezes os beneficiários do projeto não serão pessoas especializadas nesse tipo de abordagem, o analista terá uma difícil missão de escolher um modelo que seja útil para o objetivo do projeto, mas que seja também, de certa forma, passível de explicação dos seus principais elementos. 
 
 
-Por exemplo, em um caso de desenvolvimento de um modelo de classificação, haverá um trade-off entre a melhoria da acurácia e a complexidade do modelo. Ou seja, pode ser que valha a pena escolher um modelo mais simples e mais fácil de explicar do que um modelo super complexo com resultados melhores, porém difícil de entender. 
+Por exemplo, em um caso de desenvolvimento de um modelo de classificação, haverá um trade-off entre a melhoria da acurácia e a complexidade do modelo. Ou seja, pode ser que valha a pena escolher um modelo mais simples e mais fácil de explicar do que um modelo super complexo com resultados marginalmente melhores. 
 
 
 O bom entendimento dos objetivos do projeto e das necessidades do cliente vai repercutir positivamente na escolha correta dos modelos.
@@ -111,10 +111,10 @@ O bom entendimento dos objetivos do projeto e das necessidades do cliente vai re
 
 Na apresentação dos resultados, é preciso ter em mente qual é a audiência que você enfrentará, ou que tipo de uso os clientes do projeto farão com o resultado. 
 
-Como na fase de exploração, a visualização pode ter um papel fundamental. Um bom gráfico, pode conseguir passar a mesma informação de dez tabelas diferentes. Ou, dependendo do objetivo, um dashboard dinâmico para o cliente "explorar" os resultados. Em algumas situações, o resultado poderá ser um algorítmo de uso mais amplo (sistema de recomendação, motor de previsões em tempo real, robô que monitora redes sociais, etc).
+Como na fase de exploração, a visualização pode ter um papel fundamental. Um bom gráfico, pode conseguir passar a mesma informação de dez tabelas diferentes. Ou, dependendo do objetivo, um dashboard dinâmico para o cliente "explorar" os resultados. Em algumas situações, o resultado poderá ser um algoritmo de uso mais amplo (sistema de recomendação, motor de previsões em tempo real, robô que monitora redes sociais, etc).
 
 
-Outro ponto importante, é sempre deixar claro o que a análise realizada permite e o que ela não permite, aprensetando assim os resultados e suas limitações. É fundamental que os clientes tenham o mínimo de conhecimento sobre a capacidade do produto (relatório, dashboard, algorítmo...) que será entregue para que não haja mal entendidos ou frustrações. 
+Outro ponto importante, é sempre deixar claro o que a análise realizada permite e o que ela não permite, aprensetando assim os resultados e suas limitações. É fundamental que os clientes tenham o mínimo de conhecimento sobre a capacidade do produto (relatório, dashboard, algoritmo...) que será entregue para que não haja mal entendidos ou frustrações. 
 
 
 Para apresentar bem os resultados não basta um bom trabalho analítico e bons modelos, é desejável uma boa habilidade de escrita, produzir gráficos interessantes, ["story telling"](https://hbr.org/2013/03/a-data-scientists-real-job-sto/), saber apresentar dados de maneira concisa e objetiva, habilidades interperssoais e, em alguns casos, até uma boa noção de design e interfaces gráficas.

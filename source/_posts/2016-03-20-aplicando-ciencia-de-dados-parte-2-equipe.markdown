@@ -4,7 +4,7 @@ title: "Aplicando ciencia de dados parte 2 - Equipe"
 date: 2016-03-19 23:05:00 -0300
 comments: true
 categories: [conceito, workflow, equipe]
-published: true
+published: false
 ---
 
 
