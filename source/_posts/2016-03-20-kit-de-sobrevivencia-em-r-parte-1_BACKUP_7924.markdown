@@ -58,10 +58,14 @@ Em _Packages_, estão listados os pacotes que estão instalados e você pode ver
 
 _Help_ o nome já diz tudo. Essa aba será bastante utilizada por você. Saber usar o _help_ é fundamental para evitar desperdiço de tempo. Os usuários de R, em geral, são bastante solícitos. Entretanto, uma olhadinha rápida no help pode evitar que você gaste "créditos" desnecessariamente. 
 
+<<<<<<< HEAD
+Por fim, o _Viewer_. Essa funcionalidade é utilizada para visualizar localmente conteúdo web. O gráfico da figura está na aba _Viewer_ porque é uma visualização em [javascript](https://pt.wikipedia.org/wiki/JavaScript), que pode ser adicionada a documentos htmls gerados usando o [RMarkdown](http://rmarkdown.rstudio.com/) ou em aplicações web com suporte do [Shiny](http://shiny.rstudio.com/).
+=======
 Por fim, o _Viewer_. Essa funcionalidade é utilizada para visualizar localmente conteúdo web. O gráfico da figura está na aba _Viewer_ porque é uma visualização em javascript, que pode ser adicionada a documentos htmls gerados usando o [RMarkdown](http://rmarkdown.rstudio.com/) ou em aplicações web com suporte do [Shiny](http://shiny.rstudio.com/).
 
 
 Bem, isso foi uma breve explicação. Se você quiser saber mais, esta [_cheat sheet_](http://www.rstudio.com/wp-content/uploads/2016/01/rstudio-IDE-cheatsheet.pdf) criada pelo time do RStudio é muito útil.
+>>>>>>> 32d57bd87226195a51915f1a7f281e418b36883c
 	
 
 ## Instalando o R e o RStudio
