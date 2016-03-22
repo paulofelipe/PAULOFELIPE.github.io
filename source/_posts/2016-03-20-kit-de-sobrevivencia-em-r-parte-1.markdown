@@ -4,7 +4,7 @@ title: "Kit de sobrevivência em R - Parte 1"
 date: 2016-03-18 21:14:06 -0300
 comments: true
 categories: [r, básico, rstudio]
-published: false
+published: true
 ---
 
 Nesta sequênciade posts, iremos tratar o básico necessário para quem deseja iniciar o aprendizado em R. Serão quatros posts em que serão discutidos tópicos como instalação, importação de dados, tipos de dados etc. A nossa expectativa é que com essa sequência seja quebrada a barreira inicial para aqueles que prentendem entrar nesse mundo (cuidado que esse é um caminho sem volta).
