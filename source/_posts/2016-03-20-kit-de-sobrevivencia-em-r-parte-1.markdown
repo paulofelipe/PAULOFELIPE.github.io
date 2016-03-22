@@ -4,7 +4,7 @@ title: "Kit de sobrevivência em R - Parte 1"
 date: 2016-03-18 21:14:06 -0300
 comments: true
 categories: [r, básico, rstudio]
-published: true
+published: false
 ---
 
 Nesta sequênciade posts, iremos tratar o básico necessário para quem deseja iniciar o aprendizado em R. Serão quatros posts em que serão discutidos tópicos como instalação, importação de dados, tipos de dados etc. A nossa expectativa é que com essa sequência seja quebrada a barreira inicial para aqueles que prentendem entrar nesse mundo (cuidado que esse é um caminho sem volta).
@@ -25,7 +25,7 @@ Na figura abaixo, está a "cara" do RStudio. Note que há 4 janelas (ambientes) 
 
 <table class="image">
 <caption align="bottom">Visão geral do RStudio</caption>
-<tr><td><img src="/images/rstudio.png" alt="Uma visão geral do RStudio"/></td></tr>
+<tr><td><img src="/images/RStudio_001.png" alt="Uma visão geral do RStudio"/></td></tr>
 </table>
 <p></p>
 
@@ -53,6 +53,9 @@ Em _Packages_, estão listados os pacotes que estão instalados e você pode ver
 _Help_ o nome já diz tudo. Essa aba será bastante utilizada por você. Saber usar o _help_ é fundamental para evitar desperdiço de tempo. Os usuários de R, em geral, são bastante solícitos. Entretanto, uma olhadinha rápida no help pode evitar que você gaste "créditos" desnecessariamente. 
 
 Por fim, o _Viewer_. Essa funcionalidade é utilizada para visualizar localmente conteúdo web. O gráfico da figura está na aba _Viewer_ porque é uma visualização em javascript, que pode ser adicionada a documentos htmls gerados usando o [RMarkdown](http://rmarkdown.rstudio.com/) ou em aplicações web com suporte do [Shiny](http://shiny.rstudio.com/).
+
+
+Bem, isso foi uma breve explicação. Se você quiser saber mais, esta [_cheat sheet_](http://www.rstudio.com/wp-content/uploads/2016/01/rstudio-IDE-cheatsheet.pdf) criada pelo time do RStudio é muito útil.
 	
 
 ## Instalando o R e o RStudio
