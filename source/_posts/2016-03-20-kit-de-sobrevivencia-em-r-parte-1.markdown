@@ -21,12 +21,39 @@ E qual seria o melhor? Depende. Como tudo na vida, cada um apresenta vantagens e
 
 O [RStudio](https://www.rstudio.com/) é uma interface muito útil pra quem deseja usar o R. Com certeza, a maioria dos usuários de R utilizam o RStudio como IDE (integrated development environment). Nele, você terá um editor de código, um console, um dispositivo para gráficos, além de outras funcionalidades. 
 
-Então, considere fortemente começar usando R + RStudio.
+Na figura abaixo, está a "cara" do RStudio. Note que há 4 janelas (ambientes) separadas. As posições delas podem ser alteradas nas opções (`tools` -> `global options`). Além disso, você pode alterar o tema e outras tantas opções. 
 
 <table class="image">
-<caption align="bottom">Uma visão geral do RStudio</caption>
+<caption align="bottom">Visão geral do RStudio</caption>
 <tr><td><img src="/images/rstudio.png" alt="Uma visão geral do RStudio"/></td></tr>
 </table>
+<p></p>
+
+
+Vamos tratar, ainda que superficialmente, de algumas funcionalidades do RStudio. 
+
+#### 1. Editor de Código
+No editor de código, você poderá escrever e editar os scripts que conterão um conjunto de comandos que serão executados. O editor do RStudio oferece facilidades como indentação, _code complete_, destaque da sintaxe etc. 
+
+#### 2. Console
+No console aparecerão os resultados dos comandos. Você também pode escrever no console e obter os resultados, sem uso do editor de código. Também pode-se chamar a ajuda diretamente pelo console. Por exemplo: `?lm`.
+
+#### 3. _Workspace_ e _History_
+
+No _Workspace_ ficarão guardados todos os objetos que forem criados na sessão. E na aba _History_, como você deve imaginar, o RStudio cria um histórico de comandos. 
+
+#### 4. _Files_, _Plots_, _Packages_, _Help_ e _Viewer_.
+
+Nessa janela, estão várias funcionalidades do RStudio. Na aba _Files_, você terá uma navegação de arquivos do seu computador. Também será possível definir o diretório de trabalho (você também pode definir diretamente no código, mas isto será tratado posteriormente), ou seja, o R  entende o seu diretório de trabalho como ponto de partida para localizar arquivos que sejam chamados no script.
+
+A aba _Plots_ trará os gráficos gerados, possibilitando a exportação para alguns formatos diferentes, como png e pdf.  
+
+Em _Packages_, estão listados os pacotes que estão instalados e você pode verificar quais estão carregados e, caso necessário, poderá carregar algum pacote necessário para a sua análise. Também é possível instalar e atualizar pacotes. Novamente, tudo isso é possível fazer diretamente no código.
+
+_Help_ o nome já diz tudo. Essa aba será bastante utilizada por você. Saber usar o _help_ é fundamental para evitar desperdiço de tempo. Os usuários de R, em geral, são bastante solícitos. Entretanto, uma olhadinha rápida no help pode evitar que você gaste "créditos" desnecessariamente. 
+
+Por fim, o _Viewer_. Essa funcionalidade é utilizada para visualizar localmente conteúdo web. O gráfico da figura está na aba _Viewer_ porque é uma visualização em javascript, que pode ser adicionada a documentos htmls gerados usando o [RMarkdown](http://rmarkdown.rstudio.com/) ou em aplicações web com suporte do [Shiny](http://shiny.rstudio.com/).
+	
 
 ## Instalando o R e o RStudio
 
