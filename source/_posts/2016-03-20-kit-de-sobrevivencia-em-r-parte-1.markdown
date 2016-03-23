@@ -88,3 +88,20 @@ Na central de aplicativos, basta buscar por `r-base`.
 O RStudio pode ser baixado no mesmo [link](https://www.rstudio.com/products/rstudio/download/) citado quando foi explicada a instalação no windows.
 
 ### Mac OS X
+
+
+
+### Buscando Ajuda
+
+Esta parte é fundamental. Independente do seu nível de conhecimento, sempre haverá a necessidade de buscar ajuda. A nossa experiência diz que é muito difícil você ficar sem uma solução. No entanto, saber procurar é fundamental tanto para você encontrar uma solução desejável quanto para economizar tempo. Entre, as fontes de ajuda estão o próprio _help_ do R, o bom e velho google para uma busca mais ampla, o [stack overflow](http://stackoverflow.com/tags/r) (ou [em português](http://pt.stackoverflow.com/questions/tagged/r)), o [reddit](https://www.reddit.com/) e o **full join**.
+
+Se você puder fazer a sua pesquisa em inglês, é indicado. Isto porque as possibilidades de você encontrar alguém que teve uma mesma dúvida crescem consideravalmente. Se você for realizar uma pergunta em algum fórum, é importante atentar para alguns pontos que deverão ser informados:
+
+* Versão do R;
+* Sistema Operacional;
+* Forneça um exemplo replicável;
+* Veja se a sua dúvida já não foi abordada em outro tópico.
+
+Bom, por hoje é isso! Nos próximos posts, iremos abordar partes específicas e iniciar a utilização de fato do R. Até lá!
+
+
