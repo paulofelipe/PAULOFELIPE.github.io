@@ -34,8 +34,12 @@ Como dito anteriormente, trataremos primeiro dos arquivos estruturados. Em futur
 (é correto falar de sessão? ou melhor "ambiente"?)
 Antes de começar os trabalhos, é uma boa prática ter certeza de que não tem nada na sessão (entenda como memória RAM) impedindo o R de trabalhar. Um simples comando garante que está tudo limpo pronto para começar:
 
-``` r 
+{% highlight r  %}
  rm(list=ls())
+{% endhighlight %} 
+
+```r
+rm(list=ls())
 ```
 
 Lembra de onde os comandos em R devem ser digitados? Não? [Relembre aqui um pouco sobre RStudio]
@@ -44,7 +48,7 @@ Esse comando na verdade está usando outros dois comandos:
 
 * `rm()` é o comando para remover um objeto da sessão do R
 
-* `ls()` retorna os nomes de todos objetos da sessão do R
+* `ls()` é o comando para listar os nomes de todos objetos da sessão do R
 
 Os dois comandos conjugados significa dizer *remova tudo que estiver na lista de objetos da sessão do R.*
 
@@ -52,15 +56,16 @@ Pronto. Seus ambiente está limpo.
 
 ### Definindo diretório de trabalho
 
-O R vai "ler" os dados de algum lugar do seu computador. Normalmente ele inicial em um diretório padrão, mas nem sempre os arquivos estarão nesse mesmo diretório. Para dizer ao R onde ele deve ler os arquivos, usaremos o seguinte comando:
+O R vai "ler" os dados de algum lugar do seu computador. Normalmente ele inicial em um diretório padrão, mas nem sempre os arquivos estarão nesse mesmo diretório. Para dizer ao R onde ele deve ler os arquivos, usaremos o comando _set working directory_:
 
-``` r
+{% highlight r  %}
  setwd("Local/Do/Seus/Arquivos/De/Trabalho/")
-```
+{% endhighlight %}
+
+Também pode ser realizado pelos menus do RStudio em `Session > Set Working Directory > Choose Directory...` e escolha a pasta onde seus arquivos de dado estarão.
 
 
-
-falar do caminho via RStudio tmb
+## falar do caminho via RStudio tmb
 aproveitar e explicar getwd()
 
 ## falar sobre delimitadores
