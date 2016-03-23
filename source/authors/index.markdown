@@ -1,22 +1,14 @@
 ---
-layout: default
-title: Sobre nós
+layout: page
+title: Sobre Nós
+comments: false
+sharing: false
+footer: false
 ---
 
+## Saulo Guerra
 
-<article class="post">
-	<h2 class="post-title">Sobre</h2>
-	
-	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In consectetur tortor eu mauris porttitor, sit amet sagittis neque tristique. Cras vestibulum, nisl vitae semper hendrerit, nisl eros ornare odio, sed finibus eros mauris et felis. Sed condimentum dapibus massa vitae viverra. Maecenas enim mauris, cursus iaculis sagittis sed, commodo eget tortor. Phasellus ut ligula consectetur, posuere lorem consectetur, consectetur lacus. Aliquam vitae ultrices turpis, a interdum nunc. Nam ac mauris porta, tempus neque id, congue purus. Duis consequat laoreet fermentum. Aenean mauris risus, ultricies non purus a, vehicula mollis quam. Quisque dictum enim id risus sagittis, sit amet consequat dolor condimentum. Curabitur at accumsan orci. Suspendisse ac euismod lorem, ullamcorper accumsan tellus. Phasellus non volutpat turpis. Vestibulum interdum mattis metus, et ultricies lorem cursus vitae. Nam non nisl sit amet sapien cursus porta.</p>
+## Paulo Felipe
 
+Analista de Comércio Exterior do Ministério do Desenvolvimento, Indústria e Comércio Exterior. Graduação e mestrado em economia pela Universidade Federal do Ceará. Há 2 anos utiliza o R e há pouco mais de ano vem aprendendo sobre aprendizado de máquina e outros aspectos da ciência de dados.
 
-layout: page
-title: "Sobre os autores"
-date: 2016-03-14 23:12
-sharing: true
-footer: true
-
-
-	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In consectetur tortor eu mauris porttitor, sit amet sagittis neque tristique. Cras vestibulum, nisl vitae semper hendrerit, nisl eros ornare odio, sed finibus eros mauris et felis. Sed condimentum dapibus massa vitae viverra. Maecenas enim mauris, cursus iaculis sagittis sed, commodo eget tortor. Phasellus ut ligula consectetur, posuere lorem consectetur, consectetur lacus. Aliquam vitae ultrices turpis, a interdum nunc. Nam ac mauris porta, tempus neque id, congue purus. Duis consequat laoreet fermentum. Aenean mauris risus, ultricies non purus a, vehicula mollis quam. Quisque dictum enim id risus sagittis, sit amet consequat dolor condimentum. Curabitur at accumsan orci. Suspendisse ac euismod lorem, ullamcorper accumsan tellus. Phasellus non volutpat turpis. Vestibulum interdum mattis metus, et ultricies lorem cursus vitae. Nam non nisl sit amet sapien cursus porta.</p>
-
-</article>
