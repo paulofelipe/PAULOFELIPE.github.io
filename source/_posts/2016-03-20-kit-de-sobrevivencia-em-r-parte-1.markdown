@@ -4,7 +4,7 @@ title: "Kit de sobrevivência em R - Parte 1"
 date: 2016-03-18 21:14:06 -0300
 comments: true
 categories: [r, básico, rstudio]
-published: false
+published: true
 ---
 
 Nesta sequênciade de posts, iremos tratar o básico necessário para quem deseja iniciar o aprendizado em [R](https://www.r-project.org/about.html). Discutiremos tópicos como instalação, importação de dados, tipos de dados, etc. 
@@ -71,3 +71,20 @@ Bem, isso foi uma breve explicação. Se você quiser saber mais, esta [_cheat s
 Para instalar o R no windows basta realizar o download do executável [aqui](https://cran.r-project.org/bin/windows/base/) e proceder a instalação como qualquer outro software. 
 
 O Rstudio pode ser baixado [neste link](https://www.rstudio.com/products/rstudio/download/). Novamente, a instalação deve ser tranquila, sem a necessidade de maiores detalhes.
+
+### Ubuntu
+
+No ubuntu, você pode instalar o R via terminal ou pela central de programas.
+
+Pelo terminal, tecle `ctrl + alt + T` e faça o seguinte:
+
+```
+sudo apt-get update
+sudo apt-get install r-base
+```
+
+Na central de aplicativos, basta buscar por `r-base`.
+
+O RStudio pode ser baixado no mesmo [link](https://www.rstudio.com/products/rstudio/download/) citado quando foi explicada a instalação no windows.
+
+### Mac OS X
