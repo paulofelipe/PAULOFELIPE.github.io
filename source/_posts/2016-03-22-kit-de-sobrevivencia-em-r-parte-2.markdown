@@ -34,13 +34,10 @@ Como dito anteriormente, trataremos primeiro dos arquivos estruturados. Em futur
 (é correto falar de sessão? ou melhor "ambiente"?)
 Antes de começar os trabalhos, é uma boa prática ter certeza de que não tem nada na sessão (entenda como memória RAM) impedindo o R de trabalhar. Um simples comando garante que está tudo limpo pronto para começar:
 
-{% highlight r  %}
+{% highlight r  linenos %}
  rm(list=ls())
 {% endhighlight %} 
 
-```r
-rm(list=ls())
-```
 
 Lembra de onde os comandos em R devem ser digitados? Não? [Relembre aqui um pouco sobre RStudio]
 
@@ -58,7 +55,7 @@ Pronto. Seus ambiente está limpo.
 
 O R vai "ler" os dados de algum lugar do seu computador. Normalmente ele inicial em um diretório padrão, mas nem sempre os arquivos estarão nesse mesmo diretório. Para dizer ao R onde ele deve ler os arquivos, usaremos o comando _set working directory_:
 
-{% highlight r  %}
+{% highlight r  linesnos %}
  setwd("Local/Do/Seus/Arquivos/De/Trabalho/")
 {% endhighlight %}
 
