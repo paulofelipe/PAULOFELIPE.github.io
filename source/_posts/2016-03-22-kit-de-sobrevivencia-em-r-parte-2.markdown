@@ -4,7 +4,7 @@ title: "Kit de sobrevivência em R - Parte 2"
 date: 2016-03-22 20:50:09 -0300
 comments: true
 categories: [r, básico, rstudio]
-published: true
+published: false
 ---
 
 
