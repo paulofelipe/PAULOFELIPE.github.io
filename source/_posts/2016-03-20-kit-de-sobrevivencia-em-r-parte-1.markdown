@@ -7,11 +7,23 @@ categories: [r, básico, rstudio]
 published: true
 ---
 
-Nesta sequênciade de posts, iremos tratar o básico necessário para quem deseja iniciar o aprendizado em [R](https://www.r-project.org/about.html). Discutiremos tópicos como instalação, importação de dados, tipos de dados, etc. 
+Nesta sequênciade de posts, iremos tratar o básico necessário para quem deseja iniciar o aprendizado em [R](https://www.r-project.org/about.html). Trata-se de uma linguagem de programação muito usada para cálculos estatísticos. Nas próximas postagens, discutiremos tópicos como instalação, importação de dados, tipos de dados, etc. 
 
 A nossa expectativa é que, com essa sequência, seja quebrada a barreira inicial para aqueles que prentendem entrar nesse mundo (cuidado que esse é um caminho sem volta!).
 
 <!-- More -->
+
+## Por que aprender uma linguagem estatística?
+
+Qualquer um que trablhe um pouco mais com dados já esbarrou nas limitações do "excel" ou de softwares de planilha. Nada contra, são ótimos, mas as vezes eles dificultam mais do que ajudam. Abrir a mente e se permitir novas formas de trabalho pode render bons frutos.
+
+Trabalhos de manipulação de dados, verificação, limpeza e junção de dados, ou até alguns cálculos com uma massa de dados um pouco maior podem se tornar um pouco traumáticos se você não usar as ferramentas mais adequadas.
+
+As linguagens de programação estatística ajudam muito nesse sentido. São ferramentas poderosíssimas que praticamente derrubam os limites das possibilidades de se trabalhar com dados: você pode fazer praticamente qualquer coisa!
+
+"Eu trabalho com dados de forma básica, mas não quero me tornar um ciêntista de dados... ainda assim é útil?". Com certeza! Linguagens de programação estatística, mesmo que aprendendo apenas o básico, aumentam muito a produtividade.
+
+Portanto, sugerimos fortemente que aprenda uma linguagem estatística o quanto antes!
 
 ## Por que o R?
 
@@ -89,19 +101,26 @@ O RStudio pode ser baixado no mesmo [link](https://www.rstudio.com/products/rstu
 
 ### Mac OS X
 
+Para instalar o R no Mac basta realizar o download da última versão do pacote (pkg) [aqui](https://cran.rstudio.com/bin/macosx/), de um duplo click e proceda com a instalação como qualquer outro pacote no Mac. 
+
+O Rstudio pode ser baixado [neste link](https://www.rstudio.com/products/rstudio/download/). Procure na lista o instalador para Mac Os. Dessa vez será um arquivo DMG. De um duplo click e arraste o ícone do Rstudio para a pasta Aplicações. Pronto!
 
 
 ### Buscando Ajuda
 
-Esta parte é fundamental. Independente do seu nível de conhecimento, sempre haverá a necessidade de buscar ajuda. A nossa experiência diz que é muito difícil você ficar sem uma solução. No entanto, saber procurar é fundamental tanto para você encontrar uma solução desejável quanto para economizar tempo. Entre, as fontes de ajuda estão o próprio _help_ do R, o bom e velho google para uma busca mais ampla, o [stack overflow](http://stackoverflow.com/tags/r) (ou [em português](http://pt.stackoverflow.com/questions/tagged/r)), o [reddit](https://www.reddit.com/) e o **full join**.
+Esta parte é fundamental. Independente do seu nível de conhecimento, sempre haverá a necessidade de buscar ajuda. A nossa experiência diz que é muito difícil você ficar sem uma solução. No entanto, saber procurar é fundamental tanto para você encontrar uma solução desejável quanto para economizar tempo. 
 
-Se você puder fazer a sua pesquisa em inglês, é indicado. Isto porque as possibilidades de você encontrar alguém que teve uma mesma dúvida crescem consideravalmente. Se você for realizar uma pergunta em algum fórum, é importante atentar para alguns pontos que deverão ser informados:
+Entre, as fontes de ajuda estão o próprio _help_ do R, o bom e velho google para uma busca mais ampla, o [stack overflow](http://stackoverflow.com/tags/r) (ou [em português](http://pt.stackoverflow.com/questions/tagged/r)), o [reddit](https://www.reddit.com/r/rprogramming) e, é claro, o **full join**. Estaremos aqui para te ajudar.
+
+Se você puder, faça suas pesquisas em inglês. Isto porque as possibilidades de você encontrar alguém que teve uma mesma dúvida crescem consideravalmente. 
+
+Se você for realizar uma pergunta em algum fórum ou site de perguntas e respostas, é importante atentar para alguns pontos que deverão ser informados:
 
 * Versão do R;
 * Sistema Operacional;
 * Forneça um exemplo replicável;
 * Veja se a sua dúvida já não foi abordada em outro tópico.
 
-Bom, por hoje é isso! Nos próximos posts, iremos abordar partes específicas e iniciar a utilização de fato do R. Até lá!
+Bom, por enquanto é isso! Nos próximos posts, iremos abordar partes específicas e iniciar a utilização de fato do R. Até lá!
 
 
