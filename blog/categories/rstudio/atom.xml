@@ -4,7 +4,7 @@
   <title><![CDATA[Category: rstudio | Full Join]]></title>
   <link href="http://fulljoin.com.br/blog/categories/rstudio/atom.xml" rel="self"/>
   <link href="http://fulljoin.com.br/"/>
-  <updated>2016-03-23T21:54:41-03:00</updated>
+  <updated>2016-03-23T22:07:45-03:00</updated>
   <id>http://fulljoin.com.br/</id>
   <author>
     <name><![CDATA[Full Join]]></name>
@@ -14,11 +14,129 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Kit de sobrevivência em R - Parte 2]]></title>
+    <link href="http://fulljoin.com.br/blog/2016/03/23/kit-de-sobrevivencia-em-r-parte-2/"/>
+    <updated>2016-03-23T22:50:09-03:00</updated>
+    <id>http://fulljoin.com.br/blog/2016/03/23/kit-de-sobrevivencia-em-r-parte-2</id>
+    <content type="html"><![CDATA[<p>Seguindo a sequência do <em>Kit de sobrevivência em R</em>, vamos abordar um pouco sobre uma das partes iniciais de qualquer análise ou trabalho que vá ser feito no R: carregamento e leitura de dados.</p>
+
+<!-- More -->
+
+
+<p>Eis aqui uma notícia ruim: não existe um padrão dominante para armazenamento de dados. O que isso significa? Significa que, na vida real, você vai se deparar com os mais diferentes tipos de fontes de dados e mesmo assim vai ter que dar um jeito de analisá-las e estudá-las para concluir seus trabalhos.</p>
+
+<p>Ou seja, existem diversas formas de carregar dados para trabalhar com eles no R. Em prol da objetividade, vamos tratar dos casos mais comuns e mais básicos primeiro. Esse assunto pode ser extremamente vasto, então, criaremos primeiro uma base para, em posts futuros, aprofundarmos em fontes de dados mais complexas.</p>
+
+<h2>Estrutura dos dados</h2>
+
+<p>Você vai encontrar dados disonbilizados basicamente em três formas básicas: estruturados, não estruturados e semi-estruturados.</p>
+
+<p>Dados estruturados basicamente são conjuntos de informações organizadas em colunas (atribuos, variáveis, <em>features</em>, etc.) e linhas (registros, itens, observacões, etc.). São dados encontrados em bancos de dados, arquivos com algum tipo de separação entre as colunas, excel (nem todos!), arquivos com campos de tamanho fixo, etc. <em>foto de uma tabela??</em></p>
+
+<p>Dados não estruturados, como o nome diz, não tem um estrutura previsível, ou seja, cada arquivo possui uma forma única de ser carregado e manejado. Geralmente são arquivos com forte teor textual. Podemos citar, por exemplo, emails, twitters, PDFs, imagens, etc. Muito usados em mineração de dados.</p>
+
+<p>Já os arquivos semi-estruturados também possuem uma estrutura fixa, porém, não seguem o padrão de estrutura linha/coluna, ou seja, é uma estrutura mais complexa e flexível, geralmente hierárquica, estruturada em tags ou marcadores de campos. São exemplos de arquivos semi-estruturados: JSON, XML, HTML, YAML, etc. É o formato mais usado em troca de dados pela internet e consumo de APIs. <em>foto de um exemplo de JSON?</em>, <em>colocar links</em></p>
+
+<p>Como dito anteriormente, trataremos primeiro dos arquivos estruturados. Em futuros posts vamos abordar os outros tipos, pois são abordagens um puco mais complexa e é sempre bom começar pelo básico!</p>
+
+<h2>Preparando o ambiente</h2>
+
+<h3>Limpando tudo</h3>
+
+<p>(é correto falar de sessão? ou melhor &ldquo;ambiente&rdquo;?)
+Antes de começar os trabalhos, é uma boa prática ter certeza de que não tem nada na sessão (entenda como memória RAM) impedindo o R de trabalhar. Um simples comando garante que está tudo limpo pronto para começar:</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">rm</span><span class="p">(</span><span class="n">list</span><span class="o">=</span><span class="n">ls</span><span class="p">())</span></code></pre></div></p>
+
+<pre><code class="r">rm(list=ls())
+</code></pre>
+
+<p>Lembra de onde os comandos em R devem ser digitados? Não? [Relembre aqui um pouco sobre RStudio]</p>
+
+<p>Esse comando na verdade está usando outros dois comandos:</p>
+
+<ul>
+<li><p><code>rm()</code> é o comando para remover um objeto da sessão do R</p></li>
+<li><p><code>ls()</code> é o comando para listar os nomes de todos objetos da sessão do R</p></li>
+</ul>
+
+
+<p>Os dois comandos conjugados significa dizer <em>remova tudo que estiver na lista de objetos da sessão do R.</em></p>
+
+<p>Pronto. Seus ambiente está limpo.</p>
+
+<h3>Definindo diretório de trabalho</h3>
+
+<p>O R vai &ldquo;ler&rdquo; os dados de algum lugar do seu computador. Normalmente ele inicial em um diretório padrão, mas nem sempre os arquivos estarão nesse mesmo diretório. Para dizer ao R onde ele deve ler os arquivos, usaremos o comando <em>set working directory</em>:</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">setwd</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">Local</span><span class="o">/</span><span class="n">Do</span><span class="o">/</span><span class="n">Seus</span><span class="o">/</span><span class="n">Arquivos</span><span class="o">/</span><span class="n">De</span><span class="o">/</span><span class="n">Trabalho</span><span class="o">/&amp;</span><span class="n">rdquo</span><span class="p">;)</span></code></pre></div></p>
+
+<p>Também pode ser realizado pelos menus do RStudio em <code>Session &gt; Set Working Directory &gt; Choose Directory...</code> e escolha a pasta onde seus arquivos de dado estarão.</p>
+
+<p>Ok! Agora si</p>
+
+<h2>falar do caminho via RStudio tmb</h2>
+
+<p>aproveitar e explicar getwd()</p>
+
+<h2>falar sobre delimitadores</h2>
+
+<p>campos e colunas
+linhas e registros</p>
+
+<h3>delimitador TAB</h3>
+
+<p>read.table()</p>
+
+<h3>csv</h3>
+
+<p>read.csv()
+atalho de read.table()</p>
+
+<h3>outros delimitadores</h3>
+
+<p>read.delim()
+atalho de read.table()</p>
+
+<h3>excel</h3>
+
+<p>XLConnect?
+readxl?
+xls?</p>
+
+<h3>campos de tamanho fixo?</h3>
+
+<p>read.fwf()
+dados de comércio exterior</p>
+
+<h3>loaders para outros sistemas estatísticos</h3>
+
+<p>spss
+dta</p>
+
+<h3>carregar um .Rdata ?</h3>
+
+<h3>carregar de banco de dado??</h3>
+
+<h3>JSON?</h3>
+
+<h3>XML?</h3>
+
+<h3>Deixas para mais um post sobre carregamento</h3>
+
+<p>list.files() e loop de leitura
+webscraping
+PDF
+SQL</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Kit de sobrevivência em R - Parte 1]]></title>
     <link href="http://fulljoin.com.br/blog/2016/03/23/kit-de-sobrevivencia-em-r-parte-1/"/>
     <updated>2016-03-23T21:14:06-03:00</updated>
     <id>http://fulljoin.com.br/blog/2016/03/23/kit-de-sobrevivencia-em-r-parte-1</id>
-    <content type="html"><![CDATA[<p>Nesta sequênciade de posts, iremos tratar o básico necessário para quem deseja iniciar o aprendizado em <a href="https://www.r-project.org/about.html">R</a>. Trata-se de uma linguagem de programação muito usada para cálculos estatísticos. Nas próximas postagens, discutiremos tópicos como instalação, importação de dados, tipos de dados, etc.</p>
+    <content type="html"><![CDATA[<p>Nesta sequênciade de posts, iremos tratar o básico necessário para quem deseja iniciar o aprendizado em <a href="https://www.r-project.org/about.html">R</a>. Trata-se de uma linguagem de programação muito usada para cálculos estatísticos. Neste e nos próximos posts, discutiremos tópicos como instalação, importação de dados, tipos de dados, etc.</p>
 
 <p>A nossa expectativa é que, com essa sequência, seja quebrada a barreira inicial para aqueles que prentendem entrar nesse mundo (cuidado que esse é um caminho sem volta!).</p>
 
