@@ -64,6 +64,7 @@ O R vai "ler" os dados de algum lugar do seu computador. Normalmente ele inicial
 
 Também pode ser realizado pelos menus do RStudio em `Session > Set Working Directory > Choose Directory...` e escolha a pasta onde seus arquivos de dado estarão.
 
+Ok! Agora si
 
 ## falar do caminho via RStudio tmb
 aproveitar e explicar getwd()
