@@ -15,7 +15,7 @@ A nossa expectativa é que, com essa sequência, seja quebrada a barreira inicia
 
 ## Por que aprender uma linguagem estatística?
 
-Qualquer um que trablhe um pouco mais com dados já esbarrou nas limitações do "excel" ou de softwares de planilha. Nada contra, são ótimos, mas as vezes eles dificultam mais do que ajudam. Abrir a mente e se permitir novas formas de trabalho pode render bons frutos.
+Qualquer um que trabalhe um pouco mais com dados já esbarrou nas limitações do "excel" ou de softwares de planilha. Nada contra, são ótimos, mas as vezes eles dificultam mais do que ajudam. Abrir a mente e se permitir novas formas de trabalho pode render bons frutos.
 
 Trabalhos de manipulação de dados, verificação, limpeza e junção de dados, ou até alguns cálculos com uma massa de dados um pouco maior podem se tornar um pouco traumáticos se você não usar as ferramentas mais adequadas.
 
@@ -41,14 +41,10 @@ Se a sua necessidade é de realização de estudos e análises que não serão d
 
 O [RStudio](https://www.rstudio.com/) é uma interface muito útil pra quem deseja usar o R. Com certeza, a maioria dos usuários de R utilizam o RStudio como [IDE (integrated development environment)](https://pt.wikipedia.org/wiki/Ambiente_de_desenvolvimento_integrado). Nele, você terá um editor de código, um console, um dispositivo para gráficos, um [_debugger_](https://pt.wikipedia.org/wiki/Depura%C3%A7%C3%A3o), além de outras funcionalidades. 
 
-Na figura abaixo, está a "cara" do RStudio. Note que há 4 janelas (ambientes) separadas. As posições delas podem ser alteradas nas opções (`tools` -> `global options`). Além disso, você pode alterar o tema e outras tantas opções. 
+Na figura abaixo, está a "cara" do RStudio. Note que há 4 janelas (ambientes) separadas. As 	posições delas podem ser alteradas nas opções (`tools` -> `global options`). Além disso, você pode alterar o tema e outras tantas opções. 
 
-<table class="image">
-<caption align="bottom">Visão geral do RStudio</caption>
-<tr><td><img src="/images/RStudio_001.png" alt="Uma visão geral do RStudio"/></td></tr>
-</table>
-<p></p>
 
+{% img /images/RStudio_001.png Uma visão geral do RStudio %}
 
 Vamos tratar, ainda que superficialmente, de algumas funcionalidades do RStudio. 
 
