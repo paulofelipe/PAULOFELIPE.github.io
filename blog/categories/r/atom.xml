@@ -4,7 +4,7 @@
   <title><![CDATA[Category: r | Full Join]]></title>
   <link href="http://fulljoin.com.br/blog/categories/r/atom.xml" rel="self"/>
   <link href="http://fulljoin.com.br/"/>
-  <updated>2016-03-23T23:53:17-03:00</updated>
+  <updated>2016-03-24T19:43:11-03:00</updated>
   <id>http://fulljoin.com.br/</id>
   <author>
     <name><![CDATA[Full Join]]></name>
@@ -27,7 +27,7 @@
 
 <h2>Por que aprender uma linguagem estatística?</h2>
 
-<p>Qualquer um que trablhe um pouco mais com dados já esbarrou nas limitações do &ldquo;excel&rdquo; ou de softwares de planilha. Nada contra, são ótimos, mas as vezes eles dificultam mais do que ajudam. Abrir a mente e se permitir novas formas de trabalho pode render bons frutos.</p>
+<p>Qualquer um que trabalhe um pouco mais com dados já esbarrou nas limitações do &ldquo;excel&rdquo; ou de softwares de planilha. Nada contra, são ótimos, mas as vezes eles dificultam mais do que ajudam. Abrir a mente e se permitir novas formas de trabalho pode render bons frutos.</p>
 
 <p>Trabalhos de manipulação de dados, verificação, limpeza e junção de dados, ou até alguns cálculos com uma massa de dados um pouco maior podem se tornar um pouco traumáticos se você não usar as ferramentas mais adequadas.</p>
 
@@ -53,16 +53,9 @@
 
 <p>O <a href="https://www.rstudio.com/">RStudio</a> é uma interface muito útil pra quem deseja usar o R. Com certeza, a maioria dos usuários de R utilizam o RStudio como <a href="https://pt.wikipedia.org/wiki/Ambiente_de_desenvolvimento_integrado">IDE (integrated development environment)</a>. Nele, você terá um editor de código, um console, um dispositivo para gráficos, um <a href="https://pt.wikipedia.org/wiki/Depura%C3%A7%C3%A3o"><em>debugger</em></a>, além de outras funcionalidades.</p>
 
-<p>Na figura abaixo, está a &ldquo;cara&rdquo; do RStudio. Note que há 4 janelas (ambientes) separadas. As posições delas podem ser alteradas nas opções (<code>tools</code> -> <code>global options</code>). Além disso, você pode alterar o tema e outras tantas opções.</p>
+<p>Na figura abaixo, está a &ldquo;cara&rdquo; do RStudio. Note que há 4 janelas (ambientes) separadas. As   posições delas podem ser alteradas nas opções (<code>tools</code> -> <code>global options</code>). Além disso, você pode alterar o tema e outras tantas opções.</p>
 
-<table class="image">
-<caption align="bottom">Visão geral do RStudio</caption>
-<tr><td><img src="http://fulljoin.com.br/images/RStudio_001.png" alt="Uma visão geral do RStudio"/></td></tr>
-</table>
-
-
-<p></p>
-
+<p><img src="/images/RStudio_001.png" title="Uma visão geral do RStudio" ></p>
 
 <p>Vamos tratar, ainda que superficialmente, de algumas funcionalidades do RStudio.</p>
 
