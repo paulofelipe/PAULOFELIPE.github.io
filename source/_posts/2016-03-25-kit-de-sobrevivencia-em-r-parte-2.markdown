@@ -4,15 +4,117 @@ title: "Kit de sobrevivência em R - Parte 2"
 date: 2016-03-25 15:20:01 -0300
 comments: true
 categories: [r, básico]
-published: false
+published: true
 ---
 
-O que seria importante?
 
+Seguindo a proposta da sequência *Kit de sobrevivência em R*, vamos aprofundar um pouco mais no funcionamento do R e como fazer uso disso. Como dito no post anterior, o RStudio apresenta [4 janelas](link para o post), cada uma com sua função. No entanto, podemos dizer que as duas janelas que você mais vai usar são *Editor de Códigos* e o *Console*. 
+	
 ## Usando o console
 
-## instalando pacotes
+Sendo bem simplista, R é uma linguagem que funciona com base em comandos. O console é o lugar onde você digita um comando (uma instrução) e em seguida recebe uma resposta com o resultado. Para quem nunca teve contato com nenhuma outra linguagem de programação, esse simples conceito pode parecer um pouco abstrato. Não há como entendê-lo sem ser praticando.
+
+Observe no console do RStudio que há um símbolo `>`. Esse símbolo indica o lugar onde você vai escrever os seus comandos. Pois bem, clique lá e digite `2*5` em seguida aperte _enter_. Você verá o seguinte:
+
+```{r}
+2*5
+
+```
+
+O que aconteceu? Você digitou o comando "multiplique 2 vezes 5" no console, e o R respondeu com o resultado 10. E o que é esse `[1]` na resposta do R? Bom, isso significa que o resultado do seu comando só teve uma linha. Em alguns casos o resultado será mais de uma linha, então o R usa essa notação de índices `[x]` para mostrar os resultados do comando. Não se preocupe muito com isso por agora.
+
+## Uma grande calculadora de luxo
+
+O R interpreta os seus comandos e da um resultado apropriado para cada um. Para que os comandos sejam interpretados corretamente você deve usar os elementos da linguagem. Por ser uma linguagem estatística, o R já vem com muitas operações prontas para serem usadas. Por exemplo, todas as operações básicas da matemática. Digite os seguintes comandos no console:
+
+```{r}
+5 + 3 #Soma
+5 - 3 #Subração
+5 * 3 #Multiplicação
+5 / 3 #Divisão
+5 ^ 3 #Exponenciação
+2 ^ (4 - 2) * -8 / (5 * (10 + 3)) #expressões matemáticas e seus precedentes
+``` 
+
+Mas o que é esse `#`? Trata-se de um símbolo indicando um comentário. Um comentário é alguma explicação que você escreve em seus comandos e que o R não interpreta, ou seja, não influencia no resultado final. Serve apenas para documentar, comentar ou explicar alguma parte dos seus comandos.
+
+Reaprem que, com o que foi dito até agora, já da pra usar o R como uma grande calculadora de luxo!
+
+## criando e usando variáveis
+
+Na maioria dos casos o tabalho que você precisará fazer vai exigir mais do que uma simples calculadora pode oferecer. Nesse caso será necessário conhecer mais das possiblidades do R. 
+
+A estrutura mais básica que você irá utilizar é chamada *variável*. Mais uma vez, buscando ser simplista, variável nada mais é do que um pequeno espaço na memória do seu computador onde você armazena o resultado de um comando. E para esse pequeno espaço de memória você da o nome que você quiser!
+
+O uso de variáveis é extremamente útil, pois muito provavelmente você precisarar armazenar resultados de comandos para operá-los em conjunto logo em seguida.
+
+Para armazenar uma variável no R você deve usar o seguinte símbolo `<-`, formando uma setinha direcionada para a esquerda. Você pode chamar suas variáveis do que você quiser! Elas podem conter letras, números, ponto `.`, e _underscore_ `_`, e podem ter o tamanho que você quiser, Há apenas uma regra: o nome das variáveis deve começar com letras (maiúsculas ou minúsculas).
+
+```{r}
+minha_PRIMEIRA.variavel <- 9 ^ 10 #Nome esdruxulo de variávei apenas para exemplificar!
+```
+
+"Ué, apertei enter e nada aconteceu?". Aconteceu sim! Você colocou o resultado de `9 ^ -10` dentro da variável chamada `minha_PRIMEIRA.variavel`. Para comprovar e para ver o que tem "dentro da variável", digite apenas o nome da variável e aperte enter:
+
+```{r}
+minha_PRIMEIRA.variavel
+```
+
+Sempre que precisar usar o valor de 9 ^ 10, basta usar sua variável `minha_PRIMEIRA.variavel` e pronto, terá o resultado dessa operação armazenado sem precisar calcular novamente. Você pode fazer diversas operações com as variáveis. Por exemplo:
+
+```{r}
+x <- 5 / 2
+y <- 3 ^ 2
+z <- y - x #Resultado da operação y menos o resultado da operação x
+z
+```
+
+Uma dica, use nomes explicativos! Talvez não pareça muito útil agora, mas existem alguns padrões de boas práticas para criação de variável, que vai ajudar muito na hora de você mesmo ou outras pessoas entenderem o que foi feito. Recomendamos a leitura de alguns padrões de nomenclatura, [como este aqui](padrão de R, qual?).
+
+```{r}
+primeira.variavel <- -5 * 4 #padrão com ponto, mais comum em R
+primeiraVariavel <- -5 * 4 #padrão camel case, comum em outras linguagens de programação
+primeira_variavel <- -5 * 4 #padrão underscore
+```
+
+Pronto, você já sabe usar o console para comandos com os operadores matemáticos básicos e sabe armazenar resultados em variáveis. 
+
+# funções básicas em R
+
+Precisaremos mais do que simples variáveis e simples operações matemáticas para usar mais de toda potencialidade do R.
+
+Existem alguns "programas" prontos para uso no R, ou seja, algumas sequências de comandos preparados e prontos para serem usados de forma simples e facilitar sua vida. Esses "programas" prontos são chamados de funções, e são usados para tudo que você possa imaginar: cálculos mais complexos, estatística, análise de dados, manipulação de dados, gráficos, relatórios, etc. 
+
+Na verdade, uma das coisas que torna o R uma ótima linguagem estatística é a gigantesca quantidade de funções disponíveis. Para (quase) tudo que você quiser fazer, existe uma função que facilita as coisas. Algumas funções já vem com a instalação base do R, outras você precisa instalar um pacote extra (falaremos disso em breve). 
+
+Uma funcão tem dois elementos básicos: o nome e o(s) parâmetro(s). Por exemplo, função para cálculo de raiz quadrada:
+
+```{r}
+resultado <- sqrt(16) 
+resultado
+```
+
+Ou seja, `sqrt` é o nome da função para calcular raiz quadrada, e `16` é o parâmetro que você informa para função calcular. Detalhe, o resultado das funções também podem ser armazenados em variáveis, tal qual demonstra o exemplo.
+
+Um outro exemplo, é a função para arredondar um número:
+
+```{r}    
+x <- 5.99999
+round(x, 2)
+```
+
+Ou seja, `round` é o nome da função para arredondamento. Já o `x`, a variável que armazena `5.99999`, é o primeiro parâmetro, informando o número que você quer arredondar. E temos o `2` como segundo parâmetro, informando a quantidade de casas decimais para arredondar. 
+
+## intuição sobre função (mean(), c(), seq(), )
+
+## R como linguagem de script (editor)
 
 ## escrevendo seu primeiro script
+
+## Salvando .R e .RData
+
+## instalando pacotes (install, library, require)
+
+## Help (?, ??) e conhecendo pacotes a fundo
 
 
