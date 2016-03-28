@@ -7,9 +7,13 @@ categories: [r, básico]
 published: true
 ---
 
-Seguindo a proposta da sequência *Kit de sobrevivência em R*, vamos aprofundar um pouco mais no funcionamento do R e como fazer uso disso. Como dito no post anterior, o RStudio apresenta [4 janelas](link para o post), cada uma com sua função. No entanto, podemos dizer que as duas janelas que você mais vai usar são *Editor de Códigos* e o *Console*. 
+Seguindo a proposta da sequência *Kit de sobrevivência em R*, vamos aprofundar um pouco mais no funcionamento do R e como fazer uso disso. Nesse post trataremos sobre comandos de console, operações básicas, variáveis, funções, e script R no editor de códigos.
+
+
+
+Como dito no post anterior, o RStudio apresenta [4 janelas](link para o post), cada uma com sua função. No entanto, podemos dizer que as duas janelas que você mais vai usar são *Editor de Códigos* e o *Console*. 
 	
-## Usando o console
+# Usando o console
 
 Sendo bem simplista, R é uma linguagem que funciona com base em comandos. O console é o lugar onde você digita um comando (uma instrução) e em seguida recebe uma resposta com o resultado. Para quem nunca teve contato com nenhuma outra linguagem de programação, esse simples conceito pode parecer um pouco abstrato. Não há como entendê-lo sem ser praticando.
 
@@ -22,7 +26,7 @@ Observe no console do RStudio que há um símbolo `>`. Esse símbolo indica o lu
 
 O que aconteceu? Você digitou o comando "multiplique 2 vezes 5" no console, e o R respondeu com o resultado 10. E o que é esse `[1]` na resposta do R? Bom, isso significa que o resultado do seu comando só teve uma linha. Em alguns casos o resultado será mais de uma linha, então o R usa essa notação de índices `[x]` para mostrar os resultados do comando. Não se preocupe muito com isso por agora.
 
-## Uma grande calculadora de luxo
+# Uma grande calculadora
 
 O R interpreta os seus comandos e da um resultado apropriado para cada um. Para que os comandos sejam interpretados corretamente você deve usar os elementos da linguagem. Por ser uma linguagem estatística, o R já vem com muitas operações prontas para serem usadas. Por exemplo, todas as operações básicas da matemática. Digite os seguintes comandos no console, apertando _enter_ após cada linha, para ver o resutlado:
 
@@ -41,7 +45,7 @@ Reaprem que, com o que foi dito até agora, já da pra usar o R como uma grande 
 
 >Dica: no console, aperte seta para cima do teclado e você terá os últimos comandos digitados.
 
-## Criando e usando variáveis
+# Variáveis
 
 Na maioria dos casos, o tabalho que você precisará fazer vai exigir mais do que uma simples calculadora pode oferecer, será necessário conhecer mais das possiblidades do R. 
 
@@ -70,7 +74,7 @@ z <- y - x #Resultado da operação y menos o resultado da operação x
 z
 ```
 
->Dica: use nomes explicativos! Talvez não pareça muito útil agora, mas existem alguns padrões de boas práticas para criação de variável, que vai ajudar muito na hora de você mesmo ou outras pessoas entenderem o que foi feito. Recomendamos a leitura de alguns padrões de nomenclatura, [como este aqui](padrão de R, qual?).
+>Dica: use nomes explicativos! Talvez não pareça muito útil agora, mas existem alguns padrões e boas práticas para escrever comando sem R que vai ajudar muito na hora de você mesmo ou outras pessoas entenderem o que foi feito. Recomendamos a leitura de alguns padrões de nomenclatura, [como este aqui](padrão de R, qual?).
 
 
 ```{r}
@@ -81,7 +85,7 @@ primeira_variavel <- -5 * 4 #padrão underscore
 
 Pronto, você já sabe usar o console para comandos com os operadores matemáticos básicos e sabe armazenar resultados em variáveis. 
 
-# funções básicas em R
+# Funções
 
 Precisaremos mais do que simples variáveis e simples operações matemáticas para usar toda potencialidade do R.
 
@@ -109,26 +113,30 @@ Ou seja, `round` é o nome da função para arredondamento. Já o `x`, a variáv
 
 Como dito, a instalação base do R já vem com algumas funções muito utilizadas. Segue [uma](link funções R base) lista para conhecer melhor cada uma dessas funcões básicas. Na sequência de posts apresentaremos pacotes com muito mais funções importantes disponíveis.
 
-## R como linguagem de script (editor)
+# Script.R (editor)
 
 Você agora consegue fazer cálculos básicos, armazenar resultados em variáveis e usar funções para auxiliar nos cálculos. Mas tudo isso usando o console.
 
-O console é extremamente útil para algumas atividades exploratórias, mas no geral, para trabalhos envolvendo ciência de dados, será necessário escrever um script.
+O console é extremamente útil para algumas atividades exploratórias, mas, no geral, para trabalhos envolvendo ciência de dados, será necessário escrever um script.
 
-E o que seria um script em R? Nada mais é do que uma sequência de comandos, iguais aos que você escreveria no console, mas escritos em um *Editor de Códigos*, de forma que todos eles sejam executados em um momento único, sequencialmente, apresentando seus resultados de uma vez só.
+Script nada mais é do que uma sequência de comandos, iguais aos que você escreveria no console, mas escritos em um *arquivo de texto*, de forma que todos eles possam ser executados em um momento único pelo R, e os resultados apresentados de uma vez só.
 
 No console você digita um comando, aperta enter e em seguida recebe o resultado. No editor de texto você digita todos os comandos na sequência que você gostaria, e manda o R executar tudo de uma vez.
 
-Outro conceito abstrato que fica mais fácil de entender praticando.
+Um script é outro conceito abstrato que fica mais fácil de entender praticando.
 
-Deixe o console um pouco de lado agora. Procure a janela com o editor de código e escreva o seguinte:
+Deixe o console um pouco de lado agora. Clique em `File > New File > R script`(explicar como criar um novo script em branco? Português? Atalho?). Procure a janela com o editor de código e escreva o seguinte:
 
 ```{r}
-
-
+x <- sqrt(4)
+y <- sqrt(16)
+total <- x + y
+total
 ```
 
-## Salvando .R e .RData
+Agora clique em `Source` (atalho?). O resultado do seu script irá aparecer no console.  Agora salve o seu script em `File > Save` escolha uma pasta, de um nome e, ao final do nome, escreva `.R`. Pronto. Você criou, executou e salvou um script em R! Agora você pode abrir esse script sempre que você quiser e executá-lo novamente.
+
+Ao salvar, repare que o formato do arquivo ficou `.R`. Esse é o formato convencionado para scripts em R. 
 
 
 
