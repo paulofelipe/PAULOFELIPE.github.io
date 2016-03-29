@@ -7,9 +7,10 @@ categories: [r, básico]
 published: true
 ---
 
+# TESTE 
 Seguindo a proposta da sequência *Kit de sobrevivência em R*, vamos aprofundar um pouco mais no funcionamento do R e como fazer uso disso. Nesse post trataremos sobre comandos de console, operações básicas, variáveis, funções, e script R no editor de códigos.
 
-
+<!-- More -->
 
 Como dito no post anterior, o RStudio apresenta [4 janelas](link para o post), cada uma com sua função. No entanto, podemos dizer que as duas janelas que você mais vai usar são *Editor de Códigos* e o *Console*. 
 	
@@ -138,10 +139,6 @@ Agora clique em `Source` (atalho?). O resultado do seu script irá aparecer no c
 
 Ao salvar, repare que o formato do arquivo ficou `.R`. Esse é o formato convencionado para scripts em R. 
 
-
-
-## instalando pacotes (install, library, require)
-
-## Help (?, ??, ) e conhecendo pacotes a fundo
+Foi um longo post, mas finalmente chegamos ao fim! Esperamos que esse post tenha dado uma boa noção de como usar o console com operações e funções básicas, bem como armazenar resultados em variáveis. A partir de agora, salve seus trabalhos em scripts com formato .R e sempre que quiser executá-los use o botão Source. Até a próxima.
 
 
