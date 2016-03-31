@@ -32,7 +32,7 @@ Observe no console do RStudio que há um símbolo `>`. Esse símbolo indica o lu
 
 O que aconteceu? Você digitou o comando "multiplique 2 vezes 5" no console, e o R respondeu com o resultado 10. E o que é esse `[1]` na resposta do R? Bom, isso significa que o resultado do seu comando só teve uma linha. Em alguns casos o resultado será mais de uma linha, então o R usa essa notação de índices `[x]` para mostrar os resultados do comando. Não se preocupe muito com isso por agora.
 
-{% img kit_parte2_console.gif %}
+![alt text](/images/kit_parte2_console.gif)
 
 # Uma grande calculadora
 
@@ -119,7 +119,7 @@ Reaprem que, com o que foi dito até agora, já da pra usar o R como uma grande 
 
 >Dica: no console, aperte seta para cima do teclado e você terá os últimos comandos digitados.
 
-{% img kit_parte2_variaveis.gif %}
+![alt text](/images/kit_parte2_variaveis.gif)
 
 # Variáveis
 
@@ -177,7 +177,7 @@ primeira_variavel <- -5 * 4 #padrão underscore
 
 Pronto, você já sabe usar o console para comandos com os operadores matemáticos básicos e sabe armazenar resultados em variáveis. 
 
-{% img kit_parte2_funcoes.gif %}
+![alt text](/images/kit_parte2_funcoes.gif)
 
 # Funções
 
