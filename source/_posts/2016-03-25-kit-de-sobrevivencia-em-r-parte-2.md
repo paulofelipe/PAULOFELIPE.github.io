@@ -7,12 +7,11 @@ categories: [r, básico]
 published: true
 ---
 
-# TESTE 
 Seguindo a proposta da sequência *Kit de sobrevivência em R*, vamos aprofundar um pouco mais no funcionamento do R e como fazer uso disso. Nesse post trataremos sobre comandos de console, operações básicas, variáveis, funções, e script R no editor de códigos.
 
 <!-- More -->
 
-Como dito no post anterior, o RStudio apresenta [4 janelas](link para o post), cada uma com sua função. No entanto, podemos dizer que as duas janelas que você mais vai usar são *Editor de Códigos* e o *Console*. 
+Como dito no post anterior, o RStudio apresenta 4 janelas principais, cada uma com sua função. No entanto, podemos dizer que as duas janelas que você mais vai usar (no começo) são *Editor de Códigos* e o *Console*. 
 	
 # Usando o console
 
@@ -22,7 +21,7 @@ Observe no console do RStudio que há um símbolo `>`. Esse símbolo indica o lu
 
 
 {% highlight r %}
-2*5
+2 * 5
 {% endhighlight %}
 
 
@@ -33,13 +32,19 @@ Observe no console do RStudio que há um símbolo `>`. Esse símbolo indica o lu
 
 O que aconteceu? Você digitou o comando "multiplique 2 vezes 5" no console, e o R respondeu com o resultado 10. E o que é esse `[1]` na resposta do R? Bom, isso significa que o resultado do seu comando só teve uma linha. Em alguns casos o resultado será mais de uma linha, então o R usa essa notação de índices `[x]` para mostrar os resultados do comando. Não se preocupe muito com isso por agora.
 
+{% img kit_parte2_console.gif %}
+
 # Uma grande calculadora
 
-O R interpreta os seus comandos e da um resultado apropriado para cada um. Para que os comandos sejam interpretados corretamente você deve usar os elementos da linguagem. Por ser uma linguagem estatística, o R já vem com muitas operações prontas para serem usadas. Por exemplo, todas as operações básicas da matemática. Digite os seguintes comandos no console, apertando _enter_ após cada linha, para ver o resutlado:
+O R interpreta os seus comandos e da um resultado apropriado para cada um. Para que os comandos sejam interpretados corretamente você deve usar os elementos da linguagem. 
+
+Por ser uma linguagem estatística, o R já vem com muitas operações prontas para serem usadas. Por exemplo, todas as operações básicas da matemática. 
+
+Digite os seguintes comandos no console, apertando _enter_ após cada linha, para ver o resutlado:
 
 
 {% highlight r %}
-5 + 3 #Soma
+5 + 3 
 {% endhighlight %}
 
 
@@ -51,7 +56,7 @@ O R interpreta os seus comandos e da um resultado apropriado para cada um. Para 
 
 
 {% highlight r %}
-5 - 3 #Subração
+5 - 3 
 {% endhighlight %}
 
 
@@ -63,7 +68,7 @@ O R interpreta os seus comandos e da um resultado apropriado para cada um. Para 
 
 
 {% highlight r %}
-5 * 3 #Multiplicação
+5 * 3 
 {% endhighlight %}
 
 
@@ -75,7 +80,7 @@ O R interpreta os seus comandos e da um resultado apropriado para cada um. Para 
 
 
 {% highlight r %}
-5 / 3 #Divisão
+5 / 3 
 {% endhighlight %}
 
 
@@ -87,7 +92,7 @@ O R interpreta os seus comandos e da um resultado apropriado para cada um. Para 
 
 
 {% highlight r %}
-5 ^ 3 #Exponenciação
+5 ^ 3 
 {% endhighlight %}
 
 
@@ -99,7 +104,7 @@ O R interpreta os seus comandos e da um resultado apropriado para cada um. Para 
 
 
 {% highlight r %}
-2 ^ (4 - 2) * -8 / (5 * (10 + 3)) #expressões matemáticas e seus precedentes
+2 ^ (4 - 2) * -8 / (5 * (10 + 3)) #Precedentes matemáticos
 {% endhighlight %}
 
 
@@ -113,6 +118,8 @@ Mas o que é esse `#`? Trata-se de um símbolo indicando um comentário. Um come
 Reaprem que, com o que foi dito até agora, já da pra usar o R como uma grande calculadora de luxo!
 
 >Dica: no console, aperte seta para cima do teclado e você terá os últimos comandos digitados.
+
+{% img kit_parte2_variaveis.gif %}
 
 # Variáveis
 
@@ -170,6 +177,8 @@ primeira_variavel <- -5 * 4 #padrão underscore
 
 Pronto, você já sabe usar o console para comandos com os operadores matemáticos básicos e sabe armazenar resultados em variáveis. 
 
+{% img kit_parte2_funcoes.gif %}
+
 # Funções
 
 Precisaremos mais do que simples variáveis e simples operações matemáticas para usar toda potencialidade do R.
@@ -198,17 +207,17 @@ Um outro exemplo, é a função para arredondar um número:
 
 
 {% highlight r %}
-x <- 5.99999
+x <- 5.34999
 round(x, 2)
 {% endhighlight %}
 
 
 
 {% highlight text %}
-## [1] 6
+## [1] 5.35
 {% endhighlight %}
 
-Ou seja, `round` é o nome da função para arredondamento. Já o `x`, a variável que armazena `5.99999`, é o primeiro parâmetro, informando o número que você quer arredondar. E temos o `2` como segundo parâmetro, informando até quantas casas decimais você quer arredondar. 
+Ou seja, `round` é o nome da função para arredondamento. Já o `x`, a variável que armazena `5.34999`, é o primeiro parâmetro, informando o número que você quer arredondar. E temos o `2` como segundo parâmetro, informando até quantas casas decimais você quer arredondar. 
 
 Como dito, a instalação base do R já vem com algumas funções muito utilizadas. Segue [uma](link funções R base) lista para conhecer melhor cada uma dessas funcões básicas. Na sequência de posts apresentaremos pacotes com muito mais funções importantes disponíveis.
 
