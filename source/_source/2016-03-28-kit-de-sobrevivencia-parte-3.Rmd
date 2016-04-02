@@ -31,9 +31,9 @@ install.packages('readxl')
 
 Este comando irá instalar o pacote `readxl` que fornece funções para facilitar a importação de dados em arquivos `xls` e `xlsx`. Nesse caso específico, o pacote fornece duas funções: uma para listar todas as planilhas que estão em um arquivo do excel e outra para ler os dados de uma planilha pro excel. Em um post futuro sobre a importação de dados, trataremos mais sobre esse pacote. Por enquanto, estamos usando somente como exemplo.
 
-Para realizar a instalação com ajuda do RStudio, basta clicar na aba _Packages_ e depois no botão _Install_. O RStudio irá abrir uma janela como na figura abaixo. Basta você incluir o nome do pacote e clicar em _install_.
+Para realizar a instalação com ajuda do RStudio, primeiro clique na aba _Packages_ e depois no botão _Install_. Será aberta uma janela auxiliar em que você poderá escolher a fonte que será utilizada para instalar o pacote. Normalmente, você optará pelo CRAN (este termo será explicado mais adiante, porém trata-se do repositório oficial). Em _Packages_, digite o nome do pacote e depois no botão _Install_. Abaixo está uma imagem de como é o processo de instalação via RStudio.
 
-[INSERIR FIGURA AQUI]
+![alt Instalação de Pacote](/images/install_package.gif "Instalação de Pacote")
 
 ### Buscando pacotes
 
