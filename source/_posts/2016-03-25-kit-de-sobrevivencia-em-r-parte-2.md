@@ -165,7 +165,7 @@ z
 ## [1] 6.5
 {% endhighlight %}
 
->Dica: use nomes explicativos! Talvez não pareça muito útil agora, mas existem alguns padrões e boas práticas para escrever comando sem R que vai ajudar muito na hora de você mesmo ou outras pessoas entenderem o que foi feito. Recomendamos a leitura de alguns padrões de nomenclatura, [como este aqui](padrão de R, qual?).
+>Dica: use nomes explicativos! Talvez não pareça muito útil agora, mas existem alguns padrões e boas práticas para escrever comando sem R que vai ajudar muito na hora de você mesmo ou outras pessoas entenderem o que foi feito. Recomendamos a leitura de alguns padrões de nomenclatura, [como este aqui](http://adv-r.had.co.nz/Style.html).
 
 
 
@@ -233,7 +233,7 @@ No console você digita um comando, aperta enter e em seguida recebe o resultado
 
 Um script é outro conceito abstrato que fica mais fácil de entender praticando.
 
-Deixe o console um pouco de lado agora. Clique em `File > New File > R script`(explicar como criar um novo script em branco? Português? Atalho?). Procure a janela com o editor de código e escreva o seguinte:
+Deixe o console um pouco de lado agora. Clique em `File > New File > R script`. Procure a janela com o editor de código e escreva o seguinte:
 
 
 {% highlight r %}
@@ -249,10 +249,19 @@ total
 ## [1] 6
 {% endhighlight %}
 
-Agora clique em `Source` (atalho?). O resultado do seu script irá aparecer no console.  Agora salve o seu script em `File > Save` escolha uma pasta, de um nome e, ao final do nome, escreva `.R`. Pronto. Você criou, executou e salvou um script em R! Agora você pode abrir esse script sempre que você quiser e executá-lo novamente.
+Agora clique em `Source`. O resultado do seu script irá aparecer no console.  Agora salve o seu script em `File > Save` escolha uma pasta, de um nome e, ao final do nome, escreva `.R`. Pronto. Você criou, executou e salvou um script em R! Agora você pode abrir esse script sempre que você quiser e executá-lo novamente.
 
 Ao salvar, repare que o formato do arquivo ficou `.R`. Esse é o formato convencionado para scripts em R. 
 
 Foi um longo post, mas finalmente chegamos ao fim! Esperamos que esse post tenha dado uma boa noção de como usar o console com operações e funções básicas, bem como armazenar resultados em variáveis. A partir de agora, salve seus trabalhos em scripts com formato .R e sempre que quiser executá-los use o botão Source. Até a próxima.
 
+##Referências:
+
+* [DataCamp - Free introduction to R](https://www.datacamp.com/courses/free-introduction-to-r)
+* [R-introduction](http://www.r-tutor.com/r-introduction)
+* [Short R Introduction](https://cran.r-project.org/doc/contrib/Torfs+Brauer-Short-R-Intro.pdf)
+* [Working in the Console](https://support.rstudio.com/hc/en-us/articles/200404846-Working-in-the-Console)
+* [R Built in functions](http://www.statmethods.net/management/functions.html)
+* [Guia de estilo de código - by Hadley Wickham](http://adv-r.had.co.nz/Style.html)
+* [Guia de estilo de código - by Google](https://google.github.io/styleguide/Rguide.xml)
 
