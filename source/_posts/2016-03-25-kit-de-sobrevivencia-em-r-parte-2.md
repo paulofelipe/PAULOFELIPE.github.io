@@ -36,7 +36,7 @@ O que aconteceu? Você digitou o comando "multiplique 2 vezes 5" no console, e o
 
 # Uma grande calculadora
 
-O R interpreta os seus comandos e da um resultado apropriado para cada um. Para que os comandos sejam interpretados corretamente você deve usar os elementos da linguagem. 
+O R interpreta os seus comandos e dá um resultado apropriado para cada um. Para que os comandos sejam interpretados corretamente, você deve usar os elementos da linguagem. 
 
 Por ser uma linguagem estatística, o R já vem com muitas operações prontas para serem usadas. Por exemplo, todas as operações básicas da matemática. 
 
@@ -115,7 +115,7 @@ Digite os seguintes comandos no console, apertando _enter_ após cada linha, par
 
 Mas o que é esse `#`? Trata-se de um símbolo indicando um comentário. Um comentário é alguma explicação que você escreve em seus comandos e que o R não interpreta, ou seja, não influencia no resultado final. Serve apenas para documentar, comentar ou explicar alguma parte dos seus comandos.
 
-Reaprem que, com o que foi dito até agora, já da pra usar o R como uma grande calculadora de luxo!
+Reparem que, com o que foi dito até agora, já da pra usar o R como uma grande calculadora de luxo!
 
 >Dica: no console, aperte seta para cima do teclado e você terá os últimos comandos digitados.
 
@@ -125,15 +125,15 @@ Reaprem que, com o que foi dito até agora, já da pra usar o R como uma grande 
 
 Na maioria dos casos, o tabalho que você precisará fazer vai exigir mais do que uma simples calculadora pode oferecer, será necessário conhecer mais das possiblidades do R. 
 
-A estrutura mais básica que você irá utilizar é chamada *variável*. Mais uma vez, buscando ser simplista, variável nada mais é do que um pequeno espaço na memória do seu computador onde você armazena o resultado de um comando. E para esse pequeno espaço de memória você da o nome que você quiser!
+A estrutura mais básica que você irá utilizar é chamada *variável*. Mais uma vez, buscando ser simplista, variável nada mais é do que um pequeno espaço na memória do seu computador onde você armazena o resultado de um comando. E para esse pequeno espaço de memória você define o nome que você quiser!
 
-O uso de variáveis é extremamente útil, pois muito provavelmente você precisarar armazenar resultados de comandos para operá-los em conjunto logo em seguida.
+O uso de variáveis é extremamente útil, pois muito provavelmente você precisará armazenar resultados de comandos para operá-los em conjunto logo em seguida.
 
-Para armazenar uma variável no R você deve usar o seguinte símbolo `<-`, formando uma setinha direcionada para a esquerda. Você pode chamar suas variáveis do que você quiser! Elas podem conter letras, números, ponto `.`, e _underscore_ `_`, e podem ter o tamanho qualquer tamanho. Há apenas uma regra: o nome das variáveis deve começar com letras (maiúsculas ou minúsculas).
+Para armazenar uma variável no R, você deve usar o seguinte símbolo `<-`, formando uma setinha direcionada para a esquerda. Você pode chamar suas variáveis do que você quiser! Elas podem conter letras, números, ponto `.`, e _underscore_ `_`, e podem ter o tamanho qualquer tamanho. Há apenas uma regra: o nome das variáveis deve começar com letras (maiúsculas ou minúsculas). Se o R, por algum motivo, for retornar uma variável que tenha o nome iniciando com número, automaticamente será adicionado ``` no início e no fim.
 
 
 {% highlight r %}
-minha_PRIMEIRA.variavel <- 9 ^ 10 #Nome esdruxulo de variávei apenas para exemplificar!
+minha_PRIMEIRA.variavel <- 9 ^ 10 #Nome esdrúxulo de variável apenas para exemplificar!
 {% endhighlight %}
 
 "Ué, apertei enter e nada aconteceu?". Aconteceu sim! Você colocou o resultado de `9 ^ 10` dentro da variável chamada `minha_PRIMEIRA.variavel`. Para comprovar e para ver o que tem "dentro da variável", digite apenas o nome da variável e aperte enter:
@@ -165,7 +165,7 @@ z
 ## [1] 6.5
 {% endhighlight %}
 
->Dica: use nomes explicativos! Talvez não pareça muito útil agora, mas existem alguns padrões e boas práticas para escrever comando sem R que vai ajudar muito na hora de você mesmo ou outras pessoas entenderem o que foi feito. Recomendamos a leitura de alguns padrões de nomenclatura, [como este aqui](http://adv-r.had.co.nz/Style.html).
+>Dica: use nomes explicativos! Talvez não pareça muito útil agora, mas existem alguns padrões e boas práticas para escrever comando em R que vai ajudar muito na hora de você mesmo ou outras pessoas entenderem o que foi feito. Recomendamos a leitura de alguns padrões de nomenclatura, [como este aqui](http://adv-r.had.co.nz/Style.html).
 
 
 
