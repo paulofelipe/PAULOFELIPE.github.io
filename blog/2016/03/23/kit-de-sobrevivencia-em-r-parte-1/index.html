@@ -1,4 +1,4 @@
-<link href="/stylesheets/syntax.css" rel="stylesheet">
+
 
 
 <!DOCTYPE html>
@@ -267,6 +267,8 @@
         <a class="basic-alignment left" href="/blog/2016/03/14/como-aplicar-ciencia-de-dados/" title="Previous Post: Aplicando ciência de dados parte 1 - Workflow">&laquo; Aplicando ciência de dados parte 1 - Workflow</a>
       
       
+        <a class="basic-alignment right" href="/blog/2016/04/03/kit-de-sobrevivencia-em-r-parte-2/" title="Next Post: Kit de sobrevivência em R - Parte 2">Kit de sobrevivência em R - Parte 2 &raquo;</a>
+      
     </p>
   </footer>
 </article>
@@ -284,6 +286,14 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/04/03/kit-de-sobrevivencia-em-r-parte-3/">Kit De Sobrevivência Em R - Parte 3</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/04/03/kit-de-sobrevivencia-em-r-parte-2/">Kit De Sobrevivência Em R - Parte 2</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2016/03/23/kit-de-sobrevivencia-em-r-parte-1/">Kit De Sobrevivência Em R - Parte 1</a>
@@ -353,6 +363,18 @@
 
 
 
+
+<script>
+function addBlankTargetForLinks () {
+  $('a[href^="http"]').each(function(){
+		$(this).attr('target', '_blank');
+	});
+}
+
+$(document).bind('DOMNodeInserted', function(event) {
+	addBlankTargetForLinks();
+});
+</script>
 
 </body>
 </html>

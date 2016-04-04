@@ -1,0 +1,489 @@
+
+
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Kit De Sobrevivência Em R - Parte 2 - Full Join</title>
+  <meta name="author" content="Full Join">
+
+  
+  <meta name="description" content="Seguindo a proposta da sequência Kit de sobrevivência em R, vamos aprofundar um pouco mais no funcionamento do R e como fazer uso disso. Nesse post &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://fulljoin.com.br/blog/2016/04/03/kit-de-sobrevivencia-em-r-parte-2/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Full Join" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-75406624-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Full Join</a></h1>
+  
+    <h2>Um blog sobre Data Science.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="fulljoin.com.br">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Arquivo</a></li>
+  <li><a href="/authors">Sobre</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Kit De Sobrevivência Em R - Parte 2</h1>
+        
+          
+    <p class="meta">
+    
+
+
+
+
+<time class='entry-date' datetime='2016-04-03T15:20:01-03:00'><span class='date'>03/04/2016</span> <span class='time'>3:20 pm</span></time>
+        
+        | 
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/basico/'>básico</a>, <a class='category' href='/blog/categories/r/'>r</a>
+  
+</span>
+
+
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Seguindo a proposta da sequência <em>Kit de sobrevivência em R</em>, vamos aprofundar um pouco mais no funcionamento do R e como fazer uso disso. Nesse post trataremos sobre comandos de console, operações básicas, variáveis, funções, e script R no editor de códigos.</p>
+
+<!-- More -->
+
+
+<p>Como dito no post anterior, o RStudio apresenta 4 janelas principais, cada uma com sua função. No entanto, podemos dizer que as duas janelas que você mais vai usar (no começo) são <em>Editor de Códigos</em> e o <em>Console</em>.</p>
+
+<h1>Usando o console</h1>
+
+<p>Sendo bem simplista, R é uma linguagem que funciona com base em comandos. O console é o lugar onde você digita um comando (uma instrução) e em seguida recebe uma resposta com o resultado. Para quem nunca teve contato com nenhuma outra linguagem de programação, esse simples conceito pode parecer um pouco abstrato. Não há como entendê-lo sem ser praticando.</p>
+
+<p>Observe no console do RStudio que há um símbolo <code>&gt;</code>. Esse símbolo indica o lugar onde você vai escrever os seus comandos. Pois bem, clique lá e digite <code>2*5</code> em seguida aperte <em>enter</em>. Você verá o seguinte:</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="m">2</span> <span class="o">*</span> <span class="m">5</span></code></pre></div>
+
+
+
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 10</code></pre></div>
+
+
+<p>O que aconteceu? Você digitou o comando &ldquo;multiplique 2 vezes 5&rdquo; no console, e o R respondeu com o resultado 10. E o que é esse <code>[1]</code> na resposta do R? Bom, isso significa que o resultado do seu comando só teve uma linha. Em alguns casos o resultado será mais de uma linha, então o R usa essa notação de índices <code>[x]</code> para mostrar os resultados do comando. Não se preocupe muito com isso por agora.</p>
+
+<p><img src="/images/kit_parte2_console.gif" alt="alt text" /></p>
+
+<h1>Uma grande calculadora</h1>
+
+<p>O R interpreta os seus comandos e dá um resultado apropriado para cada um. Para que os comandos sejam interpretados corretamente, você deve usar os elementos da linguagem.</p>
+
+<p>Por ser uma linguagem estatística, o R já vem com muitas operações prontas para serem usadas. Por exemplo, todas as operações básicas da matemática.</p>
+
+<p>Digite os seguintes comandos no console, apertando <em>enter</em> após cada linha, para ver o resutlado:</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="m">5</span> <span class="o">+</span> <span class="m">3</span></code></pre></div>
+
+
+
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 8</code></pre></div>
+
+
+
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="m">5</span> <span class="o">-</span> <span class="m">3</span></code></pre></div>
+
+
+
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 2</code></pre></div>
+
+
+
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="m">5</span> <span class="o">*</span> <span class="m">3</span></code></pre></div>
+
+
+
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 15</code></pre></div>
+
+
+
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="m">5</span> <span class="o">/</span> <span class="m">3</span></code></pre></div>
+
+
+
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 1.666667</code></pre></div>
+
+
+
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="m">5</span> <span class="o">^</span> <span class="m">3</span></code></pre></div>
+
+
+
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 125</code></pre></div>
+
+
+
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="m">2</span> <span class="o">^</span> <span class="p">(</span><span class="m">4</span> <span class="o">-</span> <span class="m">2</span><span class="p">)</span> <span class="o">*</span> <span class="m">-8</span> <span class="o">/</span> <span class="p">(</span><span class="m">5</span> <span class="o">*</span> <span class="p">(</span><span class="m">10</span> <span class="o">+</span> <span class="m">3</span><span class="p">))</span> <span class="c1">#Precedentes matemáticos</span></code></pre></div>
+
+
+
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">## [1] -0.4923077</code></pre></div>
+
+
+<p>Mas o que é esse <code>#</code>? Trata-se de um símbolo indicando um comentário. Um comentário é alguma explicação que você escreve em seus comandos e que o R não interpreta, ou seja, não influencia no resultado final. Serve apenas para documentar, comentar ou explicar alguma parte dos seus comandos.</p>
+
+<p>Reparem que, com o que foi dito até agora, já da pra usar o R como uma grande calculadora de luxo!</p>
+
+<blockquote><p>Dica: no console, aperte seta para cima do teclado e você terá os últimos comandos digitados.</p></blockquote>
+
+<p><img src="/images/kit_parte2_variaveis.gif" alt="alt text" /></p>
+
+<h1>Variáveis</h1>
+
+<p>Na maioria dos casos, o tabalho que você precisará fazer vai exigir mais do que uma simples calculadora pode oferecer, será necessário conhecer mais das possiblidades do R.</p>
+
+<p>A estrutura mais básica que você irá utilizar é chamada <em>variável</em>. Mais uma vez, buscando ser simplista, variável nada mais é do que um pequeno espaço na memória do seu computador onde você armazena o resultado de um comando. E para esse pequeno espaço de memória você define o nome que você quiser!</p>
+
+<p>O uso de variáveis é extremamente útil, pois muito provavelmente você precisará armazenar resultados de comandos para operá-los em conjunto logo em seguida.</p>
+
+<p>Para armazenar uma variável no R, você deve usar o seguinte símbolo <code>&lt;-</code>, formando uma setinha direcionada para a esquerda. Você pode chamar suas variáveis do que você quiser! Elas podem conter letras, números, ponto <code>.</code>, e <em>underscore</em> <code>_</code>, e podem ter o tamanho qualquer tamanho. Há apenas uma regra: o nome das variáveis deve começar com letras (maiúsculas ou minúsculas). Se o R, por algum motivo, for retornar uma variável que tenha o nome iniciando com número, automaticamente será adicionado ``` no início e no fim.</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">minha_PRIMEIRA.variavel</span> <span class="o">&lt;-</span> <span class="m">9</span> <span class="o">^</span> <span class="m">10</span> <span class="c1">#Nome esdrúxulo de variável apenas para exemplificar!</span></code></pre></div>
+
+
+<p>&ldquo;Ué, apertei enter e nada aconteceu?&rdquo;. Aconteceu sim! Você colocou o resultado de <code>9 ^ 10</code> dentro da variável chamada <code>minha_PRIMEIRA.variavel</code>. Para comprovar e para ver o que tem &ldquo;dentro da variável&rdquo;, digite apenas o nome da variável e aperte enter:</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">minha_PRIMEIRA.variavel</span></code></pre></div>
+
+
+
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 3486784401</code></pre></div>
+
+
+<p>Sempre que precisar usar o valor de 9 ^ 10, basta usar sua variável <code>minha_PRIMEIRA.variavel</code> e pronto, terá o resultado dessa operação armazenado sem precisar calcular novamente. Você pode fazer diversas operações com as variáveis. Por exemplo:</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">x</span> <span class="o">&lt;-</span> <span class="m">5</span> <span class="o">/</span> <span class="m">2</span>
+<span class="n">y</span> <span class="o">&lt;-</span> <span class="m">3</span> <span class="o">^</span> <span class="m">2</span>
+<span class="n">z</span> <span class="o">&lt;-</span> <span class="n">y</span> <span class="o">-</span> <span class="n">x</span> <span class="c1">#Resultado da operação y menos o resultado da operação x</span>
+<span class="n">z</span></code></pre></div>
+
+
+
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 6.5</code></pre></div>
+
+
+<blockquote><p>Dica: use nomes explicativos! Talvez não pareça muito útil agora, mas existem alguns padrões e boas práticas para escrever comando em R que vai ajudar muito na hora de você mesmo ou outras pessoas entenderem o que foi feito. Recomendamos a leitura de alguns padrões de nomenclatura, <a href="http://adv-r.had.co.nz/Style.html">como este aqui</a>.</p></blockquote>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">primeira.variavel</span> <span class="o">&lt;-</span> <span class="m">-5</span> <span class="o">*</span> <span class="m">4</span> <span class="c1">#padrão com ponto, mais comum em R</span>
+<span class="n">primeiraVariavel</span> <span class="o">&lt;-</span> <span class="m">-5</span> <span class="o">*</span> <span class="m">4</span> <span class="c1">#padrão camel case, comum em outras linguagens de programação</span>
+<span class="n">primeira_variavel</span> <span class="o">&lt;-</span> <span class="m">-5</span> <span class="o">*</span> <span class="m">4</span> <span class="c1">#padrão underscore</span></code></pre></div>
+
+
+<p>Pronto, você já sabe usar o console para comandos com os operadores matemáticos básicos e sabe armazenar resultados em variáveis.</p>
+
+<p><img src="/images/kit_parte2_funcoes.gif" alt="alt text" /></p>
+
+<h1>Funções</h1>
+
+<p>Precisaremos mais do que simples variáveis e simples operações matemáticas para usar toda potencialidade do R.</p>
+
+<p>Existem alguns &ldquo;programas&rdquo; prontos para uso no R, ou seja, algumas sequências de comandos preparados para serem usados de forma simples e facilitar sua vida. Esses &ldquo;programas&rdquo; prontos são chamados de funções, e são usados para tudo que você possa imaginar: cálculos mais complexos, estatística, análise de dados, manipulação de dados, gráficos, relatórios, etc.</p>
+
+<p>Na verdade, uma das coisas que torna o R uma ótima linguagem estatística é a gigantesca quantidade de funções disponíveis. Para (quase) tudo que você quiser fazer, existe uma função que facilita as coisas. Algumas funções já vem com a instalação base do R, outras você precisa instalar um pacote extra (falaremos disso em breve).</p>
+
+<p>Uma funcão tem dois elementos básicos: o nome e o(s) parâmetro(s). Por exemplo, função para cálculo de raiz quadrada:</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">raiz.quadrada</span> <span class="o">&lt;-</span> <span class="n">sqrt</span><span class="p">(</span><span class="m">16</span><span class="p">)</span> 
+<span class="n">raiz.quadrada</span></code></pre></div>
+
+
+
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 4</code></pre></div>
+
+
+<p>Ou seja, <code>sqrt</code> é o nome da função para calcular raiz quadrada, e <code>16</code> é o parâmetro que você informa para função calcular. Detalhe: o resultado das funções também podem ser armazenados em variáveis, tal qual demonstra o exemplo.</p>
+
+<p>Um outro exemplo, é a função para arredondar um número:</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">x</span> <span class="o">&lt;-</span> <span class="m">5.34999</span>
+<span class="n">round</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="m">2</span><span class="p">)</span></code></pre></div>
+
+
+
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 5.35</code></pre></div>
+
+
+<p>Ou seja, <code>round</code> é o nome da função para arredondamento. Já o <code>x</code>, a variável que armazena <code>5.34999</code>, é o primeiro parâmetro, informando o número que você quer arredondar. E temos o <code>2</code> como segundo parâmetro, informando até quantas casas decimais você quer arredondar.</p>
+
+<p>Como dito, a instalação base do R já vem com algumas funções muito utilizadas. Segue <a href="link%20fun%C3%A7%C3%B5es%20R%20base">uma</a> lista para conhecer melhor cada uma dessas funcões básicas. Na sequência de posts apresentaremos pacotes com muito mais funções importantes disponíveis.</p>
+
+<h1>Script.R (editor)</h1>
+
+<p>Você agora consegue fazer cálculos básicos, armazenar resultados em variáveis e usar funções para auxiliar nos cálculos. Mas tudo isso usando o console.</p>
+
+<p>O console é extremamente útil para algumas atividades exploratórias, mas, no geral, para trabalhos envolvendo ciência de dados, será necessário escrever um script.</p>
+
+<p>Script nada mais é do que uma sequência de comandos, iguais aos que você escreveria no console, mas escritos em um <em>arquivo de texto</em>, de forma que todos eles possam ser executados em um momento único pelo R, e os resultados apresentados de uma vez só.</p>
+
+<p>No console você digita um comando, aperta enter e em seguida recebe o resultado. No editor de texto você digita todos os comandos na sequência que você gostaria, e manda o R executar tudo de uma vez.</p>
+
+<p>Um script é outro conceito abstrato que fica mais fácil de entender praticando.</p>
+
+<p>Deixe o console um pouco de lado agora. Clique em <code>File &gt; New File &gt; R script</code>. Procure a janela com o editor de código e escreva o seguinte:</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">x</span> <span class="o">&lt;-</span> <span class="n">sqrt</span><span class="p">(</span><span class="m">4</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">&lt;-</span> <span class="n">sqrt</span><span class="p">(</span><span class="m">16</span><span class="p">)</span>
+<span class="n">total</span> <span class="o">&lt;-</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+<span class="n">total</span></code></pre></div>
+
+
+
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 6</code></pre></div>
+
+
+<p>Agora clique em <code>Source</code>. O resultado do seu script irá aparecer no console.  Agora salve o seu script em <code>File &gt; Save</code> escolha uma pasta, de um nome e, ao final do nome, escreva <code>.R</code>. Pronto. Você criou, executou e salvou um script em R! Agora você pode abrir esse script sempre que você quiser e executá-lo novamente.</p>
+
+<p>Ao salvar, repare que o formato do arquivo ficou <code>.R</code>. Esse é o formato convencionado para scripts em R.</p>
+
+<p>Foi um longo post, mas finalmente chegamos ao fim! Esperamos que esse post tenha dado uma boa noção de como usar o console com operações e funções básicas, bem como armazenar resultados em variáveis. A partir de agora, salve seus trabalhos em scripts com formato .R e sempre que quiser executá-los use o botão Source. Até a próxima.</p>
+
+<h2>Referências:</h2>
+
+<ul>
+<li><a href="https://www.datacamp.com/courses/free-introduction-to-r">DataCamp - Free introduction to R</a></li>
+<li><a href="http://www.r-tutor.com/r-introduction">R-introduction</a></li>
+<li><a href="https://cran.r-project.org/doc/contrib/Torfs+Brauer-Short-R-Intro.pdf">Short R Introduction</a></li>
+<li><a href="https://support.rstudio.com/hc/en-us/articles/200404846-Working-in-the-Console">Working in the Console</a></li>
+<li><a href="http://www.statmethods.net/management/functions.html">R Built in functions</a></li>
+<li><a href="http://adv-r.had.co.nz/Style.html">Guia de estilo de código - by Hadley Wickham</a></li>
+<li><a href="https://google.github.io/styleguide/Rguide.xml">Guia de estilo de código - by Google</a></li>
+</ul>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Postado por <span class="fn">Full Join</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2016-04-03T15:20:01-03:00'><span class='date'>03/04/2016</span> <span class='time'>3:20 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/basico/'>básico</a>, <a class='category' href='/blog/categories/r/'>r</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://fulljoin.com.br/blog/2016/04/03/kit-de-sobrevivencia-em-r-parte-2/" data-via="" data-counturl="http://fulljoin.com.br/blog/2016/04/03/kit-de-sobrevivencia-em-r-parte-2/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2016/03/23/kit-de-sobrevivencia-em-r-parte-1/" title="Previous Post: Kit de sobrevivência em R - Parte 1">&laquo; Kit de sobrevivência em R - Parte 1</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2016/04/03/kit-de-sobrevivencia-em-r-parte-3/" title="Next Post: Kit de Sobrevivência em R - Parte 3">Kit de Sobrevivência em R - Parte 3 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comentários</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/04/03/kit-de-sobrevivencia-em-r-parte-3/">Kit De Sobrevivência Em R - Parte 3</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/04/03/kit-de-sobrevivencia-em-r-parte-2/">Kit De Sobrevivência Em R - Parte 2</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/03/23/kit-de-sobrevivencia-em-r-parte-1/">Kit De Sobrevivência Em R - Parte 1</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/03/14/como-aplicar-ciencia-de-dados/">Aplicando Ciência De Dados Parte 1 - Workflow</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/03/12/hello-world/">Hello World</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Full Join -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'fulljoin';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://fulljoin.com.br/blog/2016/04/03/kit-de-sobrevivencia-em-r-parte-2/';
+        var disqus_url = 'http://fulljoin.com.br/blog/2016/04/03/kit-de-sobrevivencia-em-r-parte-2/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+<script>
+function addBlankTargetForLinks () {
+  $('a[href^="http"]').each(function(){
+		$(this).attr('target', '_blank');
+	});
+}
+
+$(document).bind('DOMNodeInserted', function(event) {
+	addBlankTargetForLinks();
+});
+</script>
+
+</body>
+</html>

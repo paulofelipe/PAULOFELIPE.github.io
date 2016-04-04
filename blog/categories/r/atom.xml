@@ -4,7 +4,7 @@
   <title><![CDATA[Category: r | Full Join]]></title>
   <link href="http://fulljoin.com.br/blog/categories/r/atom.xml" rel="self"/>
   <link href="http://fulljoin.com.br/"/>
-  <updated>2016-03-24T19:43:11-03:00</updated>
+  <updated>2016-04-03T23:23:04-03:00</updated>
   <id>http://fulljoin.com.br/</id>
   <author>
     <name><![CDATA[Full Join]]></name>
@@ -12,6 +12,322 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Kit de Sobrevivência em R - Parte 3]]></title>
+    <link href="http://fulljoin.com.br/blog/2016/04/03/kit-de-sobrevivencia-em-r-parte-3/"/>
+    <updated>2016-04-03T22:10:52-03:00</updated>
+    <id>http://fulljoin.com.br/blog/2016/04/03/kit-de-sobrevivencia-em-r-parte-3</id>
+    <content type="html"><![CDATA[<p>Neste post, você aprenderá um pouco sobre os pacotes, trabalhará com o console para fazer algumas operações e ir se familiarizando mais com o R. Aprenderá como usar as funções disponíveis no R e as funcões adicionais em pacotes.</p>
+
+<!-- More -->
+
+
+<h2>Pacotes</h2>
+
+<p>Um pacote do R e um conjunto de funções que tem uma temática em comum. As funções de um mesmo pacote são carregadas juntas em memória, ou seja, ficam disponíveis para uso no R. Por ter uma temática específica, cada pacote possue uma documentação explicando suas funcionalidades disponíveis e como usá-las. Além das funções, alguns pacotes também fornecem um conjunto de dados que são usados para replicar os exemplos fornecidos nas documentações.</p>
+
+<p>Por exemplo, o <code>dplyr</code> é um pacote que possui um série de funções que facilitam consideravelmente a manipulação de dados. Já o <code>readxl</code> é um pacote com funções para leitura de arquivos excel. E o <code>ggplot2</code>, um pacote para criação de gráficos.</p>
+
+<p>No geral, você fará muito uso de pacotes para facilitar tarefas que as funções básicas do R deixam a desejar.</p>
+
+<h3>Instalação</h3>
+
+<p>Existem duas opções para instalar um pacote: via comando ou usando a funcionalidade nos menus do RStudio.</p>
+
+<p>Para instalar via comando, você pode digitar o seguinte comando no console:</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">install.packages</span><span class="p">(</span><span class="o">&amp;</span><span class="n">lsquo</span><span class="p">;</span><span class="n">readxl</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;)</span></code></pre></div></p>
+
+<p>Este comando irá instalar o pacote <code>readxl</code> que fornece funções para facilitar a importação de dados em arquivos <code>xls</code> e <code>xlsx</code>. Nesse caso específico, o pacote fornece duas funções: uma para listar todas as planilhas que estão em um arquivo do excel e outra para ler os dados de uma planilha pro excel. Em um post futuro sobre a importação de dados, trataremos mais sobre esse pacote. Por enquanto, estamos usando somente como exemplo.</p>
+
+<p>Para realizar a instalação com ajuda do RStudio, primeiro clique na aba <em>Packages</em> e depois no botão <em>Install</em>. Será aberta uma janela auxiliar em que você poderá escolher a fonte que será utilizada para instalar o pacote. Normalmente, você optará pelo CRAN (este termo será explicado mais adiante, porém trata-se do repositório oficial). Em <em>Packages</em>, digite o nome do pacote e depois no botão <em>Install</em>. Abaixo está uma imagem de como é o processo de instalação via RStudio.</p>
+
+<p><img src="/images/install_package.gif" title="Instalação de Pacote" alt="alt Instalação de Pacote" /></p>
+
+<h3>Buscando pacotes</h3>
+
+<p>Mas como saber quais pacotes estão disponíveis para uma determinada tarefa? Na maioria das vezes será inevitável realizar uma busca por uma função específica e no meio do caminho se deparar com o pacote.</p>
+
+<p>Todavia, existem algumas páginas que apresentam uma lista de pacotes relacionadas a uma determinada tarefa, que são denominadas de <em>Task View</em>. Para exemplificar, veja <a href="https://cran.r-project.org/web/views/Graphics.html">aqui</a> uma lista de pacotes para realização de gráficos e visualizações.</p>
+
+<h3>Carregando um pacote</h3>
+
+<p>Para utilizar as funções de um pacote, você deve carregá-lo antes. Para isso, você deve usar o seguinte comando:</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">library</span><span class="p">(</span><span class="n">readxl</span><span class="p">)</span></code></pre></div></p>
+
+<p>Esse comando irá carregar o pacote em memória e tornará possível a utilização de todas funções disponíveis nele. Também existe a possibilidade de carregamento de pacotes usando a função <code>require()</code>, que é mais indicado no caso de carregamento de um pacote dentro de uma rotina. Por enquanto, não nos preocupemos com ele.</p>
+
+<blockquote><p>Dica: repare que para instalar o pacote você usou o nome dele entre aspas `install.packages(&ldquo;readxl&rdquo;) e não vai funcionar sem aspas. Mas, para carregar o pacote em memória, você pode usar com ou sem aspas library(readxl) ou library(&ldquo;readxl&rdquo;)</p></blockquote>
+
+<p>Ao trabalhar com pacotes, muitas vezes irá aparecer o termo <strong>CRAN</strong>. Ele significa <em>Comprehensive R Archive Network</em>. Este é o principal repositório de pacotes do R. Trata-se de um portal que guarda uma série de pacotes que necessariamente passaram por uma série de requisitos antes de serem publicado. Atualmente, estao disponiveis mais de 8.000 pacotes no CRAN.</p>
+
+<p>Este é o único local onde os pacotes estão disponíveis? Não!</p>
+
+<p>Vários pacotes já são disponibilizados pelos próprios autores antes mesmo das verificações necessárias para entrar no CRAN. Não são apenas novos pacotes. Novas versões de um pacote podem se encaixar aqui também. Geralmente, eles estão disponíveis no <a href="https://pt.wikipedia.org/wiki/GitHub">github</a>.</p>
+
+<p>Para realizar a instalação desses pacotes &ldquo;fora do CRAN&rdquo;, será necessária a instalação do <code>devtools</code> (que é um pacote!). Por exemplo, o <code>ggplot2</code>, ótimo pacote para gráficos, já possui uma versão estável no CRAN. No entanto, se você desejar instalar a versão que está em desenvolvimento, que pode possuir uma nova funcionalidade, faça o seguinte:</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">install.packages</span><span class="p">(</span><span class="o">&amp;</span><span class="n">lsquo</span><span class="p">;</span><span class="n">devtools</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;)</span> <span class="c1"># Caso não esteja instalado ainda</span>
+<span class="n">devtools</span><span class="o">::</span><span class="n">install_github</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">hadley</span><span class="o">/</span><span class="n">ggplot2</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;)</span></code></pre></div></p>
+
+<p>Aqui temos um ponto interessante. Para usar funções de um pacote, usualmente carrega-se usando o <code>library()</code>. Contudo, se você quiser pontualmente uma função de um pacote, pode-se optar pela forma acima: <code>nome_do_pacote::nome_da_função</code>. Dessa forma você evitaria carregar todas as funções do pacote em memória. Isso pode ser muito útil!</p>
+
+<h2>Ajuda no R</h2>
+
+<p>Você baixou um pacote e não sabe muito bem como usar as funções que estão disponíveis. O que fazer? Você precisará de ajuda. O primeiro passo é verificar a ajuda do pacote. Serão listadas as funções disponíveis e links para a página de <em>help</em> de cada função. Isto pode ser feito a partir do seguinte comando:</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">help</span><span class="p">(</span><span class="n">package</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">lsquo</span><span class="p">;</span><span class="n">readxl</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;)</span></code></pre></div></p>
+
+<p>Para buscar ajuda sobre uma função específica, existem algumas possibilidades a depender se o pacote já está carregado ou não. Por exemplo:</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="o">?</span><span class="n">read_excel</span> <span class="c1"># se o pacote já estiver sido carregado com library(readxl)</span>
+<span class="o">?</span><span class="n">readxl</span><span class="o">::</span><span class="n">read_excel</span> <span class="c1"># Se o pacote não estiver carregado</span>
+<span class="o">??</span><span class="n">read_excel</span>  <span class="c1"># Pacote não carregado. Demora mais para apresentar um resultado</span></code></pre></div></p>
+
+<p>É importante destacar o <code>??</code>, que faz uma busca mais ampla por funções, demonstrações e arquivos que trazem uma visão geral (vignette) de algum pacote/função.</p>
+
+<p>Sendo mais específico, ao buscar a ajuda por uma função específica, será apresentado um texto com uma estrutura padrão: <em>Description</em>, <em>Usage</em>, <em>Arguments</em> e <em>Examples</em>. Além dessas, podem constar outras seções como <em>Details</em> e <em>Value</em>, por exemplo.</p>
+
+<p>É importante destacar o uso (<em>Usage</em>) que trará uma forma genérica de utilização dos parâmetros. Em regra, uma função tem uma série de parâmetros que serão passados para &ldquo;dentro&rdquo; dela. Os parâmetros são separados por vírgula e os que apresentam <code>=</code> possuem um valor padrão e geralmente são opcionais (nem todos os parâmetros são obrigatórios).</p>
+
+<p>Após executar uma função, ela retornará o que está descrito na seção <em>Value</em>. Pode ser um único número ou uma lista (nos próximos posts ficará mais claro o que é uma lista) de elementos que pode variar de uma vetor a um texto.</p>
+
+<p>Não se preocupe muito se o conceito de função ainda não está totalmente claro. O próprio uso e os próximos posts deixarão todos esses conceitos claros de forma natural por meio de exemplos e práticas.</p>
+
+<h2>Referências:</h2>
+
+<ul>
+<li><a href="https://www.datacamp.com/community/tutorials/functions-in-r-a-tutorial">DataCamp - Functions</a></li>
+<li><a href="https://www.rstudio.com/products/rpackages/">Principais pacotes para R</a></li>
+<li><a href="http://r-pkgs.had.co.nz/">R Packages</a></li>
+<li><a href="http://www.analyticsvidhya.com/blog/2015/08/list-r-packages-data-analysis/">Lista de pactes mais úteis para Análise de Dados</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Kit de sobrevivência em R - Parte 2]]></title>
+    <link href="http://fulljoin.com.br/blog/2016/04/03/kit-de-sobrevivencia-em-r-parte-2/"/>
+    <updated>2016-04-03T15:20:01-03:00</updated>
+    <id>http://fulljoin.com.br/blog/2016/04/03/kit-de-sobrevivencia-em-r-parte-2</id>
+    <content type="html"><![CDATA[<p>Seguindo a proposta da sequência <em>Kit de sobrevivência em R</em>, vamos aprofundar um pouco mais no funcionamento do R e como fazer uso disso. Nesse post trataremos sobre comandos de console, operações básicas, variáveis, funções, e script R no editor de códigos.</p>
+
+<!-- More -->
+
+
+<p>Como dito no post anterior, o RStudio apresenta 4 janelas principais, cada uma com sua função. No entanto, podemos dizer que as duas janelas que você mais vai usar (no começo) são <em>Editor de Códigos</em> e o <em>Console</em>.</p>
+
+<h1>Usando o console</h1>
+
+<p>Sendo bem simplista, R é uma linguagem que funciona com base em comandos. O console é o lugar onde você digita um comando (uma instrução) e em seguida recebe uma resposta com o resultado. Para quem nunca teve contato com nenhuma outra linguagem de programação, esse simples conceito pode parecer um pouco abstrato. Não há como entendê-lo sem ser praticando.</p>
+
+<p>Observe no console do RStudio que há um símbolo <code>&gt;</code>. Esse símbolo indica o lugar onde você vai escrever os seus comandos. Pois bem, clique lá e digite <code>2*5</code> em seguida aperte <em>enter</em>. Você verá o seguinte:</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="m">2</span> <span class="o">*</span> <span class="m">5</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">&lt;/p&gt;
+
+&lt;h2&gt;[1] 10&lt;/h2&gt;
+
+&lt;p&gt;</code></pre></div></p>
+
+<p>O que aconteceu? Você digitou o comando &ldquo;multiplique 2 vezes 5&rdquo; no console, e o R respondeu com o resultado 10. E o que é esse <code>[1]</code> na resposta do R? Bom, isso significa que o resultado do seu comando só teve uma linha. Em alguns casos o resultado será mais de uma linha, então o R usa essa notação de índices <code>[x]</code> para mostrar os resultados do comando. Não se preocupe muito com isso por agora.</p>
+
+<p><img src="/images/kit_parte2_console.gif" alt="alt text" /></p>
+
+<h1>Uma grande calculadora</h1>
+
+<p>O R interpreta os seus comandos e dá um resultado apropriado para cada um. Para que os comandos sejam interpretados corretamente, você deve usar os elementos da linguagem.</p>
+
+<p>Por ser uma linguagem estatística, o R já vem com muitas operações prontas para serem usadas. Por exemplo, todas as operações básicas da matemática.</p>
+
+<p>Digite os seguintes comandos no console, apertando <em>enter</em> após cada linha, para ver o resutlado:</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="m">5</span> <span class="o">+</span> <span class="m">3</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">&lt;/p&gt;
+
+&lt;h2&gt;[1] 8&lt;/h2&gt;
+
+&lt;p&gt;</code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="m">5</span> <span class="o">-</span> <span class="m">3</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">&lt;/p&gt;
+
+&lt;h2&gt;[1] 2&lt;/h2&gt;
+
+&lt;p&gt;</code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="m">5</span> <span class="o">*</span> <span class="m">3</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">&lt;/p&gt;
+
+&lt;h2&gt;[1] 15&lt;/h2&gt;
+
+&lt;p&gt;</code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="m">5</span> <span class="o">/</span> <span class="m">3</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">&lt;/p&gt;
+
+&lt;h2&gt;[1] 1.666667&lt;/h2&gt;
+
+&lt;p&gt;</code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="m">5</span> <span class="o">^</span> <span class="m">3</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">&lt;/p&gt;
+
+&lt;h2&gt;[1] 125&lt;/h2&gt;
+
+&lt;p&gt;</code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="m">2</span> <span class="o">^</span> <span class="p">(</span><span class="m">4</span> <span class="o">-</span> <span class="m">2</span><span class="p">)</span> <span class="o">*</span> <span class="m">-8</span> <span class="o">/</span> <span class="p">(</span><span class="m">5</span> <span class="o">*</span> <span class="p">(</span><span class="m">10</span> <span class="o">+</span> <span class="m">3</span><span class="p">))</span> <span class="c1">#Precedentes matemáticos</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">&lt;/p&gt;
+
+&lt;h2&gt;[1] -0.4923077&lt;/h2&gt;
+
+&lt;p&gt;</code></pre></div></p>
+
+<p>Mas o que é esse <code>#</code>? Trata-se de um símbolo indicando um comentário. Um comentário é alguma explicação que você escreve em seus comandos e que o R não interpreta, ou seja, não influencia no resultado final. Serve apenas para documentar, comentar ou explicar alguma parte dos seus comandos.</p>
+
+<p>Reparem que, com o que foi dito até agora, já da pra usar o R como uma grande calculadora de luxo!</p>
+
+<blockquote><p>Dica: no console, aperte seta para cima do teclado e você terá os últimos comandos digitados.</p></blockquote>
+
+<p><img src="/images/kit_parte2_variaveis.gif" alt="alt text" /></p>
+
+<h1>Variáveis</h1>
+
+<p>Na maioria dos casos, o tabalho que você precisará fazer vai exigir mais do que uma simples calculadora pode oferecer, será necessário conhecer mais das possiblidades do R.</p>
+
+<p>A estrutura mais básica que você irá utilizar é chamada <em>variável</em>. Mais uma vez, buscando ser simplista, variável nada mais é do que um pequeno espaço na memória do seu computador onde você armazena o resultado de um comando. E para esse pequeno espaço de memória você define o nome que você quiser!</p>
+
+<p>O uso de variáveis é extremamente útil, pois muito provavelmente você precisará armazenar resultados de comandos para operá-los em conjunto logo em seguida.</p>
+
+<p>Para armazenar uma variável no R, você deve usar o seguinte símbolo <code>&lt;-</code>, formando uma setinha direcionada para a esquerda. Você pode chamar suas variáveis do que você quiser! Elas podem conter letras, números, ponto <code>.</code>, e <em>underscore</em> <code>_</code>, e podem ter o tamanho qualquer tamanho. Há apenas uma regra: o nome das variáveis deve começar com letras (maiúsculas ou minúsculas). Se o R, por algum motivo, for retornar uma variável que tenha o nome iniciando com número, automaticamente será adicionado ``` no início e no fim.</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">minha_PRIMEIRA.variavel</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="m">9</span> <span class="o">^</span> <span class="m">10</span> <span class="c1">#Nome esdrúxulo de variável apenas para exemplificar!</span></code></pre></div></p>
+
+<p>&ldquo;Ué, apertei enter e nada aconteceu?&rdquo;. Aconteceu sim! Você colocou o resultado de <code>9 ^ 10</code> dentro da variável chamada <code>minha_PRIMEIRA.variavel</code>. Para comprovar e para ver o que tem &ldquo;dentro da variável&rdquo;, digite apenas o nome da variável e aperte enter:</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">minha_PRIMEIRA.variavel</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">&lt;/p&gt;
+
+&lt;h2&gt;[1] 3486784401&lt;/h2&gt;
+
+&lt;p&gt;</code></pre></div></p>
+
+<p>Sempre que precisar usar o valor de 9 ^ 10, basta usar sua variável <code>minha_PRIMEIRA.variavel</code> e pronto, terá o resultado dessa operação armazenado sem precisar calcular novamente. Você pode fazer diversas operações com as variáveis. Por exemplo:</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">x</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="m">5</span> <span class="o">/</span> <span class="m">2</span>
+<span class="n">y</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="m">3</span> <span class="o">^</span> <span class="m">2</span>
+<span class="n">z</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">y</span> <span class="o">-</span> <span class="n">x</span> <span class="c1">#Resultado da operação y menos o resultado da operação x</span>
+<span class="n">z</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">&lt;/p&gt;
+
+&lt;h2&gt;[1] 6.5&lt;/h2&gt;
+
+&lt;p&gt;</code></pre></div></p>
+
+<blockquote><p>Dica: use nomes explicativos! Talvez não pareça muito útil agora, mas existem alguns padrões e boas práticas para escrever comando em R que vai ajudar muito na hora de você mesmo ou outras pessoas entenderem o que foi feito. Recomendamos a leitura de alguns padrões de nomenclatura, <a href="http://adv-r.had.co.nz/Style.html">como este aqui</a>.</p></blockquote>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">primeira.variavel</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="m">-5</span> <span class="o">*</span> <span class="m">4</span> <span class="c1">#padrão com ponto, mais comum em R</span>
+<span class="n">primeiraVariavel</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="m">-5</span> <span class="o">*</span> <span class="m">4</span> <span class="c1">#padrão camel case, comum em outras linguagens de programação</span>
+<span class="n">primeira_variavel</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="m">-5</span> <span class="o">*</span> <span class="m">4</span> <span class="c1">#padrão underscore</span></code></pre></div></p>
+
+<p>Pronto, você já sabe usar o console para comandos com os operadores matemáticos básicos e sabe armazenar resultados em variáveis.</p>
+
+<p><img src="/images/kit_parte2_funcoes.gif" alt="alt text" /></p>
+
+<h1>Funções</h1>
+
+<p>Precisaremos mais do que simples variáveis e simples operações matemáticas para usar toda potencialidade do R.</p>
+
+<p>Existem alguns &ldquo;programas&rdquo; prontos para uso no R, ou seja, algumas sequências de comandos preparados para serem usados de forma simples e facilitar sua vida. Esses &ldquo;programas&rdquo; prontos são chamados de funções, e são usados para tudo que você possa imaginar: cálculos mais complexos, estatística, análise de dados, manipulação de dados, gráficos, relatórios, etc.</p>
+
+<p>Na verdade, uma das coisas que torna o R uma ótima linguagem estatística é a gigantesca quantidade de funções disponíveis. Para (quase) tudo que você quiser fazer, existe uma função que facilita as coisas. Algumas funções já vem com a instalação base do R, outras você precisa instalar um pacote extra (falaremos disso em breve).</p>
+
+<p>Uma funcão tem dois elementos básicos: o nome e o(s) parâmetro(s). Por exemplo, função para cálculo de raiz quadrada:</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">raiz.quadrada</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">sqrt</span><span class="p">(</span><span class="m">16</span><span class="p">)</span>
+<span class="n">raiz.quadrada</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">&lt;/p&gt;
+
+&lt;h2&gt;[1] 4&lt;/h2&gt;
+
+&lt;p&gt;</code></pre></div></p>
+
+<p>Ou seja, <code>sqrt</code> é o nome da função para calcular raiz quadrada, e <code>16</code> é o parâmetro que você informa para função calcular. Detalhe: o resultado das funções também podem ser armazenados em variáveis, tal qual demonstra o exemplo.</p>
+
+<p>Um outro exemplo, é a função para arredondar um número:</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">x</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="m">5.34999</span>
+<span class="n">round</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="m">2</span><span class="p">)</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">&lt;/p&gt;
+
+&lt;h2&gt;[1] 5.35&lt;/h2&gt;
+
+&lt;p&gt;</code></pre></div></p>
+
+<p>Ou seja, <code>round</code> é o nome da função para arredondamento. Já o <code>x</code>, a variável que armazena <code>5.34999</code>, é o primeiro parâmetro, informando o número que você quer arredondar. E temos o <code>2</code> como segundo parâmetro, informando até quantas casas decimais você quer arredondar.</p>
+
+<p>Como dito, a instalação base do R já vem com algumas funções muito utilizadas. Segue <a href="link%20fun%C3%A7%C3%B5es%20R%20base">uma</a> lista para conhecer melhor cada uma dessas funcões básicas. Na sequência de posts apresentaremos pacotes com muito mais funções importantes disponíveis.</p>
+
+<h1>Script.R (editor)</h1>
+
+<p>Você agora consegue fazer cálculos básicos, armazenar resultados em variáveis e usar funções para auxiliar nos cálculos. Mas tudo isso usando o console.</p>
+
+<p>O console é extremamente útil para algumas atividades exploratórias, mas, no geral, para trabalhos envolvendo ciência de dados, será necessário escrever um script.</p>
+
+<p>Script nada mais é do que uma sequência de comandos, iguais aos que você escreveria no console, mas escritos em um <em>arquivo de texto</em>, de forma que todos eles possam ser executados em um momento único pelo R, e os resultados apresentados de uma vez só.</p>
+
+<p>No console você digita um comando, aperta enter e em seguida recebe o resultado. No editor de texto você digita todos os comandos na sequência que você gostaria, e manda o R executar tudo de uma vez.</p>
+
+<p>Um script é outro conceito abstrato que fica mais fácil de entender praticando.</p>
+
+<p>Deixe o console um pouco de lado agora. Clique em <code>File &gt; New File &gt; R script</code>. Procure a janela com o editor de código e escreva o seguinte:</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">x</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">sqrt</span><span class="p">(</span><span class="m">4</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">sqrt</span><span class="p">(</span><span class="m">16</span><span class="p">)</span>
+<span class="n">total</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+<span class="n">total</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">&lt;/p&gt;
+
+&lt;h2&gt;[1] 6&lt;/h2&gt;
+
+&lt;p&gt;</code></pre></div></p>
+
+<p>Agora clique em <code>Source</code>. O resultado do seu script irá aparecer no console.  Agora salve o seu script em <code>File &gt; Save</code> escolha uma pasta, de um nome e, ao final do nome, escreva <code>.R</code>. Pronto. Você criou, executou e salvou um script em R! Agora você pode abrir esse script sempre que você quiser e executá-lo novamente.</p>
+
+<p>Ao salvar, repare que o formato do arquivo ficou <code>.R</code>. Esse é o formato convencionado para scripts em R.</p>
+
+<p>Foi um longo post, mas finalmente chegamos ao fim! Esperamos que esse post tenha dado uma boa noção de como usar o console com operações e funções básicas, bem como armazenar resultados em variáveis. A partir de agora, salve seus trabalhos em scripts com formato .R e sempre que quiser executá-los use o botão Source. Até a próxima.</p>
+
+<h2>Referências:</h2>
+
+<ul>
+<li><a href="https://www.datacamp.com/courses/free-introduction-to-r">DataCamp - Free introduction to R</a></li>
+<li><a href="http://www.r-tutor.com/r-introduction">R-introduction</a></li>
+<li><a href="https://cran.r-project.org/doc/contrib/Torfs+Brauer-Short-R-Intro.pdf">Short R Introduction</a></li>
+<li><a href="https://support.rstudio.com/hc/en-us/articles/200404846-Working-in-the-Console">Working in the Console</a></li>
+<li><a href="http://www.statmethods.net/management/functions.html">R Built in functions</a></li>
+<li><a href="http://adv-r.had.co.nz/Style.html">Guia de estilo de código - by Hadley Wickham</a></li>
+<li><a href="https://google.github.io/styleguide/Rguide.xml">Guia de estilo de código - by Google</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Kit de sobrevivência em R - Parte 1]]></title>

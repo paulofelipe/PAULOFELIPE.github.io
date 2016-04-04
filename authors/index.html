@@ -1,4 +1,4 @@
-<link href="/stylesheets/syntax.css" rel="stylesheet">
+
 
 
 <!DOCTYPE html>
@@ -11,7 +11,7 @@
   <meta name="author" content="Full Join">
 
   
-  <meta name="description" content=" Sobre Nós Saulo Guerra Paulo Felipe Recent Posts Kit De Sobrevivência Em R - Parte 1 Aplicando Ciência De Dados Parte 1 - Workflow Hello World ">
+  <meta name="description" content="Sobre Nós Inicialmente, o blog será mantido por Saulo Guerra e Paulo Felipe. A nossa ideia é que mais pessoas possam colaborar no futuro para que o &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -88,9 +88,15 @@
     
   </header>
   
-  <h2>Saulo Guerra</h2>
+  <p>Inicialmente, o blog será mantido por Saulo Guerra e Paulo Felipe. A nossa ideia é que mais pessoas possam colaborar no futuro para que o blog fique bastante rico e diversificado em informações.</p>
+
+<h2>Saulo Guerra</h2>
+
+<p>Sou Formado em Ciência da Computação pela Universidade de Brasília (UnB). Trabalho no Ministério do Desenvolvimento, Indústria e Comércio Exterior (MDIC) como Analista de Comércio Exterior. Possuo experiência com bancos de dados, programação mobile e programação web, principalmente web scraping. Adotei o R como principal linguagem de programação e venho aprofundando cada vez mais estudos e práticas na área de ciência de dados.</p>
 
 <h2>Paulo Felipe</h2>
+
+<p>Sou economista com graduação e mestrado na Universidade Federal do Ceará - UFC. Atualmente, trabalho no Ministério do Desenvolvimento, Indústria e Comércio Exterior - MDIC como Analista de Comércio Exterior. Tenho experiência com modelos microeconométricos e séries temporais. Além disso, venho estudando outras abordagens de análise de dados, como aprendizado de máquina e visualizações. Apesar de ter trabalhado com outros softwares estatísticos, o R tornou-se meu principal foco em relação a software/linguagem.</p>
 
   
 </article>
@@ -102,6 +108,14 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/04/03/kit-de-sobrevivencia-em-r-parte-3/">Kit De Sobrevivência Em R - Parte 3</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/04/03/kit-de-sobrevivencia-em-r-parte-2/">Kit De Sobrevivência Em R - Parte 2</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2016/03/23/kit-de-sobrevivencia-em-r-parte-1/">Kit De Sobrevivência Em R - Parte 1</a>
@@ -155,6 +169,18 @@
 
 
 
+
+<script>
+function addBlankTargetForLinks () {
+  $('a[href^="http"]').each(function(){
+		$(this).attr('target', '_blank');
+	});
+}
+
+$(document).bind('DOMNodeInserted', function(event) {
+	addBlankTargetForLinks();
+});
+</script>
 
 </body>
 </html>
