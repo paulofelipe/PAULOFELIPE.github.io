@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Kit de sobrevivência em R - Parte 3"
+title: "Kit de sobrevivência em R - Parte 4"
 date: 2016-03-23 22:50:09 -0300
 comments: true
 categories: [r, básico, rstudio]
