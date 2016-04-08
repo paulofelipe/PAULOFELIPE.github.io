@@ -1,0 +1,188 @@
+---
+layout: post
+title: "Kit de sobrevivência em R - Parte 4"
+date: 2016-05-07 21:00:00 -0300
+comments: true
+categories: [r, básico]
+published: true
+---
+
+
+Seguindo a sequência do *Kit de sobrevivência em R*, vamos abordar um pouco sobre uma das partes iniciais de qualquer análise ou trabalho que vá ser feito no R: carregamento e leitura de dados. Nesse post você irá aprender formas básicas de carregar dados e começar os trabalhos.
+
+<!-- More -->
+
+# Estrutura dos dados
+
+Eis aqui uma notícia ruim: não existe um padrão dominante para armazenamento de dados. O que isso significa? Significa que, na vida real, você vai se deparar com os mais diferentes tipos de fontes de dados e mesmo assim vai ter que dar um jeito de analisá-las e estudá-las para concluir seus trabalhos. 
+
+Ou seja, existem diversas formas de carregar dados para trabalhar com eles no R. Em prol da objetividade, vamos tratar dos casos mais comuns e mais básicos primeiro. Esse assunto pode ser extremamente vasto, então, criaremos primeiro uma base para, em posts futuros, aprofundarmos em fontes de dados mais complexas.
+
+Você vai encontrar dados disonbilizados basicamente em três formas básicas: estruturados, não estruturados e semi-estruturados. 
+
+## Dados Estruturados
+
+Basicamente são conjuntos de informações organizadas em colunas (atribuos, variáveis, _features_, etc.) e linhas (registros, itens, observacões, etc.). São dados encontrados em bancos de dados, arquivos com algum tipo de separação entre as colunas, excel, arquivos com campos de tamanho fixo, etc.
+
+## Dados não estruturados
+
+Como o nome diz, não tem um estrutura previsível, ou seja, cada arquivo possui uma forma única de ser carregado e manejado. Geralmente são arquivos com forte teor textual. Podemos citar, por exemplo, emails, twitters, PDFs, imagens, etc. Muito usados em mineração de dados.
+
+## Dados semi-estruturados
+
+Também possuem estrutura fixa, porém, não seguem o padrão de estrutura linha/coluna, ou seja, é uma estrutura mais complexa e flexível, geralmente hierárquica, estruturada em tags ou marcadores de campos. São exemplos de arquivos semi-estruturados: JSON, XML, HTML, YAML, etc. É o formato mais usado em troca de dados pela internet e consumo de APIs.
+
+Trataremos primeiro dos arquivos estruturados. Em futuros posts vamos abordar os outros tipos, pois são abordagens um puco mais complexa e é sempre bom começar pelo básico!
+
+# Preparando o ambiente para começar
+
+### Limpando tudo 
+
+(é correto falar de sessão? ou seria melhor "ambiente"?)
+Antes de começar os trabalhos, é uma boa prática ter certeza de que seu ambiente de trabalho está limpo. Um simples comando garante que está tudo limpo pronto para começar:
+
+```{r, eval=FALSE}
+ rm(list=ls())
+```
+
+Esse comando na verdade está usando duas funções:
+
+* `rm()` função para remover um objeto da sessão do R
+
+* `ls()` função para listar os nomes de todos objetos da sessão do R
+
+As duas funções conjugadas dão a ordem de *remover tudo que estiver na lista de objetos da sessão do R.* (acho que isso aqui precisa ser melhor escrito)
+
+Pronto. Seus ambiente está limpo.
+
+### Definindo diretório de trabalho
+
+O R vai "ler" os dados de algum lugar do seu computador. Normalmente o R inicia lendo em um diretório padrão, mas nem sempre os arquivos estarão nesse mesmo diretório. Para dizer ao R onde ele deve ler os arquivos, usaremos o comando _set working directory_:
+
+```{r, eval=FALSE}
+ setwd("Local/Do/Seus/Arquivos/De/Trabalho/")
+```
+
+Também pode ser realizado pelos menus do RStudio em `Session > Set Working Directory > Choose Directory...` e escolha a pasta onde seus arquivos de dado estarão. (GIF!)
+
+Ok! Agora sim
+
+# Tipos de carregamento
+
+O R possui algumas funções básicas de carregamento. Essas funções tratam de alguns tipos de arquivo, basicamente diferenciados pelo *delimitador*. Outro aspecto importante é que essas funções básicas pressumpõe que cada linha representa um novo registro de dados.
+
+Como dissemos antes, dados estruturados possuem colunas e linhas (ou atributos e registros, ou varáveis e observações... da na mesma!). O delimitador é uma forma de separar o conteúdo de cada coluna em uma linha. Ficará mais claro a seguir
+
+## CSV
+Trata-se de um dos tipos mais comuns de arquivo. Muito difundido, [Comma-separated values](https://pt.wikipedia.org/wiki/Comma-separated_values) é um tipo de arquivo que usa delimitador vírgula para separar as colunas.
+
+Eventualmente o conteúdo de um campo pode ter uma vírgula, e isso pode gerar problema na hora de carregar o dado, pois o R vai se confundir achando que é um separador, mas na verdade não é. Nesses casos, além da vírgula, campos textuais são envoltos em aspas duplas. Exemplo:
+
+-"M","Paulo","Brasília, DF",28
+-"F","Maria","São Paulo, SP",30
+
+Representa:
+
+[]() | []() | []() | []()
+--- | --- | --- | --- 
+ M  | Paulo  | Brasília, DF   | 28 
+ F  | Maria  | São Paulo, SP  | 30 
+
+[Exemplo de arquivo csv](link do arquivo) 
+
+Para carregar um CSV usaremos a função `read.csv()` que já vem carregada no R. Usando o arquivo que disponiblizamos como exemplo, execute os seguintes comandos (lembre-se fazer o R ler a pasta onde seu arquivo está!):
+
+```{r, eval=FALSE}
+dados <- read.csv('exemplo.csv', header = TRUE)
+dados
+```
+
+Pronto! Arquivo csv lido e disponível na variável `dados` para trabalhar
+
+Reparem na parte `header = TRUE`, isso significa dizer que a primeira linha do arquivo contem o nome das colunas, ou sejá, não é um dado propriamente dito, e sim um metadado pois é uma informação sobre os registros. Caso seu arquivo não contenha o nome das colunas, basta usar `header = FALSE`.
+
+## Delimitador TAB
+
+Outro delimitador muito utilizado é o espaçamento TAB (a tecla TAB do teclado mesmo!). Para carregar esse tipo de arquivo usaremos o `read.delim()`. Usando o arquivo de exemplo a seguir, vamos executar o seguinte comando:
+
+[Exemplo de arquivo com separador TAB](link do arquivo) 
+
+```{r, eval=FALSE}
+dados <- read.delim('exemplo_tab.csv', header = TRUE)
+dados
+```
+
+Feito. Arquivo com separador TAB lido e dados disponíveis na variável `dados`.
+
+
+## Outros Delimitadores
+
+Na prática, delimitador pode ser qualquer caracter ou conjunto deles, por exemplo: `|`, `$`, `%`, `\delimitador\`, etc... Vai variar muito de acordo com a forma de produção do arquivo. A função `read.table()` te permite definir qualquer delimitador para a leitura do arquivo.
+[Exemplo de delimitador $](link)
+[Exemplo de delimitador compost (*)](link)
+
+```{r, eval=FALSE}
+dados.1 <- read.table('exemplo_1.txt', header = TRUE, sep = '$')
+dados.1
+
+dados.2 <- read.table('exemplo_2.txt', header = TRUE, sep = '(*)')
+dados.2
+```
+
+Viu? Agora é possível carregar arquivos com qualquer delimitador.
+
+
+## Campos de tamanho fixo.
+
+E quando não existe delimitador, ou seja, quando os campos estão "colados" uns nos outros? Em alguns casos, arquivos são confeccionados com um tamanho fixo para cada coluna (principalmente em arquivos gigantescos!), e cada linha repspeita tamanhos específicos para separar os seus registros.
+
+Um arquivo com campos de tamanho fixo tem a segunte aparência
+
+MPaulo   Brasilia, DF      19851027
+FFernandaRio de Janeiro, RJ19900115 
+
+Para a leitura desse tipo de arquivo, você precisa saber previamente o tamanho de caracteres reservado para cada campo. Geralmente esse tipo de arquivo vem acompanhando de um arquivo auxiliar explicando o layout dos dados.
+
+Com o exemplo a seguir, usaremos a função `read.fwf()` para leitura dos dados:
+[Exemplo de campo com tamanho fixo](link)
+
+```{r, eval=FALSE}
+dados <- read.fwf('exemplo_fixo.txt', widths = c(1, 5, 15, 5, 2, 2))
+dados
+```
+
+Reparem que o segundo parâmetro da função, `widths` é onde você especifica o tamanho de cada campo na ordem em que eles ocorrem na linha. Ou seja, o primeiro campo tem tamanho 1, o segundo 5, já o último tem tamanho 2.
+
+O que é esse `c()`? É uma função que cria um vetor. Explicaremos detalhadamente sobre isso em outro post!
+
+E onde está o `header = TRUE`? Geralmente arquivos com campos de tamanho fixo não possuem uma linha indicando o cabeçalho. Como dito, esses arquivos costumam vir acompanhados de um arquivo de layout explicando os dados, inclusive o que cada campo significa.
+
+# Mais opções na leitura
+
+Apresentamos as funções básicas de leitura de arquivo com seu uso padrão mais simples. No entanto, existem muitos outros parâmetros que podem ser usados para especificar mais a leitura dos dados. Vale a pena conferir. Para conhecer mais sobre as funções apresentadas, lembrem-se de usar `?`. 
+
+```{r, eval=FALSE}
+?read.table()
+?read.fwf()
+?read.delim()
+?read.csv()
+```
+
+>Dica: Repare que `read.delim()` e `read.csv()` estão na mesma ajuda do `read.table()`. Na verdade todas as 3 funções são a mesma, e podem ser reproduzidas com o `read.table()` apenas mudando alguns parâmetros na chamada da função.
+
+# Outras formas de carregar dados
+
+Existe diversas outras formas de carregar dados. Mas nosso objetivo aqui é apenas criar uma introdução para conseguir carregar a grande maioria dos formatos de dados mais comuns.
+
+Em breve lançaremos posts explicando leitura de arquivos em excel, arquivos semi-estruturados e arquivos não extruturados.
+
+# Referências:
+
+
+
+
+
+
+
+
+
