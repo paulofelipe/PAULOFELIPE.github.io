@@ -12,3 +12,52 @@ pre {
 	border: 1px solid #cccccc;
 	border-radius: 4px;
 }
+
+* + table { 
+  width: 100%; 
+  border-collapse: collapse;
+}
+/* Zebra striping */
+* + table tr:nth-of-type(odd) { 
+  background: #eee; 
+}
+* + table th { 
+  background: #65a672; 
+  color: white; 
+  font-weight: bold; 
+}
+* + table td,
+* + table th { 
+  padding: 6px; 
+  border: 0px solid #ccc; 
+  text-align: center; 
+}
+
+/* 
+Max width before this PARTICULAR table gets nasty
+This query will take effect for any screen smaller than 760px
+and also iPads specifically.
+*/
+@media 
+only screen and (max-width: 480px),
+(min-device-width: 480px) and (max-device-width: 1024px)  {
+	
+	* + table{
+		overflow-x: auto;
+		display: block;
+	}
+
+}
+
+ 
+* + table th[align="left"], * + table td[align="left"] {
+text-align:left;
+}
+ 
+* + table th[align="right"], * + table td[align="right"] {
+text-align:right;
+}
+ 
+* + table th[align="center"], * + table td[align="center"] {
+text-align:center;
+}
