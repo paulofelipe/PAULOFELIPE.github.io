@@ -15,7 +15,7 @@ Neste post, você aprenderá um pouco sobre os pacotes, trabalhará com o consol
 
 Um pacote do R e um conjunto de funções que tem uma temática em comum. As funções de um mesmo pacote são carregadas juntas em memória, ou seja, ficam disponíveis para uso no R. Por ter uma temática específica, cada pacote possue uma documentação explicando suas funcionalidades disponíveis e como usá-las. Além das funções, alguns pacotes também fornecem um conjunto de dados que são usados para replicar os exemplos fornecidos nas documentações.
 
-Por exemplo, o `dplyr` é um pacote que possui um série de funções que facilitam consideravelmente a manipulação de dados. Já o `readxl` é um pacote com várias funções para leitura de arquivos excel. E o `ggplot2`, um pacote para criação de gráficos.
+Por exemplo, o `dplyr` é um pacote que possui um série de funções que facilitam consideravelmente a manipulação de dados. Já o `readxl` é um pacote com funções para leitura de arquivos excel. E o `ggplot2`, um pacote para criação de gráficos.
 
 No geral, você fará muito uso de pacotes para facilitar tarefas que as funções básicas do R deixam a desejar.
 
