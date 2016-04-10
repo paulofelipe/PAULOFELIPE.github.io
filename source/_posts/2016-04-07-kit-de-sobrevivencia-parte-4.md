@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Kit de sobrevivência em R - Parte 4"
+title: "Kit de sobrevivência em R - Parte 4: Carregando Dados"
 date: 2016-05-07 21:00:00 -0300
 comments: true
 categories: [r, básico]
@@ -67,101 +67,155 @@ O R vai "ler" os dados de algum lugar do seu computador. Normalmente o R inicia 
 
 Também pode ser realizado pelos menus do RStudio em `Session > Set Working Directory > Choose Directory...` e escolha a pasta onde seus arquivos de dado estarão. (GIF!)
 
+Caso você não deseje alterar o diretório de trabalho, também há a opção de ser informado o caminho completo do arquivo (caminho absoluto).
+
 Ok! Agora sim
 
 # Tipos de carregamento
 
-O R possui algumas funções básicas de carregamento. Essas funções tratam de alguns tipos de arquivo, basicamente diferenciados pelo *delimitador*. Outro aspecto importante é que essas funções básicas pressumpõe que cada linha representa um novo registro de dados.
+O R possui algumas funções básicas de carregamento. Essas funções tratam de alguns tipos de arquivo, basicamente diferenciados pelo *delimitador*. Outro aspecto importante é que essas funções básicas pressumpõem que cada linha representa um novo registro de dados.
 
-Como dissemos antes, dados estruturados possuem colunas e linhas (ou atributos e registros, ou varáveis e observações... da na mesma!). O delimitador é uma forma de separar o conteúdo de cada coluna em uma linha. Ficará mais claro a seguir
+Para ficar mais claro, delimitadores podem ser qualquer coisa que seja usada para separar dados. Por exemplo, os arquivos podem ser separados por vígulas ([CSV - Comma-separated values](https://pt.wikipedia.org/wiki/Comma-separated_values)), por ponto e vírgula (`;`), por espaçamento TAB (a tecla TAB do teclado mesmo!), por espaços simples ou qualquer outro tipo de símbolo.
 
-## CSV
-Trata-se de um dos tipos mais comuns de arquivo. Muito difundido, [Comma-separated values](https://pt.wikipedia.org/wiki/Comma-separated_values) é um tipo de arquivo que usa delimitador vírgula para separar as colunas.
+Como dissemos antes, dados estruturados possuem colunas e linhas (ou atributos e registros, ou variáveis e observações... dá na mesma!). O delimitador é uma forma de separar o conteúdo de cada linha em uma coluna específica. Ficará mais claro a seguir.
 
-Eventualmente o conteúdo de um campo pode ter uma vírgula, e isso pode gerar problema na hora de carregar o dado, pois o R vai se confundir achando que é um separador, mas na verdade não é. Nesses casos, além da vírgula, campos textuais são envoltos em aspas duplas. Exemplo:
+E quando não existe delimitador, ou seja, quando os campos estão "colados" uns nos outros? Em alguns casos, arquivos são confeccionados com um tamanho fixo para cada coluna (principalmente em arquivos gigantescos!), e cada linha respeita tamanhos específicos para separar os seus registros.
 
--"M","Paulo","Brasília, DF",28
--"F","Maria","São Paulo, SP",30
+Para replicar os exemplos abaixo, baixe [este arquivo zip](https://www.dropbox.com/s/4tedgnkd85c5q5s/desemprego_uf_pnad.zip?dl=0) com exemplos de dados em que foram usados diferentes delimitadores. Descompacte o arquivo em alguma pasta do seu computador. Defina esta pasta como o seu diretório de trabalho no RStudio. Além disso, dê uma olhada nos arquivos com o auxílio do bloco de notas ou outro programa para que você tenha ideia como o dado está inicialmente estruturado.
 
-Representa:
+# Carregando os dados
 
-[]() | []() | []() | []()
---- | --- | --- | --- 
- M  | Paulo  | Brasília, DF   | 28 
- F  | Maria  | São Paulo, SP  | 30 
+Dividiremos este tópico em duas partes: dados delimitados e dados com campos de tamanho fixo.
 
-[Exemplo de arquivo csv](link do arquivo) 
+#### Dados com delimitadores
 
-Para carregar um CSV usaremos a função `read.csv()` que já vem carregada no R. Usando o arquivo que disponiblizamos como exemplo, execute os seguintes comandos (lembre-se fazer o R ler a pasta onde seu arquivo está!):
+Para importar dados com delimitadores utilizaremos a função `read.table()`. Essa função permite definir qualquer delimitador para a leitura do arquivo, conforme os exemplos abaixo.
+
+
 
 
 {% highlight r %}
-dados <- read.csv('exemplo.csv', header = TRUE)
-dados
+# Separado por tabulação
+dados.tab <- read.table('desemprego_uf_tab.txt', sep = "\t", dec = ",", header = TRUE) 
+# Separado por ;
+dados.ponto.virgula <- read.table('desemprego_uf_ponto_virgula.txt', sep = ";", dec = ",", header = TRUE) 
+# Separado por espaço
+dados.espaco <- read.table('desemprego_uf_espaco.txt', sep = " ", dec = ",", header = TRUE) 
 {% endhighlight %}
-
-Pronto! Arquivo csv lido e disponível na variável `dados` para trabalhar
 
 Reparem na parte `header = TRUE`, isso significa dizer que a primeira linha do arquivo contem o nome das colunas, ou sejá, não é um dado propriamente dito, e sim um metadado pois é uma informação sobre os registros. Caso seu arquivo não contenha o nome das colunas, basta usar `header = FALSE`.
 
-## Delimitador TAB
-
-Outro delimitador muito utilizado é o espaçamento TAB (a tecla TAB do teclado mesmo!). Para carregar esse tipo de arquivo usaremos o `read.delim()`. Usando o arquivo de exemplo a seguir, vamos executar o seguinte comando:
-
-[Exemplo de arquivo com separador TAB](link do arquivo) 
+Após o carregamento, vamos usar a função `head()`para ver a "cara" dos nossos dados. Veja que eles são iguais nos três casos. Nessa função, você pode especificar o número de linhas que deseja ver. Por exemplo: `head(dados.tab, 10)`. Para visualizar as últimas linhas, você pode utilizar o `tail()` da mesma forma. Note que o RStudio tem funcionalidades que permitem que você visualize os dados como uma planilha. Basta clicar no nome do objeto que está listado na aba _Environment_.
 
 
 {% highlight r %}
-dados <- read.delim('exemplo_tab.csv', header = TRUE)
-dados
+head(dados.tab)
 {% endhighlight %}
 
-Feito. Arquivo com separador TAB lido e dados disponíveis na variável `dados`.
 
 
-## Outros Delimitadores
+{% highlight text %}
+##    Ano   Trimestre       UF Taxa_Desemprego
+## 1 2012 jan-fev-mar Rondônia           8.008
+## 2 2012 abr-mai-jun Rondônia           6.224
+## 3 2012 jul-ago-set Rondônia           5.882
+## 4 2012 out-nov-dez Rondônia           5.274
+## 5 2013 jan-fev-mar Rondônia           6.114
+## 6 2013 abr-mai-jun Rondônia           4.771
+{% endhighlight %}
 
-Na prática, delimitador pode ser qualquer caracter ou conjunto deles, por exemplo: `|`, `$`, `%`, `\delimitador\`, etc... Vai variar muito de acordo com a forma de produção do arquivo. A função `read.table()` te permite definir qualquer delimitador para a leitura do arquivo.
-[Exemplo de delimitador $](link)
-[Exemplo de delimitador compost (*)](link)
 
 
 {% highlight r %}
-dados.1 <- read.table('exemplo_1.txt', header = TRUE, sep = '$')
-dados.1
-
-dados.2 <- read.table('exemplo_2.txt', header = TRUE, sep = '(*)')
-dados.2
+head(dados.ponto.virgula)
 {% endhighlight %}
 
-Viu? Agora é possível carregar arquivos com qualquer delimitador.
 
 
-## Campos de tamanho fixo.
+{% highlight text %}
+##    Ano   Trimestre       UF Taxa_Desemprego
+## 1 2012 jan-fev-mar Rondônia           8.008
+## 2 2012 abr-mai-jun Rondônia           6.224
+## 3 2012 jul-ago-set Rondônia           5.882
+## 4 2012 out-nov-dez Rondônia           5.274
+## 5 2013 jan-fev-mar Rondônia           6.114
+## 6 2013 abr-mai-jun Rondônia           4.771
+{% endhighlight %}
 
-E quando não existe delimitador, ou seja, quando os campos estão "colados" uns nos outros? Em alguns casos, arquivos são confeccionados com um tamanho fixo para cada coluna (principalmente em arquivos gigantescos!), e cada linha repspeita tamanhos específicos para separar os seus registros.
 
-Um arquivo com campos de tamanho fixo tem a segunte aparência
 
-MPaulo   Brasilia, DF      19851027
-FFernandaRio de Janeiro, RJ19900115 
+{% highlight r %}
+head(dados.espaco)
+{% endhighlight %}
+
+
+
+{% highlight text %}
+##    Ano   Trimestre       UF Taxa_Desemprego
+## 1 2012 jan-fev-mar Rondônia           8.008
+## 2 2012 abr-mai-jun Rondônia           6.224
+## 3 2012 jul-ago-set Rondônia           5.882
+## 4 2012 out-nov-dez Rondônia           5.274
+## 5 2013 jan-fev-mar Rondônia           6.114
+## 6 2013 abr-mai-jun Rondônia           4.771
+{% endhighlight %}
+
+#### Dados com campos de tamanho fixo
 
 Para a leitura desse tipo de arquivo, você precisa saber previamente o tamanho de caracteres reservado para cada campo. Geralmente esse tipo de arquivo vem acompanhando de um arquivo auxiliar explicando o layout dos dados.
 
-Com o exemplo a seguir, usaremos a função `read.fwf()` para leitura dos dados:
-[Exemplo de campo com tamanho fixo](link)
+
 
 
 {% highlight r %}
-dados <- read.fwf('exemplo_fixo.txt', widths = c(1, 5, 15, 5, 2, 2))
-dados
+dados.fwf <- read.fwf('desemprego_uf_fwf.txt', widths = c(4, 11, 19, 6),  header = FALSE,  strip.white = TRUE)
 {% endhighlight %}
 
-Reparem que o segundo parâmetro da função, `widths` é onde você especifica o tamanho de cada campo na ordem em que eles ocorrem na linha. Ou seja, o primeiro campo tem tamanho 1, o segundo 5, já o último tem tamanho 2.
+Reparem que o segundo parâmetro da função, `widths` é onde você especifica o tamanho de cada campo na ordem em que eles ocorrem na linha. Ou seja, por exemplo, o primeiro campo tem tamanho 4 e o segundo 11. O `strip.white = TRUE` é a opção para eliminar os espaços em branco que foram incluídos na criação do arquivo para que cada linha tivesse o tamanho total especificado para cada coluna.
 
 O que é esse `c()`? É uma função que cria um vetor. Explicaremos detalhadamente sobre isso em outro post!
 
 E onde está o `header = TRUE`? Geralmente arquivos com campos de tamanho fixo não possuem uma linha indicando o cabeçalho. Como dito, esses arquivos costumam vir acompanhados de um arquivo de layout explicando os dados, inclusive o que cada campo significa.
+
+
+Se olharmos os dados, veremos que o R atribuiu nomes genéricos para as variáveis.
+
+
+{% highlight r %}
+head(dados.fwf)
+{% endhighlight %}
+
+
+
+{% highlight text %}
+##     V1          V2       V3    V4
+## 1 2012 jan-fev-mar Rondônia 8.008
+## 2 2012 abr-mai-jun Rondônia 6.224
+## 3 2012 jul-ago-set Rondônia 5.882
+## 4 2012 out-nov-dez Rondônia 5.274
+## 5 2013 jan-fev-mar Rondônia 6.114
+## 6 2013 abr-mai-jun Rondônia 4.771
+{% endhighlight %}
+
+Para definirmos os nomes das variáveis usaremos o comando `colnames()`. Basicamente, diremos que os nomes das colunas deverão ser os que estão especificados abaixo:
+
+
+{% highlight r %}
+colnames(dados.fwf) <- c('Ano', 'Trimestre', 'UF', 'Taxa_Desemprego')
+head(dados.fwf)
+{% endhighlight %}
+
+
+
+{% highlight text %}
+##    Ano   Trimestre       UF Taxa_Desemprego
+## 1 2012 jan-fev-mar Rondônia           8.008
+## 2 2012 abr-mai-jun Rondônia           6.224
+## 3 2012 jul-ago-set Rondônia           5.882
+## 4 2012 out-nov-dez Rondônia           5.274
+## 5 2013 jan-fev-mar Rondônia           6.114
+## 6 2013 abr-mai-jun Rondônia           4.771
+{% endhighlight %}
 
 # Mais opções na leitura
 
@@ -184,6 +238,12 @@ Existe diversas outras formas de carregar dados. Mas nosso objetivo aqui é apen
 Em breve lançaremos posts explicando leitura de arquivos em excel, arquivos semi-estruturados e arquivos não extruturados.
 
 # Referências:
+
+* [R Data Import/Export](https://cran.r-project.org/doc/manuals/r-release/R-data.pdf)
+* [New packages for reading data into R — fast](http://blog.revolutionanalytics.com/2015/04/new-packages-for-reading-data-into-r-fast.html)
+
+
+
 
 
 
