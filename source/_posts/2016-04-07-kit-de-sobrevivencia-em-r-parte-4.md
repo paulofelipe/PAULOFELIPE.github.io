@@ -22,7 +22,7 @@ Você vai encontrar dados disonbilizados basicamente em três formas básicas: e
 
 ## Dados Estruturados
 
-Basicamente são conjuntos de informações organizadas em colunas (atribuos, variáveis, _features_, etc.) e linhas (registros, itens, observacões, etc.). São dados encontrados em bancos de dados, arquivos com algum tipo de separação entre as colunas, excel, arquivos com campos de tamanho fixo, etc.
+Basicamente são conjuntos de informações organizadas em colunas (atributos, variáveis, _features_, etc.) e linhas (registros, itens, observacões, etc.). São dados encontrados em bancos de dados, arquivos com algum tipo de separação entre as colunas, excel, arquivos com campos de tamanho fixo, etc.
 
 ## Dados não estruturados
 
@@ -41,9 +41,10 @@ Trataremos primeiro dos arquivos estruturados. Em futuros posts vamos abordar os
 (é correto falar de sessão? ou seria melhor "ambiente"?)
 Antes de começar os trabalhos, é uma boa prática ter certeza de que seu ambiente de trabalho está limpo. Um simples comando garante que está tudo limpo pronto para começar:
 
-```{r, eval=FALSE}
+
+{% highlight r %}
  rm(list=ls())
-```
+{% endhighlight %}
 
 Esse comando na verdade está usando duas funções:
 
@@ -59,9 +60,10 @@ Pronto. Seus ambiente está limpo.
 
 O R vai "ler" os dados de algum lugar do seu computador. Normalmente o R inicia lendo em um diretório padrão, mas nem sempre os arquivos estarão nesse mesmo diretório. Para dizer ao R onde ele deve ler os arquivos, usaremos o comando _set working directory_:
 
-```{r, eval=FALSE}
+
+{% highlight r %}
  setwd("Local/Do/Seus/Arquivos/De/Trabalho/")
-```
+{% endhighlight %}
 
 Também pode ser realizado pelos menus do RStudio em `Session > Set Working Directory > Choose Directory...` e escolha a pasta onde seus arquivos de dado estarão. (GIF!)
 
@@ -75,9 +77,9 @@ O R possui algumas funções básicas de carregamento. Essas funções tratam de
 
 Para ficar mais claro, delimitadores podem ser qualquer coisa que seja usada para separar dados. Por exemplo, os arquivos podem ser separados por vígulas ([CSV - Comma-separated values](https://pt.wikipedia.org/wiki/Comma-separated_values)), por ponto e vírgula (`;`), por espaçamento TAB (a tecla TAB do teclado mesmo!), por espaços simples ou qualquer outro tipo de símbolo.
 
-Como dissemos antes, dados estruturados possuem colunas e linhas (ou atributos e registros, ou variáveis e observações... dá na mesma!). O delimitador é uma forma de separar o conteúdo de cada linha em uma coluna específica. Ficará mais claro a seguir.
-
 E quando não existe delimitador, ou seja, quando os campos estão "colados" uns nos outros? Em alguns casos, arquivos são confeccionados com um tamanho fixo para cada coluna (principalmente em arquivos gigantescos!), e cada linha respeita tamanhos específicos para separar os seus registros.
+
+Como dissemos antes, dados estruturados possuem colunas e linhas (ou atributos e registros, ou variáveis e observações... dá na mesma!). O delimitador é uma forma de separar o conteúdo de cada linha em uma coluna específica. Ficará mais claro a seguir.
 
 Para replicar os exemplos abaixo, baixe [este arquivo zip](https://www.dropbox.com/s/4tedgnkd85c5q5s/desemprego_uf_pnad.zip?dl=0) com exemplos de dados em que foram usados diferentes delimitadores. Descompacte o arquivo em alguma pasta do seu computador. Defina esta pasta como o seu diretório de trabalho no RStudio. Além disso, dê uma olhada nos arquivos com o auxílio do bloco de notas ou outro programa para que você tenha ideia como o dado está inicialmente estruturado.
 
@@ -89,44 +91,103 @@ Dividiremos este tópico em duas partes: dados delimitados e dados com campos de
 
 Para importar dados com delimitadores utilizaremos a função `read.table()`. Essa função permite definir qualquer delimitador para a leitura do arquivo, conforme os exemplos abaixo.
 
-```{r, echo = FALSE}
-dados.tab <- read.table('~/Documentos/Dados Exemplos/desemprego_uf_tab.txt', sep = "\t", dec = ",", header = TRUE) # Separado por tabulação
-dados.ponto.virgula <- read.table('~/Documentos/Dados Exemplos/desemprego_uf_ponto_virgula.txt', sep = ";", dec = ",", header = TRUE) # Separado por ;
-dados.espaco <- read.table('~/Documentos/Dados Exemplos/desemprego_uf_espaco.txt', sep = " ", dec = ",", header = TRUE) # Separado por espaço
-```
 
-```{r, eval =  FALSE}
+
+
+{% highlight r %}
 # Separado por tabulação
 dados.tab <- read.table('desemprego_uf_tab.txt', sep = "\t", dec = ",", header = TRUE) 
 # Separado por ;
 dados.ponto.virgula <- read.table('desemprego_uf_ponto_virgula.txt', sep = ";", dec = ",", header = TRUE) 
 # Separado por espaço
 dados.espaco <- read.table('desemprego_uf_espaco.txt', sep = " ", dec = ",", header = TRUE) 
-```
+{% endhighlight %}
 
-Reparem na parte `header = TRUE`, isso significa dizer que a primeira linha do arquivo contem o nome das colunas, ou sejá, não é um dado propriamente dito, e sim um metadado pois é uma informação sobre os registros. Caso seu arquivo não contenha o nome das colunas, basta usar `header = FALSE`.
+Reparem no parâmetro `header = TRUE`, isso significa dizer que a primeira linha do arquivo contem o nome das colunas, ou seja, não é um dado propriamente dito, e sim um metadado pois é uma informação sobre os registros. Caso seu arquivo não contenha o nome das colunas, basta usar `header = FALSE`.
 
-Após o carregamento, vamos usar a função `head()`para ver a "cara" dos nossos dados. Veja que eles são iguais nos três casos. Nessa função, você pode especificar o número de linhas que deseja ver. Por exemplo: `head(dados.tab, 10)`. Para visualizar as últimas linhas, você pode utilizar o `tail()` da mesma forma. Note que o RStudio tem funcionalidades que permitem que você visualize os dados como uma planilha. Basta clicar no nome do objeto que está listado na aba _Environment_.
+Após o carregamento, vamos usar a função `head()`para ver a "cara" dos nossos dados. Veja que eles são iguais nos três casos. Nessa função, você pode especificar o número de linhas que deseja ver. Por exemplo: `head(dados.tab, 10)`. Para visualizar as últimas linhas, você pode utilizar o `tail()` da mesma forma. Note que o RStudio tem funcionalidades que permitem que você visualize os dados como uma planilha. Basta clicar no nome do objeto que está listado na aba _Environment_. (gif)
 
-```{r}
+
+{% highlight r %}
 head(dados.tab)
+{% endhighlight %}
+
+
+
+{% highlight text %}
+##    Ano   Trimestre       UF Taxa_Desemprego
+## 1 2012 jan-fev-mar Rondônia           8.008
+## 2 2012 abr-mai-jun Rondônia           6.224
+## 3 2012 jul-ago-set Rondônia           5.882
+## 4 2012 out-nov-dez Rondônia           5.274
+## 5 2013 jan-fev-mar Rondônia           6.114
+## 6 2013 abr-mai-jun Rondônia           4.771
+{% endhighlight %}
+
+
+
+{% highlight r %}
 head(dados.ponto.virgula)
+{% endhighlight %}
+
+
+
+{% highlight text %}
+##    Ano   Trimestre       UF Taxa_Desemprego
+## 1 2012 jan-fev-mar Rondônia           8.008
+## 2 2012 abr-mai-jun Rondônia           6.224
+## 3 2012 jul-ago-set Rondônia           5.882
+## 4 2012 out-nov-dez Rondônia           5.274
+## 5 2013 jan-fev-mar Rondônia           6.114
+## 6 2013 abr-mai-jun Rondônia           4.771
+{% endhighlight %}
+
+
+
+{% highlight r %}
 head(dados.espaco)
-```
+{% endhighlight %}
+
+
+
+{% highlight text %}
+##    Ano   Trimestre       UF Taxa_Desemprego
+## 1 2012 jan-fev-mar Rondônia           8.008
+## 2 2012 abr-mai-jun Rondônia           6.224
+## 3 2012 jul-ago-set Rondônia           5.882
+## 4 2012 out-nov-dez Rondônia           5.274
+## 5 2013 jan-fev-mar Rondônia           6.114
+## 6 2013 abr-mai-jun Rondônia           4.771
+{% endhighlight %}
+
+
+
+{% highlight r %}
+tail(dados.espaco, 4)
+{% endhighlight %}
+
+
+
+{% highlight text %}
+##      Ano   Trimestre               UF Taxa_Desemprego
+## 429 2015 jan-fev-mar Distrito Federal          10.784
+## 430 2015 abr-mai-jun Distrito Federal           9.627
+## 431 2015 jul-ago-set Distrito Federal          10.258
+## 432 2015 out-nov-dez Distrito Federal           9.707
+{% endhighlight %}
 
 #### Dados com campos de tamanho fixo
 
-Para a leitura desse tipo de arquivo, você precisa saber previamente o tamanho de caracteres reservado para cada campo. Geralmente esse tipo de arquivo vem acompanhando de um arquivo auxiliar explicando o layout dos dados.
+Para a leitura de dados desse tipo, você precisa saber previamente o tamanho de caracteres reservado para cada campo. Geralmente esse tipo de arquivo vem acompanhando de um arquivo auxiliar explicando o layout dos dados.
 
-```{r, echo = FALSE}
-dados.fwf <- read.fwf('~/Documentos/Dados Exemplos/desemprego_uf_fwf.txt', widths = c(4, 11, 19, 6),  header = FALSE,  strip.white = TRUE)
-```
 
-```{r, eval = FALSE}
+
+
+{% highlight r %}
 dados.fwf <- read.fwf('desemprego_uf_fwf.txt', widths = c(4, 11, 19, 6),  header = FALSE,  strip.white = TRUE)
-```
+{% endhighlight %}
 
-Reparem que o segundo parâmetro da função, `widths` é onde você especifica o tamanho de cada campo na ordem em que eles ocorrem na linha. Ou seja, por exemplo, o primeiro campo tem tamanho 4 e o segundo 11. O `strip.white = TRUE` é a opção para eliminar os espaços em branco que foram incluídos na criação do arquivo para que cada linha tivesse o tamanho total especificado para cada coluna.
+Reparem que o segundo parâmetro da função, `widths` é onde você especifica o tamanho de cada campo na ordem em que eles ocorrem na linha. Ou seja, o primeiro campo tem tamanho 4 e o segundo 11. O `strip.white = TRUE` é a opção para eliminar os espaços em branco que foram incluídos na criação do arquivo para que cada linha tivesse o tamanho total especificado para cada coluna.
 
 O que é esse `c()`? É uma função que cria um vetor. Explicaremos detalhadamente sobre isso em outro post!
 
@@ -135,27 +196,54 @@ E onde está o `header = TRUE`? Geralmente arquivos com campos de tamanho fixo n
 
 Se olharmos os dados, veremos que o R atribuiu nomes genéricos para as variáveis.
 
-```{r}
+
+{% highlight r %}
 head(dados.fwf)
-```
+{% endhighlight %}
+
+
+
+{% highlight text %}
+##     V1          V2       V3    V4
+## 1 2012 jan-fev-mar Rondônia 8.008
+## 2 2012 abr-mai-jun Rondônia 6.224
+## 3 2012 jul-ago-set Rondônia 5.882
+## 4 2012 out-nov-dez Rondônia 5.274
+## 5 2013 jan-fev-mar Rondônia 6.114
+## 6 2013 abr-mai-jun Rondônia 4.771
+{% endhighlight %}
 
 Para definirmos os nomes das variáveis usaremos o comando `colnames()`. Basicamente, diremos que os nomes das colunas deverão ser os que estão especificados abaixo:
 
-```{r}
+
+{% highlight r %}
 colnames(dados.fwf) <- c('Ano', 'Trimestre', 'UF', 'Taxa_Desemprego')
 head(dados.fwf)
-```
+{% endhighlight %}
+
+
+
+{% highlight text %}
+##    Ano   Trimestre       UF Taxa_Desemprego
+## 1 2012 jan-fev-mar Rondônia           8.008
+## 2 2012 abr-mai-jun Rondônia           6.224
+## 3 2012 jul-ago-set Rondônia           5.882
+## 4 2012 out-nov-dez Rondônia           5.274
+## 5 2013 jan-fev-mar Rondônia           6.114
+## 6 2013 abr-mai-jun Rondônia           4.771
+{% endhighlight %}
 
 # Mais opções na leitura
 
 Apresentamos as funções básicas de leitura de arquivo com seu uso padrão mais simples. No entanto, existem muitos outros parâmetros que podem ser usados para especificar mais a leitura dos dados. Vale a pena conferir. Para conhecer mais sobre as funções apresentadas, lembrem-se de usar `?`. 
 
-```{r, eval=FALSE}
+
+{% highlight r %}
 ?read.table()
 ?read.fwf()
 ?read.delim()
 ?read.csv()
-```
+{% endhighlight %}
 
 >Dica: Repare que `read.delim()` e `read.csv()` estão na mesma ajuda do `read.table()`. Na verdade todas as 3 funções são a mesma, e podem ser reproduzidas com o `read.table()` apenas mudando alguns parâmetros na chamada da função.
 
@@ -169,15 +257,5 @@ Em breve lançaremos posts explicando leitura de arquivos em excel, arquivos sem
 
 * [R Data Import/Export](https://cran.r-project.org/doc/manuals/r-release/R-data.pdf)
 * [New packages for reading data into R — fast](http://blog.revolutionanalytics.com/2015/04/new-packages-for-reading-data-into-r-fast.html)
-
-
-
-
-
-
-
-
-
-
-
+* [Reading and Importing Files - DataCamp](https://www.datacamp.com/community/tutorials/r-tutorial-read-excel-into-r)
 

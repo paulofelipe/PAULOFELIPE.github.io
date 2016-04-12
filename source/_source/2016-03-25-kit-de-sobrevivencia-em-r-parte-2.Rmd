@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Kit de sobrevivência em R - Parte 2"
+title: "Kit de sobrevivência em R - Parte 2: Operações, Variáveis e Funções"
 date: 2016-04-03 15:20:01 -0300
 comments: true
 categories: [r, básico]
@@ -120,7 +120,7 @@ round(x, 2)
 
 Ou seja, `round` é o nome da função para arredondamento. Já o `x`, a variável que armazena `5.34999`, é o primeiro parâmetro, informando o número que você quer arredondar. E temos o `2` como segundo parâmetro, informando até quantas casas decimais você quer arredondar. 
 
-Como dito, a instalação base do R já vem com algumas funções muito utilizadas. Segue [uma](link funções R base) lista para conhecer melhor cada uma dessas funcões básicas. Na sequência de posts apresentaremos pacotes com muito mais funções importantes disponíveis.
+Como dito, a instalação base do R já vem com algumas funções muito utilizadas. Segue [uma](https://stat.ethz.ch/R-manual/R-devel/library/base/html/00Index.html) lista para conhecer melhor cada uma dessas funcões básicas. Na sequência de posts apresentaremos pacotes com muito mais funções importantes disponíveis.
 
 # Script.R (editor)
 
@@ -143,7 +143,11 @@ total <- x + y
 total
 ```
 
-Agora clique em `Source`. O resultado do seu script irá aparecer no console.  Agora salve o seu script em `File > Save` escolha uma pasta, de um nome e, ao final do nome, escreva `.R`. Pronto. Você criou, executou e salvou um script em R! Agora você pode abrir esse script sempre que você quiser e executá-lo novamente.
+Agora clique em `Source`. O que aconteceu? Você não viu o resultado na tela, mas o R executou todo seu script em memória e carregou as variáveis. Para ver o resultado na tela clique em `Source > Source with echo` (ou o atalho ctrl + shift + enter). O resultado do seu script irá aparecer no console. 
+
+![alt text](/images/source.gif)
+
+Salve o seu script em `File > Save` escolha uma pasta, de um nome e, ao final do nome, escreva `.R`. Pronto. Você criou, executou e salvou um script em R! Você pode abrir esse script sempre que você quiser e executá-lo novamente.
 
 Ao salvar, repare que o formato do arquivo ficou `.R`. Esse é o formato convencionado para scripts em R. 
 

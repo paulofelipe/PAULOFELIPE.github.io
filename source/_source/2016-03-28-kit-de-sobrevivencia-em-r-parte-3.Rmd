@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Kit de Sobrevivência em R - Parte 3"
+title: "Kit de Sobrevivência em R - Parte 3: Pacotes"
 date: 2016-04-03 22:10:52 -0300
 comments: true
 categories: [básico, r]
