@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Kit de sobrevivência em R - Parte 4: Carregando Dados"
-date: 2016-05-07 21:00:00 -0300
+date: 2016-04-12 21:00:00 -0300
 comments: true
 categories: [r, básico]
 published: true
@@ -18,7 +18,7 @@ Eis aqui uma notícia ruim: não existe um padrão dominante para armazenamento 
 
 Ou seja, existem diversas formas de carregar dados para trabalhar com eles no R. Em prol da objetividade, vamos tratar dos casos mais comuns e mais básicos primeiro. Esse assunto pode ser extremamente vasto, então, criaremos primeiro uma base para, em posts futuros, aprofundarmos em fontes de dados mais complexas.
 
-Você vai encontrar dados disonbilizados basicamente em três formas básicas: estruturados, não estruturados e semi-estruturados. 
+De maneira geral, você irá encontrar dados disponibilizados basicamente em três formas básicas: estruturados, não estruturados e semi-estruturados. 
 
 ## Dados Estruturados
 
@@ -32,13 +32,12 @@ Como o nome diz, não tem um estrutura previsível, ou seja, cada arquivo possui
 
 Também possuem estrutura fixa, porém, não seguem o padrão de estrutura linha/coluna, ou seja, é uma estrutura mais complexa e flexível, geralmente hierárquica, estruturada em tags ou marcadores de campos. São exemplos de arquivos semi-estruturados: JSON, XML, HTML, YAML, etc. É o formato mais usado em troca de dados pela internet e consumo de APIs.
 
-Trataremos primeiro dos arquivos estruturados. Em futuros posts vamos abordar os outros tipos, pois são abordagens um puco mais complexa e é sempre bom começar pelo básico!
+Trataremos primeiro dos arquivos estruturados. Em futuros posts vamos abordar os outros tipos, pois são abordagens um pouco mais complexas e é sempre bom começar pelo básico!
 
 # Preparando o ambiente para começar
 
 ### Limpando tudo 
 
-(é correto falar de sessão? ou seria melhor "ambiente"?)
 Antes de começar os trabalhos, é uma boa prática ter certeza de que seu ambiente de trabalho está limpo. Um simples comando garante que está tudo limpo pronto para começar:
 
 
@@ -52,7 +51,7 @@ Esse comando na verdade está usando duas funções:
 
 * `ls()` função para listar os nomes de todos objetos da sessão do R
 
-As duas funções conjugadas dão a ordem de *remover tudo que estiver na lista de objetos da sessão do R.* (acho que isso aqui precisa ser melhor escrito)
+As duas funções conjugadas dão a ordem de *remover tudo que estiver na lista de objetos da sessão do R.* 
 
 Pronto. Seus ambiente está limpo.
 
@@ -65,11 +64,15 @@ O R vai "ler" os dados de algum lugar do seu computador. Normalmente o R inicia 
  setwd("Local/Do/Seus/Arquivos/De/Trabalho/")
 {% endhighlight %}
 
-Também pode ser realizado pelos menus do RStudio em `Session > Set Working Directory > Choose Directory...` e escolha a pasta onde seus arquivos de dado estarão. (GIF!)
+Também pode ser realizado pelos menus do RStudio em `Session > Set Working Directory > Choose Directory...` e escolha a pasta onde seus arquivos de dado estarão. 
+
+![alt Definindo o diretório de trabalho](/images/setwd.gif "Definindo o diretório de trabalho")
+
+Para saber qual o diretório de trabalho está atualmente definido, use o comando `getwd()`.
 
 Caso você não deseje alterar o diretório de trabalho, também há a opção de ser informado o caminho completo do arquivo (caminho absoluto).
 
-Ok! Agora sim
+Ok! Agora sim!
 
 # Tipos de carregamento
 
@@ -105,7 +108,7 @@ dados.espaco <- read.table('desemprego_uf_espaco.txt', sep = " ", dec = ",", hea
 
 Reparem no parâmetro `header = TRUE`, isso significa dizer que a primeira linha do arquivo contem o nome das colunas, ou seja, não é um dado propriamente dito, e sim um metadado pois é uma informação sobre os registros. Caso seu arquivo não contenha o nome das colunas, basta usar `header = FALSE`.
 
-Após o carregamento, vamos usar a função `head()`para ver a "cara" dos nossos dados. Veja que eles são iguais nos três casos. Nessa função, você pode especificar o número de linhas que deseja ver. Por exemplo: `head(dados.tab, 10)`. Para visualizar as últimas linhas, você pode utilizar o `tail()` da mesma forma. Note que o RStudio tem funcionalidades que permitem que você visualize os dados como uma planilha. Basta clicar no nome do objeto que está listado na aba _Environment_. (gif)
+Após o carregamento, vamos usar a função `head()`para ver a "cara" dos nossos dados. Veja que eles são iguais nos três casos. Nessa função, você pode especificar o número de linhas que deseja ver. Por exemplo: `head(dados.tab, 10)`. Para visualizar as últimas linhas, você pode utilizar o `tail()` da mesma forma. Note que o RStudio tem funcionalidades que permitem que você visualize os dados como uma planilha. Basta clicar no nome do objeto que está listado na aba _Environment_.
 
 
 {% highlight r %}
@@ -251,7 +254,7 @@ Apresentamos as funções básicas de leitura de arquivo com seu uso padrão mai
 
 Existe diversas outras formas de carregar dados. Mas nosso objetivo aqui é apenas criar uma introdução para conseguir carregar a grande maioria dos formatos de dados mais comuns.
 
-Em breve lançaremos posts explicando leitura de arquivos em excel, arquivos semi-estruturados e arquivos não extruturados.
+Em breve lançaremos posts explicando leitura de arquivos em excel, arquivos semi-estruturados e arquivos não estruturados.
 
 # Referências:
 
