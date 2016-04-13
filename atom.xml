@@ -4,7 +4,7 @@
   <title><![CDATA[Full Join]]></title>
   <link href="http://fulljoin.com.br/atom.xml" rel="self"/>
   <link href="http://fulljoin.com.br/"/>
-  <updated>2016-04-03T23:23:04-03:00</updated>
+  <updated>2016-04-12T21:33:00-03:00</updated>
   <id>http://fulljoin.com.br/</id>
   <author>
     <name><![CDATA[Full Join]]></name>
@@ -14,7 +14,244 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Kit De Sobrevivência Em R - Parte 3]]></title>
+    <title type="html"><![CDATA[Kit De Sobrevivência Em R - Parte 4: Carregando Dados]]></title>
+    <link href="http://fulljoin.com.br/blog/2016/04/12/kit-de-sobrevivencia-em-r-parte-4/"/>
+    <updated>2016-04-12T21:00:00-03:00</updated>
+    <id>http://fulljoin.com.br/blog/2016/04/12/kit-de-sobrevivencia-em-r-parte-4</id>
+    <content type="html"><![CDATA[<p>Seguindo a sequência do <em>Kit de sobrevivência em R</em>, vamos abordar um pouco sobre uma das partes iniciais de qualquer análise ou trabalho que vá ser feito no R: carregamento e leitura de dados. Nesse post você irá aprender formas básicas de carregar dados e começar os trabalhos.</p>
+
+<!-- More -->
+
+
+<h1>Estrutura dos dados</h1>
+
+<p>Eis aqui uma notícia ruim: não existe um padrão dominante para armazenamento de dados. O que isso significa? Significa que, na vida real, você vai se deparar com os mais diferentes tipos de fontes de dados e mesmo assim vai ter que dar um jeito de analisá-las e estudá-las para concluir seus trabalhos.</p>
+
+<p>Ou seja, existem diversas formas de carregar dados para trabalhar com eles no R. Em prol da objetividade, vamos tratar dos casos mais comuns e mais básicos primeiro. Esse assunto pode ser extremamente vasto, então, criaremos primeiro uma base para, em posts futuros, aprofundarmos em fontes de dados mais complexas.</p>
+
+<p>De maneira geral, você irá encontrar dados disponibilizados basicamente em três formas básicas: estruturados, não estruturados e semi-estruturados.</p>
+
+<h2>Dados Estruturados</h2>
+
+<p>Basicamente são conjuntos de informações organizadas em colunas (atributos, variáveis, <em>features</em>, etc.) e linhas (registros, itens, observacões, etc.). São dados encontrados em bancos de dados, arquivos com algum tipo de separação entre as colunas, excel, arquivos com campos de tamanho fixo, etc.</p>
+
+<h2>Dados não estruturados</h2>
+
+<p>Como o nome diz, não tem um estrutura previsível, ou seja, cada arquivo possui uma forma única de ser carregado e manejado. Geralmente são arquivos com forte teor textual. Podemos citar, por exemplo, emails, twitters, PDFs, imagens, etc. Muito usados em mineração de dados.</p>
+
+<h2>Dados semi-estruturados</h2>
+
+<p>Também possuem estrutura fixa, porém, não seguem o padrão de estrutura linha/coluna, ou seja, é uma estrutura mais complexa e flexível, geralmente hierárquica, estruturada em tags ou marcadores de campos. São exemplos de arquivos semi-estruturados: JSON, XML, HTML, YAML, etc. É o formato mais usado em troca de dados pela internet e consumo de APIs.</p>
+
+<p>Trataremos primeiro dos arquivos estruturados. Em futuros posts vamos abordar os outros tipos, pois são abordagens um pouco mais complexas e é sempre bom começar pelo básico!</p>
+
+<h1>Preparando o ambiente para começar</h1>
+
+<h3>Limpando tudo</h3>
+
+<p>Antes de começar os trabalhos, é uma boa prática ter certeza de que seu ambiente de trabalho está limpo. Um simples comando garante que está tudo limpo pronto para começar:</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">rm</span><span class="p">(</span><span class="n">list</span><span class="o">=</span><span class="n">ls</span><span class="p">())</span></code></pre></div>
+
+
+<p>Esse comando na verdade está usando duas funções:</p>
+
+<ul>
+<li><p><code>rm()</code> função para remover um objeto da sessão do R</p></li>
+<li><p><code>ls()</code> função para listar os nomes de todos objetos da sessão do R</p></li>
+</ul>
+
+
+<p>As duas funções conjugadas dão a ordem de <em>remover tudo que estiver na lista de objetos da sessão do R.</em></p>
+
+<p>Pronto. Seus ambiente está limpo.</p>
+
+<h3>Definindo diretório de trabalho</h3>
+
+<p>O R vai &ldquo;ler&rdquo; os dados de algum lugar do seu computador. Normalmente o R inicia lendo em um diretório padrão, mas nem sempre os arquivos estarão nesse mesmo diretório. Para dizer ao R onde ele deve ler os arquivos, usaremos o comando <em>set working directory</em>:</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">setwd</span><span class="p">(</span><span class="s2">"Local/Do/Seus/Arquivos/De/Trabalho/"</span><span class="p">)</span></code></pre></div>
+
+
+<p>Também pode ser realizado pelos menus do RStudio em <code>Session &gt; Set Working Directory &gt; Choose Directory...</code> e escolha a pasta onde seus arquivos de dado estarão.</p>
+
+<p><img src="http://fulljoin.com.br/images/setwd.gif" title="Definindo o diretório de trabalho" alt="alt Definindo o diretório de trabalho" /></p>
+
+<p>Para saber qual o diretório de trabalho está atualmente definido, use o comando <code>getwd()</code>.</p>
+
+<p>Caso você não deseje alterar o diretório de trabalho, também há a opção de ser informado o caminho completo do arquivo (caminho absoluto).</p>
+
+<p>Ok! Agora sim!</p>
+
+<h1>Tipos de carregamento</h1>
+
+<p>O R possui algumas funções básicas de carregamento. Essas funções tratam de alguns tipos de arquivo, basicamente diferenciados pelo <em>delimitador</em>. Outro aspecto importante é que essas funções básicas pressumpõem que cada linha representa um novo registro de dados.</p>
+
+<p>Para ficar mais claro, delimitadores podem ser qualquer coisa que seja usada para separar dados. Por exemplo, os arquivos podem ser separados por vígulas (<a href="https://pt.wikipedia.org/wiki/Comma-separated_values">CSV - Comma-separated values</a>), por ponto e vírgula (<code>;</code>), por espaçamento TAB (a tecla TAB do teclado mesmo!), por espaços simples ou qualquer outro tipo de símbolo.</p>
+
+<p>E quando não existe delimitador, ou seja, quando os campos estão &ldquo;colados&rdquo; uns nos outros? Em alguns casos, arquivos são confeccionados com um tamanho fixo para cada coluna (principalmente em arquivos gigantescos!), e cada linha respeita tamanhos específicos para separar os seus registros.</p>
+
+<p>Como dissemos antes, dados estruturados possuem colunas e linhas (ou atributos e registros, ou variáveis e observações&hellip; dá na mesma!). O delimitador é uma forma de separar o conteúdo de cada linha em uma coluna específica. Ficará mais claro a seguir.</p>
+
+<p>Para replicar os exemplos abaixo, baixe <a href="https://www.dropbox.com/s/4tedgnkd85c5q5s/desemprego_uf_pnad.zip?dl=0">este arquivo zip</a> com exemplos de dados em que foram usados diferentes delimitadores. Descompacte o arquivo em alguma pasta do seu computador. Defina esta pasta como o seu diretório de trabalho no RStudio. Além disso, dê uma olhada nos arquivos com o auxílio do bloco de notas ou outro programa para que você tenha ideia como o dado está inicialmente estruturado.</p>
+
+<h1>Carregando os dados</h1>
+
+<p>Dividiremos este tópico em duas partes: dados delimitados e dados com campos de tamanho fixo.</p>
+
+<h4>Dados com delimitadores</h4>
+
+<p>Para importar dados com delimitadores utilizaremos a função <code>read.table()</code>. Essa função permite definir qualquer delimitador para a leitura do arquivo, conforme os exemplos abaixo.</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Separado por tabulação</span>
+<span class="n">dados.tab</span> <span class="o">&lt;-</span> <span class="n">read.table</span><span class="p">(</span><span class="s1">'desemprego_uf_tab.txt'</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s2">"\t"</span><span class="p">,</span> <span class="n">dec</span> <span class="o">=</span> <span class="s2">","</span><span class="p">,</span> <span class="n">header</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span> 
+<span class="c1"># Separado por ;</span>
+<span class="n">dados.ponto.virgula</span> <span class="o">&lt;-</span> <span class="n">read.table</span><span class="p">(</span><span class="s1">'desemprego_uf_ponto_virgula.txt'</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s2">";"</span><span class="p">,</span> <span class="n">dec</span> <span class="o">=</span> <span class="s2">","</span><span class="p">,</span> <span class="n">header</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span> 
+<span class="c1"># Separado por espaço</span>
+<span class="n">dados.espaco</span> <span class="o">&lt;-</span> <span class="n">read.table</span><span class="p">(</span><span class="s1">'desemprego_uf_espaco.txt'</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s2">" "</span><span class="p">,</span> <span class="n">dec</span> <span class="o">=</span> <span class="s2">","</span><span class="p">,</span> <span class="n">header</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span></code></pre></div>
+
+
+<p>Reparem no parâmetro <code>header = TRUE</code>, isso significa dizer que a primeira linha do arquivo contem o nome das colunas, ou seja, não é um dado propriamente dito, e sim um metadado pois é uma informação sobre os registros. Caso seu arquivo não contenha o nome das colunas, basta usar <code>header = FALSE</code>.</p>
+
+<p>Após o carregamento, vamos usar a função <code>head()</code>para ver a &ldquo;cara&rdquo; dos nossos dados. Veja que eles são iguais nos três casos. Nessa função, você pode especificar o número de linhas que deseja ver. Por exemplo: <code>head(dados.tab, 10)</code>. Para visualizar as últimas linhas, você pode utilizar o <code>tail()</code> da mesma forma. Note que o RStudio tem funcionalidades que permitem que você visualize os dados como uma planilha. Basta clicar no nome do objeto que está listado na aba <em>Environment</em>.</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">head</span><span class="p">(</span><span class="n">dados.tab</span><span class="p">)</span></code></pre></div>
+
+
+
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">##    Ano   Trimestre       UF Taxa_Desemprego
+## 1 2012 jan-fev-mar Rondônia           8.008
+## 2 2012 abr-mai-jun Rondônia           6.224
+## 3 2012 jul-ago-set Rondônia           5.882
+## 4 2012 out-nov-dez Rondônia           5.274
+## 5 2013 jan-fev-mar Rondônia           6.114
+## 6 2013 abr-mai-jun Rondônia           4.771</code></pre></div>
+
+
+
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">head</span><span class="p">(</span><span class="n">dados.ponto.virgula</span><span class="p">)</span></code></pre></div>
+
+
+
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">##    Ano   Trimestre       UF Taxa_Desemprego
+## 1 2012 jan-fev-mar Rondônia           8.008
+## 2 2012 abr-mai-jun Rondônia           6.224
+## 3 2012 jul-ago-set Rondônia           5.882
+## 4 2012 out-nov-dez Rondônia           5.274
+## 5 2013 jan-fev-mar Rondônia           6.114
+## 6 2013 abr-mai-jun Rondônia           4.771</code></pre></div>
+
+
+
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">head</span><span class="p">(</span><span class="n">dados.espaco</span><span class="p">)</span></code></pre></div>
+
+
+
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">##    Ano   Trimestre       UF Taxa_Desemprego
+## 1 2012 jan-fev-mar Rondônia           8.008
+## 2 2012 abr-mai-jun Rondônia           6.224
+## 3 2012 jul-ago-set Rondônia           5.882
+## 4 2012 out-nov-dez Rondônia           5.274
+## 5 2013 jan-fev-mar Rondônia           6.114
+## 6 2013 abr-mai-jun Rondônia           4.771</code></pre></div>
+
+
+
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">tail</span><span class="p">(</span><span class="n">dados.espaco</span><span class="p">,</span> <span class="m">4</span><span class="p">)</span></code></pre></div>
+
+
+
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">##      Ano   Trimestre               UF Taxa_Desemprego
+## 429 2015 jan-fev-mar Distrito Federal          10.784
+## 430 2015 abr-mai-jun Distrito Federal           9.627
+## 431 2015 jul-ago-set Distrito Federal          10.258
+## 432 2015 out-nov-dez Distrito Federal           9.707</code></pre></div>
+
+
+<h4>Dados com campos de tamanho fixo</h4>
+
+<p>Para a leitura de dados desse tipo, você precisa saber previamente o tamanho de caracteres reservado para cada campo. Geralmente esse tipo de arquivo vem acompanhando de um arquivo auxiliar explicando o layout dos dados.</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">dados.fwf</span> <span class="o">&lt;-</span> <span class="n">read.fwf</span><span class="p">(</span><span class="s1">'desemprego_uf_fwf.txt'</span><span class="p">,</span> <span class="n">widths</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="m">4</span><span class="p">,</span> <span class="m">11</span><span class="p">,</span> <span class="m">19</span><span class="p">,</span> <span class="m">6</span><span class="p">),</span>  <span class="n">header</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">,</span>  <span class="n">strip.white</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span></code></pre></div>
+
+
+<p>Reparem que o segundo parâmetro da função, <code>widths</code> é onde você especifica o tamanho de cada campo na ordem em que eles ocorrem na linha. Ou seja, o primeiro campo tem tamanho 4 e o segundo 11. O <code>strip.white = TRUE</code> é a opção para eliminar os espaços em branco que foram incluídos na criação do arquivo para que cada linha tivesse o tamanho total especificado para cada coluna.</p>
+
+<p>O que é esse <code>c()</code>? É uma função que cria um vetor. Explicaremos detalhadamente sobre isso em outro post!</p>
+
+<p>E onde está o <code>header = TRUE</code>? Geralmente arquivos com campos de tamanho fixo não possuem uma linha indicando o cabeçalho. Como dito, esses arquivos costumam vir acompanhados de um arquivo de layout explicando os dados, inclusive o que cada campo significa.</p>
+
+<p>Se olharmos os dados, veremos que o R atribuiu nomes genéricos para as variáveis.</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">head</span><span class="p">(</span><span class="n">dados.fwf</span><span class="p">)</span></code></pre></div>
+
+
+
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">##     V1          V2       V3    V4
+## 1 2012 jan-fev-mar Rondônia 8.008
+## 2 2012 abr-mai-jun Rondônia 6.224
+## 3 2012 jul-ago-set Rondônia 5.882
+## 4 2012 out-nov-dez Rondônia 5.274
+## 5 2013 jan-fev-mar Rondônia 6.114
+## 6 2013 abr-mai-jun Rondônia 4.771</code></pre></div>
+
+
+<p>Para definirmos os nomes das variáveis usaremos o comando <code>colnames()</code>. Basicamente, diremos que os nomes das colunas deverão ser os que estão especificados abaixo:</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">colnames</span><span class="p">(</span><span class="n">dados.fwf</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="n">c</span><span class="p">(</span><span class="s1">'Ano'</span><span class="p">,</span> <span class="s1">'Trimestre'</span><span class="p">,</span> <span class="s1">'UF'</span><span class="p">,</span> <span class="s1">'Taxa_Desemprego'</span><span class="p">)</span>
+<span class="n">head</span><span class="p">(</span><span class="n">dados.fwf</span><span class="p">)</span></code></pre></div>
+
+
+
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">##    Ano   Trimestre       UF Taxa_Desemprego
+## 1 2012 jan-fev-mar Rondônia           8.008
+## 2 2012 abr-mai-jun Rondônia           6.224
+## 3 2012 jul-ago-set Rondônia           5.882
+## 4 2012 out-nov-dez Rondônia           5.274
+## 5 2013 jan-fev-mar Rondônia           6.114
+## 6 2013 abr-mai-jun Rondônia           4.771</code></pre></div>
+
+
+<h1>Mais opções na leitura</h1>
+
+<p>Apresentamos as funções básicas de leitura de arquivo com seu uso padrão mais simples. No entanto, existem muitos outros parâmetros que podem ser usados para especificar mais a leitura dos dados. Vale a pena conferir. Para conhecer mais sobre as funções apresentadas, lembrem-se de usar <code>?</code>.</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="o">?</span><span class="n">read.table</span><span class="p">()</span>
+<span class="o">?</span><span class="n">read.fwf</span><span class="p">()</span>
+<span class="o">?</span><span class="n">read.delim</span><span class="p">()</span>
+<span class="o">?</span><span class="n">read.csv</span><span class="p">()</span></code></pre></div>
+
+
+<blockquote><p>Dica: Repare que <code>read.delim()</code> e <code>read.csv()</code> estão na mesma ajuda do <code>read.table()</code>. Na verdade todas as 3 funções são a mesma, e podem ser reproduzidas com o <code>read.table()</code> apenas mudando alguns parâmetros na chamada da função.</p></blockquote>
+
+<h1>Outras formas de carregar dados</h1>
+
+<p>Existe diversas outras formas de carregar dados. Mas nosso objetivo aqui é apenas criar uma introdução para conseguir carregar a grande maioria dos formatos de dados mais comuns.</p>
+
+<p>Em breve lançaremos posts explicando leitura de arquivos em excel, arquivos semi-estruturados e arquivos não estruturados.</p>
+
+<h1>Referências:</h1>
+
+<ul>
+<li><a href="https://cran.r-project.org/doc/manuals/r-release/R-data.pdf">R Data Import/Export</a></li>
+<li><a href="http://blog.revolutionanalytics.com/2015/04/new-packages-for-reading-data-into-r-fast.html">New packages for reading data into R — fast</a></li>
+<li><a href="https://www.datacamp.com/community/tutorials/r-tutorial-read-excel-into-r">Reading and Importing Files - DataCamp</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Kit De Sobrevivência Em R - Parte 3: Pacotes]]></title>
     <link href="http://fulljoin.com.br/blog/2016/04/03/kit-de-sobrevivencia-em-r-parte-3/"/>
     <updated>2016-04-03T22:10:52-03:00</updated>
     <id>http://fulljoin.com.br/blog/2016/04/03/kit-de-sobrevivencia-em-r-parte-3</id>
@@ -114,7 +351,7 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Kit De Sobrevivência Em R - Parte 2]]></title>
+    <title type="html"><![CDATA[Kit De Sobrevivência Em R - Parte 2: Operações, Variáveis E Funções]]></title>
     <link href="http://fulljoin.com.br/blog/2016/04/03/kit-de-sobrevivencia-em-r-parte-2/"/>
     <updated>2016-04-03T15:20:01-03:00</updated>
     <id>http://fulljoin.com.br/blog/2016/04/03/kit-de-sobrevivencia-em-r-parte-2</id>
@@ -298,7 +535,7 @@
 
 <p>Ou seja, <code>round</code> é o nome da função para arredondamento. Já o <code>x</code>, a variável que armazena <code>5.34999</code>, é o primeiro parâmetro, informando o número que você quer arredondar. E temos o <code>2</code> como segundo parâmetro, informando até quantas casas decimais você quer arredondar.</p>
 
-<p>Como dito, a instalação base do R já vem com algumas funções muito utilizadas. Segue <a href="link%20fun%C3%A7%C3%B5es%20R%20base">uma</a> lista para conhecer melhor cada uma dessas funcões básicas. Na sequência de posts apresentaremos pacotes com muito mais funções importantes disponíveis.</p>
+<p>Como dito, a instalação base do R já vem com algumas funções muito utilizadas. Segue <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/00Index.html">uma</a> lista para conhecer melhor cada uma dessas funcões básicas. Na sequência de posts apresentaremos pacotes com muito mais funções importantes disponíveis.</p>
 
 <h1>Script.R (editor)</h1>
 
@@ -325,7 +562,11 @@
 <div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 6</code></pre></div>
 
 
-<p>Agora clique em <code>Source</code>. O resultado do seu script irá aparecer no console.  Agora salve o seu script em <code>File &gt; Save</code> escolha uma pasta, de um nome e, ao final do nome, escreva <code>.R</code>. Pronto. Você criou, executou e salvou um script em R! Agora você pode abrir esse script sempre que você quiser e executá-lo novamente.</p>
+<p>Agora clique em <code>Source</code>. O que aconteceu? Você não viu o resultado na tela, mas o R executou todo seu script em memória e carregou as variáveis. Para ver o resultado na tela clique em <code>Source &gt; Source with echo</code> (ou o atalho ctrl + shift + enter). O resultado do seu script irá aparecer no console.</p>
+
+<p><img src="http://fulljoin.com.br/images/source.gif" alt="alt text" /></p>
+
+<p>Salve o seu script em <code>File &gt; Save</code> escolha uma pasta, de um nome e, ao final do nome, escreva <code>.R</code>. Pronto. Você criou, executou e salvou um script em R! Você pode abrir esse script sempre que você quiser e executá-lo novamente.</p>
 
 <p>Ao salvar, repare que o formato do arquivo ficou <code>.R</code>. Esse é o formato convencionado para scripts em R.</p>
 
@@ -347,7 +588,7 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Kit De Sobrevivência Em R - Parte 1]]></title>
+    <title type="html"><![CDATA[Kit De Sobrevivência Em R - Parte 1: Visão Geral E Instalação]]></title>
     <link href="http://fulljoin.com.br/blog/2016/03/23/kit-de-sobrevivencia-em-r-parte-1/"/>
     <updated>2016-03-23T21:14:06-03:00</updated>
     <id>http://fulljoin.com.br/blog/2016/03/23/kit-de-sobrevivencia-em-r-parte-1</id>
