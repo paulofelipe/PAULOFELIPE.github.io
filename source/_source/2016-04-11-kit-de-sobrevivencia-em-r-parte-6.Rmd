@@ -13,7 +13,7 @@ if(file.exists("~/Documentos/Dados Exemplos/desemprego_uf_espaco.txt")){
 }
 ```
 
-No último post, você aprendeu um pouco sobre os tipos de dados e como realizar algumas transformações. Neste post, trataremos um pouco sobre estruturas de controles. Estruturas de controles serão bastantes usadas durante o procesos de análise de dados, sendo importante que você domine esse tópico.
+No último post, você aprendeu um pouco sobre os tipos de dados e como realizar algumas transformações. Neste post, trataremos um pouco sobre estruturas de controles. Estruturas de controles serão bastantes usadas durante o processo de análise de dados, sendo importante que você domine esse tópico.
 
 <!-- More -->
 
