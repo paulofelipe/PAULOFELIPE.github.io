@@ -1,7 +1,7 @@
 ---
 layout: post
 
-title: "Aplicando ciência de dados parte 1 - Workflow"
+title: "Aplicando ciência de dados - parte 1: Workflow"
 date: 2016-03-14 00:11:56 -0300
 comments: true
 categories: [conceito, workflow, equipe]

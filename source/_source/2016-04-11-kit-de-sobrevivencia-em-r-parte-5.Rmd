@@ -15,15 +15,15 @@ Você já aprendeu como carregar um arquivo de dados no R para começar a trabal
 
 Durante o processo de análise de dados é bastante comum precisar de mais informações que não estão explícitas em sua base de dados, ou seja, informações além das que estão disponíveis nas linhas e colunas. Transformar os dados permite extrair, ajustar e até mesmo criar informações com seus dados, criando novas colunas, novas linhas, ou quem sabe um outro arquivo de dados derivado do original.
 
-Infelizmente aqui vai uma notícia ruim: não existe padrão algum para transformação de dados, vai depender muito do design dos seus dados, das necessidades da sua análise e da sua criatividade!
+Infelizmente, aqui vai uma notícia ruim: não existe padrão algum para transformação de dados, vai depender muito do design dos seus dados, das necessidades da sua análise e da sua criatividade!
 
 A notícia boa é que, quanto mais você conhecer formas de transformar os dados e quanto mais dominar os tipos de dados existentes em R, a tarefa de transformação de dados será mais fácil e até mais divertida.
 
 # Tipos de dados
 
-Existem diversos tipos de dados em R, alguns mais básicos e outros mais complexos (não em termos de dificuldade, e sim de estrutura). Vamos tentar apresentr alguns na prática.
+Existem diversos tipos de dados em R, alguns mais básicos e outros mais complexos (não em termos de dificuldade, e sim de estrutura). Vamos tentar apresentr alguns na prática ao longo do post.
 
-Lembra dos dados utilizados no último post ****** LINK !!! *****? Vamos usá-los novamente como exemplo. Lembre-se de informar ao R o local onde o arquivo está para que ele possa ler. 
+Lembra dos dados utilizados no [último post](2016-04-07-kit-de-sobrevivencia-em-r-parte-4)? Vamos usá-los novamente como exemplo. Lembre-se de informar ao R o local onde o arquivo está para que ele possa ler. 
 
 Carregue algum dos arquivos de forma apropriada (todos arquivos tem o mesmo conteúdo). Como exemplo, escolhemos o arquivo com colunas delimitadas por `;`.
 
@@ -35,9 +35,9 @@ dados <- read.table('~/Documents/Dados Exemplos/desemprego_uf_ponto_virgula.txt'
 dados <- read.table('desemprego_uf_ponto_virgula.txt', sep = ";", dec = ",", header = TRUE)  
 ```
 
-******** Explicar novamente do que se tratam os dados (contexto)? Será? *********
+Esses dados trazem informações trimestrais ao longo dos anos da taxa de desemprego das Unidades da Federação brasileira.
 
-No post anterior conseguimos dar uma olhada superficial nos dados usando `head()` e `tail()`. Para começar a transformar os dados precisaremos aprofundar um pouco mais. Usaremos então o `class()` e o `str()` para investigar nossos dados.
+No post anterior conseguimos dar uma olhada superficial usando `head()` e `tail()`. Para começar a transformar os dados precisaremos aprofundar um pouco mais. Usaremos então o `class()` e o `str()` para investigar melhor nossos dados.
 
 ```{r, eval = TRUE}
 class(dados)
@@ -64,7 +64,7 @@ Trata-se de um tipo de dado básico que representa um número inteiro. É tão s
 
 É um tipo de dado complexo que representa categorias (levels). Tentando ser o máximo simplesta, é uma lista de categorias enumeradas, ou seja, é uma sequência de informações texutais (palavras) representadas por um número. Você vê as categorias e o R "vê" os números que representam essas categorias. Esse tipo é muito útil para modelos estatísticos.
 
-Parece um pouco confuso de entender, mas factor é a forma mais eficiente do R interpretar uma sequência de palavras.
+Parece um pouco confuso de entender, mas factor é a forma mais eficiente do R interpretar uma sequência de palavras. Veja o resultado do comando abaixo:
 
 ```{r, eval = TRUE}
 unique(dados$UF)
@@ -75,21 +75,33 @@ A visualização que o R fornece não ajuda muito, mas repare que cada categoria
 
 Então podemos dizer que nossa coluna UF é um factor de 27 levels, e Trimestre é um factor de 4 levels.
 
-Mas o que é esse cifrão `$`? É uma notação do R para quando você quer visualizar ou trabalhar com uma coluna (variável) de um data.frame. Experimente: `dados$Ano`, `dados$UF`, `dados$Trimestre` e `dados$Taxa_Desemprego`.
+Mas o que é esse cifrão `$`? É uma notação do R para quando você quer visualizar ou trabalhar com uma coluna (variável) de um data.frame. Você informa o nome do data frame, o $ e em seguida o nome da coluna que você quer. Experimente: `dados$Ano`, `dados$UF`, `dados$Trimestre` e `dados$Taxa_Desemprego`. Essa notação é muito importante e você a utilizará bastante.
 
 E o que seria essa função `unique()`. É uma função básica do R para listar todos os valores de uma variável sem repetição. Olhando todos os dados em `dados$UF` você vai reparar que os nomes aparecem várias vezes em várias linhas, o `unique()` lista a ocorrência única de cada nome.
 
 ### Num
 
-Continuando a exploração dos tipos, temos o `num`, um tipo básico para representar números decimais.
+Continuando a exploração dos tipos, temos o `num`, um tipo básico capaz de representar números decimais. O tipo `num` também consegue representar inteiros.
 
 # Transformações
 
-Tendo consciencia dos tipos de dados em nosso data frame já é possível começar a imaginar as análises que podem ser feitas. 
+Tendo consciencia dos tipos de dados que compõem nosso data frame já é possível começar a imaginar as análises que podem ser feitas. 
 
-Vamos supor que surgiu a necessidade de analisarmos os dados de desemprego por semestre. Podemos observar nos dados que temos informações explícitas por trimestre e de certa forma por ano também. Para começarmos os cálculos então seria interessanter ter uma variável indicando o semestre.
+Vamos supor que surgiu a necessidade de analisarmos os dados de desemprego por semestre. Podemos observar nos dados que temos informações explícitas por trimestre e de certa forma por ano também. Para começarmos os cálculos então seria interessanter ter uma variável (coluna) indicando o semestre.
 
-Ora, essa informação já existe no conjunto de dados, afinal, temos trimestres e anos, porém, não está explícita em nenhuma variável. Então vamos transformar os dados e criar essa variável!
+Ora, essa informação já existe no conjunto de dados, afinal, temos trimestres e anos. Porém, não está explícita em nenhuma variável. Então vamos transformar os dados e criar essa variável!
+
+Primeiramente vamos criar a variável. A forma é muito semelhante à criação de uma variável normal, mas vamos usar o `$` para indicar que estamos criando uma variável dentro do data frame.
+
+```{r}
+dados$Semestre <- 1
+head(dados, 4)
+head(dados, 4)
+```
+
+Acabamos de criar uma nova coluna e atribuir 1 a todas as linhas dessa coluna. Não é exatamente o que queremos. Queremos atribuir 1 para primeiro semestre e 2 para segundo semestre. Para conseguir isso precisaremos atribuir a variável segundo algumas condicões. 
+
+Ou seja, quando for trimestre `jan-fev-mar` ou `abr-mai-jun` vamos atribuir 1, quando for o trimestre `jul-ago-set` ou `out-nov-dez` vamos atribuir 2:
 
 ```{r}
 dados$Semestre[dados$Trimestre == 'jan-fev-mar' | dados$Trimestre == 'abr-mai-jun'] <- 1
@@ -97,10 +109,28 @@ dados$Semestre[dados$Trimestre == 'jul-ago-set' | dados$Trimestre == 'out-nov-de
 head(dados)
 tail(dados)
 ```
-# EXPLICAÇ˜OES!!!
 
+Repare que dessa vez que estamos usando `[ ]`. Os colchetes servem para fazermos filtragens "dentro" de um data frame, ou seja, quando queremos apenas um conjunto específico de linhas do data frame, colocamos as condições necessárias para fazer a filtragem dentro do colchete. E nesse caso queremos atribuir 1 ou 2 a uma quantidade de linhas específicas.
 
-Agora vamos supor também que, além de analisar os dados por UF, que extão explícitos na variável dados$UF, queremos também analisar o desemprego por Reigão (Norte, Sul, Nordeste, Centro Oeste e Sudeste)
+Quando falamos de filtragens, necessariamente falamos também de operadores lógicos. Operações lógicas são operações comparativas que respondem tipos booleanos: TRUE (verdadeir) ou FALSE (false).
+
+Vamos com calma! Faça um pequeno experimento com o que tem dentro dos colchetes. Digite o seguinte comando: 
+
+```{r, eval = FALSE}
+dados$Trimestre == 'jan-fev-mar' | dados$Trimestre == 'abr-mai-jun'
+```
+
+O R faz essa comparação em todas as linhas e te retorna dizendo exatamente em quais linhas essa condição é verdadeira ou falsa. Esse comando vai retornar verdadeiro para todas as linhas em que trimestre for igual à `jan-fev-mar` **OU** `abr-mai-jun`. 
+
+Para entender melhor, segue alguns operadores lógicos e seus significados:
+
+- `==` igual a: compara dois objetos e se forem iguais, retorna TRUE, caso contrário, FALSE;
+- `|` ou (or): compara dois objetos, se um dos dois for TRUE, retorna TRUE, se os dois forem FASE, retorna FALSE;
+- `&` e (and): compara dois objetos, se os dois forem TRUE, retorna TRUE, se um dos dois ou os dois forem FALSE, retorna FALSE;
+
+Ao longo dos próximos post vamos trabalhar melhor os operadores lógicos e as filtragens, não se preocupe.
+
+Seguindo com as transformações, vamos supor também que, além de analisar os dados por UF, que extão explícitos na variável dados$UF, queremos também analisar o desemprego por Reigão (Norte, Sul, Nordeste, Centro Oeste e Sudeste)
 
 ```{r}
 dados$Regiao[dados$UF %in% c('Rondônia', 'Acre', 'Amazonas', 'Roraima', 'Pará', 'Amapá', 'Tocantins')] <- 'Norte' 
@@ -112,16 +142,20 @@ head(dados, 15)
 tail(dados)
 ```
 
-# EXPLICAÇ˜OES!!!
+Novamente estamos usando os colchetes para fazer uma filtragem e atribuir `Norte`, `Nordeste`, `Sudeste`, `Sul` e `Centro Oeste` apenas às linhas específicas em que o filtro dentro dos colchetes retorne TRUE. 
 
-Imagine que sua equipe está planejando estimar um modelo com base nesses dados e por algum motivo específico surgiu a necessidade de usar a raiz quadrada e o logarítmo da taxa de desemprego. Não são informações explícitas mas certamente podemos produzir com o que já temos.
+Nesse caso estamos usando o operador `%in%`, que faz uma comparação para ver se o objeto está dentro de uma listagem de outros objetos. Nas linhas em que `dados$UF` estiver "dentro" da listagem de UFs, o filtro retornará TRUE.
+
+
+Para finalizar os exemplos de transformações, vamos tentar uma abordagem com funções matemáticas. Imagine que sua equipe está planejando estimar um modelo com base nesses dados e por algum motivo específico surgiu a necessidade de usar a raiz quadrada e o logarítmo da taxa de desemprego. Não são informações explícitas mas certamente podemos produzir com o que já temos.
 
 ```{r}
 dados$Log_Taxa_Desemprego <- log(dados$Taxa_Desemprego)
 dados$Sqrt_Taxa_Desemprego <- sqrt(dados$Taxa_Desemprego)
-head(dados, 20)
+head(dados, 15)
 ```
-# EXPLICAÇ˜OES!!!
+
+Estamos criando duas novas variáveis em nosso data frame, uma armazenando o `log()` e outra a raiz quadrada `sqrt()`. A função será aplica a todas as linhas do data frame, pois não estamos usando nenhum filtro. Em cada linha será usado o valor do campo `Taxa_Desemprego` como parâmetro das funções.
 
 # Referências:
 
