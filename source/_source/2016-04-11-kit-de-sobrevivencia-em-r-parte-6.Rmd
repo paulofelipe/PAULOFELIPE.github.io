@@ -4,7 +4,7 @@ title: "Kit de sobrevivência em R - Parte 6: Estruturas de Controle"
 date: 2016-05-18 20:04:00 -0300
 comments: true
 categories: [r, básico, introdução r]
-published: false
+published: true
 ---
   
 ```{r, echo = FALSE}

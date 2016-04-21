@@ -93,9 +93,16 @@ Dividiremos este tópico em duas partes: dados delimitados e dados com campos de
 Para importar dados com delimitadores utilizaremos a função `read.table()`. Essa função permite definir qualquer delimitador para a leitura do arquivo, conforme os exemplos abaixo.
 
 ```{r, echo = FALSE}
+if(file.exists('~/Documentos/Dados Exemplos/desemprego_uf_tab.txt')){
 dados.tab <- read.table('~/Documentos/Dados Exemplos/desemprego_uf_tab.txt', sep = "\t", dec = ",", header = TRUE) # Separado por tabulação
 dados.ponto.virgula <- read.table('~/Documentos/Dados Exemplos/desemprego_uf_ponto_virgula.txt', sep = ";", dec = ",", header = TRUE) # Separado por ;
 dados.espaco <- read.table('~/Documentos/Dados Exemplos/desemprego_uf_espaco.txt', sep = " ", dec = ",", header = TRUE) # Separado por espaço
+}else{
+dados.tab <- read.table('~/Documents/Dados Exemplos/desemprego_uf_tab.txt', sep = "\t", dec = ",", header = TRUE) # Separado por tabulação
+dados.ponto.virgula <- read.table('~/Documents/Dados Exemplos/desemprego_uf_ponto_virgula.txt', sep = ";", dec = ",", header = TRUE) # Separado por ;
+dados.espaco <- read.table('~/Documents/Dados Exemplos/desemprego_uf_espaco.txt', sep = " ", dec = ",", header = TRUE) # Separado por espaço
+}
+
 ```
 
 ```{r, eval =  FALSE}
@@ -123,7 +130,11 @@ tail(dados.espaco, 4)
 Para a leitura de dados desse tipo, você precisa saber previamente o tamanho de caracteres reservado para cada campo. Geralmente esse tipo de arquivo vem acompanhando de um arquivo auxiliar explicando o layout dos dados.
 
 ```{r, echo = FALSE}
-dados.fwf <- read.fwf('~/Documentos/Dados Exemplos/desemprego_uf_fwf.txt', widths = c(4, 11, 19, 6),  header = FALSE,  strip.white = TRUE)
+if(file.exists('~/Documentos/Dados Exemplos/desemprego_uf_fwf.txt')){
+  dados.fwf <- read.fwf('~/Documentos/Dados Exemplos/desemprego_uf_fwf.txt', widths = c(4, 11, 19, 6),  header = FALSE,  strip.white = TRUE)
+}else{
+  dados.fwf <- read.fwf('~/Documents/Dados Exemplos/desemprego_uf_fwf.txt', widths = c(4, 11, 19, 6),  header = FALSE,  strip.white = TRUE)
+}
 ```
 
 ```{r, eval = FALSE}

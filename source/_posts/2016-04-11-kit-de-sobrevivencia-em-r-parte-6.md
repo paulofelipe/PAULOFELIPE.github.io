@@ -4,7 +4,7 @@ title: "Kit de sobrevivência em R - Parte 6: Estruturas de Controle"
 date: 2016-05-18 20:04:00 -0300
 comments: true
 categories: [r, básico, introdução r]
-published: false
+published: true
 ---
   
 
@@ -32,12 +32,6 @@ Para facilitar, iremos criar um novo data.frame em que estejam selecionadas some
 desemprego.uf.2015 <- desemprego.uf[desemprego.uf$Ano == 2015,]
 {% endhighlight %}
 
-
-
-{% highlight text %}
-## Error in eval(expr, envir, enclos): objeto 'desemprego.uf' não encontrado
-{% endhighlight %}
-
 Perceba que no código base do R, para selecionar linhas de um data.frame, você utiliza o `[,]`. A vírgula divide as duas dimensões do data.frame. Assim, se o desejo é selecionar linhas, são utilizadas condições antes da vírgula. Para selecionar colunas, utiliza-se códigos após a vírgula. Funciona de maneira similar a uma matriz. No entanto, esta não é a única maneira de realizar esse filtro nos dados. Por exemplo, você poderia obter o mesmo resultado usando a função `subset()`. Dê uma olhadinha no help.
 
 Além disso, iremos criar um vetor com os trimestres que serão usados como base para realização do loop.
@@ -46,24 +40,14 @@ Além disso, iremos criar um vetor com os trimestres que serão usados como base
 {% highlight r %}
 # Selecionar valores únicos da coluna Trimestre
 trimestre <- unique(desemprego.uf.2015$Trimestre)
-{% endhighlight %}
-
-
-
-{% highlight text %}
-## Error in unique(desemprego.uf.2015$Trimestre): objeto 'desemprego.uf.2015' não encontrado
-{% endhighlight %}
-
-
-
-{% highlight r %}
 trimestre
 {% endhighlight %}
 
 
 
 {% highlight text %}
-## Error in eval(expr, envir, enclos): objeto 'trimestre' não encontrado
+## [1] jan-fev-mar abr-mai-jun jul-ago-set out-nov-dez
+## Levels: abr-mai-jun jan-fev-mar jul-ago-set out-nov-dez
 {% endhighlight %}
 
 Antes de criar o plot, vamos realizar um exemplo simples para exemplificar como `for()` funciona.
@@ -77,7 +61,10 @@ for(i in trimestre){
 
 
 {% highlight text %}
-## Error in eval(expr, envir, enclos): objeto 'trimestre' não encontrado
+## [1] "jan-fev-mar"
+## [1] "abr-mai-jun"
+## [1] "jul-ago-set"
+## [1] "out-nov-dez"
 {% endhighlight %}
 
 Ele realizará a operação que está entre as `{}` para cada `i` do vetor trimestre. Você também pode passar números que poderão ser usados como índices.
@@ -134,10 +121,7 @@ for(i in trimestre){
 
 Veja o resultado:
 
-
-{% highlight text %}
-## Error in eval(expr, envir, enclos): objeto 'trimestre' não encontrado
-{% endhighlight %}
+![plot of chunk unnamed-chunk-9](/figures/source/2016-04-11-kit-de-sobrevivencia-em-r-parte-6/unnamed-chunk-9-1.png)
 
 O gif abaixo mostra como o R vai inserindo gráfico a gráfico. Adicionei o comando `Sys.sleep()` para que a execução fosse suspensa durante 1,5 segundo para ficar mais claro a criação de cada gráfico.
 
@@ -169,11 +153,7 @@ for(i in trimestre){
 }
 {% endhighlight %}
 
-
-
-{% highlight text %}
-## Error in eval(expr, envir, enclos): objeto 'trimestre' não encontrado
-{% endhighlight %}
+![plot of chunk unnamed-chunk-10](/figures/source/2016-04-11-kit-de-sobrevivencia-em-r-parte-6/unnamed-chunk-10-1.png)
 
 Podemos reescrever o código acima com o comando `ifelse()` e obter o mesmo resultado. Para isso, iremos usar o comando `ifelse()` no argumento `col`. O primeiro agumento dessa função é o teste que você deseja realizar (saber se o trimestre é ou não é igual a `out-nov-dez`), o segundo é o valor desejado caso seja verdade e o último é o valor a ser retornado caso a condição não seja satisfeita.
 
@@ -195,11 +175,7 @@ for(i in trimestre){
 }
 {% endhighlight %}
 
-
-
-{% highlight text %}
-## Error in eval(expr, envir, enclos): objeto 'trimestre' não encontrado
-{% endhighlight %}
+![plot of chunk unnamed-chunk-11](/figures/source/2016-04-11-kit-de-sobrevivencia-em-r-parte-6/unnamed-chunk-11-1.png)
 
 O `ifelse()`tem uma característica importante. Enquanto o `if()` aceita apensas um único teste (comprimento um), o `ifelse` pode receber um vetor para testes e aplicar as condições para este conjunto de teste. Para ficar mais claro veja o exemplo abaixo.
 
@@ -208,24 +184,23 @@ O `ifelse()`tem uma característica importante. Enquanto o `if()` aceita apensas
 desemprego.uf.2015$Maior.que.9 <- ifelse(desemprego.uf.2015$Taxa_Desemprego > 9,
                                          "Maior que 9",
                                          "Menor ou igual a 9")
-{% endhighlight %}
-
-
-
-{% highlight text %}
-## Error in ifelse(desemprego.uf.2015$Taxa_Desemprego > 9, "Maior que 9", : objeto 'desemprego.uf.2015' não encontrado
-{% endhighlight %}
-
-
-
-{% highlight r %}
 head(desemprego.uf.2015, 10)
 {% endhighlight %}
 
 
 
 {% highlight text %}
-## Error in head(desemprego.uf.2015, 10): objeto 'desemprego.uf.2015' não encontrado
+##     Ano   Trimestre       UF Taxa_Desemprego        Maior.que.9
+## 13 2015 jan-fev-mar Rondônia           4.396 Menor ou igual a 9
+## 14 2015 abr-mai-jun Rondônia           4.919 Menor ou igual a 9
+## 15 2015 jul-ago-set Rondônia           6.679 Menor ou igual a 9
+## 16 2015 out-nov-dez Rondônia           6.276 Menor ou igual a 9
+## 29 2015 jan-fev-mar     Acre           8.722 Menor ou igual a 9
+## 30 2015 abr-mai-jun     Acre           8.723 Menor ou igual a 9
+## 31 2015 jul-ago-set     Acre           8.759 Menor ou igual a 9
+## 32 2015 out-nov-dez     Acre           7.588 Menor ou igual a 9
+## 45 2015 jan-fev-mar Amazonas           9.358        Maior que 9
+## 46 2015 abr-mai-jun Amazonas           9.457        Maior que 9
 {% endhighlight %}
 
 ## while, repeat, break, next
