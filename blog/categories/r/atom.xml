@@ -4,7 +4,7 @@
   <title><![CDATA[Category: r | Full Join]]></title>
   <link href="http://fulljoin.com.br/blog/categories/r/atom.xml" rel="self"/>
   <link href="http://fulljoin.com.br/"/>
-  <updated>2016-04-12T21:33:00-03:00</updated>
+  <updated>2016-04-21T18:40:48-03:00</updated>
   <id>http://fulljoin.com.br/</id>
   <author>
     <name><![CDATA[Full Join]]></name>
@@ -12,6 +12,362 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Kit de sobrevivência em R - Parte 5: Tipos de dados e transformações]]></title>
+    <link href="http://fulljoin.com.br/blog/2016/04/21/kit-de-sobrevivencia-em-r-parte-5/"/>
+    <updated>2016-04-21T19:00:00-03:00</updated>
+    <id>http://fulljoin.com.br/blog/2016/04/21/kit-de-sobrevivencia-em-r-parte-5</id>
+    <content type="html"><![CDATA[<p>Você já aprendeu como carregar um arquivo de dados no R para começar a trabalhar com ele. Agora vamos conhecer o básico necessário para manipular os dados e prepará-los para a análise propriamente dita. Para isso será necessário saber sobre alguns tipos básicos de dados e algumas formas de transformação de dados.</p>
+
+<!-- More -->
+
+<h1 id="porque-transformar-os-dados">Porque transformar os dados?</h1>
+
+<p>Durante o processo de análise de dados é bastante comum precisar de mais informações que não estão explícitas em sua base de dados, ou seja, informações além das que estão disponíveis nas linhas e colunas.</p>
+
+<p>Transformar os dados permite extrair, ajustar e até mesmo criar informações com seus dados, criando novas colunas, novas linhas, ou quem sabe um outro arquivo de dados derivado do original.</p>
+
+<p>Infelizmente, aqui vai uma notícia ruim: não existe padrão algum para transformação de dados, vai depender muito do design dos seus dados, das necessidades da sua análise e da sua criatividade!</p>
+
+<p>A notícia boa é que, quanto mais você conhecer formas de transformar os dados e quanto mais dominar os tipos de dados existentes em R, a tarefa de transformação de dados será mais fácil e até mais divertida.</p>
+
+<h1 id="tipos-de-dados">Tipos de dados</h1>
+
+<p>Existem diversos tipos de dados em R, alguns mais básicos e outros mais complexos (não em termos de dificuldade, e sim de estrutura). Vamos tentar apresentar alguns na prática ao longo do post.</p>
+
+<p>Lembra dos dados utilizados no <a href="/blog/2016/04/12/kit-de-sobrevivencia-em-r-parte-4">último post</a>? Vamos usá-los novamente como exemplo. Lembre-se de informar ao R o local onde o arquivo está para que ele possa ler.</p>
+
+<p>Carregue algum dos arquivos de forma apropriada (todos arquivos tem o mesmo conteúdo). Como exemplo, escolhemos o arquivo com colunas delimitadas por <code>;</code>.</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">dados</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">read.table</span><span class="p">(</span><span class="err">‘</span><span class="n">desemprego_uf_ponto_virgula.txt</span><span class="err">’</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="err">“</span><span class="p">;</span><span class="err">”</span><span class="p">,</span> <span class="n">dec</span> <span class="o">=</span> <span class="err">“</span><span class="p">,</span><span class="err">”</span><span class="p">,</span> <span class="n">header</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span><span class="o">&lt;</span><span class="n">br</span> <span class="o">/&gt;</span></code></pre></div></p>
+
+<p>Esses dados trazem informações trimestrais ao longo dos anos da taxa de desemprego das Unidades da Federação do Brasil.</p>
+
+<p>No post anterior conseguimos dar uma olhada superficial usando <code>head()</code> e <code>tail()</code>. Para começar a transformar os dados precisaremos aprofundar um pouco mais. Usaremos então o <code>class()</code> e o <code>str()</code> para investigar melhor nossos dados.</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">class</span><span class="p">(</span><span class="n">dados</span><span class="p">)</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## [1] “data.frame”</code></pre></div></p>
+
+<p>A função <code>class()</code> recebe como parâmetro uma variável, e como resposta ela apresenta o tipo de dado dessa variável. Temos então um <code>data.frame</code>.</p>
+
+<h3 id="dataframe">Data.frame</h3>
+
+<p>Data frame é um tipo de dado complexo, um dos mais utilizados em R. É nele que você armazena conjuntos de dados estruturados em linhas e colunas. Um data frame possue colunas nomeadas, sendo que todas as colunas possuem a mesma quantidade de linhas.</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">str</span><span class="p">(</span><span class="n">dados</span><span class="p">)</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## ‘data.frame’:	432 obs. of  4 variables:
+##  $ Ano            : int  2012 2012 2012 2012 2013 2013 2013 2013 2014 2014 …
+##  $ Trimestre      : Factor w/ 4 levels “abr-mai-jun”,..: 2 1 3 4 2 1 3 4 2 1 …
+##  $ UF             : Factor w/ 27 levels “Acre”,”Alagoas”,..: 22 22 22 22 22 22 22 22 22 22 …
+##  $ Taxa_Desemprego: num  8.01 6.22 5.88 5.27 6.11 …</code></pre></div></p>
+
+<p>Com a função <code>str()</code> podemos examinar melhor a estrutura do nosso data frame.
+Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 observações (linhas). Temos ainda uma listagem com o nome das colunas, o tipo de dado presente em cada coluna e uma pequena amostra dos dados.</p>
+
+<blockquote>
+  <p>Matrizes também são objetos de duas dimensões (linhas e colunas). No entanto, diferentemente do data.frame, elas somente aceitam um tipo de dado.</p>
+</blockquote>
+
+<h3 id="integer">Integer</h3>
+
+<p>Trata-se de um tipo de dado básico que representa um número inteiro. É tão simples que não há muito o que comentar: 1, 2, 3, 4… até 2147483647. Tente <code>class(dados$Ano)</code> e veja que o ano é um tipo inteiro.</p>
+
+<h3 id="factor">Factor</h3>
+
+<p>É um tipo de dado complexo que representa categorias (levels). Tentando ser o máximo simplesta, é uma lista de categorias enumeradas, ou seja, é uma sequência de informações texutais (palavras) representadas por um número. Você vê as categorias e o R “vê” os números que representam essas categorias. Esse tipo é muito útil para modelos estatísticos.</p>
+
+<p>Parece um pouco confuso de entender, mas factor é a forma mais eficiente do R interpretar uma sequência de palavras. Veja o resultado do comando abaixo:</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">unique</span><span class="p">(</span><span class="n">dados</span><span class="o">$</span><span class="n">UF</span><span class="p">)</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">##  [1] Rondônia            Acre                Amazonas         &lt;br /&gt;
+##  [4] Roraima             Pará                Amapá            &lt;br /&gt;
+##  [7] Tocantins           Maranhão            Piauí            &lt;br /&gt;
+## [10] Ceará               Rio Grande do Norte Paraíba          &lt;br /&gt;
+## [13] Pernambuco          Alagoas             Sergipe          &lt;br /&gt;
+## [16] Bahia               Minas Gerais        Espírito Santo   &lt;br /&gt;
+## [19] Rio de Janeiro      São Paulo           Paraná           &lt;br /&gt;
+## [22] Santa Catarina      Rio Grande do Sul   Mato Grosso do Sul 
+## [25] Mato Grosso         Goiás               Distrito Federal &lt;br /&gt;
+## 27 Levels: Acre Alagoas Amapá Amazonas Bahia … Tocantins</code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">unique</span><span class="p">(</span><span class="n">dados</span><span class="o">$</span><span class="n">Trimestre</span><span class="p">)</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## [1] jan-fev-mar abr-mai-jun jul-ago-set out-nov-dez
+## Levels: abr-mai-jun jan-fev-mar jul-ago-set out-nov-dez</code></pre></div></p>
+
+<p>A visualização que o R fornece não ajuda muito, mas repare que cada categoria possui um número. Exemplo: “Rondônia” - 1, “Acre” - 2, “Mato Grosso” - 25, “Distrito Federal” - 27; ou ainda “jan-fev-mar” - 1, “abr-mai-jun” - 2, “jul-ago-set” - 3, “out-nov-dez” - 4.</p>
+
+<p>Então podemos dizer que nossa coluna UF é um factor de 27 levels, e Trimestre é um factor de 4 levels.</p>
+
+<p>Mas o que é esse cifrão <code>$</code> que usamos nos comandos acima? É uma notação do R para quando você quer visualizar ou trabalhar com uma coluna (variável) de um data.frame. Você verá que o <code>$</code> também é utilizado em outros tipos de objetos, como listas. A ideia é acessar uma parte de um objeto.</p>
+
+<p>No caso data.frame, você informa o nome do objeto, o <code>$</code>, e em seguida o nome da coluna que você quer. Experimente: <code>dados$Ano</code>, <code>dados$UF</code>, <code>dados$Trimestre</code> e <code>dados$Taxa_Desemprego</code>. Essa notação é muito importante e você a utilizará bastante.</p>
+
+<p>E o que seria essa função <code>unique()</code>? É uma função básica do R para listar todos os valores de uma variável sem repetição. Olhando todos os dados em <code>dados$UF</code> você vai reparar que os nomes aparecem várias vezes em várias linhas, o <code>unique()</code> lista a ocorrência única de cada nome.</p>
+
+<h3 id="numeric">Numeric</h3>
+
+<p>Continuando a exploração dos tipos, temos o <code>numeric</code> ou <code>num</code>, um tipo básico capaz de representar números decimais. O tipo <code>numeric</code> também consegue representar inteiros. Tente <code>class(dados$Taxa_Desemprego)</code> e repare que é um tipo numerico.</p>
+
+<h1 id="transformaes">Transformações</h1>
+
+<p>Tendo consciência dos tipos de dados que compõem nosso data frame, já é possível começar a imaginar as análises que podem ser feitas.</p>
+
+<p>Vamos supor que surgiu a necessidade de analisarmos os dados de desemprego por semestre. Podemos observar nos dados que temos informações explícitas por trimestre e de certa forma por ano também. Para começarmos os cálculos então seria interessanter ter uma variável (coluna) indicando o semestre.</p>
+
+<p>Ora, essa informação já existe no conjunto de dados, afinal, temos trimestres e anos. Porém, não está explícita em nenhuma variável. Então vamos transformar os dados e criar essa variável!</p>
+
+<p>Primeiramente vamos criar a variável. A forma é muito semelhante à criação de uma variável normal, mas vamos usar o <code>$</code> para indicar que estamos criando uma variável dentro do data frame.</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">dados</span><span class="o">$</span><span class="n">Semestre</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="m">1</span>
+<span class="n">head</span><span class="p">(</span><span class="n">dados</span><span class="p">,</span> <span class="m">4</span><span class="p">)</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">##    Ano   Trimestre       UF Taxa_Desemprego Semestre
+## 1 2012 jan-fev-mar Rondônia           8.008        1
+## 2 2012 abr-mai-jun Rondônia           6.224        1
+## 3 2012 jul-ago-set Rondônia           5.882        1
+## 4 2012 out-nov-dez Rondônia           5.274        1</code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">tail</span><span class="p">(</span><span class="n">dados</span><span class="p">,</span> <span class="m">4</span><span class="p">)</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">##      Ano   Trimestre               UF Taxa_Desemprego Semestre
+## 429 2015 jan-fev-mar Distrito Federal          10.784        1
+## 430 2015 abr-mai-jun Distrito Federal           9.627        1
+## 431 2015 jul-ago-set Distrito Federal          10.258        1
+## 432 2015 out-nov-dez Distrito Federal           9.707        1</code></pre></div></p>
+
+<p>Acabamos de criar uma nova coluna e atribuir 1 a todas as linhas dessa coluna. Não é exatamente o que queremos. Queremos atribuir 1 para primeiro semestre e 2 para segundo semestre. Para conseguir isso precisaremos atribuir a variável segundo algumas condicões.</p>
+
+<p>Ou seja, quando for trimestre <code>jan-fev-mar</code> ou <code>abr-mai-jun</code> vamos atribuir 1, quando for o trimestre <code>jul-ago-set</code> ou <code>out-nov-dez</code> vamos atribuir 2:</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">dados</span><span class="o">$</span><span class="n">Semestre</span><span class="p">[</span><span class="n">dados</span><span class="o">$</span><span class="n">Trimestre</span> <span class="o">==</span> <span class="err">‘</span><span class="n">jan</span><span class="o">-</span><span class="n">fev</span><span class="o">-</span><span class="n">mar</span><span class="err">’</span> <span class="o">|</span> <span class="n">dados</span><span class="o">$</span><span class="n">Trimestre</span> <span class="o">==</span> <span class="err">‘</span><span class="n">abr</span><span class="o">-</span><span class="n">mai</span><span class="o">-</span><span class="n">jun</span><span class="err">’</span><span class="p">]</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="m">1</span>
+<span class="n">dados</span><span class="o">$</span><span class="n">Semestre</span><span class="p">[</span><span class="n">dados</span><span class="o">$</span><span class="n">Trimestre</span> <span class="o">==</span> <span class="err">‘</span><span class="n">jul</span><span class="o">-</span><span class="n">ago</span><span class="o">-</span><span class="n">set</span><span class="err">’</span> <span class="o">|</span> <span class="n">dados</span><span class="o">$</span><span class="n">Trimestre</span> <span class="o">==</span> <span class="err">‘</span><span class="n">out</span><span class="o">-</span><span class="n">nov</span><span class="o">-</span><span class="n">dez</span><span class="err">’</span><span class="p">]</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="m">2</span>
+<span class="n">head</span><span class="p">(</span><span class="n">dados</span><span class="p">)</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">##    Ano   Trimestre       UF Taxa_Desemprego Semestre
+## 1 2012 jan-fev-mar Rondônia           8.008        1
+## 2 2012 abr-mai-jun Rondônia           6.224        1
+## 3 2012 jul-ago-set Rondônia           5.882        2
+## 4 2012 out-nov-dez Rondônia           5.274        2
+## 5 2013 jan-fev-mar Rondônia           6.114        1
+## 6 2013 abr-mai-jun Rondônia           4.771        1</code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">tail</span><span class="p">(</span><span class="n">dados</span><span class="p">)</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">##      Ano   Trimestre               UF Taxa_Desemprego Semestre
+## 427 2014 jul-ago-set Distrito Federal           8.861        2
+## 428 2014 out-nov-dez Distrito Federal           8.708        2
+## 429 2015 jan-fev-mar Distrito Federal          10.784        1
+## 430 2015 abr-mai-jun Distrito Federal           9.627        1
+## 431 2015 jul-ago-set Distrito Federal          10.258        2
+## 432 2015 out-nov-dez Distrito Federal           9.707        2</code></pre></div></p>
+
+<p>Repare que dessa vez estamos usando <code>[ ]</code>. Os colchetes servem para fazermos filtragens “dentro” de um vetor ou um data frame. Mas o que é um vetor? O vetor é um objeto unidimensional. Além disso, ele só aceita um tipo de dado.</p>
+
+<p>Mas o que tem isso tem a ver com o código acima? Bem, quando selecionamos a variável semestre, o objeto resultante não será mais um data.frame, e sim um vetor.</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">is.vector</span><span class="p">(</span><span class="n">dados</span><span class="o">$</span><span class="n">Semestre</span><span class="p">)</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## [1] TRUE</code></pre></div></p>
+
+<p>Veja que a função <code>is.vector()</code> verifica se o objeto é um vetor. Ou seja, o objeto tem apenas uma dimensão. Isto tem implicações sobre <code>[ ]</code>. Se o objeto possuir duas dimensões, será preciso dizer em qual dimensão você está fazendo a seleção ou filtragem.</p>
+
+<p>As dimensões são separadas por vírgulas. Por exemplo, no caso do data frame, como existem duas dimensões (linhas e colunas) será preciso dizer em qual nós estamos interessados. Por exemplo, teste os seguintes comandos:</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Selecionar as 5 primeiras linhas</span>
+<span class="n">dados</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">,</span> <span class="p">]</span>
+<span class="c1"># Selecionar as 5 primeiras linhas e as duas primeiras colunas</span>
+<span class="n">dados</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">,</span> <span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">]</span>
+<span class="c1"># Selecionar todas as linhas e as duas primeiras colunas</span>
+<span class="n">dados</span><span class="p">[,</span> <span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">]</span></code></pre></div></p>
+
+<p>Apesar de ter sido usado apenas números, você pode usar condições e nomes das colunas. Tente o seguinte:</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Selecionar as 5 primeiras linhas e a coluna UF e Taxa_Desemprego</span>
+<span class="n">dados</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">,</span> <span class="n">c</span><span class="p">(</span><span class="err">“</span><span class="n">UF</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">Taxa_Desemprego</span><span class="err">”</span><span class="p">)]</span></code></pre></div></p>
+
+<p>Nesse caso usamos um vetor <code>c()</code> para informar a listagem de nomes de colunas. No próximo post aprofundaremos mais no uso das filtragens de linha e coluna dentro do data frame.</p>
+
+<p>No caso da variável semestre, estamos tratando apenas de uma coluna, portanto teremos um vetor unidimensional, logo, as condições que estão dentro <code>[ ]</code> serão utilizadas para selecionar as posições exatas que receberão o valor da atribuição <code>&lt;-</code>.</p>
+
+<p>Concluindo, vamos usar um exemplo mais complexo. Suponha que você queira criar um data.frame novo apenas com as linhas em que UF é igual a São Paulo e com as colunas <code>Ano</code>, <code>Trimestre</code> e <code>Taxa_Desemprego</code>. Para isto, você irá fazer uma filtragem em um data frame (duas dimensões) e atribuir o resultado para uma variável nova <code>SP</code>:</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">SP</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">dados</span><span class="p">[</span><span class="n">dados</span><span class="o">$</span><span class="n">UF</span> <span class="o">==</span> <span class="err">“</span><span class="n">S</span><span class="err">ã</span><span class="n">o</span> <span class="n">Paulo</span><span class="err">”</span><span class="p">,</span> <span class="n">c</span><span class="p">(</span><span class="err">“</span><span class="n">Ano</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">Trimestre</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">Taxa_Desemprego</span><span class="err">”</span><span class="p">)]</span>
+<span class="n">head</span><span class="p">(</span><span class="n">SP</span><span class="p">)</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">##      Ano   Trimestre Taxa_Desemprego
+## 305 2012 jan-fev-mar           7.792
+## 306 2012 abr-mai-jun           7.524
+## 307 2012 jul-ago-set           6.889
+## 308 2012 out-nov-dez           6.754
+## 309 2013 jan-fev-mar           7.718
+## 310 2013 abr-mai-jun           7.405</code></pre></div></p>
+
+<h3 id="logical">Logical</h3>
+
+<p>Quando falamos de filtragens, necessariamente falamos também de operadores lógicos. Operações lógicas são operações comparativas que respondem um tipo específico de dados, os tipos lógicos(booleanos): TRUE (verdadeiro) ou FALSE (falso). Tente <code>class(TRUE)</code> ou <code>class(FALSE)</code>.</p>
+
+<p>Faça um pequeno experimento com o que tem dentro dos colchetes. Digite o seguinte comando:</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">dados</span><span class="o">$</span><span class="n">Trimestre</span> <span class="o">==</span> <span class="err">‘</span><span class="n">jan</span><span class="o">-</span><span class="n">fev</span><span class="o">-</span><span class="n">mar</span><span class="err">’</span> <span class="o">|</span> <span class="n">dados</span><span class="o">$</span><span class="n">Trimestre</span> <span class="o">==</span> <span class="err">‘</span><span class="n">abr</span><span class="o">-</span><span class="n">mai</span><span class="o">-</span><span class="n">jun</span><span class="err">’</span></code></pre></div></p>
+
+<p>O R faz essa comparação em todas as linhas e te retorna dizendo exatamente em quais linhas essa condição é verdadeira ou falsa. Esse comando vai retornar verdadeiro para todas as linhas em que trimestre for igual à <code>jan-fev-mar</code> <strong>OU</strong> for igual a <code>abr-mai-jun</code>.</p>
+
+<p>Para entender melhor, segue alguns operadores lógicos e seus significados:</p>
+
+<ul>
+  <li><code>==</code> igual a: compara dois objetos e se forem iguais, retorna TRUE, caso contrário, FALSE;</li>
+  <li><code>!=</code> diferente: compara dois objetos e se forem diferentes, retorna TRUE, caso contrário, FALSE;</li>
+  <li><code>|</code> ou (or): compara dois objetos, se um dos dois for TRUE, retorna TRUE, se os dois forem FASE, retorna FALSE;</li>
+  <li><code>&amp;</code> e (and): compara dois objetos, se os dois forem TRUE, retorna TRUE, se um dos dois ou os dois forem FALSE, retorna FALSE;</li>
+  <li><code>&gt;</code>, <code>&gt;=</code>, <code>&lt;</code>, <code>&lt;=</code> maior, maior ou igual, menor, menor ou igual: compara grandeza de dois números e retorna TRUE ou FALSE confome a condição;</li>
+</ul>
+
+<p>Segue alguns exemplos para entender os operadores lógicos:</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="m">5</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">=</span> <span class="m">4</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## [1] FALSE</code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="m">5</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">=</span> <span class="m">5</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## [1] TRUE</code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="m">5</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">=</span> <span class="m">6</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## [1] TRUE</code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="m">5</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span> <span class="m">5</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## [1] FALSE</code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="p">(</span><span class="m">5</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span> <span class="m">6</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="m">5</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span> <span class="m">3</span><span class="p">)</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## [1] TRUE</code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="p">(</span><span class="m">5</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span> <span class="m">6</span><span class="p">)</span> <span class="o">&amp;</span><span class="n">amp</span><span class="p">;</span> <span class="p">(</span><span class="m">5</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span> <span class="m">3</span><span class="p">)</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## [1] FALSE</code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="m">2</span> <span class="o">!=</span> <span class="m">1</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## [1] TRUE</code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="m">2</span> <span class="o">==</span> <span class="m">1</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## [1] FALSE</code></pre></div></p>
+
+<p>Ao longo dos próximos posts vamos trabalhar melhor os operadores lógicos e as filtragens, aos poucos o uso ficará intuitivo.</p>
+
+<p>Seguindo com as transformações, vamos supor também que, além de analisar o desemprego por UF, que estão explícitos na variável <code>dados$UF</code>, queremos também analisar o desemprego por Região (Norte, Sul, Nordeste, Centro Oeste e Sudeste):</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">dados</span><span class="o">$</span><span class="n">Regiao</span><span class="p">[</span><span class="n">dados</span><span class="o">$</span><span class="n">UF</span> <span class="o">%</span><span class="k">in</span><span class="o">%</span> <span class="n">c</span><span class="p">(</span><span class="err">‘</span><span class="n">Rond</span><span class="err">ô</span><span class="n">nia</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">Acre</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">Amazonas</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">Roraima</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">Par</span><span class="err">á’</span><span class="p">,</span> <span class="err">‘</span><span class="n">Amap</span><span class="err">á’</span><span class="p">,</span> <span class="err">‘</span><span class="n">Tocantins</span><span class="err">’</span><span class="p">)]</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="err">‘</span><span class="n">Norte</span><span class="err">’</span> 
+<span class="n">dados</span><span class="o">$</span><span class="n">Regiao</span><span class="p">[</span><span class="n">dados</span><span class="o">$</span><span class="n">UF</span> <span class="o">%</span><span class="k">in</span><span class="o">%</span> <span class="n">c</span><span class="p">(</span><span class="err">‘</span><span class="n">Maranh</span><span class="err">ã</span><span class="n">o</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">Piau</span><span class="err">í’</span><span class="p">,</span> <span class="err">‘</span><span class="n">Cear</span><span class="err">á’</span><span class="p">,</span> <span class="err">‘</span><span class="n">Rio</span> <span class="n">Grande</span> <span class="n">do</span> <span class="n">Norte</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">Para</span><span class="err">í</span><span class="n">ba</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">Pernambuco</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">Alagoas</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">Sergipe</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">Bahia</span><span class="err">’</span><span class="p">)]</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="err">‘</span><span class="n">Nordeste</span><span class="err">’</span> 
+<span class="n">dados</span><span class="o">$</span><span class="n">Regiao</span><span class="p">[</span><span class="n">dados</span><span class="o">$</span><span class="n">UF</span> <span class="o">%</span><span class="k">in</span><span class="o">%</span> <span class="n">c</span><span class="p">(</span><span class="err">‘</span><span class="n">Minas</span> <span class="n">Gerais</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">Esp</span><span class="err">í</span><span class="n">rito</span> <span class="n">Santo</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">Rio</span> <span class="n">de</span> <span class="n">Janeiro</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">S</span><span class="err">ã</span><span class="n">o</span> <span class="n">Paulo</span><span class="err">’</span><span class="p">)]</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="err">‘</span><span class="n">Sudeste</span><span class="err">’</span> <span class="o">&lt;</span><span class="n">br</span> <span class="o">/&gt;</span>
+<span class="n">dados</span><span class="o">$</span><span class="n">Regiao</span><span class="p">[</span><span class="n">dados</span><span class="o">$</span><span class="n">UF</span> <span class="o">%</span><span class="k">in</span><span class="o">%</span> <span class="n">c</span><span class="p">(</span><span class="err">‘</span><span class="n">Paran</span><span class="err">á’</span><span class="p">,</span> <span class="err">‘</span><span class="n">Santa</span> <span class="n">Catarina</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">Rio</span> <span class="n">Grande</span> <span class="n">do</span> <span class="n">Sul</span><span class="err">’</span><span class="p">)]</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="err">‘</span><span class="n">Sul</span><span class="err">’</span>
+<span class="n">dados</span><span class="o">$</span><span class="n">Regiao</span><span class="p">[</span><span class="n">dados</span><span class="o">$</span><span class="n">UF</span> <span class="o">%</span><span class="k">in</span><span class="o">%</span> <span class="n">c</span><span class="p">(</span><span class="err">‘</span><span class="n">Mato</span> <span class="n">Grosso</span> <span class="n">do</span> <span class="n">Sul</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">Mato</span> <span class="n">Grosso</span> <span class="n">Goi</span><span class="err">á</span><span class="n">s</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">Distrito</span> <span class="n">Federal</span><span class="err">’</span><span class="p">)]</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="err">‘</span><span class="n">Centro</span> <span class="n">Oeste</span><span class="err">’</span>
+<span class="n">head</span><span class="p">(</span><span class="n">dados</span><span class="p">,</span> <span class="m">15</span><span class="p">)</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">##     Ano   Trimestre       UF Taxa_Desemprego Semestre Regiao
+## 1  2012 jan-fev-mar Rondônia           8.008        1  Norte
+## 2  2012 abr-mai-jun Rondônia           6.224        1  Norte
+## 3  2012 jul-ago-set Rondônia           5.882        2  Norte
+## 4  2012 out-nov-dez Rondônia           5.274        2  Norte
+## 5  2013 jan-fev-mar Rondônia           6.114        1  Norte
+## 6  2013 abr-mai-jun Rondônia           4.771        1  Norte
+## 7  2013 jul-ago-set Rondônia           4.534        2  Norte
+## 8  2013 out-nov-dez Rondônia           4.902        2  Norte
+## 9  2014 jan-fev-mar Rondônia           4.917        1  Norte
+## 10 2014 abr-mai-jun Rondônia           4.112        1  Norte
+## 11 2014 jul-ago-set Rondônia           4.111        2  Norte
+## 12 2014 out-nov-dez Rondônia           3.575        2  Norte
+## 13 2015 jan-fev-mar Rondônia           4.396        1  Norte
+## 14 2015 abr-mai-jun Rondônia           4.919        1  Norte
+## 15 2015 jul-ago-set Rondônia           6.679        2  Norte</code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">tail</span><span class="p">(</span><span class="n">dados</span><span class="p">)</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">##      Ano   Trimestre               UF Taxa_Desemprego Semestre
+## 427 2014 jul-ago-set Distrito Federal           8.861        2
+## 428 2014 out-nov-dez Distrito Federal           8.708        2
+## 429 2015 jan-fev-mar Distrito Federal          10.784        1
+## 430 2015 abr-mai-jun Distrito Federal           9.627        1
+## 431 2015 jul-ago-set Distrito Federal          10.258        2
+## 432 2015 out-nov-dez Distrito Federal           9.707        2
+##           Regiao
+## 427 Centro Oeste
+## 428 Centro Oeste
+## 429 Centro Oeste
+## 430 Centro Oeste
+## 431 Centro Oeste
+## 432 Centro Oeste</code></pre></div></p>
+
+<p>Novamente estamos usando os colchetes para fazer uma filtragem e atribuir <code>Norte</code>, <code>Nordeste</code>, <code>Sudeste</code>, <code>Sul</code> e <code>Centro Oeste</code> apenas às linhas específicas em que o filtro dentro dos colchetes retorne <code>TRUE</code>.</p>
+
+<p>Nesse caso estamos usando o operador <code>%in%</code>, que faz uma comparação para ver se o objeto está dentro de uma listagem (vetor) de outros objetos. Nas linhas em que <code>dados$UF</code> estiver “dentro” da listagem de UFs, o filtro retornará TRUE e a atribuição da variável será feita, caso contrário retornará FALSE e não vai atribuir o valor à <code>dados$Regiao</code>.</p>
+
+<p>Para finalizar os exemplos de transformações, vamos tentar uma abordagem com funções matemáticas. Imagine que sua equipe está planejando estimar um modelo com base nesses dados e por algum motivo específico surgiu a necessidade de usar o logarítmo da taxa de desemprego. Não é uma informações explícita mas certamente podemos produzir com o que já temos.</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">dados</span><span class="o">$</span><span class="n">Log_Taxa_Desemprego</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">log</span><span class="p">(</span><span class="n">dados</span><span class="o">$</span><span class="n">Taxa_Desemprego</span><span class="p">)</span>
+<span class="n">head</span><span class="p">(</span><span class="n">dados</span><span class="p">,</span> <span class="m">15</span><span class="p">)</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">##     Ano   Trimestre       UF Taxa_Desemprego Semestre Regiao
+## 1  2012 jan-fev-mar Rondônia           8.008        1  Norte
+## 2  2012 abr-mai-jun Rondônia           6.224        1  Norte
+## 3  2012 jul-ago-set Rondônia           5.882        2  Norte
+## 4  2012 out-nov-dez Rondônia           5.274        2  Norte
+## 5  2013 jan-fev-mar Rondônia           6.114        1  Norte
+## 6  2013 abr-mai-jun Rondônia           4.771        1  Norte
+## 7  2013 jul-ago-set Rondônia           4.534        2  Norte
+## 8  2013 out-nov-dez Rondônia           4.902        2  Norte
+## 9  2014 jan-fev-mar Rondônia           4.917        1  Norte
+## 10 2014 abr-mai-jun Rondônia           4.112        1  Norte
+## 11 2014 jul-ago-set Rondônia           4.111        2  Norte
+## 12 2014 out-nov-dez Rondônia           3.575        2  Norte
+## 13 2015 jan-fev-mar Rondônia           4.396        1  Norte
+## 14 2015 abr-mai-jun Rondônia           4.919        1  Norte
+## 15 2015 jul-ago-set Rondônia           6.679        2  Norte
+##    Log_Taxa_Desemprego
+## 1             2.080441
+## 2             1.828413
+## 3             1.771897
+## 4             1.662789
+## 5             1.810581
+## 6             1.562556
+## 7             1.511605
+## 8             1.589643
+## 9             1.592699
+## 10            1.413910
+## 11            1.413666
+## 12            1.273965
+## 13            1.480695
+## 14            1.593105
+## 15            1.898968</code></pre></div></p>
+
+<p>Estamos criando uma novas variável em nosso data frame, armazenando o <code>log()</code> na nova variável <code>Log_Taxa_Desemprego</code> em nosso data frame.</p>
+
+<p>A função será aplicada a todas as linhas do data frame, pois não estamos usando nenhum filtro. Em cada linha será usado o valor do campo <code>Taxa_Desemprego</code> como parâmetro da função.</p>
+
+<h1 id="desafio">Desafio</h1>
+
+<p>Apenas para treinar, tente criar uma variável nesse data frame para classificar a taxa de desemprego em <code>alta</code>, <code>média</code> ou <code>baixa</code>, com o critério que quiser. Crie também uma variável armazenando a raiz quadrada da taxa de desemprego.</p>
+
+<p>Muitas outras transformações são possíveis com essa simples base de dados usando atribuição com filtros e funções matemáticas. Consegue imaginar outras transformações? Deixe um comentário sobre os resutlados que conseguiu!</p>
+
+<h1 id="referncias">Referências:</h1>
+
+<ul>
+  <li><a href="http://www.cyclismo.org/tutorial/R/types.html">Basic Data Types</a></li>
+  <li><a href="http://www.r-tutor.com/r-introduction/basic-data-types">Basic Data Types II</a></li>
+  <li><a href="http://www.computerworld.com/article/2486425/business-intelligence/business-intelligence-4-data-wrangling-tasks-in-r-for-advanced-beginners.html">4 data wrangling tasks in R for advanced beginners</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Kit de sobrevivência em R - Parte 4: Carregando Dados]]></title>
@@ -22,8 +378,7 @@
 
 <!-- More -->
 
-
-<h1>Estrutura dos dados</h1>
+<h1 id="estrutura-dos-dados">Estrutura dos dados</h1>
 
 <p>Eis aqui uma notícia ruim: não existe um padrão dominante para armazenamento de dados. O que isso significa? Significa que, na vida real, você vai se deparar com os mais diferentes tipos de fontes de dados e mesmo assim vai ter que dar um jeito de analisá-las e estudá-las para concluir seus trabalhos.</p>
 
@@ -31,23 +386,23 @@
 
 <p>De maneira geral, você irá encontrar dados disponibilizados basicamente em três formas básicas: estruturados, não estruturados e semi-estruturados.</p>
 
-<h2>Dados Estruturados</h2>
+<h2 id="dados-estruturados">Dados Estruturados</h2>
 
 <p>Basicamente são conjuntos de informações organizadas em colunas (atributos, variáveis, <em>features</em>, etc.) e linhas (registros, itens, observacões, etc.). São dados encontrados em bancos de dados, arquivos com algum tipo de separação entre as colunas, excel, arquivos com campos de tamanho fixo, etc.</p>
 
-<h2>Dados não estruturados</h2>
+<h2 id="dados-no-estruturados">Dados não estruturados</h2>
 
 <p>Como o nome diz, não tem um estrutura previsível, ou seja, cada arquivo possui uma forma única de ser carregado e manejado. Geralmente são arquivos com forte teor textual. Podemos citar, por exemplo, emails, twitters, PDFs, imagens, etc. Muito usados em mineração de dados.</p>
 
-<h2>Dados semi-estruturados</h2>
+<h2 id="dados-semi-estruturados">Dados semi-estruturados</h2>
 
 <p>Também possuem estrutura fixa, porém, não seguem o padrão de estrutura linha/coluna, ou seja, é uma estrutura mais complexa e flexível, geralmente hierárquica, estruturada em tags ou marcadores de campos. São exemplos de arquivos semi-estruturados: JSON, XML, HTML, YAML, etc. É o formato mais usado em troca de dados pela internet e consumo de APIs.</p>
 
 <p>Trataremos primeiro dos arquivos estruturados. Em futuros posts vamos abordar os outros tipos, pois são abordagens um pouco mais complexas e é sempre bom começar pelo básico!</p>
 
-<h1>Preparando o ambiente para começar</h1>
+<h1 id="preparando-o-ambiente-para-comear">Preparando o ambiente para começar</h1>
 
-<h3>Limpando tudo</h3>
+<h3 id="limpando-tudo">Limpando tudo</h3>
 
 <p>Antes de começar os trabalhos, é uma boa prática ter certeza de que seu ambiente de trabalho está limpo. Um simples comando garante que está tudo limpo pronto para começar:</p>
 
@@ -56,24 +411,27 @@
 <p>Esse comando na verdade está usando duas funções:</p>
 
 <ul>
-<li><p><code>rm()</code> função para remover um objeto da sessão do R</p></li>
-<li><p><code>ls()</code> função para listar os nomes de todos objetos da sessão do R</p></li>
+  <li>
+    <p><code>rm()</code> função para remover um objeto da sessão do R</p>
+  </li>
+  <li>
+    <p><code>ls()</code> função para listar os nomes de todos objetos da sessão do R</p>
+  </li>
 </ul>
-
 
 <p>As duas funções conjugadas dão a ordem de <em>remover tudo que estiver na lista de objetos da sessão do R.</em></p>
 
 <p>Pronto. Seus ambiente está limpo.</p>
 
-<h3>Definindo diretório de trabalho</h3>
+<h3 id="definindo-diretrio-de-trabalho">Definindo diretório de trabalho</h3>
 
-<p>O R vai &ldquo;ler&rdquo; os dados de algum lugar do seu computador. Normalmente o R inicia lendo em um diretório padrão, mas nem sempre os arquivos estarão nesse mesmo diretório. Para dizer ao R onde ele deve ler os arquivos, usaremos o comando <em>set working directory</em>:</p>
+<p>O R vai “ler” os dados de algum lugar do seu computador. Normalmente o R inicia lendo em um diretório padrão, mas nem sempre os arquivos estarão nesse mesmo diretório. Para dizer ao R onde ele deve ler os arquivos, usaremos o comando <em>set working directory</em>:</p>
 
-<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">setwd</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">Local</span><span class="o">/</span><span class="n">Do</span><span class="o">/</span><span class="n">Seus</span><span class="o">/</span><span class="n">Arquivos</span><span class="o">/</span><span class="n">De</span><span class="o">/</span><span class="n">Trabalho</span><span class="o">/&amp;</span><span class="n">rdquo</span><span class="p">;)</span></code></pre></div></p>
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">setwd</span><span class="p">(</span><span class="err">“</span><span class="n">Local</span><span class="o">/</span><span class="n">Do</span><span class="o">/</span><span class="n">Seus</span><span class="o">/</span><span class="n">Arquivos</span><span class="o">/</span><span class="n">De</span><span class="o">/</span><span class="n">Trabalho</span><span class="o">/</span><span class="err">”</span><span class="p">)</span></code></pre></div></p>
 
 <p>Também pode ser realizado pelos menus do RStudio em <code>Session &gt; Set Working Directory &gt; Choose Directory...</code> e escolha a pasta onde seus arquivos de dado estarão.</p>
 
-<p><img src="/images/setwd.gif" title="Definindo o diretório de trabalho" alt="alt Definindo o diretório de trabalho" /></p>
+<p><img src="/images/setwd.gif" alt="alt Definindo o diretório de trabalho" title="Definindo o diretório de trabalho" /></p>
 
 <p>Para saber qual o diretório de trabalho está atualmente definido, use o comando <code>getwd()</code>.</p>
 
@@ -81,125 +439,80 @@
 
 <p>Ok! Agora sim!</p>
 
-<h1>Tipos de carregamento</h1>
+<h1 id="tipos-de-carregamento">Tipos de carregamento</h1>
 
 <p>O R possui algumas funções básicas de carregamento. Essas funções tratam de alguns tipos de arquivo, basicamente diferenciados pelo <em>delimitador</em>. Outro aspecto importante é que essas funções básicas pressumpõem que cada linha representa um novo registro de dados.</p>
 
 <p>Para ficar mais claro, delimitadores podem ser qualquer coisa que seja usada para separar dados. Por exemplo, os arquivos podem ser separados por vígulas (<a href="https://pt.wikipedia.org/wiki/Comma-separated_values">CSV - Comma-separated values</a>), por ponto e vírgula (<code>;</code>), por espaçamento TAB (a tecla TAB do teclado mesmo!), por espaços simples ou qualquer outro tipo de símbolo.</p>
 
-<p>E quando não existe delimitador, ou seja, quando os campos estão &ldquo;colados&rdquo; uns nos outros? Em alguns casos, arquivos são confeccionados com um tamanho fixo para cada coluna (principalmente em arquivos gigantescos!), e cada linha respeita tamanhos específicos para separar os seus registros.</p>
+<p>E quando não existe delimitador, ou seja, quando os campos estão “colados” uns nos outros? Em alguns casos, arquivos são confeccionados com um tamanho fixo para cada coluna (principalmente em arquivos gigantescos!), e cada linha respeita tamanhos específicos para separar os seus registros.</p>
 
-<p>Como dissemos antes, dados estruturados possuem colunas e linhas (ou atributos e registros, ou variáveis e observações&hellip; dá na mesma!). O delimitador é uma forma de separar o conteúdo de cada linha em uma coluna específica. Ficará mais claro a seguir.</p>
+<p>Como dissemos antes, dados estruturados possuem colunas e linhas (ou atributos e registros, ou variáveis e observações… dá na mesma!). O delimitador é uma forma de separar o conteúdo de cada linha em uma coluna específica. Ficará mais claro a seguir.</p>
 
 <p>Para replicar os exemplos abaixo, baixe <a href="https://www.dropbox.com/s/4tedgnkd85c5q5s/desemprego_uf_pnad.zip?dl=0">este arquivo zip</a> com exemplos de dados em que foram usados diferentes delimitadores. Descompacte o arquivo em alguma pasta do seu computador. Defina esta pasta como o seu diretório de trabalho no RStudio. Além disso, dê uma olhada nos arquivos com o auxílio do bloco de notas ou outro programa para que você tenha ideia como o dado está inicialmente estruturado.</p>
 
-<h1>Carregando os dados</h1>
+<h1 id="carregando-os-dados">Carregando os dados</h1>
 
 <p>Dividiremos este tópico em duas partes: dados delimitados e dados com campos de tamanho fixo.</p>
 
-<h4>Dados com delimitadores</h4>
+<h4 id="dados-com-delimitadores">Dados com delimitadores</h4>
 
 <p>Para importar dados com delimitadores utilizaremos a função <code>read.table()</code>. Essa função permite definir qualquer delimitador para a leitura do arquivo, conforme os exemplos abaixo.</p>
 
-<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-
-<span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">Separado</span> <span class="n">por</span> <span class="n">tabula</span><span class="err">çã</span><span class="n">o</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
-
-<span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">dados.tab</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">read.table</span><span class="p">(</span><span class="o">&amp;</span><span class="n">lsquo</span><span class="p">;</span><span class="n">desemprego_uf_tab.txt</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;,</span> <span class="n">sep</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="err">\</span><span class="n">t</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;,</span> <span class="n">dec</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;,</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;,</span> <span class="n">header</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-
-<span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">Separado</span> <span class="n">por</span> <span class="p">;</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
-
-<span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">dados.ponto.virgula</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">read.table</span><span class="p">(</span><span class="o">&amp;</span><span class="n">lsquo</span><span class="p">;</span><span class="n">desemprego_uf_ponto_virgula.txt</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;,</span> <span class="n">sep</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;;</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;,</span> <span class="n">dec</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;,</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;,</span> <span class="n">header</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-
-<span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">Separado</span> <span class="n">por</span> <span class="n">espa</span><span class="err">ç</span><span class="n">o</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
-
-<span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">dados.espaco</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">read.table</span><span class="p">(</span><span class="o">&amp;</span><span class="n">lsquo</span><span class="p">;</span><span class="n">desemprego_uf_espaco.txt</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;,</span> <span class="n">sep</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span> <span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;,</span> <span class="n">dec</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;,</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;,</span> <span class="n">header</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span></code></pre></div></p>
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Separado por tabulação</span>
+<span class="n">dados.tab</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">read.table</span><span class="p">(</span><span class="err">‘</span><span class="n">desemprego_uf_tab.txt</span><span class="err">’</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="err">“\</span><span class="n">t</span><span class="err">”</span><span class="p">,</span> <span class="n">dec</span> <span class="o">=</span> <span class="err">“</span><span class="p">,</span><span class="err">”</span><span class="p">,</span> <span class="n">header</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span> 
+<span class="c1"># Separado por ;</span>
+<span class="n">dados.ponto.virgula</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">read.table</span><span class="p">(</span><span class="err">‘</span><span class="n">desemprego_uf_ponto_virgula.txt</span><span class="err">’</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="err">“</span><span class="p">;</span><span class="err">”</span><span class="p">,</span> <span class="n">dec</span> <span class="o">=</span> <span class="err">“</span><span class="p">,</span><span class="err">”</span><span class="p">,</span> <span class="n">header</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span> 
+<span class="c1"># Separado por espaço</span>
+<span class="n">dados.espaco</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">read.table</span><span class="p">(</span><span class="err">‘</span><span class="n">desemprego_uf_espaco.txt</span><span class="err">’</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="err">“</span> <span class="err">“</span><span class="p">,</span> <span class="n">dec</span> <span class="o">=</span> <span class="err">“</span><span class="p">,</span><span class="err">”</span><span class="p">,</span> <span class="n">header</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span></code></pre></div></p>
 
 <p>Reparem no parâmetro <code>header = TRUE</code>, isso significa dizer que a primeira linha do arquivo contem o nome das colunas, ou seja, não é um dado propriamente dito, e sim um metadado pois é uma informação sobre os registros. Caso seu arquivo não contenha o nome das colunas, basta usar <code>header = FALSE</code>.</p>
 
-<p>Após o carregamento, vamos usar a função <code>head()</code>para ver a &ldquo;cara&rdquo; dos nossos dados. Veja que eles são iguais nos três casos. Nessa função, você pode especificar o número de linhas que deseja ver. Por exemplo: <code>head(dados.tab, 10)</code>. Para visualizar as últimas linhas, você pode utilizar o <code>tail()</code> da mesma forma. Note que o RStudio tem funcionalidades que permitem que você visualize os dados como uma planilha. Basta clicar no nome do objeto que está listado na aba <em>Environment</em>.</p>
+<p>Após o carregamento, vamos usar a função <code>head()</code>para ver a “cara” dos nossos dados. Veja que eles são iguais nos três casos. Nessa função, você pode especificar o número de linhas que deseja ver. Por exemplo: <code>head(dados.tab, 10)</code>. Para visualizar as últimas linhas, você pode utilizar o <code>tail()</code> da mesma forma. Note que o RStudio tem funcionalidades que permitem que você visualize os dados como uma planilha. Basta clicar no nome do objeto que está listado na aba <em>Environment</em>.</p>
 
 <p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">head</span><span class="p">(</span><span class="n">dados.tab</span><span class="p">)</span></code></pre></div></p>
 
-<p><div class="highlight"><pre><code class="language-text" data-lang="text">&lt;/p&gt;
-
-&lt;h2&gt;Ano   Trimestre       UF Taxa_Desemprego&lt;/h2&gt;
-
-&lt;h2&gt;1 2012 jan-fev-mar Rondônia           8.008&lt;/h2&gt;
-
-&lt;h2&gt;2 2012 abr-mai-jun Rondônia           6.224&lt;/h2&gt;
-
-&lt;h2&gt;3 2012 jul-ago-set Rondônia           5.882&lt;/h2&gt;
-
-&lt;h2&gt;4 2012 out-nov-dez Rondônia           5.274&lt;/h2&gt;
-
-&lt;h2&gt;5 2013 jan-fev-mar Rondônia           6.114&lt;/h2&gt;
-
-&lt;h2&gt;6 2013 abr-mai-jun Rondônia           4.771&lt;/h2&gt;
-
-&lt;p&gt;</code></pre></div></p>
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">##    Ano   Trimestre       UF Taxa_Desemprego
+## 1 2012 jan-fev-mar Rondônia           8.008
+## 2 2012 abr-mai-jun Rondônia           6.224
+## 3 2012 jul-ago-set Rondônia           5.882
+## 4 2012 out-nov-dez Rondônia           5.274
+## 5 2013 jan-fev-mar Rondônia           6.114
+## 6 2013 abr-mai-jun Rondônia           4.771</code></pre></div></p>
 
 <p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">head</span><span class="p">(</span><span class="n">dados.ponto.virgula</span><span class="p">)</span></code></pre></div></p>
 
-<p><div class="highlight"><pre><code class="language-text" data-lang="text">&lt;/p&gt;
-
-&lt;h2&gt;Ano   Trimestre       UF Taxa_Desemprego&lt;/h2&gt;
-
-&lt;h2&gt;1 2012 jan-fev-mar Rondônia           8.008&lt;/h2&gt;
-
-&lt;h2&gt;2 2012 abr-mai-jun Rondônia           6.224&lt;/h2&gt;
-
-&lt;h2&gt;3 2012 jul-ago-set Rondônia           5.882&lt;/h2&gt;
-
-&lt;h2&gt;4 2012 out-nov-dez Rondônia           5.274&lt;/h2&gt;
-
-&lt;h2&gt;5 2013 jan-fev-mar Rondônia           6.114&lt;/h2&gt;
-
-&lt;h2&gt;6 2013 abr-mai-jun Rondônia           4.771&lt;/h2&gt;
-
-&lt;p&gt;</code></pre></div></p>
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">##    Ano   Trimestre       UF Taxa_Desemprego
+## 1 2012 jan-fev-mar Rondônia           8.008
+## 2 2012 abr-mai-jun Rondônia           6.224
+## 3 2012 jul-ago-set Rondônia           5.882
+## 4 2012 out-nov-dez Rondônia           5.274
+## 5 2013 jan-fev-mar Rondônia           6.114
+## 6 2013 abr-mai-jun Rondônia           4.771</code></pre></div></p>
 
 <p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">head</span><span class="p">(</span><span class="n">dados.espaco</span><span class="p">)</span></code></pre></div></p>
 
-<p><div class="highlight"><pre><code class="language-text" data-lang="text">&lt;/p&gt;
-
-&lt;h2&gt;Ano   Trimestre       UF Taxa_Desemprego&lt;/h2&gt;
-
-&lt;h2&gt;1 2012 jan-fev-mar Rondônia           8.008&lt;/h2&gt;
-
-&lt;h2&gt;2 2012 abr-mai-jun Rondônia           6.224&lt;/h2&gt;
-
-&lt;h2&gt;3 2012 jul-ago-set Rondônia           5.882&lt;/h2&gt;
-
-&lt;h2&gt;4 2012 out-nov-dez Rondônia           5.274&lt;/h2&gt;
-
-&lt;h2&gt;5 2013 jan-fev-mar Rondônia           6.114&lt;/h2&gt;
-
-&lt;h2&gt;6 2013 abr-mai-jun Rondônia           4.771&lt;/h2&gt;
-
-&lt;p&gt;</code></pre></div></p>
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">##    Ano   Trimestre       UF Taxa_Desemprego
+## 1 2012 jan-fev-mar Rondônia           8.008
+## 2 2012 abr-mai-jun Rondônia           6.224
+## 3 2012 jul-ago-set Rondônia           5.882
+## 4 2012 out-nov-dez Rondônia           5.274
+## 5 2013 jan-fev-mar Rondônia           6.114
+## 6 2013 abr-mai-jun Rondônia           4.771</code></pre></div></p>
 
 <p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">tail</span><span class="p">(</span><span class="n">dados.espaco</span><span class="p">,</span> <span class="m">4</span><span class="p">)</span></code></pre></div></p>
 
-<p><div class="highlight"><pre><code class="language-text" data-lang="text">&lt;/p&gt;
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">##      Ano   Trimestre               UF Taxa_Desemprego
+## 429 2015 jan-fev-mar Distrito Federal          10.784
+## 430 2015 abr-mai-jun Distrito Federal           9.627
+## 431 2015 jul-ago-set Distrito Federal          10.258
+## 432 2015 out-nov-dez Distrito Federal           9.707</code></pre></div></p>
 
-&lt;h2&gt;Ano   Trimestre               UF Taxa_Desemprego&lt;/h2&gt;
-
-&lt;h2&gt;429 2015 jan-fev-mar Distrito Federal          10.784&lt;/h2&gt;
-
-&lt;h2&gt;430 2015 abr-mai-jun Distrito Federal           9.627&lt;/h2&gt;
-
-&lt;h2&gt;431 2015 jul-ago-set Distrito Federal          10.258&lt;/h2&gt;
-
-&lt;h2&gt;432 2015 out-nov-dez Distrito Federal           9.707&lt;/h2&gt;
-
-&lt;p&gt;</code></pre></div></p>
-
-<h4>Dados com campos de tamanho fixo</h4>
+<h4 id="dados-com-campos-de-tamanho-fixo">Dados com campos de tamanho fixo</h4>
 
 <p>Para a leitura de dados desse tipo, você precisa saber previamente o tamanho de caracteres reservado para cada campo. Geralmente esse tipo de arquivo vem acompanhando de um arquivo auxiliar explicando o layout dos dados.</p>
 
-<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">dados.fwf</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">read.fwf</span><span class="p">(</span><span class="o">&amp;</span><span class="n">lsquo</span><span class="p">;</span><span class="n">desemprego_uf_fwf.txt</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;,</span> <span class="n">widths</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="m">4</span><span class="p">,</span> <span class="m">11</span><span class="p">,</span> <span class="m">19</span><span class="p">,</span> <span class="m">6</span><span class="p">),</span>  <span class="n">header</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">,</span>  <span class="n">strip.white</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span></code></pre></div></p>
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">dados.fwf</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">read.fwf</span><span class="p">(</span><span class="err">‘</span><span class="n">desemprego_uf_fwf.txt</span><span class="err">’</span><span class="p">,</span> <span class="n">widths</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="m">4</span><span class="p">,</span> <span class="m">11</span><span class="p">,</span> <span class="m">19</span><span class="p">,</span> <span class="m">6</span><span class="p">),</span>  <span class="n">header</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">,</span>  <span class="n">strip.white</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span></code></pre></div></p>
 
 <p>Reparem que o segundo parâmetro da função, <code>widths</code> é onde você especifica o tamanho de cada campo na ordem em que eles ocorrem na linha. Ou seja, o primeiro campo tem tamanho 4 e o segundo 11. O <code>strip.white = TRUE</code> é a opção para eliminar os espaços em branco que foram incluídos na criação do arquivo para que cada linha tivesse o tamanho total especificado para cada coluna.</p>
 
@@ -211,48 +524,28 @@
 
 <p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">head</span><span class="p">(</span><span class="n">dados.fwf</span><span class="p">)</span></code></pre></div></p>
 
-<p><div class="highlight"><pre><code class="language-text" data-lang="text">&lt;/p&gt;
-
-&lt;h2&gt;V1          V2       V3    V4&lt;/h2&gt;
-
-&lt;h2&gt;1 2012 jan-fev-mar Rondônia 8.008&lt;/h2&gt;
-
-&lt;h2&gt;2 2012 abr-mai-jun Rondônia 6.224&lt;/h2&gt;
-
-&lt;h2&gt;3 2012 jul-ago-set Rondônia 5.882&lt;/h2&gt;
-
-&lt;h2&gt;4 2012 out-nov-dez Rondônia 5.274&lt;/h2&gt;
-
-&lt;h2&gt;5 2013 jan-fev-mar Rondônia 6.114&lt;/h2&gt;
-
-&lt;h2&gt;6 2013 abr-mai-jun Rondônia 4.771&lt;/h2&gt;
-
-&lt;p&gt;</code></pre></div></p>
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">##     V1          V2       V3    V4
+## 1 2012 jan-fev-mar Rondônia 8.008
+## 2 2012 abr-mai-jun Rondônia 6.224
+## 3 2012 jul-ago-set Rondônia 5.882
+## 4 2012 out-nov-dez Rondônia 5.274
+## 5 2013 jan-fev-mar Rondônia 6.114
+## 6 2013 abr-mai-jun Rondônia 4.771</code></pre></div></p>
 
 <p>Para definirmos os nomes das variáveis usaremos o comando <code>colnames()</code>. Basicamente, diremos que os nomes das colunas deverão ser os que estão especificados abaixo:</p>
 
-<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">colnames</span><span class="p">(</span><span class="n">dados.fwf</span><span class="p">)</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">c</span><span class="p">(</span><span class="o">&amp;</span><span class="n">lsquo</span><span class="p">;</span><span class="n">Ano</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;,</span> <span class="o">&amp;</span><span class="n">lsquo</span><span class="p">;</span><span class="n">Trimestre</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;,</span> <span class="o">&amp;</span><span class="n">lsquo</span><span class="p">;</span><span class="n">UF</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;,</span> <span class="o">&amp;</span><span class="n">lsquo</span><span class="p">;</span><span class="n">Taxa_Desemprego</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;)</span>
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">colnames</span><span class="p">(</span><span class="n">dados.fwf</span><span class="p">)</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">c</span><span class="p">(</span><span class="err">‘</span><span class="n">Ano</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">Trimestre</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">UF</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">Taxa_Desemprego</span><span class="err">’</span><span class="p">)</span>
 <span class="n">head</span><span class="p">(</span><span class="n">dados.fwf</span><span class="p">)</span></code></pre></div></p>
 
-<p><div class="highlight"><pre><code class="language-text" data-lang="text">&lt;/p&gt;
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">##    Ano   Trimestre       UF Taxa_Desemprego
+## 1 2012 jan-fev-mar Rondônia           8.008
+## 2 2012 abr-mai-jun Rondônia           6.224
+## 3 2012 jul-ago-set Rondônia           5.882
+## 4 2012 out-nov-dez Rondônia           5.274
+## 5 2013 jan-fev-mar Rondônia           6.114
+## 6 2013 abr-mai-jun Rondônia           4.771</code></pre></div></p>
 
-&lt;h2&gt;Ano   Trimestre       UF Taxa_Desemprego&lt;/h2&gt;
-
-&lt;h2&gt;1 2012 jan-fev-mar Rondônia           8.008&lt;/h2&gt;
-
-&lt;h2&gt;2 2012 abr-mai-jun Rondônia           6.224&lt;/h2&gt;
-
-&lt;h2&gt;3 2012 jul-ago-set Rondônia           5.882&lt;/h2&gt;
-
-&lt;h2&gt;4 2012 out-nov-dez Rondônia           5.274&lt;/h2&gt;
-
-&lt;h2&gt;5 2013 jan-fev-mar Rondônia           6.114&lt;/h2&gt;
-
-&lt;h2&gt;6 2013 abr-mai-jun Rondônia           4.771&lt;/h2&gt;
-
-&lt;p&gt;</code></pre></div></p>
-
-<h1>Mais opções na leitura</h1>
+<h1 id="mais-opes-na-leitura">Mais opções na leitura</h1>
 
 <p>Apresentamos as funções básicas de leitura de arquivo com seu uso padrão mais simples. No entanto, existem muitos outros parâmetros que podem ser usados para especificar mais a leitura dos dados. Vale a pena conferir. Para conhecer mais sobre as funções apresentadas, lembrem-se de usar <code>?</code>.</p>
 
@@ -261,20 +554,30 @@
 <span class="o">?</span><span class="n">read.delim</span><span class="p">()</span>
 <span class="o">?</span><span class="n">read.csv</span><span class="p">()</span></code></pre></div></p>
 
-<blockquote><p>Dica: Repare que <code>read.delim()</code> e <code>read.csv()</code> estão na mesma ajuda do <code>read.table()</code>. Na verdade todas as 3 funções são a mesma, e podem ser reproduzidas com o <code>read.table()</code> apenas mudando alguns parâmetros na chamada da função.</p></blockquote>
+<blockquote>
+  <p>Dica: Repare que <code>read.delim()</code> e <code>read.csv()</code> estão na mesma ajuda do <code>read.table()</code>. Na verdade todas as 3 funções são a mesma, e podem ser reproduzidas com o <code>read.table()</code> apenas mudando alguns parâmetros na chamada da função.</p>
+</blockquote>
 
-<h1>Outras formas de carregar dados</h1>
+<h1 id="outras-formas-de-carregar-dados">Outras formas de carregar dados</h1>
 
 <p>Existe diversas outras formas de carregar dados. Mas nosso objetivo aqui é apenas criar uma introdução para conseguir carregar a grande maioria dos formatos de dados mais comuns.</p>
 
 <p>Em breve lançaremos posts explicando leitura de arquivos em excel, arquivos semi-estruturados e arquivos não estruturados.</p>
 
-<h1>Referências:</h1>
+<h1 id="desafio">Desafio</h1>
+
+<p>Que tal tentar carregar e visualizar no R os dados da série histórica das taxas de vendas de títulos do tesouro direto (<a href="http://www.tesourotransparente.gov.br/ckan/dataset/taxas-dos-titulos-ofertados-pelo-tesouro-direto">download Tesouro Direto</a>)?</p>
+
+<p>Tente também carregar e visualizar os dados do IPCA (Índice Nacional de Preço ao Consumidor Amplo), indicador oficial da inflação brasileira (<a href="http://dados.gov.br/dataset/indice-nacional-de-precos-ao-consumidor-amplo-ipca/resource/3292e931-5ed8-42fb-aa59-4386e115d619">download IPCA</a>).</p>
+
+<p>Teve alguma dificuldade? Comente abaixo para que possamos ajudar!</p>
+
+<h1 id="referncias">Referências:</h1>
 
 <ul>
-<li><a href="https://cran.r-project.org/doc/manuals/r-release/R-data.pdf">R Data Import/Export</a></li>
-<li><a href="http://blog.revolutionanalytics.com/2015/04/new-packages-for-reading-data-into-r-fast.html">New packages for reading data into R — fast</a></li>
-<li><a href="https://www.datacamp.com/community/tutorials/r-tutorial-read-excel-into-r">Reading and Importing Files - DataCamp</a></li>
+  <li><a href="https://cran.r-project.org/doc/manuals/r-release/R-data.pdf">R Data Import/Export</a></li>
+  <li><a href="http://blog.revolutionanalytics.com/2015/04/new-packages-for-reading-data-into-r-fast.html">New packages for reading data into R — fast</a></li>
+  <li><a href="https://www.datacamp.com/community/tutorials/r-tutorial-read-excel-into-r">Reading and Importing Files - DataCamp</a></li>
 </ul>
 
 ]]></content>
@@ -289,8 +592,7 @@
 
 <!-- More -->
 
-
-<h2>Pacotes</h2>
+<h2 id="pacotes">Pacotes</h2>
 
 <p>Um pacote do R e um conjunto de funções que tem uma temática em comum. As funções de um mesmo pacote são carregadas juntas em memória, ou seja, ficam disponíveis para uso no R. Por ter uma temática específica, cada pacote possue uma documentação explicando suas funcionalidades disponíveis e como usá-las. Além das funções, alguns pacotes também fornecem um conjunto de dados que são usados para replicar os exemplos fornecidos nas documentações.</p>
 
@@ -298,27 +600,27 @@
 
 <p>No geral, você fará muito uso de pacotes para facilitar tarefas que as funções básicas do R deixam a desejar.</p>
 
-<h3>Instalação</h3>
+<h3 id="instalao">Instalação</h3>
 
 <p>Existem duas opções para instalar um pacote: via comando ou usando a funcionalidade nos menus do RStudio.</p>
 
 <p>Para instalar via comando, você pode digitar o seguinte comando no console:</p>
 
-<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">install.packages</span><span class="p">(</span><span class="o">&amp;</span><span class="n">lsquo</span><span class="p">;</span><span class="n">readxl</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;)</span></code></pre></div></p>
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">install.packages</span><span class="p">(</span><span class="err">‘</span><span class="n">readxl</span><span class="err">’</span><span class="p">)</span></code></pre></div></p>
 
 <p>Este comando irá instalar o pacote <code>readxl</code> que fornece funções para facilitar a importação de dados em arquivos <code>xls</code> e <code>xlsx</code>. Nesse caso específico, o pacote fornece duas funções: uma para listar todas as planilhas que estão em um arquivo do excel e outra para ler os dados de uma planilha pro excel. Em um post futuro sobre a importação de dados, trataremos mais sobre esse pacote. Por enquanto, estamos usando somente como exemplo.</p>
 
 <p>Para realizar a instalação com ajuda do RStudio, primeiro clique na aba <em>Packages</em> e depois no botão <em>Install</em>. Será aberta uma janela auxiliar em que você poderá escolher a fonte que será utilizada para instalar o pacote. Normalmente, você optará pelo CRAN (este termo será explicado mais adiante, porém trata-se do repositório oficial). Em <em>Packages</em>, digite o nome do pacote e depois no botão <em>Install</em>. Abaixo está uma imagem de como é o processo de instalação via RStudio.</p>
 
-<p><img src="/images/install_package.gif" title="Instalação de Pacote" alt="alt Instalação de Pacote" /></p>
+<p><img src="/images/install_package.gif" alt="alt Instalação de Pacote" title="Instalação de Pacote" /></p>
 
-<h3>Buscando pacotes</h3>
+<h3 id="buscando-pacotes">Buscando pacotes</h3>
 
 <p>Mas como saber quais pacotes estão disponíveis para uma determinada tarefa? Na maioria das vezes será inevitável realizar uma busca por uma função específica e no meio do caminho se deparar com o pacote.</p>
 
 <p>Todavia, existem algumas páginas que apresentam uma lista de pacotes relacionadas a uma determinada tarefa, que são denominadas de <em>Task View</em>. Para exemplificar, veja <a href="https://cran.r-project.org/web/views/Graphics.html">aqui</a> uma lista de pacotes para realização de gráficos e visualizações.</p>
 
-<h3>Carregando um pacote</h3>
+<h3 id="carregando-um-pacote">Carregando um pacote</h3>
 
 <p>Para utilizar as funções de um pacote, você deve carregá-lo antes. Para isso, você deve usar o seguinte comando:</p>
 
@@ -326,7 +628,9 @@
 
 <p>Esse comando irá carregar o pacote em memória e tornará possível a utilização de todas funções disponíveis nele. Também existe a possibilidade de carregamento de pacotes usando a função <code>require()</code>, que é mais indicado no caso de carregamento de um pacote dentro de uma rotina. Por enquanto, não nos preocupemos com ele.</p>
 
-<blockquote><p>Dica: repare que para instalar o pacote você usou o nome dele entre aspas `install.packages(&ldquo;readxl&rdquo;) e não vai funcionar sem aspas. Mas, para carregar o pacote em memória, você pode usar com ou sem aspas library(readxl) ou library(&ldquo;readxl&rdquo;)</p></blockquote>
+<blockquote>
+  <p>Dica: repare que para instalar o pacote você usou o nome dele entre aspas `install.packages(“readxl”) e não vai funcionar sem aspas. Mas, para carregar o pacote em memória, você pode usar com ou sem aspas library(readxl) ou library(“readxl”)</p>
+</blockquote>
 
 <p>Ao trabalhar com pacotes, muitas vezes irá aparecer o termo <strong>CRAN</strong>. Ele significa <em>Comprehensive R Archive Network</em>. Este é o principal repositório de pacotes do R. Trata-se de um portal que guarda uma série de pacotes que necessariamente passaram por uma série de requisitos antes de serem publicado. Atualmente, estao disponiveis mais de 8.000 pacotes no CRAN.</p>
 
@@ -334,18 +638,18 @@
 
 <p>Vários pacotes já são disponibilizados pelos próprios autores antes mesmo das verificações necessárias para entrar no CRAN. Não são apenas novos pacotes. Novas versões de um pacote podem se encaixar aqui também. Geralmente, eles estão disponíveis no <a href="https://pt.wikipedia.org/wiki/GitHub">github</a>.</p>
 
-<p>Para realizar a instalação desses pacotes &ldquo;fora do CRAN&rdquo;, será necessária a instalação do <code>devtools</code> (que é um pacote!). Por exemplo, o <code>ggplot2</code>, ótimo pacote para gráficos, já possui uma versão estável no CRAN. No entanto, se você desejar instalar a versão que está em desenvolvimento, que pode possuir uma nova funcionalidade, faça o seguinte:</p>
+<p>Para realizar a instalação desses pacotes “fora do CRAN”, será necessária a instalação do <code>devtools</code> (que é um pacote!). Por exemplo, o <code>ggplot2</code>, ótimo pacote para gráficos, já possui uma versão estável no CRAN. No entanto, se você desejar instalar a versão que está em desenvolvimento, que pode possuir uma nova funcionalidade, faça o seguinte:</p>
 
-<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">install.packages</span><span class="p">(</span><span class="o">&amp;</span><span class="n">lsquo</span><span class="p">;</span><span class="n">devtools</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;)</span> <span class="c1"># Caso não esteja instalado ainda</span>
-<span class="n">devtools</span><span class="o">::</span><span class="n">install_github</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">hadley</span><span class="o">/</span><span class="n">ggplot2</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;)</span></code></pre></div></p>
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">install.packages</span><span class="p">(</span><span class="err">‘</span><span class="n">devtools</span><span class="err">’</span><span class="p">)</span> <span class="c1"># Caso não esteja instalado ainda</span>
+<span class="n">devtools</span><span class="o">::</span><span class="n">install_github</span><span class="p">(</span><span class="err">“</span><span class="n">hadley</span><span class="o">/</span><span class="n">ggplot2</span><span class="err">”</span><span class="p">)</span></code></pre></div></p>
 
 <p>Aqui temos um ponto interessante. Para usar funções de um pacote, usualmente carrega-se usando o <code>library()</code>. Contudo, se você quiser pontualmente uma função de um pacote, pode-se optar pela forma acima: <code>nome_do_pacote::nome_da_função</code>. Dessa forma você evitaria carregar todas as funções do pacote em memória. Isso pode ser muito útil!</p>
 
-<h2>Ajuda no R</h2>
+<h2 id="ajuda-no-r">Ajuda no R</h2>
 
 <p>Você baixou um pacote e não sabe muito bem como usar as funções que estão disponíveis. O que fazer? Você precisará de ajuda. O primeiro passo é verificar a ajuda do pacote. Serão listadas as funções disponíveis e links para a página de <em>help</em> de cada função. Isto pode ser feito a partir do seguinte comando:</p>
 
-<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">help</span><span class="p">(</span><span class="n">package</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">lsquo</span><span class="p">;</span><span class="n">readxl</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;)</span></code></pre></div></p>
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">help</span><span class="p">(</span><span class="n">package</span> <span class="o">=</span> <span class="err">‘</span><span class="n">readxl</span><span class="err">’</span><span class="p">)</span></code></pre></div></p>
 
 <p>Para buscar ajuda sobre uma função específica, existem algumas possibilidades a depender se o pacote já está carregado ou não. Por exemplo:</p>
 
@@ -357,21 +661,23 @@
 
 <p>Sendo mais específico, ao buscar a ajuda por uma função específica, será apresentado um texto com uma estrutura padrão: <em>Description</em>, <em>Usage</em>, <em>Arguments</em> e <em>Examples</em>. Além dessas, podem constar outras seções como <em>Details</em> e <em>Value</em>, por exemplo.</p>
 
-<p>É importante destacar o uso (<em>Usage</em>) que trará uma forma genérica de utilização dos parâmetros. Em regra, uma função tem uma série de parâmetros que serão passados para &ldquo;dentro&rdquo; dela. Os parâmetros são separados por vírgula e os que apresentam <code>=</code> possuem um valor padrão e geralmente são opcionais (nem todos os parâmetros são obrigatórios).</p>
+<p>É importante destacar o uso (<em>Usage</em>) que trará uma forma genérica de utilização dos parâmetros. Em regra, uma função tem uma série de parâmetros que serão passados para “dentro” dela. Os parâmetros são separados por vírgula e os que apresentam <code>=</code> possuem um valor padrão e geralmente são opcionais (nem todos os parâmetros são obrigatórios).</p>
 
 <p>Após executar uma função, ela retornará o que está descrito na seção <em>Value</em>. Pode ser um único número ou uma lista (nos próximos posts ficará mais claro o que é uma lista) de elementos que pode variar de uma vetor a um texto.</p>
 
 <p>Não se preocupe muito se o conceito de função ainda não está totalmente claro. O próprio uso e os próximos posts deixarão todos esses conceitos claros de forma natural por meio de exemplos e práticas.</p>
 
-<h2>Referências:</h2>
+<h1 id="desafio">Desafio</h1>
 
+<p>Instale e carrege os pacotes <code>tidyr</code> e <code>stringr</code>. Consegue descobrir para que servem esses pacotes? Consegue visualizar as funções existentes em cada pacote? Para que serve a função <code>gather()</code> do pacote <code>tidyr</code>?  Para que serve a função <code>str_count()</code> do pacote <code>stringr</code>? Compartilhe conosco nos comentários o que descobriu!</p>
+
+<h1 id="referncias">Referências:</h1>
 <ul>
-<li><a href="https://www.datacamp.com/community/tutorials/functions-in-r-a-tutorial">DataCamp - Functions</a></li>
-<li><a href="https://www.rstudio.com/products/rpackages/">Principais pacotes para R</a></li>
-<li><a href="http://r-pkgs.had.co.nz/">R Packages</a></li>
-<li><a href="http://www.analyticsvidhya.com/blog/2015/08/list-r-packages-data-analysis/">Lista de pactes mais úteis para Análise de Dados</a></li>
+  <li><a href="https://www.datacamp.com/community/tutorials/functions-in-r-a-tutorial">DataCamp - Functions</a></li>
+  <li><a href="https://www.rstudio.com/products/rpackages/">Principais pacotes para R</a></li>
+  <li><a href="http://r-pkgs.had.co.nz/">R Packages</a></li>
+  <li><a href="http://www.analyticsvidhya.com/blog/2015/08/list-r-packages-data-analysis/">Lista de pactes mais úteis para Análise de Dados</a></li>
 </ul>
-
 ]]></content>
   </entry>
   
@@ -384,10 +690,9 @@
 
 <!-- More -->
 
-
 <p>Como dito no post anterior, o RStudio apresenta 4 janelas principais, cada uma com sua função. No entanto, podemos dizer que as duas janelas que você mais vai usar (no começo) são <em>Editor de Códigos</em> e o <em>Console</em>.</p>
 
-<h1>Usando o console</h1>
+<h1 id="usando-o-console">Usando o console</h1>
 
 <p>Sendo bem simplista, R é uma linguagem que funciona com base em comandos. O console é o lugar onde você digita um comando (uma instrução) e em seguida recebe uma resposta com o resultado. Para quem nunca teve contato com nenhuma outra linguagem de programação, esse simples conceito pode parecer um pouco abstrato. Não há como entendê-lo sem ser praticando.</p>
 
@@ -395,17 +700,13 @@
 
 <p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="m">2</span> <span class="o">*</span> <span class="m">5</span></code></pre></div></p>
 
-<p><div class="highlight"><pre><code class="language-text" data-lang="text">&lt;/p&gt;
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 10</code></pre></div></p>
 
-&lt;h2&gt;[1] 10&lt;/h2&gt;
-
-&lt;p&gt;</code></pre></div></p>
-
-<p>O que aconteceu? Você digitou o comando &ldquo;multiplique 2 vezes 5&rdquo; no console, e o R respondeu com o resultado 10. E o que é esse <code>[1]</code> na resposta do R? Bom, isso significa que o resultado do seu comando só teve uma linha. Em alguns casos o resultado será mais de uma linha, então o R usa essa notação de índices <code>[x]</code> para mostrar os resultados do comando. Não se preocupe muito com isso por agora.</p>
+<p>O que aconteceu? Você digitou o comando “multiplique 2 vezes 5” no console, e o R respondeu com o resultado 10. E o que é esse <code>[1]</code> na resposta do R? Bom, isso significa que o resultado do seu comando só teve uma linha. Em alguns casos o resultado será mais de uma linha, então o R usa essa notação de índices <code>[x]</code> para mostrar os resultados do comando. Não se preocupe muito com isso por agora.</p>
 
 <p><img src="/images/kit_parte2_console.gif" alt="alt text" /></p>
 
-<h1>Uma grande calculadora</h1>
+<h1 id="uma-grande-calculadora">Uma grande calculadora</h1>
 
 <p>O R interpreta os seus comandos e dá um resultado apropriado para cada um. Para que os comandos sejam interpretados corretamente, você deve usar os elementos da linguagem.</p>
 
@@ -415,61 +716,39 @@
 
 <p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="m">5</span> <span class="o">+</span> <span class="m">3</span></code></pre></div></p>
 
-<p><div class="highlight"><pre><code class="language-text" data-lang="text">&lt;/p&gt;
-
-&lt;h2&gt;[1] 8&lt;/h2&gt;
-
-&lt;p&gt;</code></pre></div></p>
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 8</code></pre></div></p>
 
 <p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="m">5</span> <span class="o">-</span> <span class="m">3</span></code></pre></div></p>
 
-<p><div class="highlight"><pre><code class="language-text" data-lang="text">&lt;/p&gt;
-
-&lt;h2&gt;[1] 2&lt;/h2&gt;
-
-&lt;p&gt;</code></pre></div></p>
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 2</code></pre></div></p>
 
 <p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="m">5</span> <span class="o">*</span> <span class="m">3</span></code></pre></div></p>
 
-<p><div class="highlight"><pre><code class="language-text" data-lang="text">&lt;/p&gt;
-
-&lt;h2&gt;[1] 15&lt;/h2&gt;
-
-&lt;p&gt;</code></pre></div></p>
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 15</code></pre></div></p>
 
 <p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="m">5</span> <span class="o">/</span> <span class="m">3</span></code></pre></div></p>
 
-<p><div class="highlight"><pre><code class="language-text" data-lang="text">&lt;/p&gt;
-
-&lt;h2&gt;[1] 1.666667&lt;/h2&gt;
-
-&lt;p&gt;</code></pre></div></p>
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 1.666667</code></pre></div></p>
 
 <p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="m">5</span> <span class="o">^</span> <span class="m">3</span></code></pre></div></p>
 
-<p><div class="highlight"><pre><code class="language-text" data-lang="text">&lt;/p&gt;
-
-&lt;h2&gt;[1] 125&lt;/h2&gt;
-
-&lt;p&gt;</code></pre></div></p>
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 125</code></pre></div></p>
 
 <p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="m">2</span> <span class="o">^</span> <span class="p">(</span><span class="m">4</span> <span class="o">-</span> <span class="m">2</span><span class="p">)</span> <span class="o">*</span> <span class="m">-8</span> <span class="o">/</span> <span class="p">(</span><span class="m">5</span> <span class="o">*</span> <span class="p">(</span><span class="m">10</span> <span class="o">+</span> <span class="m">3</span><span class="p">))</span> <span class="c1">#Precedentes matemáticos</span></code></pre></div></p>
 
-<p><div class="highlight"><pre><code class="language-text" data-lang="text">&lt;/p&gt;
-
-&lt;h2&gt;[1] -0.4923077&lt;/h2&gt;
-
-&lt;p&gt;</code></pre></div></p>
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## [1] -0.4923077</code></pre></div></p>
 
 <p>Mas o que é esse <code>#</code>? Trata-se de um símbolo indicando um comentário. Um comentário é alguma explicação que você escreve em seus comandos e que o R não interpreta, ou seja, não influencia no resultado final. Serve apenas para documentar, comentar ou explicar alguma parte dos seus comandos.</p>
 
 <p>Reparem que, com o que foi dito até agora, já da pra usar o R como uma grande calculadora de luxo!</p>
 
-<blockquote><p>Dica: no console, aperte seta para cima do teclado e você terá os últimos comandos digitados.</p></blockquote>
+<blockquote>
+  <p>Dica: no console, aperte seta para cima do teclado e você terá os últimos comandos digitados.</p>
+</blockquote>
 
 <p><img src="/images/kit_parte2_variaveis.gif" alt="alt text" /></p>
 
-<h1>Variáveis</h1>
+<h1 id="variveis">Variáveis</h1>
 
 <p>Na maioria dos casos, o tabalho que você precisará fazer vai exigir mais do que uma simples calculadora pode oferecer, será necessário conhecer mais das possiblidades do R.</p>
 
@@ -481,15 +760,11 @@
 
 <p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">minha_PRIMEIRA.variavel</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="m">9</span> <span class="o">^</span> <span class="m">10</span> <span class="c1">#Nome esdrúxulo de variável apenas para exemplificar!</span></code></pre></div></p>
 
-<p>&ldquo;Ué, apertei enter e nada aconteceu?&rdquo;. Aconteceu sim! Você colocou o resultado de <code>9 ^ 10</code> dentro da variável chamada <code>minha_PRIMEIRA.variavel</code>. Para comprovar e para ver o que tem &ldquo;dentro da variável&rdquo;, digite apenas o nome da variável e aperte enter:</p>
+<p>“Ué, apertei enter e nada aconteceu?”. Aconteceu sim! Você colocou o resultado de <code>9 ^ 10</code> dentro da variável chamada <code>minha_PRIMEIRA.variavel</code>. Para comprovar e para ver o que tem “dentro da variável”, digite apenas o nome da variável e aperte enter:</p>
 
 <p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">minha_PRIMEIRA.variavel</span></code></pre></div></p>
 
-<p><div class="highlight"><pre><code class="language-text" data-lang="text">&lt;/p&gt;
-
-&lt;h2&gt;[1] 3486784401&lt;/h2&gt;
-
-&lt;p&gt;</code></pre></div></p>
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 3486784401</code></pre></div></p>
 
 <p>Sempre que precisar usar o valor de 9 ^ 10, basta usar sua variável <code>minha_PRIMEIRA.variavel</code> e pronto, terá o resultado dessa operação armazenado sem precisar calcular novamente. Você pode fazer diversas operações com as variáveis. Por exemplo:</p>
 
@@ -498,13 +773,11 @@
 <span class="n">z</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">y</span> <span class="o">-</span> <span class="n">x</span> <span class="c1">#Resultado da operação y menos o resultado da operação x</span>
 <span class="n">z</span></code></pre></div></p>
 
-<p><div class="highlight"><pre><code class="language-text" data-lang="text">&lt;/p&gt;
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 6.5</code></pre></div></p>
 
-&lt;h2&gt;[1] 6.5&lt;/h2&gt;
-
-&lt;p&gt;</code></pre></div></p>
-
-<blockquote><p>Dica: use nomes explicativos! Talvez não pareça muito útil agora, mas existem alguns padrões e boas práticas para escrever comando em R que vai ajudar muito na hora de você mesmo ou outras pessoas entenderem o que foi feito. Recomendamos a leitura de alguns padrões de nomenclatura, <a href="http://adv-r.had.co.nz/Style.html">como este aqui</a>.</p></blockquote>
+<blockquote>
+  <p>Dica: use nomes explicativos! Talvez não pareça muito útil agora, mas existem alguns padrões e boas práticas para escrever comando em R que vai ajudar muito na hora de você mesmo ou outras pessoas entenderem o que foi feito. Recomendamos a leitura de alguns padrões de nomenclatura, <a href="http://adv-r.had.co.nz/Style.html">como este aqui</a>.</p>
+</blockquote>
 
 <p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">primeira.variavel</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="m">-5</span> <span class="o">*</span> <span class="m">4</span> <span class="c1">#padrão com ponto, mais comum em R</span>
 <span class="n">primeiraVariavel</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="m">-5</span> <span class="o">*</span> <span class="m">4</span> <span class="c1">#padrão camel case, comum em outras linguagens de programação</span>
@@ -514,24 +787,20 @@
 
 <p><img src="/images/kit_parte2_funcoes.gif" alt="alt text" /></p>
 
-<h1>Funções</h1>
+<h1 id="funes">Funções</h1>
 
 <p>Precisaremos mais do que simples variáveis e simples operações matemáticas para usar toda potencialidade do R.</p>
 
-<p>Existem alguns &ldquo;programas&rdquo; prontos para uso no R, ou seja, algumas sequências de comandos preparados para serem usados de forma simples e facilitar sua vida. Esses &ldquo;programas&rdquo; prontos são chamados de funções, e são usados para tudo que você possa imaginar: cálculos mais complexos, estatística, análise de dados, manipulação de dados, gráficos, relatórios, etc.</p>
+<p>Existem alguns “programas” prontos para uso no R, ou seja, algumas sequências de comandos preparados para serem usados de forma simples e facilitar sua vida. Esses “programas” prontos são chamados de funções, e são usados para tudo que você possa imaginar: cálculos mais complexos, estatística, análise de dados, manipulação de dados, gráficos, relatórios, etc.</p>
 
 <p>Na verdade, uma das coisas que torna o R uma ótima linguagem estatística é a gigantesca quantidade de funções disponíveis. Para (quase) tudo que você quiser fazer, existe uma função que facilita as coisas. Algumas funções já vem com a instalação base do R, outras você precisa instalar um pacote extra (falaremos disso em breve).</p>
 
 <p>Uma funcão tem dois elementos básicos: o nome e o(s) parâmetro(s). Por exemplo, função para cálculo de raiz quadrada:</p>
 
-<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">raiz.quadrada</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">sqrt</span><span class="p">(</span><span class="m">16</span><span class="p">)</span>
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">raiz.quadrada</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">sqrt</span><span class="p">(</span><span class="m">16</span><span class="p">)</span> 
 <span class="n">raiz.quadrada</span></code></pre></div></p>
 
-<p><div class="highlight"><pre><code class="language-text" data-lang="text">&lt;/p&gt;
-
-&lt;h2&gt;[1] 4&lt;/h2&gt;
-
-&lt;p&gt;</code></pre></div></p>
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 4</code></pre></div></p>
 
 <p>Ou seja, <code>sqrt</code> é o nome da função para calcular raiz quadrada, e <code>16</code> é o parâmetro que você informa para função calcular. Detalhe: o resultado das funções também podem ser armazenados em variáveis, tal qual demonstra o exemplo.</p>
 
@@ -540,17 +809,13 @@
 <p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">x</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="m">5.34999</span>
 <span class="n">round</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="m">2</span><span class="p">)</span></code></pre></div></p>
 
-<p><div class="highlight"><pre><code class="language-text" data-lang="text">&lt;/p&gt;
-
-&lt;h2&gt;[1] 5.35&lt;/h2&gt;
-
-&lt;p&gt;</code></pre></div></p>
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 5.35</code></pre></div></p>
 
 <p>Ou seja, <code>round</code> é o nome da função para arredondamento. Já o <code>x</code>, a variável que armazena <code>5.34999</code>, é o primeiro parâmetro, informando o número que você quer arredondar. E temos o <code>2</code> como segundo parâmetro, informando até quantas casas decimais você quer arredondar.</p>
 
 <p>Como dito, a instalação base do R já vem com algumas funções muito utilizadas. Segue <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/00Index.html">uma</a> lista para conhecer melhor cada uma dessas funcões básicas. Na sequência de posts apresentaremos pacotes com muito mais funções importantes disponíveis.</p>
 
-<h1>Script.R (editor)</h1>
+<h1 id="scriptr-editor">Script.R (editor)</h1>
 
 <p>Você agora consegue fazer cálculos básicos, armazenar resultados em variáveis e usar funções para auxiliar nos cálculos. Mas tudo isso usando o console.</p>
 
@@ -569,11 +834,7 @@
 <span class="n">total</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
 <span class="n">total</span></code></pre></div></p>
 
-<p><div class="highlight"><pre><code class="language-text" data-lang="text">&lt;/p&gt;
-
-&lt;h2&gt;[1] 6&lt;/h2&gt;
-
-&lt;p&gt;</code></pre></div></p>
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 6</code></pre></div></p>
 
 <p>Agora clique em <code>Source</code>. O que aconteceu? Você não viu o resultado na tela, mas o R executou todo seu script em memória e carregou as variáveis. Para ver o resultado na tela clique em <code>Source &gt; Source with echo</code> (ou o atalho ctrl + shift + enter). O resultado do seu script irá aparecer no console.</p>
 
@@ -585,16 +846,16 @@
 
 <p>Foi um longo post, mas finalmente chegamos ao fim! Esperamos que esse post tenha dado uma boa noção de como usar o console com operações e funções básicas, bem como armazenar resultados em variáveis. A partir de agora, salve seus trabalhos em scripts com formato .R e sempre que quiser executá-los use o botão Source. Até a próxima.</p>
 
-<h2>Referências:</h2>
+<h2 id="referncias">Referências:</h2>
 
 <ul>
-<li><a href="https://www.datacamp.com/courses/free-introduction-to-r">DataCamp - Free introduction to R</a></li>
-<li><a href="http://www.r-tutor.com/r-introduction">R-introduction</a></li>
-<li><a href="https://cran.r-project.org/doc/contrib/Torfs+Brauer-Short-R-Intro.pdf">Short R Introduction</a></li>
-<li><a href="https://support.rstudio.com/hc/en-us/articles/200404846-Working-in-the-Console">Working in the Console</a></li>
-<li><a href="http://www.statmethods.net/management/functions.html">R Built in functions</a></li>
-<li><a href="http://adv-r.had.co.nz/Style.html">Guia de estilo de código - by Hadley Wickham</a></li>
-<li><a href="https://google.github.io/styleguide/Rguide.xml">Guia de estilo de código - by Google</a></li>
+  <li><a href="https://www.datacamp.com/courses/free-introduction-to-r">DataCamp - Free introduction to R</a></li>
+  <li><a href="http://www.r-tutor.com/r-introduction">R-introduction</a></li>
+  <li><a href="https://cran.r-project.org/doc/contrib/Torfs+Brauer-Short-R-Intro.pdf">Short R Introduction</a></li>
+  <li><a href="https://support.rstudio.com/hc/en-us/articles/200404846-Working-in-the-Console">Working in the Console</a></li>
+  <li><a href="http://www.statmethods.net/management/functions.html">R Built in functions</a></li>
+  <li><a href="http://adv-r.had.co.nz/Style.html">Guia de estilo de código - by Hadley Wickham</a></li>
+  <li><a href="https://google.github.io/styleguide/Rguide.xml">Guia de estilo de código - by Google</a></li>
 </ul>
 
 ]]></content>
@@ -611,96 +872,92 @@
 
 <!-- More -->
 
+<h2 id="por-que-aprender-uma-linguagem-estatstica">Por que aprender uma linguagem estatística?</h2>
 
-<h2>Por que aprender uma linguagem estatística?</h2>
-
-<p>Qualquer um que trabalhe um pouco mais com dados já esbarrou nas limitações do &ldquo;excel&rdquo; ou de softwares de planilha. Nada contra, são ótimos, mas as vezes eles dificultam mais do que ajudam. Abrir a mente e se permitir novas formas de trabalho pode render bons frutos.</p>
+<p>Qualquer um que trabalhe um pouco mais com dados já esbarrou nas limitações do “excel” ou de softwares de planilha. Nada contra, são ótimos, mas as vezes eles dificultam mais do que ajudam. Abrir a mente e se permitir novas formas de trabalho pode render bons frutos.</p>
 
 <p>Trabalhos de manipulação de dados, verificação, limpeza e junção de dados, ou até alguns cálculos com uma massa de dados um pouco maior podem se tornar um pouco traumáticos se você não usar as ferramentas mais adequadas.</p>
 
 <p>As linguagens de programação estatística ajudam muito nesse sentido. São ferramentas poderosíssimas que praticamente derrubam os limites das possibilidades de se trabalhar com dados: você pode fazer praticamente qualquer coisa!</p>
 
-<p>&ldquo;Eu trabalho com dados de forma básica, mas não quero me tornar um ciêntista de dados&hellip; ainda assim é útil?&rdquo;. Com certeza! Linguagens de programação estatística, mesmo que aprendendo apenas o básico, aumentam muito a produtividade.</p>
+<p>“Eu trabalho com dados de forma básica, mas não quero me tornar um ciêntista de dados… ainda assim é útil?”. Com certeza! Linguagens de programação estatística, mesmo que aprendendo apenas o básico, aumentam muito a produtividade.</p>
 
 <p>Portanto, sugerimos fortemente que aprenda uma linguagem estatística o quanto antes!</p>
 
-<h2>Por que o R?</h2>
+<h2 id="por-que-o-r">Por que o R?</h2>
 
 <p>Um motivo básico é que o R é <strong>livre</strong>. Em circustâncias de restrição orçamentária, isso pode ser um fator determimante. No entanto, a escolha do R ultrapassa a questão dos custos. Algumas pessoas têm o costume de pensar que soluções livres são geralmente inferiores às proprietárias.</p>
 
 <p>Todavia, no caso de ciência de dados, os softwares livres parecem que vieram para ficar em posição dominante. De acordo com <a href="http://blog.dominodatalab.com/open-source-winning-against-proprietary-data-science-vendors/">essa pesquisa</a>, o mercado da ciência de dados está sendo dominado por softwares livres.</p>
 
-<p>Podemos dizer, então, que grande &ldquo;concorrente&rdquo; do R no momento é o Python, outro software livre.</p>
+<p>Podemos dizer, então, que grande “concorrente” do R no momento é o Python, outro software livre.</p>
 
 <p>E qual seria o melhor? Depende. Como tudo na vida, cada um apresenta vantagens e desvantagens. O importante é tirar proveito das diferenças. Sua necessidade dirá qual é o software mais adequado.</p>
 
 <p>Se a sua necessidade é de realização de estudos e análises que não serão diretamente ligada a outras plataformas, como uma aplicação web por exemplo, o R é o ideal para você. O Python costuma ser mais indicado em casos de análises que resultarão em algo mais sistemático. Este post <a href="http://www.kdnuggets.com/2015/05/r-vs-python-data-science.html">aqui</a> pode ser útil se você desejar saber mais sobre esse ponto.</p>
 
-<h2>Sobre o RStudio</h2>
+<h2 id="sobre-o-rstudio">Sobre o RStudio</h2>
 
 <p>O <a href="https://www.rstudio.com/">RStudio</a> é uma interface muito útil pra quem deseja usar o R. Com certeza, a maioria dos usuários de R utilizam o RStudio como <a href="https://pt.wikipedia.org/wiki/Ambiente_de_desenvolvimento_integrado">IDE (integrated development environment)</a>. Nele, você terá um editor de código, um console, um dispositivo para gráficos, um <a href="https://pt.wikipedia.org/wiki/Depura%C3%A7%C3%A3o"><em>debugger</em></a>, além de outras funcionalidades.</p>
 
-<p>Na figura abaixo, está a &ldquo;cara&rdquo; do RStudio. Note que há 4 janelas (ambientes) separadas. As   posições delas podem ser alteradas nas opções (<code>tools</code> -> <code>global options</code>). Além disso, você pode alterar o tema e outras tantas opções.</p>
+<p>Na figura abaixo, está a “cara” do RStudio. Note que há 4 janelas (ambientes) separadas. As 	posições delas podem ser alteradas nas opções (<code>tools</code> -&gt; <code>global options</code>). Além disso, você pode alterar o tema e outras tantas opções.</p>
 
 <p><img src="/images/RStudio_001.png" title="Uma visão geral do RStudio" ></p>
 
 <p>Vamos tratar, ainda que superficialmente, de algumas funcionalidades do RStudio.</p>
 
-<h4>1. Editor de Código</h4>
-
+<h4 id="editor-de-cdigo">1. Editor de Código</h4>
 <p>No editor de código, você poderá escrever e editar os scripts. <a href="https://pt.wikipedia.org/wiki/Linguagem_de_script">Script</a> nada mais é do que um conjunto de comandos que serão executados em sequência. O editor do RStudio oferece facilidades como indentação, <em>code complete</em>, destaque da sintaxe, etc.</p>
 
-<h4>2. Console</h4>
-
+<h4 id="console">2. Console</h4>
 <p>No console aparecerão os resultados dos comandos. Você também pode escrever no console e obter os resultados, sem uso do editor de código. Também pode-se chamar a ajuda diretamente pelo console. Por exemplo: <code>?lm</code>. Voltaremos a falar desse comando <code>?</code> mais pra frente.</p>
 
-<h4>3. <em>Workspace</em> e <em>History</em></h4>
-
+<h4 id="workspace-e-history">3. <em>Workspace</em> e <em>History</em></h4>
 <p>No <em>Workspace</em> ficarão guardados todos os objetos que forem criados na sessão. Entenda sessão como o espaço de tempo entre o momento em que você inicia o R e o momento que finaliza. Nesse período tudo que você faz usa memória RAM e o processador do computador. E na aba <em>History</em>, como você deve imaginar, o RStudio cria um histórico de comandos.</p>
 
-<h4>4. <em>Files</em>, <em>Plots</em>, <em>Packages</em>, <em>Help</em> e <em>Viewer</em>.</h4>
-
+<h4 id="files-plots-packages-help-e-viewer">4. <em>Files</em>, <em>Plots</em>, <em>Packages</em>, <em>Help</em> e <em>Viewer</em>.</h4>
 <p>Nessa janela, estão várias funcionalidades do RStudio. Na aba <em>Files</em>, você terá uma navegação de arquivos do seu computador. Também será possível definir o diretório de trabalho (você também pode definir diretamente no código, mas isto será tratado posteriormente), ou seja, o R  entende o seu diretório de trabalho como ponto de partida para localizar arquivos que sejam chamados no script.</p>
 
 <p>A aba <em>Plots</em> trará os gráficos gerados, possibilitando a exportação para alguns formatos diferentes, como png e pdf.</p>
 
 <p>Em <em>Packages</em>, estão listados os pacotes que estão instalados e você pode verificar quais estão carregados e, caso necessário, poderá carregar algum pacote necessário para a sua análise. Também é possível instalar e atualizar pacotes. Novamente, tudo isso é possível fazer diretamente no código.</p>
 
-<p><em>Help</em> o nome já diz tudo. Essa aba será bastante utilizada por você. Saber usar o <em>help</em> é fundamental para evitar desperdiço de tempo. Os usuários de R, em geral, são bastante solícitos. Entretanto, uma olhadinha rápida no help pode evitar que você gaste &ldquo;créditos&rdquo; desnecessariamente.</p>
+<p><em>Help</em> o nome já diz tudo. Essa aba será bastante utilizada por você. Saber usar o <em>help</em> é fundamental para evitar desperdiço de tempo. Os usuários de R, em geral, são bastante solícitos. Entretanto, uma olhadinha rápida no help pode evitar que você gaste “créditos” desnecessariamente.</p>
 
 <p>Por fim, o <em>Viewer</em>. Essa funcionalidade é utilizada para visualizar localmente conteúdo web. O gráfico da figura está na aba <em>Viewer</em> porque é uma visualização em <a href="https://pt.wikipedia.org/wiki/JavaScript">javascript</a>, que pode ser adicionada a documentos htmls gerados usando o <a href="http://rmarkdown.rstudio.com/">RMarkdown</a> ou em aplicações web com suporte do <a href="http://shiny.rstudio.com/">Shiny</a>.</p>
 
 <p>Bem, isso foi uma breve explicação. Se você quiser saber mais, esta <a href="http://www.rstudio.com/wp-content/uploads/2016/01/rstudio-IDE-cheatsheet.pdf"><em>cheat sheet</em></a> criada pelo time do RStudio é muito útil.</p>
 
-<h2>Instalando o R e o RStudio</h2>
+<h2 id="instalando-o-r-e-o-rstudio">Instalando o R e o RStudio</h2>
 
-<h3>Windows</h3>
+<h3 id="windows">Windows</h3>
 
 <p>Para instalar o R no windows basta realizar o download do executável <a href="https://cran.r-project.org/bin/windows/base/">aqui</a> e proceder a instalação como qualquer outro software.</p>
 
 <p>O Rstudio pode ser baixado <a href="https://www.rstudio.com/products/rstudio/download/">neste link</a>. Novamente, a instalação deve ser tranquila, sem a necessidade de maiores detalhes.</p>
 
-<h3>Ubuntu</h3>
+<h3 id="ubuntu">Ubuntu</h3>
 
 <p>No ubuntu, você pode instalar o R via terminal ou pela central de programas.</p>
 
 <p>Pelo terminal, tecle <code>ctrl + alt + T</code> e faça o seguinte:</p>
 
-<pre><code>sudo apt-get update
+<p><code>
+sudo apt-get update
 sudo apt-get install r-base
-</code></pre>
+</code></p>
 
 <p>Na central de aplicativos, basta buscar por <code>r-base</code>.</p>
 
 <p>O RStudio pode ser baixado no mesmo <a href="https://www.rstudio.com/products/rstudio/download/">link</a> citado quando foi explicada a instalação no windows.</p>
 
-<h3>Mac OS X</h3>
+<h3 id="mac-os-x">Mac OS X</h3>
 
 <p>Para instalar o R no Mac basta realizar o download da última versão do pacote (pkg) <a href="https://cran.rstudio.com/bin/macosx/">aqui</a>, de um duplo click e proceda com a instalação como qualquer outro pacote no Mac.</p>
 
 <p>O Rstudio pode ser baixado <a href="https://www.rstudio.com/products/rstudio/download/">neste link</a>. Procure na lista o instalador para Mac Os. Dessa vez será um arquivo DMG. De um duplo click e arraste o ícone do Rstudio para a pasta Aplicações. Pronto!</p>
 
-<h3>Buscando Ajuda</h3>
+<h3 id="buscando-ajuda">Buscando Ajuda</h3>
 
 <p>Esta parte é fundamental. Independente do seu nível de conhecimento, sempre haverá a necessidade de buscar ajuda. A nossa experiência diz que é muito difícil você ficar sem uma solução. No entanto, saber procurar é fundamental tanto para você encontrar uma solução desejável quanto para economizar tempo.</p>
 
@@ -711,14 +968,14 @@ sudo apt-get install r-base
 <p>Se você for realizar uma pergunta em algum fórum ou site de perguntas e respostas, é importante atentar para alguns pontos que deverão ser informados:</p>
 
 <ul>
-<li>Versão do R;</li>
-<li>Sistema Operacional;</li>
-<li>Forneça um exemplo replicável;</li>
-<li>Veja se a sua dúvida já não foi abordada em outro tópico.</li>
+  <li>Versão do R;</li>
+  <li>Sistema Operacional;</li>
+  <li>Forneça um exemplo replicável;</li>
+  <li>Veja se a sua dúvida já não foi abordada em outro tópico.</li>
 </ul>
 
-
 <p>Bom, por enquanto é isso! Nos próximos posts, iremos abordar partes específicas e iniciar a utilização de fato do R. Até lá!</p>
+
 ]]></content>
   </entry>
   

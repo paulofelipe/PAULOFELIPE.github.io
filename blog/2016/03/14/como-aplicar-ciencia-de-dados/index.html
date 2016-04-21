@@ -7,11 +7,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Aplicando Ciência De Dados Parte 1 - Workflow - Full Join</title>
+  <title>Aplicando Ciência De Dados - Parte 1: Workflow - Full Join</title>
   <meta name="author" content="Full Join">
 
   
-  <meta name="description" content="No geral, atividades envolvendo aplicação da ciência de dados assumem o formato de projeto: empreendimentos de esforços durante um tempo (início e &hellip;">
+  <meta name="description" content="Aplicando Ciência De Dados - Parte 1: Workflow 14/03/2016 12:11 am | conceito, equipe, workflow No geral, atividades envolvendo aplicação da ciência &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -28,7 +28,38 @@
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+  <!-- MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript"
+   src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
@@ -85,7 +116,7 @@
   
   <header>
     
-      <h1 class="entry-title">Aplicando Ciência De Dados Parte 1 - Workflow</h1>
+      <h1 class="entry-title">Aplicando Ciência De Dados - Parte 1: Workflow</h1>
         
           
     <p class="meta">
@@ -114,38 +145,35 @@
 
 <!-- More -->
 
-
 <p>Qualquer projeto precisa ter uma metodologia clara e um workflow mínimo para organizar os recurso, o trabalho e a equipe, aumentando assim as chances de ser concluído com sucesso.</p>
 
 <p>Nesse sentido, projetos com aplicação de ciência de dados não são diferentes: é muito importante estruturar e organizar o fluxo de trabalho.</p>
 
-<p>Não há &ldquo;o jeito certo&rdquo; e &ldquo;o jeito errado&rdquo; de se estruturar um projeto em ciência de dados, pois os problemas na prática são tão variados, com características tão diferentes, que fica difícil definir uma única forma de executar o trabalho e obter sucesso no final.</p>
+<p>Não há “o jeito certo” e “o jeito errado” de se estruturar um projeto em ciência de dados, pois os problemas na prática são tão variados, com características tão diferentes, que fica difícil definir uma única forma de executar o trabalho e obter sucesso no final.</p>
 
 <p>No entanto, existem modelos baseados em estudos e experências anteriores que auxiliam bastante na hora de estruturar um projeto desse tipo.</p>
 
 <p>Segundo <a href="http://www.kdnuggets.com/polls/2014/analytics-data-mining-data-science-methodology.html">votação no KDnuggets (2014)</a> a metodologia <a href="https://en.wikipedia.org/wiki/Cross_Industry_Standard_Process_for_Data_Mining">CRISP-DM</a> é a mais utilizada para projetos em análise de dados, mineração de dados e ciência de dados. Cross Industry Standard Process for Data Mining é um modelo iterativo e incremental que define 6 grandes fases:</p>
 
 <ul>
-<li>Entendimento do negócio</li>
-<li>Entendimento dos dados</li>
-<li>Preparação dos dados</li>
-<li>Modelagem</li>
-<li>Avaliação e análise</li>
-<li>Resultados e lançamento do produto</li>
+  <li>Entendimento do negócio</li>
+  <li>Entendimento dos dados</li>
+  <li>Preparação dos dados</li>
+  <li>Modelagem</li>
+  <li>Avaliação e análise</li>
+  <li>Resultados e lançamento do produto</li>
 </ul>
-
 
 <p>Já o livro <a href="http://www.amazon.com/Practical-Data-Science-Nina-Zumel/dp/1617291560">Practical Data Science with R</a>, define 6 estágios, também iterativos, para o ciclo de vida de um projeto em ciência de dados:</p>
 
 <ul>
-<li>Definição do objetivo</li>
-<li>Coleta de dados</li>
-<li>Modelagem</li>
-<li>Avaliação e crítica</li>
-<li>Apresentação dos resultados</li>
-<li>Lançamento do produto</li>
+  <li>Definição do objetivo</li>
+  <li>Coleta de dados</li>
+  <li>Modelagem</li>
+  <li>Avaliação e crítica</li>
+  <li>Apresentação dos resultados</li>
+  <li>Lançamento do produto</li>
 </ul>
-
 
 <p>Repare que ambas as referências se parecem bastante ao definir as fases de um projeto.</p>
 
@@ -155,15 +183,15 @@
 
 <p>Tentaremos fazer um resumo do que é importante ter e mente antes de começar (e durante!) um projeto com aplicação de ciência de dados.</p>
 
-<h2>Tenha perguntas bem definidas</h2>
+<h2 id="tenha-perguntas-bem-definidas">Tenha perguntas bem definidas</h2>
 
 <p>O objetivo de um projeto desse tipo geralmente é responder uma pergunta (ou várias), descobrir ou prever algo, confirmar uma hipótese ou solucionar um problema.</p>
 
 <p>Se antes de começar o projeto você conseguir resumir seu objetivo em uma pergunta clara e objetiva, você já vai começar muito bem! Se começar o projeto sem uma pergunta clara, então seus objetivos também não serão claros, com isso o projeto correrá sérios riscos de não obter sucesso.</p>
 
-<p>Nesse momento é importante conhecer bem sobre o assunto do projeto. Conversas com os interessados e &ldquo;donos do problema&rdquo; são muito bem vindas. Habilidades em <a href="https://pt.wikipedia.org/wiki/An%C3%A1lise_de_requerimento_de_software">levantamento de requisitos</a> ajudam bastante a elucidar e entender bem o que se espera do projeto e o impacto do problema para o cliente. Entender verdadeiramente o problema é crucial para o sucesso do projeto.</p>
+<p>Nesse momento é importante conhecer bem sobre o assunto do projeto. Conversas com os interessados e “donos do problema” são muito bem vindas. Habilidades em <a href="https://pt.wikipedia.org/wiki/An%C3%A1lise_de_requerimento_de_software">levantamento de requisitos</a> ajudam bastante a elucidar e entender bem o que se espera do projeto e o impacto do problema para o cliente. Entender verdadeiramente o problema é crucial para o sucesso do projeto.</p>
 
-<h2>Obtenha os dados necessários</h2>
+<h2 id="obtenha-os-dados-necessrios">Obtenha os dados necessários</h2>
 
 <p>Esse momento é muito interessante, pois o projeto pode terminar aqui mesmo se não for possível obter os dados necessários. Nem sempre é fácil observar se os dados obtidos são adequados para atingir o objetivo. Eventualmente, somente ao final do processo é possível concluir que os dados foram insuficientes ou inadequados.</p>
 
@@ -171,33 +199,33 @@
 
 <p>Por isso essa fase pode exigir alguns conhecimentos mais específicos, como entender de bancos de dados, dominar alguma linguagem de manipulação de dados, conhecer técnicas de limpeza e modelagem de dados, e eventualmente entender de <a href="https://en.wikipedia.org/wiki/Web_scraping">web scraping</a> ou usar APIs específicas para consumo de dados.</p>
 
-<h2>Explore os dados</h2>
+<h2 id="explore-os-dados">Explore os dados</h2>
 
 <p>Nessa fase é importante começar a investigar os dados em busca de insights, padrões e <a href="https://en.wikipedia.org/wiki/Outlier">outliers</a>, com o objetivo de aprofundar o conhecimento sobre os dados, entendendo melhor como eles se comportam.</p>
 
 <p>Esse exercício muitas vezes exige a habilidade de plotar diferentes gráficos, extrair amostras e realizar análises estatísticas mais básicas.</p>
 
-<h2>Escolha os modelos necessários</h2>
+<h2 id="escolha-os-modelos-necessrios">Escolha os modelos necessários</h2>
 
 <p>A escolha dos modelos é um momento crucial no desenvolvimento do projeto. É aqui que serão utilizados conhecimentos mais robusto em estatística e aprendizado de máquina. É fundamental conhecer as estratégias e os tipos de modelos para escolher bem os que podem ajudar a alcançar o objetivo do projeto.</p>
 
-<p>Outro aspecto importante é saber balancear &ldquo;complexidade e simplicidade&rdquo;. Como muitas vezes os beneficiários do projeto não serão pessoas especializadas nesse tipo de abordagem, o analista terá uma difícil missão de escolher um modelo que seja útil para o objetivo do projeto, mas que seja também, de certa forma, passível de explicação dos seus principais elementos.</p>
+<p>Outro aspecto importante é saber balancear “complexidade e simplicidade”. Como muitas vezes os beneficiários do projeto não serão pessoas especializadas nesse tipo de abordagem, o analista terá uma difícil missão de escolher um modelo que seja útil para o objetivo do projeto, mas que seja também, de certa forma, passível de explicação dos seus principais elementos.</p>
 
 <p>Por exemplo, em um caso de desenvolvimento de um modelo de classificação, haverá um trade-off entre a melhoria da acurácia e a complexidade do modelo. Ou seja, pode ser que valha a pena escolher um modelo mais simples e mais fácil de explicar do que um modelo super complexo com resultados marginalmente melhores.</p>
 
 <p>O bom entendimento dos objetivos do projeto e das necessidades do cliente vai repercutir positivamente na escolha correta dos modelos.</p>
 
-<h2>Apresente os resultados</h2>
+<h2 id="apresente-os-resultados">Apresente os resultados</h2>
 
 <p>Na apresentação dos resultados, é preciso ter em mente qual é a audiência que você enfrentará, ou que tipo de uso os clientes do projeto farão com o resultado.</p>
 
-<p>Como na fase de exploração, a visualização pode ter um papel fundamental. Um bom gráfico, pode conseguir passar a mesma informação de dez tabelas diferentes. Ou, dependendo do objetivo, um dashboard dinâmico para o cliente &ldquo;explorar&rdquo; os resultados. Em algumas situações, o resultado poderá ser um algoritmo de uso mais amplo (sistema de recomendação, motor de previsões em tempo real, robô que monitora redes sociais, etc).</p>
+<p>Como na fase de exploração, a visualização pode ter um papel fundamental. Um bom gráfico, pode conseguir passar a mesma informação de dez tabelas diferentes. Ou, dependendo do objetivo, um dashboard dinâmico para o cliente “explorar” os resultados. Em algumas situações, o resultado poderá ser um algoritmo de uso mais amplo (sistema de recomendação, motor de previsões em tempo real, robô que monitora redes sociais, etc).</p>
 
-<p>Outro ponto importante, é sempre deixar claro o que a análise realizada permite e o que ela não permite, aprensetando assim os resultados e suas limitações. É fundamental que os clientes tenham o mínimo de conhecimento sobre a capacidade do produto (relatório, dashboard, algoritmo&hellip;) que será entregue para que não haja mal entendidos ou frustrações.</p>
+<p>Outro ponto importante, é sempre deixar claro o que a análise realizada permite e o que ela não permite, aprensetando assim os resultados e suas limitações. É fundamental que os clientes tenham o mínimo de conhecimento sobre a capacidade do produto (relatório, dashboard, algoritmo…) que será entregue para que não haja mal entendidos ou frustrações.</p>
 
-<p>Para apresentar bem os resultados não basta um bom trabalho analítico e bons modelos, é desejável uma boa habilidade de escrita, produzir gráficos interessantes, <a href="https://hbr.org/2013/03/a-data-scientists-real-job-sto/">&ldquo;story telling&rdquo;</a>, saber apresentar dados de maneira concisa e objetiva, habilidades interperssoais e, em alguns casos, até uma boa noção de design e interfaces gráficas.</p>
+<p>Para apresentar bem os resultados não basta um bom trabalho analítico e bons modelos, é desejável uma boa habilidade de escrita, produzir gráficos interessantes, <a href="https://hbr.org/2013/03/a-data-scientists-real-job-sto/">“story telling”</a>, saber apresentar dados de maneira concisa e objetiva, habilidades interperssoais e, em alguns casos, até uma boa noção de design e interfaces gráficas.</p>
 
-<h2>Faça loops entre as fases</h2>
+<h2 id="faa-loops-entre-as-fases">Faça loops entre as fases</h2>
 
 <p>Em qualquer fase e a qualquer momento, é normal que se retorne a fases anteriores ou se avance a fases posteriores.</p>
 
@@ -208,15 +236,17 @@
 <p>Referências:</p>
 
 <ul>
-<li><a href="http://www.amazon.com/Practical-Data-Science-Nina-Zumel/dp/1617291560">Parte 1 - Capítulo 1 &ldquo;The data science process&rdquo; - Practical Data Science with R</a></li>
-<li><a href="https://en.wikipedia.org/wiki/">Wikipedia - Cross Industry Standard Process for Data Mining</a></li>
-<li><a href="http://guerrilla-analytics.net/2015/02/20/data-science-workflows-a-reality-check/">Data Science Workflows – A Reality Check</a></li>
-<li><a href="http://cacm.acm.org/blogs/blog-cacm/169199-data-science-workflow-overview-and-challenges/fulltext">Data Science Workflow: Overview and Challenges</a></li>
+  <li><a href="http://www.amazon.com/Practical-Data-Science-Nina-Zumel/dp/1617291560">Parte 1 - Capítulo 1 “The data science process” - Practical Data Science with R</a></li>
+  <li><a href="https://en.wikipedia.org/wiki/">Wikipedia - Cross Industry Standard Process for Data Mining</a></li>
+  <li><a href="http://guerrilla-analytics.net/2015/02/20/data-science-workflows-a-reality-check/">Data Science Workflows – A Reality Check</a></li>
+  <li><a href="http://cacm.acm.org/blogs/blog-cacm/169199-data-science-workflow-overview-and-challenges/fulltext">Data Science Workflow: Overview and Challenges</a></li>
 </ul>
-
 </div>
 
 
+  <p class="meta" style="text-align:center">
+    <i>Tem alguma dúvida, crítica ou sugestão? Deixe o seu comentário! Ficaremos felizes em ajudar.<i>
+  </p>
   <footer>
     <p class="meta">
       
@@ -276,6 +306,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/04/21/kit-de-sobrevivencia-em-r-parte-5/">Kit De Sobrevivência Em R - Parte 5: Tipos De Dados E Transformações</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/04/12/kit-de-sobrevivencia-em-r-parte-4/">Kit De Sobrevivência Em R - Parte 4: Carregando Dados</a>
       </li>
     
@@ -289,10 +323,6 @@
     
       <li class="post">
         <a href="/blog/2016/03/23/kit-de-sobrevivencia-em-r-parte-1/">Kit De Sobrevivência Em R - Parte 1: Visão Geral E Instalação</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/03/14/como-aplicar-ciencia-de-dados/">Aplicando Ciência De Dados Parte 1 - Workflow</a>
       </li>
     
   </ul>

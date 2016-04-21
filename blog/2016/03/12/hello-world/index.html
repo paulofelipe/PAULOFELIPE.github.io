@@ -11,7 +11,7 @@
   <meta name="author" content="Full Join">
 
   
-  <meta name="description" content="E nasce hoje o Full Join! Um blog sobre data science e tudo mais que envolve a arte de trabalhar com dados. A ideia é postar sobre programação, &hellip;">
+  <meta name="description" content="Hello World 12/03/2016 11:27 pm | conceito E nasce hoje o Full Join! Um blog sobre data science e tudo mais que envolve a arte de trabalhar com &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -28,7 +28,38 @@
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+  <!-- MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript"
+   src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
@@ -118,25 +149,23 @@
 
 <!-- More -->
 
-
 <p>Sempre que possível os posts serão em formatos de tutoriais, com exemplos práticos, explicações teóricas e links de referência.</p>
 
-<h2>Mas, afinal, o que é data science?</h2>
+<h2 id="mas-afinal-o-que--data-science">Mas, afinal, o que é data science?</h2>
 
 <p>Apesar de ser um termo que vem ganhando bastante relevância, não se trata de uma atividade completamente nova. Basicamente todas as áreas do conhecimento já praticavam a tão famosa ciência dos dados muito antes do termo ganhar popularidade.</p>
 
 <p>Sendo bem simplista, data science nada mais é do que extrair algum tipo de conhecimento, interpretar informações ou realizar descobertas, tudo isso utilizando massas de dados. Normalmente essa atividade é multidisciplinar e envolve matemática, estatística, computação, e, principalmente, capacidade de entender e explorar os dados com os quais se vai trabalhar.</p>
 
-<h2>Se não é novidade, porque o tema está tão relevante?</h2>
+<h2 id="se-no--novidade-porque-o-tema-est-to-relevante">Se não é novidade, porque o tema está tão relevante?</h2>
 
 <p>É inquestionável que a capacidade de produção de dados e a capacidade de processamento de dados aumentou muito nas últimas décadas (internet!).</p>
 
 <p>Aplicar ciência dos dados em um arquivo com 2 toneladas de papel é bem menos viável do que aplicar em 2 peta bytes de dados em um servidor. O aumento da capacidade computacional e a quantidade de dados eletrônicos sendo produzidos proporcionou o cenário perfeito para o desenvolvimento de técnicas computacionais para explorar os dados, descobrir coisas, explicar e até prever situações.</p>
 
-<blockquote><p>Data Science is an interdisciplinary field about processes and systems to extract knowledge or insights from data in various forms, either structured or unstructured, which is a continuation of some of the data analysis fields such as statistics, data mining, and predictive analytics, similar to Knowledge Discovery in Databases (KDD).</p><footer><strong>Wikipedia</strong> <cite><a href='https://en.wikipedia.org/wiki/Data_science'>Data Science</a></cite></footer></blockquote>
+<blockquote><p>Data Science is an interdisciplinary field about processes and systems to extract knowledge or insights from data in various forms, either structured or unstructured, which is a continuation of some of the data analysis fields such as statistics, data mining, and predictive analytics, similar to Knowledge Discovery in Databases (KDD).</p><footer><strong>Wikipedia</strong> <cite><a href="https://en.wikipedia.org/wiki/Data_science">Data Science</a></cite></footer></blockquote>
 
-
-<h2>O Cientista de Dados</h2>
+<h2 id="o-cientista-de-dados">O Cientista de Dados</h2>
 
 <p>Talvez o aspecto mais intrigante sobre a popularização da ciência dos dados tenha sido a expectativa criada em torno do Cientista de Dados (ou Analista de Dados, como preferirem), o profissional chave da tal ciência dos dados.</p>
 
@@ -149,26 +178,28 @@
 <p>Para o primeiro post não passar batido, aqui vão alguns links bastante úteis para quem deseja começar, praticar e se manter atualizado sobre ciência de dados:</p>
 
 <ul>
-<li><a href="https://www.datacamp.com/">Datacamp</a></li>
-<li><a href="https://www.kaggle.com">Kaggle</a></li>
-<li><a href="http://www.kdnuggets.com/">KDnuggets</a></li>
-<li><a href="http://www.r-bloggers.com/">R-Bloggers</a></li>
-<li><a href="http://pca.st/dataskeptic">Data Skpetic Podcast</a></li>
-<li><a href="https://www.reddit.com/r/datascience/">/r/datascience (Reddit)</a></li>
-<li><a href="https://www.coursera.org/specializations/jhu-data-science">Data Science Specialization</a></li>
+  <li><a href="https://www.datacamp.com/">Datacamp</a></li>
+  <li><a href="https://www.kaggle.com">Kaggle</a></li>
+  <li><a href="http://www.kdnuggets.com/">KDnuggets</a></li>
+  <li><a href="http://www.r-bloggers.com/">R-Bloggers</a></li>
+  <li><a href="http://pca.st/dataskeptic">Data Skpetic Podcast</a></li>
+  <li><a href="https://www.reddit.com/r/datascience/">/r/datascience (Reddit)</a></li>
+  <li><a href="https://www.coursera.org/specializations/jhu-data-science">Data Science Specialization</a></li>
 </ul>
-
 
 <p>O <strong>Full Join</strong> será mantido por dois entusiastas da ciência dos dados, Saulo Guerra e Paulo Felipe.</p>
 </div>
 
 
+  <p class="meta" style="text-align:center">
+    <i>Tem alguma dúvida, crítica ou sugestão? Deixe o seu comentário! Ficaremos felizes em ajudar.<i>
+  </p>
   <footer>
     <p class="meta">
       
   
 
-<span class="byline author vcard">Postado por <span class="fn">Saulo Guerra</span></span>
+<span class="byline author vcard">Postado por <span class="fn">Full Join</span></span>
 
       
 
@@ -199,7 +230,7 @@
     <p class="meta">
       
       
-        <a class="basic-alignment right" href="/blog/2016/03/14/como-aplicar-ciencia-de-dados/" title="Next Post: Aplicando ciência de dados parte 1 - Workflow">Aplicando ciência de dados parte 1 - Workflow &raquo;</a>
+        <a class="basic-alignment right" href="/blog/2016/03/14/como-aplicar-ciencia-de-dados/" title="Next Post: Aplicando ciência de dados - parte 1: Workflow">Aplicando ciência de dados - parte 1: Workflow &raquo;</a>
       
     </p>
   </footer>
@@ -220,6 +251,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/04/21/kit-de-sobrevivencia-em-r-parte-5/">Kit De Sobrevivência Em R - Parte 5: Tipos De Dados E Transformações</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/04/12/kit-de-sobrevivencia-em-r-parte-4/">Kit De Sobrevivência Em R - Parte 4: Carregando Dados</a>
       </li>
     
@@ -233,10 +268,6 @@
     
       <li class="post">
         <a href="/blog/2016/03/23/kit-de-sobrevivencia-em-r-parte-1/">Kit De Sobrevivência Em R - Parte 1: Visão Geral E Instalação</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/03/14/como-aplicar-ciencia-de-dados/">Aplicando Ciência De Dados Parte 1 - Workflow</a>
       </li>
     
   </ul>

@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>http://fulljoin.com.br/blog/2016/04/21/kit-de-sobrevivencia-em-r-parte-5/</loc>
+<lastmod>2016-04-21T19:00:00-03:00</lastmod>
+</url>
+<url>
 <loc>http://fulljoin.com.br/blog/2016/04/12/kit-de-sobrevivencia-em-r-parte-4/</loc>
 <lastmod>2016-04-12T21:00:00-03:00</lastmod>
 </url>
@@ -31,13 +35,13 @@
 <loc>http://fulljoin.com.br/blog/archives/</loc>
 </url>
 <url>
-<loc>http://fulljoin.com.br/archives/</loc>
+<loc>http://fulljoin.com.br/blog/</loc>
 </url>
 <url>
 <loc>http://fulljoin.com.br/</loc>
 </url>
 <url>
-<loc>http://fulljoin.com.br/blog/</loc>
+<loc>http://fulljoin.com.br/archives/</loc>
 </url>
 <url>
 <loc>http://fulljoin.com.br/authors/</loc>
@@ -59,5 +63,8 @@
 </url>
 <url>
 <loc>http://fulljoin.com.br/blog/categories/rstudio/</loc>
+</url>
+<url>
+<loc>http://fulljoin.com.br/blog/categories/introducao-r/</loc>
 </url>
 </urlset>

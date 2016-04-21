@@ -4,7 +4,7 @@
   <title><![CDATA[Category: rstudio | Full Join]]></title>
   <link href="http://fulljoin.com.br/blog/categories/rstudio/atom.xml" rel="self"/>
   <link href="http://fulljoin.com.br/"/>
-  <updated>2016-04-12T21:33:00-03:00</updated>
+  <updated>2016-04-21T18:40:48-03:00</updated>
   <id>http://fulljoin.com.br/</id>
   <author>
     <name><![CDATA[Full Join]]></name>
@@ -24,96 +24,92 @@
 
 <!-- More -->
 
+<h2 id="por-que-aprender-uma-linguagem-estatstica">Por que aprender uma linguagem estatística?</h2>
 
-<h2>Por que aprender uma linguagem estatística?</h2>
-
-<p>Qualquer um que trabalhe um pouco mais com dados já esbarrou nas limitações do &ldquo;excel&rdquo; ou de softwares de planilha. Nada contra, são ótimos, mas as vezes eles dificultam mais do que ajudam. Abrir a mente e se permitir novas formas de trabalho pode render bons frutos.</p>
+<p>Qualquer um que trabalhe um pouco mais com dados já esbarrou nas limitações do “excel” ou de softwares de planilha. Nada contra, são ótimos, mas as vezes eles dificultam mais do que ajudam. Abrir a mente e se permitir novas formas de trabalho pode render bons frutos.</p>
 
 <p>Trabalhos de manipulação de dados, verificação, limpeza e junção de dados, ou até alguns cálculos com uma massa de dados um pouco maior podem se tornar um pouco traumáticos se você não usar as ferramentas mais adequadas.</p>
 
 <p>As linguagens de programação estatística ajudam muito nesse sentido. São ferramentas poderosíssimas que praticamente derrubam os limites das possibilidades de se trabalhar com dados: você pode fazer praticamente qualquer coisa!</p>
 
-<p>&ldquo;Eu trabalho com dados de forma básica, mas não quero me tornar um ciêntista de dados&hellip; ainda assim é útil?&rdquo;. Com certeza! Linguagens de programação estatística, mesmo que aprendendo apenas o básico, aumentam muito a produtividade.</p>
+<p>“Eu trabalho com dados de forma básica, mas não quero me tornar um ciêntista de dados… ainda assim é útil?”. Com certeza! Linguagens de programação estatística, mesmo que aprendendo apenas o básico, aumentam muito a produtividade.</p>
 
 <p>Portanto, sugerimos fortemente que aprenda uma linguagem estatística o quanto antes!</p>
 
-<h2>Por que o R?</h2>
+<h2 id="por-que-o-r">Por que o R?</h2>
 
 <p>Um motivo básico é que o R é <strong>livre</strong>. Em circustâncias de restrição orçamentária, isso pode ser um fator determimante. No entanto, a escolha do R ultrapassa a questão dos custos. Algumas pessoas têm o costume de pensar que soluções livres são geralmente inferiores às proprietárias.</p>
 
 <p>Todavia, no caso de ciência de dados, os softwares livres parecem que vieram para ficar em posição dominante. De acordo com <a href="http://blog.dominodatalab.com/open-source-winning-against-proprietary-data-science-vendors/">essa pesquisa</a>, o mercado da ciência de dados está sendo dominado por softwares livres.</p>
 
-<p>Podemos dizer, então, que grande &ldquo;concorrente&rdquo; do R no momento é o Python, outro software livre.</p>
+<p>Podemos dizer, então, que grande “concorrente” do R no momento é o Python, outro software livre.</p>
 
 <p>E qual seria o melhor? Depende. Como tudo na vida, cada um apresenta vantagens e desvantagens. O importante é tirar proveito das diferenças. Sua necessidade dirá qual é o software mais adequado.</p>
 
 <p>Se a sua necessidade é de realização de estudos e análises que não serão diretamente ligada a outras plataformas, como uma aplicação web por exemplo, o R é o ideal para você. O Python costuma ser mais indicado em casos de análises que resultarão em algo mais sistemático. Este post <a href="http://www.kdnuggets.com/2015/05/r-vs-python-data-science.html">aqui</a> pode ser útil se você desejar saber mais sobre esse ponto.</p>
 
-<h2>Sobre o RStudio</h2>
+<h2 id="sobre-o-rstudio">Sobre o RStudio</h2>
 
 <p>O <a href="https://www.rstudio.com/">RStudio</a> é uma interface muito útil pra quem deseja usar o R. Com certeza, a maioria dos usuários de R utilizam o RStudio como <a href="https://pt.wikipedia.org/wiki/Ambiente_de_desenvolvimento_integrado">IDE (integrated development environment)</a>. Nele, você terá um editor de código, um console, um dispositivo para gráficos, um <a href="https://pt.wikipedia.org/wiki/Depura%C3%A7%C3%A3o"><em>debugger</em></a>, além de outras funcionalidades.</p>
 
-<p>Na figura abaixo, está a &ldquo;cara&rdquo; do RStudio. Note que há 4 janelas (ambientes) separadas. As   posições delas podem ser alteradas nas opções (<code>tools</code> -> <code>global options</code>). Além disso, você pode alterar o tema e outras tantas opções.</p>
+<p>Na figura abaixo, está a “cara” do RStudio. Note que há 4 janelas (ambientes) separadas. As 	posições delas podem ser alteradas nas opções (<code>tools</code> -&gt; <code>global options</code>). Além disso, você pode alterar o tema e outras tantas opções.</p>
 
 <p><img src="/images/RStudio_001.png" title="Uma visão geral do RStudio" ></p>
 
 <p>Vamos tratar, ainda que superficialmente, de algumas funcionalidades do RStudio.</p>
 
-<h4>1. Editor de Código</h4>
-
+<h4 id="editor-de-cdigo">1. Editor de Código</h4>
 <p>No editor de código, você poderá escrever e editar os scripts. <a href="https://pt.wikipedia.org/wiki/Linguagem_de_script">Script</a> nada mais é do que um conjunto de comandos que serão executados em sequência. O editor do RStudio oferece facilidades como indentação, <em>code complete</em>, destaque da sintaxe, etc.</p>
 
-<h4>2. Console</h4>
-
+<h4 id="console">2. Console</h4>
 <p>No console aparecerão os resultados dos comandos. Você também pode escrever no console e obter os resultados, sem uso do editor de código. Também pode-se chamar a ajuda diretamente pelo console. Por exemplo: <code>?lm</code>. Voltaremos a falar desse comando <code>?</code> mais pra frente.</p>
 
-<h4>3. <em>Workspace</em> e <em>History</em></h4>
-
+<h4 id="workspace-e-history">3. <em>Workspace</em> e <em>History</em></h4>
 <p>No <em>Workspace</em> ficarão guardados todos os objetos que forem criados na sessão. Entenda sessão como o espaço de tempo entre o momento em que você inicia o R e o momento que finaliza. Nesse período tudo que você faz usa memória RAM e o processador do computador. E na aba <em>History</em>, como você deve imaginar, o RStudio cria um histórico de comandos.</p>
 
-<h4>4. <em>Files</em>, <em>Plots</em>, <em>Packages</em>, <em>Help</em> e <em>Viewer</em>.</h4>
-
+<h4 id="files-plots-packages-help-e-viewer">4. <em>Files</em>, <em>Plots</em>, <em>Packages</em>, <em>Help</em> e <em>Viewer</em>.</h4>
 <p>Nessa janela, estão várias funcionalidades do RStudio. Na aba <em>Files</em>, você terá uma navegação de arquivos do seu computador. Também será possível definir o diretório de trabalho (você também pode definir diretamente no código, mas isto será tratado posteriormente), ou seja, o R  entende o seu diretório de trabalho como ponto de partida para localizar arquivos que sejam chamados no script.</p>
 
 <p>A aba <em>Plots</em> trará os gráficos gerados, possibilitando a exportação para alguns formatos diferentes, como png e pdf.</p>
 
 <p>Em <em>Packages</em>, estão listados os pacotes que estão instalados e você pode verificar quais estão carregados e, caso necessário, poderá carregar algum pacote necessário para a sua análise. Também é possível instalar e atualizar pacotes. Novamente, tudo isso é possível fazer diretamente no código.</p>
 
-<p><em>Help</em> o nome já diz tudo. Essa aba será bastante utilizada por você. Saber usar o <em>help</em> é fundamental para evitar desperdiço de tempo. Os usuários de R, em geral, são bastante solícitos. Entretanto, uma olhadinha rápida no help pode evitar que você gaste &ldquo;créditos&rdquo; desnecessariamente.</p>
+<p><em>Help</em> o nome já diz tudo. Essa aba será bastante utilizada por você. Saber usar o <em>help</em> é fundamental para evitar desperdiço de tempo. Os usuários de R, em geral, são bastante solícitos. Entretanto, uma olhadinha rápida no help pode evitar que você gaste “créditos” desnecessariamente.</p>
 
 <p>Por fim, o <em>Viewer</em>. Essa funcionalidade é utilizada para visualizar localmente conteúdo web. O gráfico da figura está na aba <em>Viewer</em> porque é uma visualização em <a href="https://pt.wikipedia.org/wiki/JavaScript">javascript</a>, que pode ser adicionada a documentos htmls gerados usando o <a href="http://rmarkdown.rstudio.com/">RMarkdown</a> ou em aplicações web com suporte do <a href="http://shiny.rstudio.com/">Shiny</a>.</p>
 
 <p>Bem, isso foi uma breve explicação. Se você quiser saber mais, esta <a href="http://www.rstudio.com/wp-content/uploads/2016/01/rstudio-IDE-cheatsheet.pdf"><em>cheat sheet</em></a> criada pelo time do RStudio é muito útil.</p>
 
-<h2>Instalando o R e o RStudio</h2>
+<h2 id="instalando-o-r-e-o-rstudio">Instalando o R e o RStudio</h2>
 
-<h3>Windows</h3>
+<h3 id="windows">Windows</h3>
 
 <p>Para instalar o R no windows basta realizar o download do executável <a href="https://cran.r-project.org/bin/windows/base/">aqui</a> e proceder a instalação como qualquer outro software.</p>
 
 <p>O Rstudio pode ser baixado <a href="https://www.rstudio.com/products/rstudio/download/">neste link</a>. Novamente, a instalação deve ser tranquila, sem a necessidade de maiores detalhes.</p>
 
-<h3>Ubuntu</h3>
+<h3 id="ubuntu">Ubuntu</h3>
 
 <p>No ubuntu, você pode instalar o R via terminal ou pela central de programas.</p>
 
 <p>Pelo terminal, tecle <code>ctrl + alt + T</code> e faça o seguinte:</p>
 
-<pre><code>sudo apt-get update
+<p><code>
+sudo apt-get update
 sudo apt-get install r-base
-</code></pre>
+</code></p>
 
 <p>Na central de aplicativos, basta buscar por <code>r-base</code>.</p>
 
 <p>O RStudio pode ser baixado no mesmo <a href="https://www.rstudio.com/products/rstudio/download/">link</a> citado quando foi explicada a instalação no windows.</p>
 
-<h3>Mac OS X</h3>
+<h3 id="mac-os-x">Mac OS X</h3>
 
 <p>Para instalar o R no Mac basta realizar o download da última versão do pacote (pkg) <a href="https://cran.rstudio.com/bin/macosx/">aqui</a>, de um duplo click e proceda com a instalação como qualquer outro pacote no Mac.</p>
 
 <p>O Rstudio pode ser baixado <a href="https://www.rstudio.com/products/rstudio/download/">neste link</a>. Procure na lista o instalador para Mac Os. Dessa vez será um arquivo DMG. De um duplo click e arraste o ícone do Rstudio para a pasta Aplicações. Pronto!</p>
 
-<h3>Buscando Ajuda</h3>
+<h3 id="buscando-ajuda">Buscando Ajuda</h3>
 
 <p>Esta parte é fundamental. Independente do seu nível de conhecimento, sempre haverá a necessidade de buscar ajuda. A nossa experiência diz que é muito difícil você ficar sem uma solução. No entanto, saber procurar é fundamental tanto para você encontrar uma solução desejável quanto para economizar tempo.</p>
 
@@ -124,14 +120,14 @@ sudo apt-get install r-base
 <p>Se você for realizar uma pergunta em algum fórum ou site de perguntas e respostas, é importante atentar para alguns pontos que deverão ser informados:</p>
 
 <ul>
-<li>Versão do R;</li>
-<li>Sistema Operacional;</li>
-<li>Forneça um exemplo replicável;</li>
-<li>Veja se a sua dúvida já não foi abordada em outro tópico.</li>
+  <li>Versão do R;</li>
+  <li>Sistema Operacional;</li>
+  <li>Forneça um exemplo replicável;</li>
+  <li>Veja se a sua dúvida já não foi abordada em outro tópico.</li>
 </ul>
 
-
 <p>Bom, por enquanto é isso! Nos próximos posts, iremos abordar partes específicas e iniciar a utilização de fato do R. Até lá!</p>
+
 ]]></content>
   </entry>
   

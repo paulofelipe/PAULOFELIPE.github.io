@@ -11,7 +11,7 @@
   <meta name="author" content="Full Join">
 
   
-  <meta name="description" content="Seguindo a proposta da sequência Kit de sobrevivência em R, vamos aprofundar um pouco mais no funcionamento do R e como fazer uso disso. Nesse post &hellip;">
+  <meta name="description" content="Kit De Sobrevivência Em R - Parte 2: Operações, Variáveis E Funções 03/04/2016 3:20 pm | básico, introdução r, r Seguindo a proposta da sequência &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -28,7 +28,38 @@
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+  <!-- MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript"
+   src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
@@ -100,7 +131,7 @@
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/basico/'>básico</a>, <a class='category' href='/blog/categories/r/'>r</a>
+    <a class='category' href='/blog/categories/basico/'>básico</a>, <a class='category' href='/blog/categories/introducao-r/'>introdução r</a>, <a class='category' href='/blog/categories/r/'>r</a>
   
 </span>
 
@@ -114,10 +145,9 @@
 
 <!-- More -->
 
-
 <p>Como dito no post anterior, o RStudio apresenta 4 janelas principais, cada uma com sua função. No entanto, podemos dizer que as duas janelas que você mais vai usar (no começo) são <em>Editor de Códigos</em> e o <em>Console</em>.</p>
 
-<h1>Usando o console</h1>
+<h1 id="usando-o-console">Usando o console</h1>
 
 <p>Sendo bem simplista, R é uma linguagem que funciona com base em comandos. O console é o lugar onde você digita um comando (uma instrução) e em seguida recebe uma resposta com o resultado. Para quem nunca teve contato com nenhuma outra linguagem de programação, esse simples conceito pode parecer um pouco abstrato. Não há como entendê-lo sem ser praticando.</p>
 
@@ -125,17 +155,13 @@
 
 <div class="highlight"><pre><code class="language-r" data-lang="r"><span class="m">2</span> <span class="o">*</span> <span class="m">5</span></code></pre></div>
 
-
-
-
 <div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 10</code></pre></div>
 
-
-<p>O que aconteceu? Você digitou o comando &ldquo;multiplique 2 vezes 5&rdquo; no console, e o R respondeu com o resultado 10. E o que é esse <code>[1]</code> na resposta do R? Bom, isso significa que o resultado do seu comando só teve uma linha. Em alguns casos o resultado será mais de uma linha, então o R usa essa notação de índices <code>[x]</code> para mostrar os resultados do comando. Não se preocupe muito com isso por agora.</p>
+<p>O que aconteceu? Você digitou o comando “multiplique 2 vezes 5” no console, e o R respondeu com o resultado 10. E o que é esse <code>[1]</code> na resposta do R? Bom, isso significa que o resultado do seu comando só teve uma linha. Em alguns casos o resultado será mais de uma linha, então o R usa essa notação de índices <code>[x]</code> para mostrar os resultados do comando. Não se preocupe muito com isso por agora.</p>
 
 <p><img src="/images/kit_parte2_console.gif" alt="alt text" /></p>
 
-<h1>Uma grande calculadora</h1>
+<h1 id="uma-grande-calculadora">Uma grande calculadora</h1>
 
 <p>O R interpreta os seus comandos e dá um resultado apropriado para cada um. Para que os comandos sejam interpretados corretamente, você deve usar os elementos da linguagem.</p>
 
@@ -145,71 +171,39 @@
 
 <div class="highlight"><pre><code class="language-r" data-lang="r"><span class="m">5</span> <span class="o">+</span> <span class="m">3</span></code></pre></div>
 
-
-
-
 <div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 8</code></pre></div>
-
-
-
 
 <div class="highlight"><pre><code class="language-r" data-lang="r"><span class="m">5</span> <span class="o">-</span> <span class="m">3</span></code></pre></div>
 
-
-
-
 <div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 2</code></pre></div>
-
-
-
 
 <div class="highlight"><pre><code class="language-r" data-lang="r"><span class="m">5</span> <span class="o">*</span> <span class="m">3</span></code></pre></div>
 
-
-
-
 <div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 15</code></pre></div>
-
-
-
 
 <div class="highlight"><pre><code class="language-r" data-lang="r"><span class="m">5</span> <span class="o">/</span> <span class="m">3</span></code></pre></div>
 
-
-
-
 <div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 1.666667</code></pre></div>
-
-
-
 
 <div class="highlight"><pre><code class="language-r" data-lang="r"><span class="m">5</span> <span class="o">^</span> <span class="m">3</span></code></pre></div>
 
-
-
-
 <div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 125</code></pre></div>
-
-
-
 
 <div class="highlight"><pre><code class="language-r" data-lang="r"><span class="m">2</span> <span class="o">^</span> <span class="p">(</span><span class="m">4</span> <span class="o">-</span> <span class="m">2</span><span class="p">)</span> <span class="o">*</span> <span class="m">-8</span> <span class="o">/</span> <span class="p">(</span><span class="m">5</span> <span class="o">*</span> <span class="p">(</span><span class="m">10</span> <span class="o">+</span> <span class="m">3</span><span class="p">))</span> <span class="c1">#Precedentes matemáticos</span></code></pre></div>
 
-
-
-
 <div class="highlight"><pre><code class="language-text" data-lang="text">## [1] -0.4923077</code></pre></div>
-
 
 <p>Mas o que é esse <code>#</code>? Trata-se de um símbolo indicando um comentário. Um comentário é alguma explicação que você escreve em seus comandos e que o R não interpreta, ou seja, não influencia no resultado final. Serve apenas para documentar, comentar ou explicar alguma parte dos seus comandos.</p>
 
 <p>Reparem que, com o que foi dito até agora, já da pra usar o R como uma grande calculadora de luxo!</p>
 
-<blockquote><p>Dica: no console, aperte seta para cima do teclado e você terá os últimos comandos digitados.</p></blockquote>
+<blockquote>
+  <p>Dica: no console, aperte seta para cima do teclado e você terá os últimos comandos digitados.</p>
+</blockquote>
 
 <p><img src="/images/kit_parte2_variaveis.gif" alt="alt text" /></p>
 
-<h1>Variáveis</h1>
+<h1 id="variveis">Variáveis</h1>
 
 <p>Na maioria dos casos, o tabalho que você precisará fazer vai exigir mais do que uma simples calculadora pode oferecer, será necessário conhecer mais das possiblidades do R.</p>
 
@@ -221,16 +215,11 @@
 
 <div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">minha_PRIMEIRA.variavel</span> <span class="o">&lt;-</span> <span class="m">9</span> <span class="o">^</span> <span class="m">10</span> <span class="c1">#Nome esdrúxulo de variável apenas para exemplificar!</span></code></pre></div>
 
-
-<p>&ldquo;Ué, apertei enter e nada aconteceu?&rdquo;. Aconteceu sim! Você colocou o resultado de <code>9 ^ 10</code> dentro da variável chamada <code>minha_PRIMEIRA.variavel</code>. Para comprovar e para ver o que tem &ldquo;dentro da variável&rdquo;, digite apenas o nome da variável e aperte enter:</p>
+<p>“Ué, apertei enter e nada aconteceu?”. Aconteceu sim! Você colocou o resultado de <code>9 ^ 10</code> dentro da variável chamada <code>minha_PRIMEIRA.variavel</code>. Para comprovar e para ver o que tem “dentro da variável”, digite apenas o nome da variável e aperte enter:</p>
 
 <div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">minha_PRIMEIRA.variavel</span></code></pre></div>
 
-
-
-
 <div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 3486784401</code></pre></div>
-
 
 <p>Sempre que precisar usar o valor de 9 ^ 10, basta usar sua variável <code>minha_PRIMEIRA.variavel</code> e pronto, terá o resultado dessa operação armazenado sem precisar calcular novamente. Você pode fazer diversas operações com as variáveis. Por exemplo:</p>
 
@@ -239,28 +228,25 @@
 <span class="n">z</span> <span class="o">&lt;-</span> <span class="n">y</span> <span class="o">-</span> <span class="n">x</span> <span class="c1">#Resultado da operação y menos o resultado da operação x</span>
 <span class="n">z</span></code></pre></div>
 
-
-
-
 <div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 6.5</code></pre></div>
 
-
-<blockquote><p>Dica: use nomes explicativos! Talvez não pareça muito útil agora, mas existem alguns padrões e boas práticas para escrever comando em R que vai ajudar muito na hora de você mesmo ou outras pessoas entenderem o que foi feito. Recomendamos a leitura de alguns padrões de nomenclatura, <a href="http://adv-r.had.co.nz/Style.html">como este aqui</a>.</p></blockquote>
+<blockquote>
+  <p>Dica: use nomes explicativos! Talvez não pareça muito útil agora, mas existem alguns padrões e boas práticas para escrever comando em R que vai ajudar muito na hora de você mesmo ou outras pessoas entenderem o que foi feito. Recomendamos a leitura de alguns padrões de nomenclatura, <a href="http://adv-r.had.co.nz/Style.html">como este aqui</a>.</p>
+</blockquote>
 
 <div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">primeira.variavel</span> <span class="o">&lt;-</span> <span class="m">-5</span> <span class="o">*</span> <span class="m">4</span> <span class="c1">#padrão com ponto, mais comum em R</span>
 <span class="n">primeiraVariavel</span> <span class="o">&lt;-</span> <span class="m">-5</span> <span class="o">*</span> <span class="m">4</span> <span class="c1">#padrão camel case, comum em outras linguagens de programação</span>
 <span class="n">primeira_variavel</span> <span class="o">&lt;-</span> <span class="m">-5</span> <span class="o">*</span> <span class="m">4</span> <span class="c1">#padrão underscore</span></code></pre></div>
 
-
 <p>Pronto, você já sabe usar o console para comandos com os operadores matemáticos básicos e sabe armazenar resultados em variáveis.</p>
 
 <p><img src="/images/kit_parte2_funcoes.gif" alt="alt text" /></p>
 
-<h1>Funções</h1>
+<h1 id="funes">Funções</h1>
 
 <p>Precisaremos mais do que simples variáveis e simples operações matemáticas para usar toda potencialidade do R.</p>
 
-<p>Existem alguns &ldquo;programas&rdquo; prontos para uso no R, ou seja, algumas sequências de comandos preparados para serem usados de forma simples e facilitar sua vida. Esses &ldquo;programas&rdquo; prontos são chamados de funções, e são usados para tudo que você possa imaginar: cálculos mais complexos, estatística, análise de dados, manipulação de dados, gráficos, relatórios, etc.</p>
+<p>Existem alguns “programas” prontos para uso no R, ou seja, algumas sequências de comandos preparados para serem usados de forma simples e facilitar sua vida. Esses “programas” prontos são chamados de funções, e são usados para tudo que você possa imaginar: cálculos mais complexos, estatística, análise de dados, manipulação de dados, gráficos, relatórios, etc.</p>
 
 <p>Na verdade, uma das coisas que torna o R uma ótima linguagem estatística é a gigantesca quantidade de funções disponíveis. Para (quase) tudo que você quiser fazer, existe uma função que facilita as coisas. Algumas funções já vem com a instalação base do R, outras você precisa instalar um pacote extra (falaremos disso em breve).</p>
 
@@ -269,11 +255,7 @@
 <div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">raiz.quadrada</span> <span class="o">&lt;-</span> <span class="n">sqrt</span><span class="p">(</span><span class="m">16</span><span class="p">)</span> 
 <span class="n">raiz.quadrada</span></code></pre></div>
 
-
-
-
 <div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 4</code></pre></div>
-
 
 <p>Ou seja, <code>sqrt</code> é o nome da função para calcular raiz quadrada, e <code>16</code> é o parâmetro que você informa para função calcular. Detalhe: o resultado das funções também podem ser armazenados em variáveis, tal qual demonstra o exemplo.</p>
 
@@ -282,17 +264,13 @@
 <div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">x</span> <span class="o">&lt;-</span> <span class="m">5.34999</span>
 <span class="n">round</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="m">2</span><span class="p">)</span></code></pre></div>
 
-
-
-
 <div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 5.35</code></pre></div>
-
 
 <p>Ou seja, <code>round</code> é o nome da função para arredondamento. Já o <code>x</code>, a variável que armazena <code>5.34999</code>, é o primeiro parâmetro, informando o número que você quer arredondar. E temos o <code>2</code> como segundo parâmetro, informando até quantas casas decimais você quer arredondar.</p>
 
 <p>Como dito, a instalação base do R já vem com algumas funções muito utilizadas. Segue <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/00Index.html">uma</a> lista para conhecer melhor cada uma dessas funcões básicas. Na sequência de posts apresentaremos pacotes com muito mais funções importantes disponíveis.</p>
 
-<h1>Script.R (editor)</h1>
+<h1 id="scriptr-editor">Script.R (editor)</h1>
 
 <p>Você agora consegue fazer cálculos básicos, armazenar resultados em variáveis e usar funções para auxiliar nos cálculos. Mas tudo isso usando o console.</p>
 
@@ -311,11 +289,7 @@
 <span class="n">total</span> <span class="o">&lt;-</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
 <span class="n">total</span></code></pre></div>
 
-
-
-
 <div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 6</code></pre></div>
-
 
 <p>Agora clique em <code>Source</code>. O que aconteceu? Você não viu o resultado na tela, mas o R executou todo seu script em memória e carregou as variáveis. Para ver o resultado na tela clique em <code>Source &gt; Source with echo</code> (ou o atalho ctrl + shift + enter). O resultado do seu script irá aparecer no console.</p>
 
@@ -327,21 +301,24 @@
 
 <p>Foi um longo post, mas finalmente chegamos ao fim! Esperamos que esse post tenha dado uma boa noção de como usar o console com operações e funções básicas, bem como armazenar resultados em variáveis. A partir de agora, salve seus trabalhos em scripts com formato .R e sempre que quiser executá-los use o botão Source. Até a próxima.</p>
 
-<h2>Referências:</h2>
+<h2 id="referncias">Referências:</h2>
 
 <ul>
-<li><a href="https://www.datacamp.com/courses/free-introduction-to-r">DataCamp - Free introduction to R</a></li>
-<li><a href="http://www.r-tutor.com/r-introduction">R-introduction</a></li>
-<li><a href="https://cran.r-project.org/doc/contrib/Torfs+Brauer-Short-R-Intro.pdf">Short R Introduction</a></li>
-<li><a href="https://support.rstudio.com/hc/en-us/articles/200404846-Working-in-the-Console">Working in the Console</a></li>
-<li><a href="http://www.statmethods.net/management/functions.html">R Built in functions</a></li>
-<li><a href="http://adv-r.had.co.nz/Style.html">Guia de estilo de código - by Hadley Wickham</a></li>
-<li><a href="https://google.github.io/styleguide/Rguide.xml">Guia de estilo de código - by Google</a></li>
+  <li><a href="https://www.datacamp.com/courses/free-introduction-to-r">DataCamp - Free introduction to R</a></li>
+  <li><a href="http://www.r-tutor.com/r-introduction">R-introduction</a></li>
+  <li><a href="https://cran.r-project.org/doc/contrib/Torfs+Brauer-Short-R-Intro.pdf">Short R Introduction</a></li>
+  <li><a href="https://support.rstudio.com/hc/en-us/articles/200404846-Working-in-the-Console">Working in the Console</a></li>
+  <li><a href="http://www.statmethods.net/management/functions.html">R Built in functions</a></li>
+  <li><a href="http://adv-r.had.co.nz/Style.html">Guia de estilo de código - by Hadley Wickham</a></li>
+  <li><a href="https://google.github.io/styleguide/Rguide.xml">Guia de estilo de código - by Google</a></li>
 </ul>
 
 </div>
 
 
+  <p class="meta" style="text-align:center">
+    <i>Tem alguma dúvida, crítica ou sugestão? Deixe o seu comentário! Ficaremos felizes em ajudar.<i>
+  </p>
   <footer>
     <p class="meta">
       
@@ -359,7 +336,7 @@
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/basico/'>básico</a>, <a class='category' href='/blog/categories/r/'>r</a>
+    <a class='category' href='/blog/categories/basico/'>básico</a>, <a class='category' href='/blog/categories/introducao-r/'>introdução r</a>, <a class='category' href='/blog/categories/r/'>r</a>
   
 </span>
 
@@ -401,6 +378,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/04/21/kit-de-sobrevivencia-em-r-parte-5/">Kit De Sobrevivência Em R - Parte 5: Tipos De Dados E Transformações</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/04/12/kit-de-sobrevivencia-em-r-parte-4/">Kit De Sobrevivência Em R - Parte 4: Carregando Dados</a>
       </li>
     
@@ -414,10 +395,6 @@
     
       <li class="post">
         <a href="/blog/2016/03/23/kit-de-sobrevivencia-em-r-parte-1/">Kit De Sobrevivência Em R - Parte 1: Visão Geral E Instalação</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/03/14/como-aplicar-ciencia-de-dados/">Aplicando Ciência De Dados Parte 1 - Workflow</a>
       </li>
     
   </ul>

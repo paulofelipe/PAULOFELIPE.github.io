@@ -11,7 +11,7 @@
   <meta name="author" content="Full Join">
 
   
-  <meta name="description" content="Neste post, você aprenderá um pouco sobre os pacotes, trabalhará com o console para fazer algumas operações e ir se familiarizando mais com o R. &hellip;">
+  <meta name="description" content="Kit De Sobrevivência Em R - Parte 3: Pacotes 03/04/2016 10:10 pm | básico, introdução r, r Neste post, você aprenderá um pouco sobre os pacotes, &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -28,7 +28,38 @@
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+  <!-- MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript"
+   src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
@@ -100,7 +131,7 @@
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/basico/'>básico</a>, <a class='category' href='/blog/categories/r/'>r</a>
+    <a class='category' href='/blog/categories/basico/'>básico</a>, <a class='category' href='/blog/categories/introducao-r/'>introdução r</a>, <a class='category' href='/blog/categories/r/'>r</a>
   
 </span>
 
@@ -114,8 +145,7 @@
 
 <!-- More -->
 
-
-<h2>Pacotes</h2>
+<h2 id="pacotes">Pacotes</h2>
 
 <p>Um pacote do R e um conjunto de funções que tem uma temática em comum. As funções de um mesmo pacote são carregadas juntas em memória, ou seja, ficam disponíveis para uso no R. Por ter uma temática específica, cada pacote possue uma documentação explicando suas funcionalidades disponíveis e como usá-las. Além das funções, alguns pacotes também fornecem um conjunto de dados que são usados para replicar os exemplos fornecidos nas documentações.</p>
 
@@ -123,7 +153,7 @@
 
 <p>No geral, você fará muito uso de pacotes para facilitar tarefas que as funções básicas do R deixam a desejar.</p>
 
-<h3>Instalação</h3>
+<h3 id="instalao">Instalação</h3>
 
 <p>Existem duas opções para instalar um pacote: via comando ou usando a funcionalidade nos menus do RStudio.</p>
 
@@ -131,29 +161,29 @@
 
 <div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">install.packages</span><span class="p">(</span><span class="s1">'readxl'</span><span class="p">)</span></code></pre></div>
 
-
 <p>Este comando irá instalar o pacote <code>readxl</code> que fornece funções para facilitar a importação de dados em arquivos <code>xls</code> e <code>xlsx</code>. Nesse caso específico, o pacote fornece duas funções: uma para listar todas as planilhas que estão em um arquivo do excel e outra para ler os dados de uma planilha pro excel. Em um post futuro sobre a importação de dados, trataremos mais sobre esse pacote. Por enquanto, estamos usando somente como exemplo.</p>
 
 <p>Para realizar a instalação com ajuda do RStudio, primeiro clique na aba <em>Packages</em> e depois no botão <em>Install</em>. Será aberta uma janela auxiliar em que você poderá escolher a fonte que será utilizada para instalar o pacote. Normalmente, você optará pelo CRAN (este termo será explicado mais adiante, porém trata-se do repositório oficial). Em <em>Packages</em>, digite o nome do pacote e depois no botão <em>Install</em>. Abaixo está uma imagem de como é o processo de instalação via RStudio.</p>
 
-<p><img src="/images/install_package.gif" title="Instalação de Pacote" alt="alt Instalação de Pacote" /></p>
+<p><img src="/images/install_package.gif" alt="alt Instalação de Pacote" title="Instalação de Pacote" /></p>
 
-<h3>Buscando pacotes</h3>
+<h3 id="buscando-pacotes">Buscando pacotes</h3>
 
 <p>Mas como saber quais pacotes estão disponíveis para uma determinada tarefa? Na maioria das vezes será inevitável realizar uma busca por uma função específica e no meio do caminho se deparar com o pacote.</p>
 
 <p>Todavia, existem algumas páginas que apresentam uma lista de pacotes relacionadas a uma determinada tarefa, que são denominadas de <em>Task View</em>. Para exemplificar, veja <a href="https://cran.r-project.org/web/views/Graphics.html">aqui</a> uma lista de pacotes para realização de gráficos e visualizações.</p>
 
-<h3>Carregando um pacote</h3>
+<h3 id="carregando-um-pacote">Carregando um pacote</h3>
 
 <p>Para utilizar as funções de um pacote, você deve carregá-lo antes. Para isso, você deve usar o seguinte comando:</p>
 
 <div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">library</span><span class="p">(</span><span class="n">readxl</span><span class="p">)</span></code></pre></div>
 
-
 <p>Esse comando irá carregar o pacote em memória e tornará possível a utilização de todas funções disponíveis nele. Também existe a possibilidade de carregamento de pacotes usando a função <code>require()</code>, que é mais indicado no caso de carregamento de um pacote dentro de uma rotina. Por enquanto, não nos preocupemos com ele.</p>
 
-<blockquote><p>Dica: repare que para instalar o pacote você usou o nome dele entre aspas `install.packages(&ldquo;readxl&rdquo;) e não vai funcionar sem aspas. Mas, para carregar o pacote em memória, você pode usar com ou sem aspas library(readxl) ou library(&ldquo;readxl&rdquo;)</p></blockquote>
+<blockquote>
+  <p>Dica: repare que para instalar o pacote você usou o nome dele entre aspas `install.packages(“readxl”) e não vai funcionar sem aspas. Mas, para carregar o pacote em memória, você pode usar com ou sem aspas library(readxl) ou library(“readxl”)</p>
+</blockquote>
 
 <p>Ao trabalhar com pacotes, muitas vezes irá aparecer o termo <strong>CRAN</strong>. Ele significa <em>Comprehensive R Archive Network</em>. Este é o principal repositório de pacotes do R. Trata-se de um portal que guarda uma série de pacotes que necessariamente passaram por uma série de requisitos antes de serem publicado. Atualmente, estao disponiveis mais de 8.000 pacotes no CRAN.</p>
 
@@ -161,20 +191,18 @@
 
 <p>Vários pacotes já são disponibilizados pelos próprios autores antes mesmo das verificações necessárias para entrar no CRAN. Não são apenas novos pacotes. Novas versões de um pacote podem se encaixar aqui também. Geralmente, eles estão disponíveis no <a href="https://pt.wikipedia.org/wiki/GitHub">github</a>.</p>
 
-<p>Para realizar a instalação desses pacotes &ldquo;fora do CRAN&rdquo;, será necessária a instalação do <code>devtools</code> (que é um pacote!). Por exemplo, o <code>ggplot2</code>, ótimo pacote para gráficos, já possui uma versão estável no CRAN. No entanto, se você desejar instalar a versão que está em desenvolvimento, que pode possuir uma nova funcionalidade, faça o seguinte:</p>
+<p>Para realizar a instalação desses pacotes “fora do CRAN”, será necessária a instalação do <code>devtools</code> (que é um pacote!). Por exemplo, o <code>ggplot2</code>, ótimo pacote para gráficos, já possui uma versão estável no CRAN. No entanto, se você desejar instalar a versão que está em desenvolvimento, que pode possuir uma nova funcionalidade, faça o seguinte:</p>
 
 <div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">install.packages</span><span class="p">(</span><span class="s1">'devtools'</span><span class="p">)</span> <span class="c1"># Caso não esteja instalado ainda</span>
 <span class="n">devtools</span><span class="o">::</span><span class="n">install_github</span><span class="p">(</span><span class="s2">"hadley/ggplot2"</span><span class="p">)</span></code></pre></div>
 
-
 <p>Aqui temos um ponto interessante. Para usar funções de um pacote, usualmente carrega-se usando o <code>library()</code>. Contudo, se você quiser pontualmente uma função de um pacote, pode-se optar pela forma acima: <code>nome_do_pacote::nome_da_função</code>. Dessa forma você evitaria carregar todas as funções do pacote em memória. Isso pode ser muito útil!</p>
 
-<h2>Ajuda no R</h2>
+<h2 id="ajuda-no-r">Ajuda no R</h2>
 
 <p>Você baixou um pacote e não sabe muito bem como usar as funções que estão disponíveis. O que fazer? Você precisará de ajuda. O primeiro passo é verificar a ajuda do pacote. Serão listadas as funções disponíveis e links para a página de <em>help</em> de cada função. Isto pode ser feito a partir do seguinte comando:</p>
 
 <div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">help</span><span class="p">(</span><span class="n">package</span> <span class="o">=</span> <span class="s1">'readxl'</span><span class="p">)</span></code></pre></div>
-
 
 <p>Para buscar ajuda sobre uma função específica, existem algumas possibilidades a depender se o pacote já está carregado ou não. Por exemplo:</p>
 
@@ -182,29 +210,33 @@
 <span class="o">?</span><span class="n">readxl</span><span class="o">::</span><span class="n">read_excel</span> <span class="c1"># Se o pacote não estiver carregado</span>
 <span class="o">??</span><span class="n">read_excel</span>  <span class="c1"># Pacote não carregado. Demora mais para apresentar um resultado</span></code></pre></div>
 
-
 <p>É importante destacar o <code>??</code>, que faz uma busca mais ampla por funções, demonstrações e arquivos que trazem uma visão geral (vignette) de algum pacote/função.</p>
 
 <p>Sendo mais específico, ao buscar a ajuda por uma função específica, será apresentado um texto com uma estrutura padrão: <em>Description</em>, <em>Usage</em>, <em>Arguments</em> e <em>Examples</em>. Além dessas, podem constar outras seções como <em>Details</em> e <em>Value</em>, por exemplo.</p>
 
-<p>É importante destacar o uso (<em>Usage</em>) que trará uma forma genérica de utilização dos parâmetros. Em regra, uma função tem uma série de parâmetros que serão passados para &ldquo;dentro&rdquo; dela. Os parâmetros são separados por vírgula e os que apresentam <code>=</code> possuem um valor padrão e geralmente são opcionais (nem todos os parâmetros são obrigatórios).</p>
+<p>É importante destacar o uso (<em>Usage</em>) que trará uma forma genérica de utilização dos parâmetros. Em regra, uma função tem uma série de parâmetros que serão passados para “dentro” dela. Os parâmetros são separados por vírgula e os que apresentam <code>=</code> possuem um valor padrão e geralmente são opcionais (nem todos os parâmetros são obrigatórios).</p>
 
 <p>Após executar uma função, ela retornará o que está descrito na seção <em>Value</em>. Pode ser um único número ou uma lista (nos próximos posts ficará mais claro o que é uma lista) de elementos que pode variar de uma vetor a um texto.</p>
 
 <p>Não se preocupe muito se o conceito de função ainda não está totalmente claro. O próprio uso e os próximos posts deixarão todos esses conceitos claros de forma natural por meio de exemplos e práticas.</p>
 
-<h2>Referências:</h2>
+<h1 id="desafio">Desafio</h1>
 
+<p>Instale e carrege os pacotes <code>tidyr</code> e <code>stringr</code>. Consegue descobrir para que servem esses pacotes? Consegue visualizar as funções existentes em cada pacote? Para que serve a função <code>gather()</code> do pacote <code>tidyr</code>?  Para que serve a função <code>str_count()</code> do pacote <code>stringr</code>? Compartilhe conosco nos comentários o que descobriu!</p>
+
+<h1 id="referncias">Referências:</h1>
 <ul>
-<li><a href="https://www.datacamp.com/community/tutorials/functions-in-r-a-tutorial">DataCamp - Functions</a></li>
-<li><a href="https://www.rstudio.com/products/rpackages/">Principais pacotes para R</a></li>
-<li><a href="http://r-pkgs.had.co.nz/">R Packages</a></li>
-<li><a href="http://www.analyticsvidhya.com/blog/2015/08/list-r-packages-data-analysis/">Lista de pactes mais úteis para Análise de Dados</a></li>
+  <li><a href="https://www.datacamp.com/community/tutorials/functions-in-r-a-tutorial">DataCamp - Functions</a></li>
+  <li><a href="https://www.rstudio.com/products/rpackages/">Principais pacotes para R</a></li>
+  <li><a href="http://r-pkgs.had.co.nz/">R Packages</a></li>
+  <li><a href="http://www.analyticsvidhya.com/blog/2015/08/list-r-packages-data-analysis/">Lista de pactes mais úteis para Análise de Dados</a></li>
 </ul>
-
 </div>
 
 
+  <p class="meta" style="text-align:center">
+    <i>Tem alguma dúvida, crítica ou sugestão? Deixe o seu comentário! Ficaremos felizes em ajudar.<i>
+  </p>
   <footer>
     <p class="meta">
       
@@ -222,7 +254,7 @@
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/basico/'>básico</a>, <a class='category' href='/blog/categories/r/'>r</a>
+    <a class='category' href='/blog/categories/basico/'>básico</a>, <a class='category' href='/blog/categories/introducao-r/'>introdução r</a>, <a class='category' href='/blog/categories/r/'>r</a>
   
 </span>
 
@@ -264,6 +296,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/04/21/kit-de-sobrevivencia-em-r-parte-5/">Kit De Sobrevivência Em R - Parte 5: Tipos De Dados E Transformações</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/04/12/kit-de-sobrevivencia-em-r-parte-4/">Kit De Sobrevivência Em R - Parte 4: Carregando Dados</a>
       </li>
     
@@ -277,10 +313,6 @@
     
       <li class="post">
         <a href="/blog/2016/03/23/kit-de-sobrevivencia-em-r-parte-1/">Kit De Sobrevivência Em R - Parte 1: Visão Geral E Instalação</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/03/14/como-aplicar-ciencia-de-dados/">Aplicando Ciência De Dados Parte 1 - Workflow</a>
       </li>
     
   </ul>

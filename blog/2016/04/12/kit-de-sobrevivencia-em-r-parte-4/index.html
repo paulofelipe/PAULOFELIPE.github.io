@@ -11,7 +11,7 @@
   <meta name="author" content="Full Join">
 
   
-  <meta name="description" content="Seguindo a sequência do Kit de sobrevivência em R, vamos abordar um pouco sobre uma das partes iniciais de qualquer análise ou trabalho que vá ser &hellip;">
+  <meta name="description" content="Kit De Sobrevivência Em R - Parte 4: Carregando Dados 12/04/2016 9:00 pm | básico, introdução r, r Seguindo a sequência do Kit de sobrevivência em R &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -28,7 +28,38 @@
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+  <!-- MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript"
+   src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
@@ -100,7 +131,7 @@
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/basico/'>básico</a>, <a class='category' href='/blog/categories/r/'>r</a>
+    <a class='category' href='/blog/categories/basico/'>básico</a>, <a class='category' href='/blog/categories/introducao-r/'>introdução r</a>, <a class='category' href='/blog/categories/r/'>r</a>
   
 </span>
 
@@ -114,8 +145,7 @@
 
 <!-- More -->
 
-
-<h1>Estrutura dos dados</h1>
+<h1 id="estrutura-dos-dados">Estrutura dos dados</h1>
 
 <p>Eis aqui uma notícia ruim: não existe um padrão dominante para armazenamento de dados. O que isso significa? Significa que, na vida real, você vai se deparar com os mais diferentes tipos de fontes de dados e mesmo assim vai ter que dar um jeito de analisá-las e estudá-las para concluir seus trabalhos.</p>
 
@@ -123,51 +153,52 @@
 
 <p>De maneira geral, você irá encontrar dados disponibilizados basicamente em três formas básicas: estruturados, não estruturados e semi-estruturados.</p>
 
-<h2>Dados Estruturados</h2>
+<h2 id="dados-estruturados">Dados Estruturados</h2>
 
 <p>Basicamente são conjuntos de informações organizadas em colunas (atributos, variáveis, <em>features</em>, etc.) e linhas (registros, itens, observacões, etc.). São dados encontrados em bancos de dados, arquivos com algum tipo de separação entre as colunas, excel, arquivos com campos de tamanho fixo, etc.</p>
 
-<h2>Dados não estruturados</h2>
+<h2 id="dados-no-estruturados">Dados não estruturados</h2>
 
 <p>Como o nome diz, não tem um estrutura previsível, ou seja, cada arquivo possui uma forma única de ser carregado e manejado. Geralmente são arquivos com forte teor textual. Podemos citar, por exemplo, emails, twitters, PDFs, imagens, etc. Muito usados em mineração de dados.</p>
 
-<h2>Dados semi-estruturados</h2>
+<h2 id="dados-semi-estruturados">Dados semi-estruturados</h2>
 
 <p>Também possuem estrutura fixa, porém, não seguem o padrão de estrutura linha/coluna, ou seja, é uma estrutura mais complexa e flexível, geralmente hierárquica, estruturada em tags ou marcadores de campos. São exemplos de arquivos semi-estruturados: JSON, XML, HTML, YAML, etc. É o formato mais usado em troca de dados pela internet e consumo de APIs.</p>
 
 <p>Trataremos primeiro dos arquivos estruturados. Em futuros posts vamos abordar os outros tipos, pois são abordagens um pouco mais complexas e é sempre bom começar pelo básico!</p>
 
-<h1>Preparando o ambiente para começar</h1>
+<h1 id="preparando-o-ambiente-para-comear">Preparando o ambiente para começar</h1>
 
-<h3>Limpando tudo</h3>
+<h3 id="limpando-tudo">Limpando tudo</h3>
 
 <p>Antes de começar os trabalhos, é uma boa prática ter certeza de que seu ambiente de trabalho está limpo. Um simples comando garante que está tudo limpo pronto para começar:</p>
 
 <div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">rm</span><span class="p">(</span><span class="n">list</span><span class="o">=</span><span class="n">ls</span><span class="p">())</span></code></pre></div>
 
-
 <p>Esse comando na verdade está usando duas funções:</p>
 
 <ul>
-<li><p><code>rm()</code> função para remover um objeto da sessão do R</p></li>
-<li><p><code>ls()</code> função para listar os nomes de todos objetos da sessão do R</p></li>
+  <li>
+    <p><code>rm()</code> função para remover um objeto da sessão do R</p>
+  </li>
+  <li>
+    <p><code>ls()</code> função para listar os nomes de todos objetos da sessão do R</p>
+  </li>
 </ul>
-
 
 <p>As duas funções conjugadas dão a ordem de <em>remover tudo que estiver na lista de objetos da sessão do R.</em></p>
 
 <p>Pronto. Seus ambiente está limpo.</p>
 
-<h3>Definindo diretório de trabalho</h3>
+<h3 id="definindo-diretrio-de-trabalho">Definindo diretório de trabalho</h3>
 
-<p>O R vai &ldquo;ler&rdquo; os dados de algum lugar do seu computador. Normalmente o R inicia lendo em um diretório padrão, mas nem sempre os arquivos estarão nesse mesmo diretório. Para dizer ao R onde ele deve ler os arquivos, usaremos o comando <em>set working directory</em>:</p>
+<p>O R vai “ler” os dados de algum lugar do seu computador. Normalmente o R inicia lendo em um diretório padrão, mas nem sempre os arquivos estarão nesse mesmo diretório. Para dizer ao R onde ele deve ler os arquivos, usaremos o comando <em>set working directory</em>:</p>
 
 <div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">setwd</span><span class="p">(</span><span class="s2">"Local/Do/Seus/Arquivos/De/Trabalho/"</span><span class="p">)</span></code></pre></div>
 
-
 <p>Também pode ser realizado pelos menus do RStudio em <code>Session &gt; Set Working Directory &gt; Choose Directory...</code> e escolha a pasta onde seus arquivos de dado estarão.</p>
 
-<p><img src="/images/setwd.gif" title="Definindo o diretório de trabalho" alt="alt Definindo o diretório de trabalho" /></p>
+<p><img src="/images/setwd.gif" alt="alt Definindo o diretório de trabalho" title="Definindo o diretório de trabalho" /></p>
 
 <p>Para saber qual o diretório de trabalho está atualmente definido, use o comando <code>getwd()</code>.</p>
 
@@ -175,23 +206,23 @@
 
 <p>Ok! Agora sim!</p>
 
-<h1>Tipos de carregamento</h1>
+<h1 id="tipos-de-carregamento">Tipos de carregamento</h1>
 
 <p>O R possui algumas funções básicas de carregamento. Essas funções tratam de alguns tipos de arquivo, basicamente diferenciados pelo <em>delimitador</em>. Outro aspecto importante é que essas funções básicas pressumpõem que cada linha representa um novo registro de dados.</p>
 
 <p>Para ficar mais claro, delimitadores podem ser qualquer coisa que seja usada para separar dados. Por exemplo, os arquivos podem ser separados por vígulas (<a href="https://pt.wikipedia.org/wiki/Comma-separated_values">CSV - Comma-separated values</a>), por ponto e vírgula (<code>;</code>), por espaçamento TAB (a tecla TAB do teclado mesmo!), por espaços simples ou qualquer outro tipo de símbolo.</p>
 
-<p>E quando não existe delimitador, ou seja, quando os campos estão &ldquo;colados&rdquo; uns nos outros? Em alguns casos, arquivos são confeccionados com um tamanho fixo para cada coluna (principalmente em arquivos gigantescos!), e cada linha respeita tamanhos específicos para separar os seus registros.</p>
+<p>E quando não existe delimitador, ou seja, quando os campos estão “colados” uns nos outros? Em alguns casos, arquivos são confeccionados com um tamanho fixo para cada coluna (principalmente em arquivos gigantescos!), e cada linha respeita tamanhos específicos para separar os seus registros.</p>
 
-<p>Como dissemos antes, dados estruturados possuem colunas e linhas (ou atributos e registros, ou variáveis e observações&hellip; dá na mesma!). O delimitador é uma forma de separar o conteúdo de cada linha em uma coluna específica. Ficará mais claro a seguir.</p>
+<p>Como dissemos antes, dados estruturados possuem colunas e linhas (ou atributos e registros, ou variáveis e observações… dá na mesma!). O delimitador é uma forma de separar o conteúdo de cada linha em uma coluna específica. Ficará mais claro a seguir.</p>
 
 <p>Para replicar os exemplos abaixo, baixe <a href="https://www.dropbox.com/s/4tedgnkd85c5q5s/desemprego_uf_pnad.zip?dl=0">este arquivo zip</a> com exemplos de dados em que foram usados diferentes delimitadores. Descompacte o arquivo em alguma pasta do seu computador. Defina esta pasta como o seu diretório de trabalho no RStudio. Além disso, dê uma olhada nos arquivos com o auxílio do bloco de notas ou outro programa para que você tenha ideia como o dado está inicialmente estruturado.</p>
 
-<h1>Carregando os dados</h1>
+<h1 id="carregando-os-dados">Carregando os dados</h1>
 
 <p>Dividiremos este tópico em duas partes: dados delimitados e dados com campos de tamanho fixo.</p>
 
-<h4>Dados com delimitadores</h4>
+<h4 id="dados-com-delimitadores">Dados com delimitadores</h4>
 
 <p>Para importar dados com delimitadores utilizaremos a função <code>read.table()</code>. Essa função permite definir qualquer delimitador para a leitura do arquivo, conforme os exemplos abaixo.</p>
 
@@ -202,16 +233,12 @@
 <span class="c1"># Separado por espaço</span>
 <span class="n">dados.espaco</span> <span class="o">&lt;-</span> <span class="n">read.table</span><span class="p">(</span><span class="s1">'desemprego_uf_espaco.txt'</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s2">" "</span><span class="p">,</span> <span class="n">dec</span> <span class="o">=</span> <span class="s2">","</span><span class="p">,</span> <span class="n">header</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span></code></pre></div>
 
-
 <p>Reparem no parâmetro <code>header = TRUE</code>, isso significa dizer que a primeira linha do arquivo contem o nome das colunas, ou seja, não é um dado propriamente dito, e sim um metadado pois é uma informação sobre os registros. Caso seu arquivo não contenha o nome das colunas, basta usar <code>header = FALSE</code>.</p>
 
-<p>Após o carregamento, vamos usar a função <code>head()</code>para ver a &ldquo;cara&rdquo; dos nossos dados. Veja que eles são iguais nos três casos. Nessa função, você pode especificar o número de linhas que deseja ver. Por exemplo: <code>head(dados.tab, 10)</code>. Para visualizar as últimas linhas, você pode utilizar o <code>tail()</code> da mesma forma. Note que o RStudio tem funcionalidades que permitem que você visualize os dados como uma planilha. Basta clicar no nome do objeto que está listado na aba <em>Environment</em>.</p>
+<p>Após o carregamento, vamos usar a função <code>head()</code>para ver a “cara” dos nossos dados. Veja que eles são iguais nos três casos. Nessa função, você pode especificar o número de linhas que deseja ver. Por exemplo: <code>head(dados.tab, 10)</code>. Para visualizar as últimas linhas, você pode utilizar o <code>tail()</code> da mesma forma. Note que o RStudio tem funcionalidades que permitem que você visualize os dados como uma planilha. Basta clicar no nome do objeto que está listado na aba <em>Environment</em>.</p>
 
 <div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">head</span><span class="p">(</span><span class="n">dados.tab</span><span class="p">)</span></code></pre></div>
 
-
-
-
 <div class="highlight"><pre><code class="language-text" data-lang="text">##    Ano   Trimestre       UF Taxa_Desemprego
 ## 1 2012 jan-fev-mar Rondônia           8.008
 ## 2 2012 abr-mai-jun Rondônia           6.224
@@ -219,15 +246,9 @@
 ## 4 2012 out-nov-dez Rondônia           5.274
 ## 5 2013 jan-fev-mar Rondônia           6.114
 ## 6 2013 abr-mai-jun Rondônia           4.771</code></pre></div>
-
-
-
 
 <div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">head</span><span class="p">(</span><span class="n">dados.ponto.virgula</span><span class="p">)</span></code></pre></div>
 
-
-
-
 <div class="highlight"><pre><code class="language-text" data-lang="text">##    Ano   Trimestre       UF Taxa_Desemprego
 ## 1 2012 jan-fev-mar Rondônia           8.008
 ## 2 2012 abr-mai-jun Rondônia           6.224
@@ -235,15 +256,9 @@
 ## 4 2012 out-nov-dez Rondônia           5.274
 ## 5 2013 jan-fev-mar Rondônia           6.114
 ## 6 2013 abr-mai-jun Rondônia           4.771</code></pre></div>
-
-
-
 
 <div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">head</span><span class="p">(</span><span class="n">dados.espaco</span><span class="p">)</span></code></pre></div>
 
-
-
-
 <div class="highlight"><pre><code class="language-text" data-lang="text">##    Ano   Trimestre       UF Taxa_Desemprego
 ## 1 2012 jan-fev-mar Rondônia           8.008
 ## 2 2012 abr-mai-jun Rondônia           6.224
@@ -252,13 +267,7 @@
 ## 5 2013 jan-fev-mar Rondônia           6.114
 ## 6 2013 abr-mai-jun Rondônia           4.771</code></pre></div>
 
-
-
-
 <div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">tail</span><span class="p">(</span><span class="n">dados.espaco</span><span class="p">,</span> <span class="m">4</span><span class="p">)</span></code></pre></div>
-
-
-
 
 <div class="highlight"><pre><code class="language-text" data-lang="text">##      Ano   Trimestre               UF Taxa_Desemprego
 ## 429 2015 jan-fev-mar Distrito Federal          10.784
@@ -266,13 +275,11 @@
 ## 431 2015 jul-ago-set Distrito Federal          10.258
 ## 432 2015 out-nov-dez Distrito Federal           9.707</code></pre></div>
 
-
-<h4>Dados com campos de tamanho fixo</h4>
+<h4 id="dados-com-campos-de-tamanho-fixo">Dados com campos de tamanho fixo</h4>
 
 <p>Para a leitura de dados desse tipo, você precisa saber previamente o tamanho de caracteres reservado para cada campo. Geralmente esse tipo de arquivo vem acompanhando de um arquivo auxiliar explicando o layout dos dados.</p>
 
 <div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">dados.fwf</span> <span class="o">&lt;-</span> <span class="n">read.fwf</span><span class="p">(</span><span class="s1">'desemprego_uf_fwf.txt'</span><span class="p">,</span> <span class="n">widths</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="m">4</span><span class="p">,</span> <span class="m">11</span><span class="p">,</span> <span class="m">19</span><span class="p">,</span> <span class="m">6</span><span class="p">),</span>  <span class="n">header</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">,</span>  <span class="n">strip.white</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span></code></pre></div>
-
 
 <p>Reparem que o segundo parâmetro da função, <code>widths</code> é onde você especifica o tamanho de cada campo na ordem em que eles ocorrem na linha. Ou seja, o primeiro campo tem tamanho 4 e o segundo 11. O <code>strip.white = TRUE</code> é a opção para eliminar os espaços em branco que foram incluídos na criação do arquivo para que cada linha tivesse o tamanho total especificado para cada coluna.</p>
 
@@ -284,9 +291,6 @@
 
 <div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">head</span><span class="p">(</span><span class="n">dados.fwf</span><span class="p">)</span></code></pre></div>
 
-
-
-
 <div class="highlight"><pre><code class="language-text" data-lang="text">##     V1          V2       V3    V4
 ## 1 2012 jan-fev-mar Rondônia 8.008
 ## 2 2012 abr-mai-jun Rondônia 6.224
@@ -295,14 +299,10 @@
 ## 5 2013 jan-fev-mar Rondônia 6.114
 ## 6 2013 abr-mai-jun Rondônia 4.771</code></pre></div>
 
-
 <p>Para definirmos os nomes das variáveis usaremos o comando <code>colnames()</code>. Basicamente, diremos que os nomes das colunas deverão ser os que estão especificados abaixo:</p>
 
 <div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">colnames</span><span class="p">(</span><span class="n">dados.fwf</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="n">c</span><span class="p">(</span><span class="s1">'Ano'</span><span class="p">,</span> <span class="s1">'Trimestre'</span><span class="p">,</span> <span class="s1">'UF'</span><span class="p">,</span> <span class="s1">'Taxa_Desemprego'</span><span class="p">)</span>
 <span class="n">head</span><span class="p">(</span><span class="n">dados.fwf</span><span class="p">)</span></code></pre></div>
-
-
-
 
 <div class="highlight"><pre><code class="language-text" data-lang="text">##    Ano   Trimestre       UF Taxa_Desemprego
 ## 1 2012 jan-fev-mar Rondônia           8.008
@@ -312,8 +312,7 @@
 ## 5 2013 jan-fev-mar Rondônia           6.114
 ## 6 2013 abr-mai-jun Rondônia           4.771</code></pre></div>
 
-
-<h1>Mais opções na leitura</h1>
+<h1 id="mais-opes-na-leitura">Mais opções na leitura</h1>
 
 <p>Apresentamos as funções básicas de leitura de arquivo com seu uso padrão mais simples. No entanto, existem muitos outros parâmetros que podem ser usados para especificar mais a leitura dos dados. Vale a pena conferir. Para conhecer mais sobre as funções apresentadas, lembrem-se de usar <code>?</code>.</p>
 
@@ -322,26 +321,38 @@
 <span class="o">?</span><span class="n">read.delim</span><span class="p">()</span>
 <span class="o">?</span><span class="n">read.csv</span><span class="p">()</span></code></pre></div>
 
+<blockquote>
+  <p>Dica: Repare que <code>read.delim()</code> e <code>read.csv()</code> estão na mesma ajuda do <code>read.table()</code>. Na verdade todas as 3 funções são a mesma, e podem ser reproduzidas com o <code>read.table()</code> apenas mudando alguns parâmetros na chamada da função.</p>
+</blockquote>
 
-<blockquote><p>Dica: Repare que <code>read.delim()</code> e <code>read.csv()</code> estão na mesma ajuda do <code>read.table()</code>. Na verdade todas as 3 funções são a mesma, e podem ser reproduzidas com o <code>read.table()</code> apenas mudando alguns parâmetros na chamada da função.</p></blockquote>
-
-<h1>Outras formas de carregar dados</h1>
+<h1 id="outras-formas-de-carregar-dados">Outras formas de carregar dados</h1>
 
 <p>Existe diversas outras formas de carregar dados. Mas nosso objetivo aqui é apenas criar uma introdução para conseguir carregar a grande maioria dos formatos de dados mais comuns.</p>
 
 <p>Em breve lançaremos posts explicando leitura de arquivos em excel, arquivos semi-estruturados e arquivos não estruturados.</p>
 
-<h1>Referências:</h1>
+<h1 id="desafio">Desafio</h1>
+
+<p>Que tal tentar carregar e visualizar no R os dados da série histórica das taxas de vendas de títulos do tesouro direto (<a href="http://www.tesourotransparente.gov.br/ckan/dataset/taxas-dos-titulos-ofertados-pelo-tesouro-direto">download Tesouro Direto</a>)?</p>
+
+<p>Tente também carregar e visualizar os dados do IPCA (Índice Nacional de Preço ao Consumidor Amplo), indicador oficial da inflação brasileira (<a href="http://dados.gov.br/dataset/indice-nacional-de-precos-ao-consumidor-amplo-ipca/resource/3292e931-5ed8-42fb-aa59-4386e115d619">download IPCA</a>).</p>
+
+<p>Teve alguma dificuldade? Comente abaixo para que possamos ajudar!</p>
+
+<h1 id="referncias">Referências:</h1>
 
 <ul>
-<li><a href="https://cran.r-project.org/doc/manuals/r-release/R-data.pdf">R Data Import/Export</a></li>
-<li><a href="http://blog.revolutionanalytics.com/2015/04/new-packages-for-reading-data-into-r-fast.html">New packages for reading data into R — fast</a></li>
-<li><a href="https://www.datacamp.com/community/tutorials/r-tutorial-read-excel-into-r">Reading and Importing Files - DataCamp</a></li>
+  <li><a href="https://cran.r-project.org/doc/manuals/r-release/R-data.pdf">R Data Import/Export</a></li>
+  <li><a href="http://blog.revolutionanalytics.com/2015/04/new-packages-for-reading-data-into-r-fast.html">New packages for reading data into R — fast</a></li>
+  <li><a href="https://www.datacamp.com/community/tutorials/r-tutorial-read-excel-into-r">Reading and Importing Files - DataCamp</a></li>
 </ul>
 
 </div>
 
 
+  <p class="meta" style="text-align:center">
+    <i>Tem alguma dúvida, crítica ou sugestão? Deixe o seu comentário! Ficaremos felizes em ajudar.<i>
+  </p>
   <footer>
     <p class="meta">
       
@@ -359,7 +370,7 @@
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/basico/'>básico</a>, <a class='category' href='/blog/categories/r/'>r</a>
+    <a class='category' href='/blog/categories/basico/'>básico</a>, <a class='category' href='/blog/categories/introducao-r/'>introdução r</a>, <a class='category' href='/blog/categories/r/'>r</a>
   
 </span>
 
@@ -380,6 +391,8 @@
         <a class="basic-alignment left" href="/blog/2016/04/03/kit-de-sobrevivencia-em-r-parte-3/" title="Previous Post: Kit de Sobrevivência em R - Parte 3: Pacotes">&laquo; Kit de Sobrevivência em R - Parte 3: Pacotes</a>
       
       
+        <a class="basic-alignment right" href="/blog/2016/04/21/kit-de-sobrevivencia-em-r-parte-5/" title="Next Post: Kit de sobrevivência em R - Parte 5: Tipos de dados e transformações">Kit de sobrevivência em R - Parte 5: Tipos de dados e transformações &raquo;</a>
+      
     </p>
   </footer>
 </article>
@@ -399,6 +412,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/04/21/kit-de-sobrevivencia-em-r-parte-5/">Kit De Sobrevivência Em R - Parte 5: Tipos De Dados E Transformações</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/04/12/kit-de-sobrevivencia-em-r-parte-4/">Kit De Sobrevivência Em R - Parte 4: Carregando Dados</a>
       </li>
     
@@ -412,10 +429,6 @@
     
       <li class="post">
         <a href="/blog/2016/03/23/kit-de-sobrevivencia-em-r-parte-1/">Kit De Sobrevivência Em R - Parte 1: Visão Geral E Instalação</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/03/14/como-aplicar-ciencia-de-dados/">Aplicando Ciência De Dados Parte 1 - Workflow</a>
       </li>
     
   </ul>
