@@ -103,3 +103,6 @@ google_analytics_tracking_id: UA-75406624-1
 
 # Facebook Like
 facebook_like: false
+
+category_title_prefix: ''
+category_meta_description_prefix: ''
