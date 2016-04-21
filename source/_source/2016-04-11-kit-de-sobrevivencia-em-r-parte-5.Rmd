@@ -21,21 +21,25 @@ A notícia boa é que, quanto mais você conhecer formas de transformar os dados
 
 # Tipos de dados
 
-Existem diversos tipos de dados em R, alguns mais básicos e outros mais complexos (não em termos de dificuldade, e sim de estrutura). Vamos tentar apresentr alguns na prática ao longo do post.
+Existem diversos tipos de dados em R, alguns mais básicos e outros mais complexos (não em termos de dificuldade, e sim de estrutura). Vamos tentar apresentar alguns na prática ao longo do post.
 
 Lembra dos dados utilizados no [último post]({{root_url}}/blog/2016/04/12/kit-de-sobrevivencia-em-r-parte-4)? Vamos usá-los novamente como exemplo. Lembre-se de informar ao R o local onde o arquivo está para que ele possa ler. 
 
 Carregue algum dos arquivos de forma apropriada (todos arquivos tem o mesmo conteúdo). Como exemplo, escolhemos o arquivo com colunas delimitadas por `;`.
 
 ```{r, echo = FALSE}
+if(file.exists('~/Documents/Dados Exemplos/desemprego_uf_ponto_virgula.txt')){
 dados <- read.table('~/Documents/Dados Exemplos/desemprego_uf_ponto_virgula.txt', sep = ";", dec = ",", header = TRUE)
+}else{
+dados <- read.table('~/Documentos/Dados Exemplos/desemprego_uf_ponto_virgula.txt', sep = ";", dec = ",", header = TRUE)
+}
 ```
 
 ```{r, eval =  FALSE}
 dados <- read.table('desemprego_uf_ponto_virgula.txt', sep = ";", dec = ",", header = TRUE)  
 ```
 
-Esses dados trazem informações trimestrais ao longo dos anos da taxa de desemprego das Unidades da Federação brasileira.
+Esses dados trazem informações trimestrais ao longo dos anos da taxa de desemprego das Unidades da Federação do Brasil.
 
 No post anterior conseguimos dar uma olhada superficial usando `head()` e `tail()`. Para começar a transformar os dados precisaremos aprofundar um pouco mais. Usaremos então o `class()` e o `str()` para investigar melhor nossos dados.
 
@@ -49,12 +53,15 @@ A função `class()` recebe como parâmetro uma variável, e como resposta ela a
 
 Data frame é um tipo de dado complexo, um dos mais utilizados em R. É nele que você armazena conjuntos de dados estruturados em linhas e colunas. Um data frame possue colunas nomeadas, sendo que todas as colunas possuem a mesma quantidade de linhas.
 
+
 ```{r, eval = TRUE}
 str(dados)
 ```
 
 Com a função `str()` podemos examinar melhor a estrutura do nosso data frame.
-Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 observações (linhas). Temos ainda uma listagem com o nome das colunas, o tipo de dado presente em cada coluna e uma pequena amostra dos dados.
+Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 observações (linhas). Temos ainda uma listagem com o nome das colunas, o tipo de dado presente em cada coluna e uma pequena amostra dos dados. 
+
+> Matrizes também são objetos de duas dimensões (linhas e colunas). No entanto, diferentemente do data.frame, elas somente aceitam um tipo de dado.
 
 ### Integer
 
@@ -75,7 +82,7 @@ A visualização que o R fornece não ajuda muito, mas repare que cada categoria
 
 Então podemos dizer que nossa coluna UF é um factor de 27 levels, e Trimestre é um factor de 4 levels.
 
-Mas o que é esse cifrão `$`? É uma notação do R para quando você quer visualizar ou trabalhar com uma coluna (variável) de um data.frame. Você informa o nome do data frame, o $ e em seguida o nome da coluna que você quer. Experimente: `dados$Ano`, `dados$UF`, `dados$Trimestre` e `dados$Taxa_Desemprego`. Essa notação é muito importante e você a utilizará bastante.
+Mas o que é esse cifrão `$`? É uma notação do R para quando você quer visualizar ou trabalhar com uma coluna (variável) de um data.frame. Você verá que o `$` também é utilizado em outros tipos de objetos, como listas. A ideia é acessar uma parte de um objeto. No caso data.frame, você informa o nome do objeto, o `$` e em seguida o nome da coluna que você quer. Experimente: `dados$Ano`, `dados$UF`, `dados$Trimestre` e `dados$Taxa_Desemprego`. Essa notação é muito importante e você a utilizará bastante.
 
 E o que seria essa função `unique()`. É uma função básica do R para listar todos os valores de uma variável sem repetição. Olhando todos os dados em `dados$UF` você vai reparar que os nomes aparecem várias vezes em várias linhas, o `unique()` lista a ocorrência única de cada nome.
 
@@ -85,7 +92,7 @@ Continuando a exploração dos tipos, temos o `numeric` ou `num`, um tipo básic
 
 # Transformações
 
-Tendo consciencia dos tipos de dados que compõem nosso data frame já é possível começar a imaginar as análises que podem ser feitas. 
+Tendo consciência dos tipos de dados que compõem nosso data frame, já é possível começar a imaginar as análises que podem ser feitas. 
 
 Vamos supor que surgiu a necessidade de analisarmos os dados de desemprego por semestre. Podemos observar nos dados que temos informações explícitas por trimestre e de certa forma por ano também. Para começarmos os cálculos então seria interessanter ter uma variável (coluna) indicando o semestre.
 
@@ -96,7 +103,7 @@ Primeiramente vamos criar a variável. A forma é muito semelhante à criação 
 ```{r}
 dados$Semestre <- 1
 head(dados, 4)
-head(dados, 4)
+tail(dados, 4)
 ```
 
 Acabamos de criar uma nova coluna e atribuir 1 a todas as linhas dessa coluna. Não é exatamente o que queremos. Queremos atribuir 1 para primeiro semestre e 2 para segundo semestre. Para conseguir isso precisaremos atribuir a variável segundo algumas condicões. 
@@ -110,10 +117,35 @@ head(dados)
 tail(dados)
 ```
 
-Repare que dessa vez estamos usando `[ ]`. Os colchetes servem para fazermos filtragens "dentro" de um data frame, ou seja, quando queremos apenas um conjunto específico de linhas do data frame, colocamos as condições necessárias para fazer a filtragem dentro do colchete. E nesse caso queremos atribuir 1 ou 2 a uma quantidade de linhas específicas.
+Repare que dessa vez estamos usando `[ ]`. Os colchetes servem para fazermos filtragens "dentro" de um vetor ou um data frame. Mas o que é um vetor? O vetor é um objeto unidimensional. Além disso, ele só aceita um tipo de dado. Mas o que tem isso tem a ver com o código acima? Bem, quando selecionamos a variável semestre, o objeto resultante não será mais um data.frame, e sim um vetor. 
 
-### Logic
-Quando falamos de filtragens, necessariamente falamos também de operadores lógicos. Operações lógicas são operações comparativas que respondem um tipo específico de dados, os tipos lógicos(booleandos): TRUE (verdadeir) ou FALSE (false). Tente `class(TRUE)` ou `class(FALSE)`. 
+```{r}
+is.vector(dados$Semestre)
+```
+
+Veja que a função `is.vector()`, que testa se o objeto é um vetor, retorna `TRUE`. Ou seja, o objeto tem apenas uma dimensão. Isto tem implicações sobre `[ ]`. Se o objeto possuir duas dimensões, será preciso dizer em qual dimensão você está fazendo a seleção ou filtragem. As dimensões são separadas por vírgulas. Por exemplo, no caso do data frame, como existem duas dimensões (linhas e colunas) será preciso dizer em qual nós estamos interessados. Por exemplo:
+
+```{r}
+# Selecionar as 5 primeiras linhas
+dados[1:5,]
+# Selecionar as 5 primeiras linhas e as duas primeiras colunas
+dados[1:5,1:2]
+```
+
+Apesar de ter sido usado apenas números, você pode usar condições e nomes das colunas.
+
+Para deixar claro o que foi feito com a variável semestre. Como selecionamos apenas a coluna semestre, teremos um vetor unidimensional, logo as condições que estão dentro `[ ]` serão utilizadas para selecionar os elementos que receberão o valor que está após o `<-`.
+
+Para concluir, vamos dar mais um exemplo. Suponha que você queira criar um data.frame apenas com as linhas em que UF é igual a São Paulo e com as colunas `Ano`, `Trimestre` e `Taxa_Desemprego`. Para isto, você irá fazer uma seleção em um data frame (duas dimensões):
+
+```{r}
+SP <- dados[dados$UF == "São Paulo", c("Ano", "Trimestre", "Taxa_Desemprego")]
+head(SP)
+```
+
+### Logical
+
+Quando falamos de filtragens, necessariamente falamos também de operadores lógicos. Operações lógicas são operações comparativas que respondem um tipo específico de dados, os tipos lógicos(booleanos): TRUE (verdadeiro) ou FALSE (falso). Tente `class(TRUE)` ou `class(FALSE)`. 
 
 Faça um pequeno experimento com o que tem dentro dos colchetes. Digite o seguinte comando: 
 
@@ -144,9 +176,9 @@ Segue alguns exemplos para entender os operadores lógicos:
 2 == 1
 ```
 
-Ao longo dos próximos post vamos trabalhar melhor os operadores lógicos e as filtragens, aos poucos o uso ficará intuitivo.
+Ao longo dos próximos posts vamos trabalhar melhor os operadores lógicos e as filtragens, aos poucos o uso ficará intuitivo.
 
-Seguindo com as transformações, vamos supor também que, além de analisar o desemprego por UF, que estão explícitos na variável `dados$UF`, queremos também analisar o desemprego por Reigão (Norte, Sul, Nordeste, Centro Oeste e Sudeste):
+Seguindo com as transformações, vamos supor também que, além de analisar o desemprego por UF, que estão explícitos na variável `dados$UF`, queremos também analisar o desemprego por Região (Norte, Sul, Nordeste, Centro Oeste e Sudeste):
 
 ```{r}
 dados$Regiao[dados$UF %in% c('Rondônia', 'Acre', 'Amazonas', 'Roraima', 'Pará', 'Amapá', 'Tocantins')] <- 'Norte' 
@@ -172,15 +204,18 @@ head(dados, 15)
 
 Estamos criando uma novas variável em nosso data frame, armazenando o `log()` na nova variável `Log_Taxa_Desemprego` em nosso data frame. 
 
-A função será aplica a todas as linhas do data frame, pois não estamos usando nenhum filtro. Em cada linha será usado o valor do campo `Taxa_Desemprego` como parâmetro da função.
+A função será aplicada a todas as linhas do data frame, pois não estamos usando nenhum filtro. Em cada linha será usado o valor do campo `Taxa_Desemprego` como parâmetro da função.
 
 # Desafio
 
 Apenas para treinar, tente criar uma variável nesse data frame para classificar a taxa de desemprego em `alta`, `média` ou `baixa`, com o critério que quiser. Crie também uma variável armazenando a raiz quadrada da taxa de desemprego. 
 
-Muitas outras transformações são possíveis com essa simples base de dados usando atribuição com filtros e funções matemáticas. Consegue imagiar outras transformações? Deixe um comentário sobre os resutlados que conseguiu!
+Muitas outras transformações são possíveis com essa simples base de dados usando atribuição com filtros e funções matemáticas. Consegue imaginar outras transformações? Deixe um comentário sobre os resutlados que conseguiu!
 
 # Referências:
 
-* [LINK](LINK)
+* [Basic Data Types](http://www.cyclismo.org/tutorial/R/types.html)
+* [Basic Data Types II](http://www.r-tutor.com/r-introduction/basic-data-types)
+* [4 data wrangling tasks in R for advanced beginners](http://www.computerworld.com/article/2486425/business-intelligence/business-intelligence-4-data-wrangling-tasks-in-r-for-advanced-beginners.html)
+
 
