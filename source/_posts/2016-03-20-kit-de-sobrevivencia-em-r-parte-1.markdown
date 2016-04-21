@@ -3,7 +3,7 @@ layout: post
 title: "Kit de sobrevivência em R - Parte 1: Visão Geral e Instalação"
 date: 2016-03-23 21:14:06 -0300
 comments: true
-categories: [r, básico, rstudio]
+categories: [r, básico, rstudio, introdução r]
 published: true
 ---
 

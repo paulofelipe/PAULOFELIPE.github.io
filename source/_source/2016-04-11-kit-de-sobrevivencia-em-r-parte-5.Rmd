@@ -1,9 +1,9 @@
 ---
 layout: post
 title: "Kit de sobrevivência em R - Parte 5: Tipos de dados e transformações"
-date: 2016-05-11 21:00:00 -0300
+date: 2016-04-21 19:00:00 -0300
 comments: true
-categories: [r, básico]
+categories: [r, básico, introdução r]
 published: true
 ---
 
@@ -13,7 +13,9 @@ Você já aprendeu como carregar um arquivo de dados no R para começar a trabal
 
 # Porque transformar os dados?
 
-Durante o processo de análise de dados é bastante comum precisar de mais informações que não estão explícitas em sua base de dados, ou seja, informações além das que estão disponíveis nas linhas e colunas. Transformar os dados permite extrair, ajustar e até mesmo criar informações com seus dados, criando novas colunas, novas linhas, ou quem sabe um outro arquivo de dados derivado do original.
+Durante o processo de análise de dados é bastante comum precisar de mais informações que não estão explícitas em sua base de dados, ou seja, informações além das que estão disponíveis nas linhas e colunas. 
+
+Transformar os dados permite extrair, ajustar e até mesmo criar informações com seus dados, criando novas colunas, novas linhas, ou quem sabe um outro arquivo de dados derivado do original.
 
 Infelizmente, aqui vai uma notícia ruim: não existe padrão algum para transformação de dados, vai depender muito do design dos seus dados, das necessidades da sua análise e da sua criatividade!
 
@@ -131,7 +133,7 @@ Veja que a função `is.vector()` verifica se o objeto é um vetor. Ou seja, o o
 
 As dimensões são separadas por vírgulas. Por exemplo, no caso do data frame, como existem duas dimensões (linhas e colunas) será preciso dizer em qual nós estamos interessados. Por exemplo, teste os seguintes comandos:
 
-```{r, eval = false}
+```{r, eval = FALSE}
 # Selecionar as 5 primeiras linhas
 dados[1:5, ]
 # Selecionar as 5 primeiras linhas e as duas primeiras colunas
@@ -142,7 +144,7 @@ dados[, 1:2]
 
 Apesar de ter sido usado apenas números, você pode usar condições e nomes das colunas. Tente o seguinte:
 
-```{r, eval = false}
+```{r, eval = FALSE}
 # Selecionar as 5 primeiras linhas e a coluna UF e Taxa_Desemprego
 dados[1:5, c("UF", "Taxa_Desemprego")]
 ```

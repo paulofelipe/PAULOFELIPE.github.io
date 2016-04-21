@@ -1,9 +1,9 @@
 ---
 layout: post
 title: "Kit de sobrevivência em R - Parte 5: Tipos de dados e transformações"
-date: 2016-05-11 21:00:00 -0300
+date: 2016-04-21 19:00:00 -0300
 comments: true
-categories: [r, básico]
+categories: [r, básico, introdução r]
 published: true
 ---
 
@@ -13,7 +13,9 @@ Você já aprendeu como carregar um arquivo de dados no R para começar a trabal
 
 # Porque transformar os dados?
 
-Durante o processo de análise de dados é bastante comum precisar de mais informações que não estão explícitas em sua base de dados, ou seja, informações além das que estão disponíveis nas linhas e colunas. Transformar os dados permite extrair, ajustar e até mesmo criar informações com seus dados, criando novas colunas, novas linhas, ou quem sabe um outro arquivo de dados derivado do original.
+Durante o processo de análise de dados é bastante comum precisar de mais informações que não estão explícitas em sua base de dados, ou seja, informações além das que estão disponíveis nas linhas e colunas. 
+
+Transformar os dados permite extrair, ajustar e até mesmo criar informações com seus dados, criando novas colunas, novas linhas, ou quem sabe um outro arquivo de dados derivado do original.
 
 Infelizmente, aqui vai uma notícia ruim: não existe padrão algum para transformação de dados, vai depender muito do design dos seus dados, das necessidades da sua análise e da sua criatividade!
 
@@ -78,7 +80,7 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
 
 ### Integer
 
-Trata-se de um tipo de dado básico que representa um número inteiro. É tão simples que não há muito o que comentar: 1, 2, 3, 4... até 2147483647.
+Trata-se de um tipo de dado básico que representa um número inteiro. É tão simples que não há muito o que comentar: 1, 2, 3, 4... até 2147483647. Tente `class(dados$Ano)` e veja que o ano é um tipo inteiro.
 
 ### Factor
 
@@ -123,13 +125,15 @@ A visualização que o R fornece não ajuda muito, mas repare que cada categoria
 
 Então podemos dizer que nossa coluna UF é um factor de 27 levels, e Trimestre é um factor de 4 levels.
 
-Mas o que é esse cifrão `$`? É uma notação do R para quando você quer visualizar ou trabalhar com uma coluna (variável) de um data.frame. Você verá que o `$` também é utilizado em outros tipos de objetos, como listas. A ideia é acessar uma parte de um objeto. No caso data.frame, você informa o nome do objeto, o `$` e em seguida o nome da coluna que você quer. Experimente: `dados$Ano`, `dados$UF`, `dados$Trimestre` e `dados$Taxa_Desemprego`. Essa notação é muito importante e você a utilizará bastante.
+Mas o que é esse cifrão `$` que usamos nos comandos acima? É uma notação do R para quando você quer visualizar ou trabalhar com uma coluna (variável) de um data.frame. Você verá que o `$` também é utilizado em outros tipos de objetos, como listas. A ideia é acessar uma parte de um objeto. 
 
-E o que seria essa função `unique()`. É uma função básica do R para listar todos os valores de uma variável sem repetição. Olhando todos os dados em `dados$UF` você vai reparar que os nomes aparecem várias vezes em várias linhas, o `unique()` lista a ocorrência única de cada nome.
+No caso data.frame, você informa o nome do objeto, o `$`, e em seguida o nome da coluna que você quer. Experimente: `dados$Ano`, `dados$UF`, `dados$Trimestre` e `dados$Taxa_Desemprego`. Essa notação é muito importante e você a utilizará bastante.
+
+E o que seria essa função `unique()`? É uma função básica do R para listar todos os valores de uma variável sem repetição. Olhando todos os dados em `dados$UF` você vai reparar que os nomes aparecem várias vezes em várias linhas, o `unique()` lista a ocorrência única de cada nome.
 
 ### Numeric
 
-Continuando a exploração dos tipos, temos o `numeric` ou `num`, um tipo básico capaz de representar números decimais. O tipo `numeric` também consegue representar inteiros.
+Continuando a exploração dos tipos, temos o `numeric` ou `num`, um tipo básico capaz de representar números decimais. O tipo `numeric` também consegue representar inteiros. Tente `class(dados$Taxa_Desemprego)` e repare que é um tipo numerico.
 
 # Transformações
 
@@ -214,7 +218,9 @@ tail(dados)
 ## 432 2015 out-nov-dez Distrito Federal           9.707        2
 {% endhighlight %}
 
-Repare que dessa vez estamos usando `[ ]`. Os colchetes servem para fazermos filtragens "dentro" de um vetor ou um data frame. Mas o que é um vetor? O vetor é um objeto unidimensional. Além disso, ele só aceita um tipo de dado. Mas o que tem isso tem a ver com o código acima? Bem, quando selecionamos a variável semestre, o objeto resultante não será mais um data.frame, e sim um vetor. 
+Repare que dessa vez estamos usando `[ ]`. Os colchetes servem para fazermos filtragens "dentro" de um vetor ou um data frame. Mas o que é um vetor? O vetor é um objeto unidimensional. Além disso, ele só aceita um tipo de dado.
+
+Mas o que tem isso tem a ver com o código acima? Bem, quando selecionamos a variável semestre, o objeto resultante não será mais um data.frame, e sim um vetor. 
 
 
 {% highlight r %}
@@ -227,48 +233,33 @@ is.vector(dados$Semestre)
 ## [1] TRUE
 {% endhighlight %}
 
-Veja que a função `is.vector()`, que testa se o objeto é um vetor, retorna `TRUE`. Ou seja, o objeto tem apenas uma dimensão. Isto tem implicações sobre `[ ]`. Se o objeto possuir duas dimensões, será preciso dizer em qual dimensão você está fazendo a seleção ou filtragem. As dimensões são separadas por vírgulas. Por exemplo, no caso do data frame, como existem duas dimensões (linhas e colunas) será preciso dizer em qual nós estamos interessados. Por exemplo:
+Veja que a função `is.vector()` verifica se o objeto é um vetor. Ou seja, o objeto tem apenas uma dimensão. Isto tem implicações sobre `[ ]`. Se o objeto possuir duas dimensões, será preciso dizer em qual dimensão você está fazendo a seleção ou filtragem. 
+
+As dimensões são separadas por vírgulas. Por exemplo, no caso do data frame, como existem duas dimensões (linhas e colunas) será preciso dizer em qual nós estamos interessados. Por exemplo, teste os seguintes comandos:
 
 
 {% highlight r %}
 # Selecionar as 5 primeiras linhas
-dados[1:5,]
+dados[1:5, ]
+# Selecionar as 5 primeiras linhas e as duas primeiras colunas
+dados[1:5, 1:2]
+# Selecionar todas as linhas e as duas primeiras colunas
+dados[, 1:2]
 {% endhighlight %}
 
-
-
-{% highlight text %}
-##    Ano   Trimestre       UF Taxa_Desemprego Semestre
-## 1 2012 jan-fev-mar Rondônia           8.008        1
-## 2 2012 abr-mai-jun Rondônia           6.224        1
-## 3 2012 jul-ago-set Rondônia           5.882        2
-## 4 2012 out-nov-dez Rondônia           5.274        2
-## 5 2013 jan-fev-mar Rondônia           6.114        1
-{% endhighlight %}
-
+Apesar de ter sido usado apenas números, você pode usar condições e nomes das colunas. Tente o seguinte:
 
 
 {% highlight r %}
-# Selecionar as 5 primeiras linhas e as duas primeiras colunas
-dados[1:5,1:2]
+# Selecionar as 5 primeiras linhas e a coluna UF e Taxa_Desemprego
+dados[1:5, c("UF", "Taxa_Desemprego")]
 {% endhighlight %}
 
+Nesse caso usamos um vetor `c()` para informar a listagem de nomes de colunas. No próximo post aprofundaremos mais no uso das filtragens de linha e coluna dentro do data frame.
 
+No caso da variável semestre, estamos tratando apenas de uma coluna, portanto teremos um vetor unidimensional, logo, as condições que estão dentro `[ ]` serão utilizadas para selecionar as posições exatas que receberão o valor da atribuição `<-`.
 
-{% highlight text %}
-##    Ano   Trimestre
-## 1 2012 jan-fev-mar
-## 2 2012 abr-mai-jun
-## 3 2012 jul-ago-set
-## 4 2012 out-nov-dez
-## 5 2013 jan-fev-mar
-{% endhighlight %}
-
-Apesar de ter sido usado apenas números, você pode usar condições e nomes das colunas.
-
-Para deixar claro o que foi feito com a variável semestre. Como selecionamos apenas a coluna semestre, teremos um vetor unidimensional, logo as condições que estão dentro `[ ]` serão utilizadas para selecionar os elementos que receberão o valor que está após o `<-`.
-
-Para concluir, vamos dar mais um exemplo. Suponha que você queira criar um data.frame apenas com as linhas em que UF é igual a São Paulo e com as colunas `Ano`, `Trimestre` e `Taxa_Desemprego`. Para isto, você irá fazer uma seleção em um data frame (duas dimensões):
+Concluindo, vamos usar um exemplo mais complexo. Suponha que você queira criar um data.frame novo apenas com as linhas em que UF é igual a São Paulo e com as colunas `Ano`, `Trimestre` e `Taxa_Desemprego`. Para isto, você irá fazer uma filtragem em um data frame (duas dimensões) e atribuir o resultado para uma variável nova `SP`:
 
 
 {% highlight r %}
@@ -466,10 +457,9 @@ tail(dados)
 ## 432 Centro Oeste
 {% endhighlight %}
 
-Novamente estamos usando os colchetes para fazer uma filtragem e atribuir `Norte`, `Nordeste`, `Sudeste`, `Sul` e `Centro Oeste` apenas às linhas específicas em que o filtro dentro dos colchetes retorne TRUE. 
+Novamente estamos usando os colchetes para fazer uma filtragem e atribuir `Norte`, `Nordeste`, `Sudeste`, `Sul` e `Centro Oeste` apenas às linhas específicas em que o filtro dentro dos colchetes retorne `TRUE`. 
 
 Nesse caso estamos usando o operador `%in%`, que faz uma comparação para ver se o objeto está dentro de uma listagem (vetor) de outros objetos. Nas linhas em que `dados$UF` estiver "dentro" da listagem de UFs, o filtro retornará TRUE e a atribuição da variável será feita, caso contrário retornará FALSE e não vai atribuir o valor à `dados$Regiao`.
-
 
 Para finalizar os exemplos de transformações, vamos tentar uma abordagem com funções matemáticas. Imagine que sua equipe está planejando estimar um modelo com base nesses dados e por algum motivo específico surgiu a necessidade de usar o logarítmo da taxa de desemprego. Não é uma informações explícita mas certamente podemos produzir com o que já temos.
 
