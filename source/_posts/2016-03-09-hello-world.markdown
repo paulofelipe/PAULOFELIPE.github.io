@@ -3,7 +3,6 @@ layout: post
 title: "Hello World"
 date: 2016-03-12 23:27:00 -0300
 comments: true
-author: Saulo Guerra
 categories: [Conceito]
 ---
 

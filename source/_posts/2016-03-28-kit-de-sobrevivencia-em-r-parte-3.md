@@ -98,7 +98,11 @@ Após executar uma função, ela retornará o que está descrito na seção _Val
 
 Não se preocupe muito se o conceito de função ainda não está totalmente claro. O próprio uso e os próximos posts deixarão todos esses conceitos claros de forma natural por meio de exemplos e práticas. 
 
-## Referências:
+# Desafio
+
+Instale e carrege os pacotes `tidyr` e `stringr`. Consegue descobrir para que servem esses pacotes? Consegue visualizar as funções existentes em cada pacote? Para que serve a função `gather()` do pacote `tidyr`?  Para que serve a função `str_count()` do pacote `stringr`? Compartilhe conosco nos comentários o que descobriu!
+
+# Referências:
 * [DataCamp - Functions](https://www.datacamp.com/community/tutorials/functions-in-r-a-tutorial)
 * [Principais pacotes para R](https://www.rstudio.com/products/rpackages/)
 * [R Packages](http://r-pkgs.had.co.nz/)

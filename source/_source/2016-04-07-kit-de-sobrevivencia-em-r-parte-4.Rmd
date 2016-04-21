@@ -169,6 +169,15 @@ Existe diversas outras formas de carregar dados. Mas nosso objetivo aqui é apen
 
 Em breve lançaremos posts explicando leitura de arquivos em excel, arquivos semi-estruturados e arquivos não estruturados.
 
+# Desafio
+
+Que tal tentar carregar e visualizar no R os dados da série histórica das taxas de vendas de títulos do tesouro direto ([download Tesouro Direto](http://www.tesourotransparente.gov.br/ckan/dataset/taxas-dos-titulos-ofertados-pelo-tesouro-direto))? 
+
+Tente também carregar e visualizar os dados do IPCA (Índice Nacional de Preço ao Consumidor Amplo), indicador oficial da inflação brasileira ([download IPCA](http://dados.gov.br/dataset/indice-nacional-de-precos-ao-consumidor-amplo-ipca/resource/3292e931-5ed8-42fb-aa59-4386e115d619)). 
+
+Teve alguma dificuldade? Comente abaixo para que possamos ajudar!
+
+
 # Referências:
 
 * [R Data Import/Export](https://cran.r-project.org/doc/manuals/r-release/R-data.pdf)

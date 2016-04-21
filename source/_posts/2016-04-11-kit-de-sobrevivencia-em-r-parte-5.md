@@ -23,7 +23,7 @@ A notícia boa é que, quanto mais você conhecer formas de transformar os dados
 
 Existem diversos tipos de dados em R, alguns mais básicos e outros mais complexos (não em termos de dificuldade, e sim de estrutura). Vamos tentar apresentr alguns na prática ao longo do post.
 
-Lembra dos dados utilizados no [último post](2016-04-07-kit-de-sobrevivencia-em-r-parte-4)? Vamos usá-los novamente como exemplo. Lembre-se de informar ao R o local onde o arquivo está para que ele possa ler. 
+Lembra dos dados utilizados no [último post]({{root_url}}/blog/2016/04/12/kit-de-sobrevivencia-em-r-parte-4)? Vamos usá-los novamente como exemplo. Lembre-se de informar ao R o local onde o arquivo está para que ele possa ler. 
 
 Carregue algum dos arquivos de forma apropriada (todos arquivos tem o mesmo conteúdo). Como exemplo, escolhemos o arquivo com colunas delimitadas por `;`.
 
@@ -73,7 +73,7 @@ str(dados)
 Com a função `str()` podemos examinar melhor a estrutura do nosso data frame.
 Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 observações (linhas). Temos ainda uma listagem com o nome das colunas, o tipo de dado presente em cada coluna e uma pequena amostra dos dados.
 
-### Int
+### Integer
 
 Trata-se de um tipo de dado básico que representa um número inteiro. É tão simples que não há muito o que comentar: 1, 2, 3, 4... até 2147483647.
 
@@ -124,9 +124,9 @@ Mas o que é esse cifrão `$`? É uma notação do R para quando você quer visu
 
 E o que seria essa função `unique()`. É uma função básica do R para listar todos os valores de uma variável sem repetição. Olhando todos os dados em `dados$UF` você vai reparar que os nomes aparecem várias vezes em várias linhas, o `unique()` lista a ocorrência única de cada nome.
 
-### Num
+### Numeric
 
-Continuando a exploração dos tipos, temos o `num`, um tipo básico capaz de representar números decimais. O tipo `num` também consegue representar inteiros.
+Continuando a exploração dos tipos, temos o `numeric` ou `num`, um tipo básico capaz de representar números decimais. O tipo `numeric` também consegue representar inteiros.
 
 # Transformações
 
@@ -211,28 +211,128 @@ tail(dados)
 ## 432 2015 out-nov-dez Distrito Federal           9.707        2
 {% endhighlight %}
 
-Repare que dessa vez que estamos usando `[ ]`. Os colchetes servem para fazermos filtragens "dentro" de um data frame, ou seja, quando queremos apenas um conjunto específico de linhas do data frame, colocamos as condições necessárias para fazer a filtragem dentro do colchete. E nesse caso queremos atribuir 1 ou 2 a uma quantidade de linhas específicas.
+Repare que dessa vez estamos usando `[ ]`. Os colchetes servem para fazermos filtragens "dentro" de um data frame, ou seja, quando queremos apenas um conjunto específico de linhas do data frame, colocamos as condições necessárias para fazer a filtragem dentro do colchete. E nesse caso queremos atribuir 1 ou 2 a uma quantidade de linhas específicas.
 
-Quando falamos de filtragens, necessariamente falamos também de operadores lógicos. Operações lógicas são operações comparativas que respondem tipos booleanos: TRUE (verdadeir) ou FALSE (false).
+### Logic
+Quando falamos de filtragens, necessariamente falamos também de operadores lógicos. Operações lógicas são operações comparativas que respondem um tipo específico de dados, os tipos lógicos(booleandos): TRUE (verdadeir) ou FALSE (false). Tente `class(TRUE)` ou `class(FALSE)`. 
 
-Vamos com calma! Faça um pequeno experimento com o que tem dentro dos colchetes. Digite o seguinte comando: 
+Faça um pequeno experimento com o que tem dentro dos colchetes. Digite o seguinte comando: 
 
 
 {% highlight r %}
 dados$Trimestre == 'jan-fev-mar' | dados$Trimestre == 'abr-mai-jun'
 {% endhighlight %}
 
-O R faz essa comparação em todas as linhas e te retorna dizendo exatamente em quais linhas essa condição é verdadeira ou falsa. Esse comando vai retornar verdadeiro para todas as linhas em que trimestre for igual à `jan-fev-mar` **OU** `abr-mai-jun`. 
+O R faz essa comparação em todas as linhas e te retorna dizendo exatamente em quais linhas essa condição é verdadeira ou falsa. Esse comando vai retornar verdadeiro para todas as linhas em que trimestre for igual à `jan-fev-mar` **OU** for igual a `abr-mai-jun`. 
 
 Para entender melhor, segue alguns operadores lógicos e seus significados:
 
 - `==` igual a: compara dois objetos e se forem iguais, retorna TRUE, caso contrário, FALSE;
+- `!=` diferente: compara dois objetos e se forem diferentes, retorna TRUE, caso contrário, FALSE;
 - `|` ou (or): compara dois objetos, se um dos dois for TRUE, retorna TRUE, se os dois forem FASE, retorna FALSE;
 - `&` e (and): compara dois objetos, se os dois forem TRUE, retorna TRUE, se um dos dois ou os dois forem FALSE, retorna FALSE;
+- `>`, `>=`, `<`, `<=` maior, maior ou igual, menor, menor ou igual: compara grandeza de dois números e retorna TRUE ou FALSE confome a condição;
 
-Ao longo dos próximos post vamos trabalhar melhor os operadores lógicos e as filtragens, não se preocupe.
+Segue alguns exemplos para entender os operadores lógicos:
 
-Seguindo com as transformações, vamos supor também que, além de analisar os dados por UF, que extão explícitos na variável dados$UF, queremos também analisar o desemprego por Reigão (Norte, Sul, Nordeste, Centro Oeste e Sudeste)
+
+{% highlight r %}
+5 <= 4
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## [1] FALSE
+{% endhighlight %}
+
+
+
+{% highlight r %}
+5 <= 5
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## [1] TRUE
+{% endhighlight %}
+
+
+
+{% highlight r %}
+5 <= 6
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## [1] TRUE
+{% endhighlight %}
+
+
+
+{% highlight r %}
+5 < 5
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## [1] FALSE
+{% endhighlight %}
+
+
+
+{% highlight r %}
+(5 < 6) | (5 < 3)
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## [1] TRUE
+{% endhighlight %}
+
+
+
+{% highlight r %}
+(5 < 6) & (5 < 3)
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## [1] FALSE
+{% endhighlight %}
+
+
+
+{% highlight r %}
+2 != 1
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## [1] TRUE
+{% endhighlight %}
+
+
+
+{% highlight r %}
+2 == 1
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## [1] FALSE
+{% endhighlight %}
+
+Ao longo dos próximos post vamos trabalhar melhor os operadores lógicos e as filtragens, aos poucos o uso ficará intuitivo.
+
+Seguindo com as transformações, vamos supor também que, além de analisar o desemprego por UF, que estão explícitos na variável `dados$UF`, queremos também analisar o desemprego por Reigão (Norte, Sul, Nordeste, Centro Oeste e Sudeste):
 
 
 {% highlight r %}
@@ -292,15 +392,14 @@ tail(dados)
 
 Novamente estamos usando os colchetes para fazer uma filtragem e atribuir `Norte`, `Nordeste`, `Sudeste`, `Sul` e `Centro Oeste` apenas às linhas específicas em que o filtro dentro dos colchetes retorne TRUE. 
 
-Nesse caso estamos usando o operador `%in%`, que faz uma comparação para ver se o objeto está dentro de uma listagem de outros objetos. Nas linhas em que `dados$UF` estiver "dentro" da listagem de UFs, o filtro retornará TRUE.
+Nesse caso estamos usando o operador `%in%`, que faz uma comparação para ver se o objeto está dentro de uma listagem (vetor) de outros objetos. Nas linhas em que `dados$UF` estiver "dentro" da listagem de UFs, o filtro retornará TRUE e a atribuição da variável será feita, caso contrário retornará FALSE e não vai atribuir o valor à `dados$Regiao`.
 
 
-Para finalizar os exemplos de transformações, vamos tentar uma abordagem com funções matemáticas. Imagine que sua equipe está planejando estimar um modelo com base nesses dados e por algum motivo específico surgiu a necessidade de usar a raiz quadrada e o logarítmo da taxa de desemprego. Não são informações explícitas mas certamente podemos produzir com o que já temos.
+Para finalizar os exemplos de transformações, vamos tentar uma abordagem com funções matemáticas. Imagine que sua equipe está planejando estimar um modelo com base nesses dados e por algum motivo específico surgiu a necessidade de usar o logarítmo da taxa de desemprego. Não é uma informações explícita mas certamente podemos produzir com o que já temos.
 
 
 {% highlight r %}
 dados$Log_Taxa_Desemprego <- log(dados$Taxa_Desemprego)
-dados$Sqrt_Taxa_Desemprego <- sqrt(dados$Taxa_Desemprego)
 head(dados, 15)
 {% endhighlight %}
 
@@ -323,25 +422,33 @@ head(dados, 15)
 ## 13 2015 jan-fev-mar Rondônia           4.396        1  Norte
 ## 14 2015 abr-mai-jun Rondônia           4.919        1  Norte
 ## 15 2015 jul-ago-set Rondônia           6.679        2  Norte
-##    Log_Taxa_Desemprego Sqrt_Taxa_Desemprego
-## 1             2.080441             2.829841
-## 2             1.828413             2.494795
-## 3             1.771897             2.425283
-## 4             1.662789             2.296519
-## 5             1.810581             2.472650
-## 6             1.562556             2.184262
-## 7             1.511605             2.129319
-## 8             1.589643             2.214046
-## 9             1.592699             2.217431
-## 10            1.413910             2.027807
-## 11            1.413666             2.027560
-## 12            1.273965             1.890767
-## 13            1.480695             2.096664
-## 14            1.593105             2.217882
-## 15            1.898968             2.584376
+##    Log_Taxa_Desemprego
+## 1             2.080441
+## 2             1.828413
+## 3             1.771897
+## 4             1.662789
+## 5             1.810581
+## 6             1.562556
+## 7             1.511605
+## 8             1.589643
+## 9             1.592699
+## 10            1.413910
+## 11            1.413666
+## 12            1.273965
+## 13            1.480695
+## 14            1.593105
+## 15            1.898968
 {% endhighlight %}
 
-Estamos criando duas novas variáveis em nosso data frame, uma armazenando o `log()` e outra a raiz quadrada `sqrt()`. A função será aplica a todas as linhas do data frame, pois não estamos usando nenhum filtro. Em cada linha será usado o valor do campo `Taxa_Desemprego` como parâmetro das funções.
+Estamos criando uma novas variável em nosso data frame, armazenando o `log()` na nova variável `Log_Taxa_Desemprego` em nosso data frame. 
+
+A função será aplica a todas as linhas do data frame, pois não estamos usando nenhum filtro. Em cada linha será usado o valor do campo `Taxa_Desemprego` como parâmetro da função.
+
+# Desafio
+
+Apenas para treinar, tente criar uma variável nesse data frame para classificar a taxa de desemprego em `alta`, `média` ou `baixa`, com o critério que quiser. Crie também uma variável armazenando a raiz quadrada da taxa de desemprego. 
+
+Muitas outras transformações são possíveis com essa simples base de dados usando atribuição com filtros e funções matemáticas. Consegue imagiar outras transformações? Deixe um comentário sobre os resutlados que conseguiu!
 
 # Referências:
 

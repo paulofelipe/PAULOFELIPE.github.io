@@ -95,6 +95,45 @@ Dividiremos este tópico em duas partes: dados delimitados e dados com campos de
 Para importar dados com delimitadores utilizaremos a função `read.table()`. Essa função permite definir qualquer delimitador para a leitura do arquivo, conforme os exemplos abaixo.
 
 
+{% highlight text %}
+## Warning in file(file, "rt"): não foi possível abrir o arquivo '/Users/
+## sauloguerra/Documentos/Dados Exemplos/desemprego_uf_tab.txt': No such
+## file or directory
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## Error in file(file, "rt"): não é possível abrir a conexão
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## Warning in file(file, "rt"): não foi possível abrir o
+## arquivo '/Users/sauloguerra/Documentos/Dados Exemplos/
+## desemprego_uf_ponto_virgula.txt': No such file or directory
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## Error in file(file, "rt"): não é possível abrir a conexão
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## Warning in file(file, "rt"): não foi possível abrir o arquivo '/Users/
+## sauloguerra/Documentos/Dados Exemplos/desemprego_uf_espaco.txt': No
+## such file or directory
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## Error in file(file, "rt"): não é possível abrir a conexão
+{% endhighlight %}
 
 
 {% highlight r %}
@@ -118,13 +157,7 @@ head(dados.tab)
 
 
 {% highlight text %}
-##    Ano   Trimestre       UF Taxa_Desemprego
-## 1 2012 jan-fev-mar Rondônia           8.008
-## 2 2012 abr-mai-jun Rondônia           6.224
-## 3 2012 jul-ago-set Rondônia           5.882
-## 4 2012 out-nov-dez Rondônia           5.274
-## 5 2013 jan-fev-mar Rondônia           6.114
-## 6 2013 abr-mai-jun Rondônia           4.771
+## Error in head(dados.tab): objeto 'dados.tab' não encontrado
 {% endhighlight %}
 
 
@@ -136,13 +169,7 @@ head(dados.ponto.virgula)
 
 
 {% highlight text %}
-##    Ano   Trimestre       UF Taxa_Desemprego
-## 1 2012 jan-fev-mar Rondônia           8.008
-## 2 2012 abr-mai-jun Rondônia           6.224
-## 3 2012 jul-ago-set Rondônia           5.882
-## 4 2012 out-nov-dez Rondônia           5.274
-## 5 2013 jan-fev-mar Rondônia           6.114
-## 6 2013 abr-mai-jun Rondônia           4.771
+## Error in head(dados.ponto.virgula): objeto 'dados.ponto.virgula' não encontrado
 {% endhighlight %}
 
 
@@ -154,13 +181,7 @@ head(dados.espaco)
 
 
 {% highlight text %}
-##    Ano   Trimestre       UF Taxa_Desemprego
-## 1 2012 jan-fev-mar Rondônia           8.008
-## 2 2012 abr-mai-jun Rondônia           6.224
-## 3 2012 jul-ago-set Rondônia           5.882
-## 4 2012 out-nov-dez Rondônia           5.274
-## 5 2013 jan-fev-mar Rondônia           6.114
-## 6 2013 abr-mai-jun Rondônia           4.771
+## Error in head(dados.espaco): objeto 'dados.espaco' não encontrado
 {% endhighlight %}
 
 
@@ -172,11 +193,7 @@ tail(dados.espaco, 4)
 
 
 {% highlight text %}
-##      Ano   Trimestre               UF Taxa_Desemprego
-## 429 2015 jan-fev-mar Distrito Federal          10.784
-## 430 2015 abr-mai-jun Distrito Federal           9.627
-## 431 2015 jul-ago-set Distrito Federal          10.258
-## 432 2015 out-nov-dez Distrito Federal           9.707
+## Error in tail(dados.espaco, 4): objeto 'dados.espaco' não encontrado
 {% endhighlight %}
 
 #### Dados com campos de tamanho fixo
@@ -184,6 +201,17 @@ tail(dados.espaco, 4)
 Para a leitura de dados desse tipo, você precisa saber previamente o tamanho de caracteres reservado para cada campo. Geralmente esse tipo de arquivo vem acompanhando de um arquivo auxiliar explicando o layout dos dados.
 
 
+{% highlight text %}
+## Warning in file(file, "rt"): não foi possível abrir o arquivo '/Users/
+## sauloguerra/Documentos/Dados Exemplos/desemprego_uf_fwf.txt': No such
+## file or directory
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## Error in file(file, "rt"): não é possível abrir a conexão
+{% endhighlight %}
 
 
 {% highlight r %}
@@ -207,13 +235,7 @@ head(dados.fwf)
 
 
 {% highlight text %}
-##     V1          V2       V3    V4
-## 1 2012 jan-fev-mar Rondônia 8.008
-## 2 2012 abr-mai-jun Rondônia 6.224
-## 3 2012 jul-ago-set Rondônia 5.882
-## 4 2012 out-nov-dez Rondônia 5.274
-## 5 2013 jan-fev-mar Rondônia 6.114
-## 6 2013 abr-mai-jun Rondônia 4.771
+## Error in head(dados.fwf): objeto 'dados.fwf' não encontrado
 {% endhighlight %}
 
 Para definirmos os nomes das variáveis usaremos o comando `colnames()`. Basicamente, diremos que os nomes das colunas deverão ser os que estão especificados abaixo:
@@ -221,19 +243,24 @@ Para definirmos os nomes das variáveis usaremos o comando `colnames()`. Basicam
 
 {% highlight r %}
 colnames(dados.fwf) <- c('Ano', 'Trimestre', 'UF', 'Taxa_Desemprego')
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## Error in colnames(dados.fwf) <- c("Ano", "Trimestre", "UF", "Taxa_Desemprego"): objeto 'dados.fwf' não encontrado
+{% endhighlight %}
+
+
+
+{% highlight r %}
 head(dados.fwf)
 {% endhighlight %}
 
 
 
 {% highlight text %}
-##    Ano   Trimestre       UF Taxa_Desemprego
-## 1 2012 jan-fev-mar Rondônia           8.008
-## 2 2012 abr-mai-jun Rondônia           6.224
-## 3 2012 jul-ago-set Rondônia           5.882
-## 4 2012 out-nov-dez Rondônia           5.274
-## 5 2013 jan-fev-mar Rondônia           6.114
-## 6 2013 abr-mai-jun Rondônia           4.771
+## Error in head(dados.fwf): objeto 'dados.fwf' não encontrado
 {% endhighlight %}
 
 # Mais opções na leitura
@@ -255,6 +282,15 @@ Apresentamos as funções básicas de leitura de arquivo com seu uso padrão mai
 Existe diversas outras formas de carregar dados. Mas nosso objetivo aqui é apenas criar uma introdução para conseguir carregar a grande maioria dos formatos de dados mais comuns.
 
 Em breve lançaremos posts explicando leitura de arquivos em excel, arquivos semi-estruturados e arquivos não estruturados.
+
+# Desafio
+
+Que tal tentar carregar e visualizar no R os dados da série histórica das taxas de vendas de títulos do tesouro direto ([download Tesouro Direto](http://www.tesourotransparente.gov.br/ckan/dataset/taxas-dos-titulos-ofertados-pelo-tesouro-direto))? 
+
+Tente também carregar e visualizar os dados do IPCA (Índice Nacional de Preço ao Consumidor Amplo), indicador oficial da inflação brasileira ([download IPCA](http://dados.gov.br/dataset/indice-nacional-de-precos-ao-consumidor-amplo-ipca/resource/3292e931-5ed8-42fb-aa59-4386e115d619)). 
+
+Teve alguma dificuldade? Comente abaixo para que possamos ajudar!
+
 
 # Referências:
 
