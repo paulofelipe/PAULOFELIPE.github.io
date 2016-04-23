@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: introdução r | Full Join]]></title>
+  <title><![CDATA[introdução r | Full Join]]></title>
   <link href="http://fulljoin.com.br/blog/categories/introducao-r/atom.xml" rel="self"/>
   <link href="http://fulljoin.com.br/"/>
-  <updated>2016-04-21T18:40:48-03:00</updated>
+  <updated>2016-04-23T16:01:50-03:00</updated>
   <id>http://fulljoin.com.br/</id>
   <author>
     <name><![CDATA[Full Join]]></name>
@@ -12,6 +12,259 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Kit de sobrevivência em R - Parte 6: Estruturas de Controle]]></title>
+    <link href="http://fulljoin.com.br/blog/2016/05/18/kit-de-sobrevivencia-em-r-parte-6/"/>
+    <updated>2016-05-18T20:04:00-03:00</updated>
+    <id>http://fulljoin.com.br/blog/2016/05/18/kit-de-sobrevivencia-em-r-parte-6</id>
+    <content type="html"><![CDATA[<p>No último post, você aprendeu um pouco sobre os tipos de dados e como realizar algumas transformações. Neste post, trataremos um pouco sobre estruturas de controles (for, if, else, while etc.). Estruturas de controles serão bastantes usadas durante o processo de análise de dados, sendo importante que você domine esse tópico.</p>
+
+<!-- More -->
+
+<p>Para exemplificar, utilizaremos os dados de taxas de desemprego que estão disponíveis <a href="https://www.dropbox.com/s/4tedgnkd85c5q5s/desemprego_uf_pnad.zip?dl=0">neste link</a>.</p>
+
+<p>Primeiramente, carregue os dados:</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">desemprego.uf</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">read.table</span><span class="p">(</span><span class="err">“</span><span class="n">desemprego_uf_espaco.txt</span><span class="err">”</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="err">“</span> <span class="err">“</span><span class="p">,</span> <span class="n">dec</span> <span class="o">=</span> <span class="err">“</span><span class="p">,</span><span class="err">”</span><span class="p">,</span> <span class="n">stringsAsFactors</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">)</span></code></pre></div></p>
+
+<h2 id="for">for()</h2>
+
+<p>O <code>for()</code> é usado para realizar uma série de ordens para uma determinada sequência ou índices. No exemplo abaixo, faremos um <em>loop</em> simples, mas que deixa claro como o <code>for()</code> funciona. Suponha que você necessita gerar um único plot com quatro gráficos, um para cada trimestre de 2015, da taxa de desemprego por unidade da federação.</p>
+
+<p>Para facilitar, iremos criar um novo data.frame em que estejam selecionadas somente as linhas em que a variável ano é igual a 2015:</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">desemprego.uf.2015</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">desemprego.uf</span><span class="p">[</span><span class="n">desemprego.uf</span><span class="o">$</span><span class="n">Ano</span> <span class="o">==</span> <span class="m">2015</span><span class="p">,]</span></code></pre></div></p>
+
+<p>Perceba que no código base do R, para selecionar linhas de um data.frame, você utiliza o <code>[,]</code>. A vírgula divide as duas dimensões do data.frame. Assim, se o desejo é selecionar linhas, são utilizadas condições antes da vírgula. Para selecionar colunas, utiliza-se códigos após a vírgula. Funciona de maneira similar a uma matriz. No entanto, esta não é a única maneira de realizar esse filtro nos dados. Por exemplo, você poderia obter o mesmo resultado usando a função <code>subset()</code>. Dê uma olhadinha no help.</p>
+
+<p>Além disso, iremos criar um vetor com os trimestres que serão usados como base para realização do loop.</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Selecionar valores únicos da coluna Trimestre</span>
+<span class="n">trimestre</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">unique</span><span class="p">(</span><span class="n">desemprego.uf.2015</span><span class="o">$</span><span class="n">Trimestre</span><span class="p">)</span>
+<span class="n">trimestre</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## [1] jan-fev-mar abr-mai-jun jul-ago-set out-nov-dez
+## Levels: abr-mai-jun jan-fev-mar jul-ago-set out-nov-dez</code></pre></div></p>
+
+<p>Antes de criar o plot, vamos realizar um exemplo simples para exemplificar como <code>for()</code> funciona.</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="k">in</span> <span class="n">trimestre</span><span class="p">){</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<span class="p">}</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## [1] “jan-fev-mar”
+## [1] “abr-mai-jun”
+## [1] “jul-ago-set”
+## [1] “out-nov-dez”</code></pre></div></p>
+
+<p>Ele realizará a operação que está entre as <code>{}</code> para cada <code>i</code> do vetor trimestre. Você também pode passar números que poderão ser usados como índices.</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">x</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">6</span><span class="p">,</span> <span class="m">10</span><span class="p">)</span>
+<span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="k">in</span> <span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">){</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+<span class="p">}</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 1
+## [1] 4
+## [1] 5
+## [1] 6
+## [1] 10</code></pre></div></p>
+
+<p>Agora, vamos definir alguns parâmetros do plot. Aqui usaremos o recurso base do R para geração dos gráficos. Atualmente, uma boa parte dos usuários (inclusive a gente! utiliza o <a href="http://docs.ggplot2.org/current/">ggplot2</a> e com um pouco de paciência e uma boa base de dados você poderá criar gráficos como o que está <a href="https://medium.com/airbnb-engineering/using-r-packages-and-education-to-scale-data-science-at-airbnb-906faa58e12d#.z39ukskpb">neste post</a> do Airbnb. Os parâmetros do plot serão definidos usando a função <code>par()</code>. Utilize o <code>?par</code> para ver mais detalhes sobre esta função e as opções disponíveis.</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">par</span><span class="p">(</span><span class="n">mfrow</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">),</span> <span class="c1"># O plot terá 2 linas e 2 colunas</span>
+    <span class="n">mar</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="m">10</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">2</span><span class="p">),</span> <span class="c1"># margens inferior, esquerda, superior, direita</span>
+    <span class="n">las</span> <span class="o">=</span> <span class="m">2</span><span class="p">)</span> <span class="c1"># rótulos perpendicular aos eixos</span></code></pre></div></p>
+
+<p>O código abaixo traz o loop. Temos 4 operações dentro do loop:</p>
+
+<ul>
+  <li>Criar o data.frame <code>dados.tmp</code> a partir de um filtro no data.frame <code>desemprego.uf.2015</code>. Queremos somente as linhas em que o Trimestre é igual a <code>i</code>.</li>
+  <li>Usando a função <code>order()</code>, ordenar as linhas dos <code>dados.tmp</code> de forma decrescente pelo valor da taxa de desemprego;</li>
+  <li>Criar um objeto de texto que trará o título de cada gráfico. Usamos a função <code>paste()</code> que tem o papel de concatenar o que for passado como argumento. Usamos espaço como separador, mas você pode passar qualquer separador entre as aspas. Esta função tem mais um parâmetro: <code>collapse</code>. Dê uma olhada no help para ver alguns exemplos;</li>
+  <li>Por fim, usamos o <code>barplot()</code> para criar o gráfico de barra.</li>
+</ul>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="k">in</span> <span class="n">trimestre</span><span class="p">){</span>
+  <span class="n">dados.tmp</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">desemprego.uf.2015</span><span class="p">[</span><span class="n">desemprego.uf.2015</span><span class="o">$</span><span class="n">Trimestre</span> <span class="o">==</span> <span class="n">i</span><span class="p">,</span>
+                                  <span class="n">c</span><span class="p">(</span><span class="err">‘</span><span class="n">UF</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">Taxa_Desemprego</span><span class="err">’</span><span class="p">)]</span>
+  <span class="n">dados.tmp</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">dados.tmp</span><span class="p">[</span><span class="n">order</span><span class="p">(</span><span class="n">dados.tmp</span><span class="o">$</span><span class="n">Taxa_Desemprego</span><span class="p">,</span> <span class="n">decreasing</span> <span class="o">=</span> <span class="n">T</span><span class="p">),]</span>
+  <span class="c1"># Cria o título do plot</span>
+  <span class="n">title</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">paste</span><span class="p">(</span><span class="err">“</span><span class="n">Taxa</span> <span class="n">de</span> <span class="n">Desemprego</span> <span class="m">2015</span><span class="o">:</span><span class="err">”</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="err">“</span> <span class="err">“</span><span class="p">)</span>
+  <span class="c1"># Gera o gráfico de barras</span>
+  <span class="n">barplot</span><span class="p">(</span><span class="n">dados.tmp</span><span class="o">$</span><span class="n">Taxa_Desemprego</span><span class="p">,</span> <span class="n">names.arg</span> <span class="o">=</span> <span class="n">dados.tmp</span><span class="o">$</span><span class="n">UF</span><span class="p">,</span>
+          <span class="n">col</span> <span class="o">=</span> <span class="err">“</span><span class="n">dodgerblue</span><span class="err">”</span><span class="p">,</span> <span class="n">border</span> <span class="o">=</span> <span class="n">NA</span><span class="p">,</span> <span class="n">main</span> <span class="o">=</span> <span class="n">title</span><span class="p">,</span>
+          <span class="n">ylab</span><span class="o">=</span><span class="err">”</span><span class="o">%</span><span class="err">”</span><span class="p">)</span>
+<span class="p">}</span></code></pre></div></p>
+
+<p>Veja o resultado:</p>
+
+<p><img src="/figures/source/2016-04-11-kit-de-sobrevivencia-em-r-parte-6/unnamed-chunk-9-1.png" alt="plot of chunk unnamed-chunk-9" /></p>
+
+<p>O gif abaixo mostra como o R vai inserindo gráfico a gráfico. Adicionei o comando <code>Sys.sleep()</code> para que a execução fosse suspensa durante 1,5 segundo para ficar mais claro a criação de cada gráfico.</p>
+
+<p><img src="/images/forloop.gif" alt="alt Usando o for" title="Usando o for" /></p>
+
+<h2 id="if-e-else">if e else</h2>
+
+<p>Para exemplificar o uso do if e else, vamos continuar com o exemplo anterior, mas desta vez queremos que as barras para o trimestre <code>out-nov-dez</code> sejam vermelhas. Dessa forma, usaremos os controles if e else. A ideia é testar <code>i</code> que assume um valor do vetor <code>trimestre</code>. Assim, se <code>i</code> for igual a <code>out-nov-dez</code> a cor será ver vermelha (<code>col = red</code>), caso contrário utilizaremos o azul (<code>col = dodgerblue</code>).</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">par</span><span class="p">(</span><span class="n">mfrow</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">),</span> <span class="c1"># O plot terá 2 linas e 2 colunas</span>
+    <span class="n">mar</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="m">10</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">2</span><span class="p">),</span> <span class="c1"># margens inferior, esquerda, superior, direita</span>
+    <span class="n">las</span> <span class="o">=</span> <span class="m">2</span><span class="p">)</span> <span class="c1"># rótulos perpendicular aos eixos</span>
+<span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="k">in</span> <span class="n">trimestre</span><span class="p">){</span>
+  <span class="n">dados.tmp</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">desemprego.uf.2015</span><span class="p">[</span><span class="n">desemprego.uf.2015</span><span class="o">$</span><span class="n">Trimestre</span> <span class="o">==</span> <span class="n">i</span><span class="p">,</span>
+                                  <span class="n">c</span><span class="p">(</span><span class="err">‘</span><span class="n">UF</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">Taxa_Desemprego</span><span class="err">’</span><span class="p">)]</span>
+  <span class="n">dados.tmp</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">dados.tmp</span><span class="p">[</span><span class="n">order</span><span class="p">(</span><span class="n">dados.tmp</span><span class="o">$</span><span class="n">Taxa_Desemprego</span><span class="p">,</span> <span class="n">decreasing</span> <span class="o">=</span> <span class="n">T</span><span class="p">),]</span>
+  <span class="n">title</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">paste</span><span class="p">(</span><span class="err">“</span><span class="n">Taxa</span> <span class="n">de</span> <span class="n">Desemprego</span> <span class="m">2015</span><span class="o">:</span><span class="err">”</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="err">“</span> <span class="err">“</span><span class="p">)</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="err">‘</span><span class="n">out</span><span class="o">-</span><span class="n">nov</span><span class="o">-</span><span class="n">dez</span><span class="err">’</span><span class="p">){</span>
+    <span class="n">barplot</span><span class="p">(</span><span class="n">dados.tmp</span><span class="o">$</span><span class="n">Taxa_Desemprego</span><span class="p">,</span> <span class="n">names.arg</span> <span class="o">=</span> <span class="n">dados.tmp</span><span class="o">$</span><span class="n">UF</span><span class="p">,</span>
+          <span class="n">col</span> <span class="o">=</span> <span class="err">“</span><span class="n">red</span><span class="err">”</span><span class="p">,</span> <span class="n">border</span> <span class="o">=</span> <span class="n">NA</span><span class="p">,</span> <span class="n">main</span> <span class="o">=</span> <span class="n">title</span><span class="p">,</span>
+          <span class="n">ylab</span><span class="o">=</span><span class="err">”</span><span class="o">%</span><span class="err">”</span><span class="p">)</span>
+  <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+     <span class="n">barplot</span><span class="p">(</span><span class="n">dados.tmp</span><span class="o">$</span><span class="n">Taxa_Desemprego</span><span class="p">,</span> <span class="n">names.arg</span> <span class="o">=</span> <span class="n">dados.tmp</span><span class="o">$</span><span class="n">UF</span><span class="p">,</span>
+          <span class="n">col</span> <span class="o">=</span> <span class="err">“</span><span class="n">dodgerblue</span><span class="err">”</span><span class="p">,</span> <span class="n">border</span> <span class="o">=</span> <span class="n">NA</span><span class="p">,</span> <span class="n">main</span> <span class="o">=</span> <span class="n">title</span><span class="p">,</span>
+          <span class="n">ylab</span><span class="o">=</span><span class="err">”</span><span class="o">%</span><span class="err">”</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span></code></pre></div></p>
+
+<p><img src="/figures/source/2016-04-11-kit-de-sobrevivencia-em-r-parte-6/unnamed-chunk-10-1.png" alt="plot of chunk unnamed-chunk-10" /></p>
+
+<p>Podemos reescrever o código acima com o comando <code>ifelse()</code> e obter o mesmo resultado. Para isso, iremos usar o comando <code>ifelse()</code> no argumento <code>col</code>. O primeiro agumento dessa função é o teste que você deseja realizar (saber se o trimestre é ou não é igual a <code>out-nov-dez</code>), o segundo é o valor desejado caso seja verdade e o último é o valor a ser retornado caso a condição não seja satisfeita.</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">par</span><span class="p">(</span><span class="n">mfrow</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">),</span> <span class="c1"># O plot terá 2 linas e 2 colunas</span>
+    <span class="n">mar</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="m">10</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">2</span><span class="p">),</span> <span class="c1"># margens inferior, esquerda, superior, direita</span>
+    <span class="n">las</span> <span class="o">=</span> <span class="m">2</span><span class="p">)</span> <span class="c1"># rótulos perpendicular aos eixos</span>
+<span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="k">in</span> <span class="n">trimestre</span><span class="p">){</span>
+  <span class="n">dados.tmp</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">desemprego.uf.2015</span><span class="p">[</span><span class="n">desemprego.uf.2015</span><span class="o">$</span><span class="n">Trimestre</span> <span class="o">==</span> <span class="n">i</span><span class="p">,</span>
+                                  <span class="n">c</span><span class="p">(</span><span class="err">‘</span><span class="n">UF</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">Taxa_Desemprego</span><span class="err">’</span><span class="p">)]</span>
+  <span class="n">dados.tmp</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">dados.tmp</span><span class="p">[</span><span class="n">order</span><span class="p">(</span><span class="n">dados.tmp</span><span class="o">$</span><span class="n">Taxa_Desemprego</span><span class="p">,</span> <span class="n">decreasing</span> <span class="o">=</span> <span class="n">T</span><span class="p">),]</span>
+  <span class="n">title</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">paste</span><span class="p">(</span><span class="err">“</span><span class="n">Taxa</span> <span class="n">de</span> <span class="n">Desemprego</span> <span class="m">2015</span><span class="o">:</span><span class="err">”</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="err">“</span> <span class="err">“</span><span class="p">)</span>
+  <span class="n">barplot</span><span class="p">(</span><span class="n">dados.tmp</span><span class="o">$</span><span class="n">Taxa_Desemprego</span><span class="p">,</span> <span class="n">names.arg</span> <span class="o">=</span> <span class="n">dados.tmp</span><span class="o">$</span><span class="n">UF</span><span class="p">,</span>
+          <span class="n">col</span> <span class="o">=</span> <span class="n">ifelse</span><span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="err">‘</span><span class="n">out</span><span class="o">-</span><span class="n">nov</span><span class="o">-</span><span class="n">dez</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">red</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">dodgerblue</span><span class="err">’</span><span class="p">),</span>
+          <span class="n">border</span> <span class="o">=</span> <span class="n">NA</span><span class="p">,</span> <span class="n">main</span> <span class="o">=</span> <span class="n">title</span><span class="p">,</span>
+          <span class="n">ylab</span><span class="o">=</span><span class="err">”</span><span class="o">%</span><span class="err">”</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">}</span></code></pre></div></p>
+
+<p><img src="/figures/source/2016-04-11-kit-de-sobrevivencia-em-r-parte-6/unnamed-chunk-11-1.png" alt="plot of chunk unnamed-chunk-11" /></p>
+
+<p>O <code>ifelse()</code>tem uma característica importante. Enquanto o <code>if()</code> aceita apensas um único teste (comprimento um), o <code>ifelse</code> pode receber um vetor para testes e aplicar as condições para este conjunto de teste. Para ficar mais claro veja o exemplo abaixo.</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">desemprego.uf.2015</span><span class="o">$</span><span class="n">Maior.que.9</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">ifelse</span><span class="p">(</span><span class="n">desemprego.uf.2015</span><span class="o">$</span><span class="n">Taxa_Desemprego</span> <span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="m">9</span><span class="p">,</span>
+                                         <span class="err">“</span><span class="n">Maior</span> <span class="n">que</span> <span class="m">9</span><span class="err">”</span><span class="p">,</span>
+                                         <span class="err">“</span><span class="n">Menor</span> <span class="n">ou</span> <span class="n">igual</span> <span class="n">a</span> <span class="m">9</span><span class="err">”</span><span class="p">)</span>
+<span class="n">head</span><span class="p">(</span><span class="n">desemprego.uf.2015</span><span class="p">,</span> <span class="m">10</span><span class="p">)</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">##     Ano   Trimestre       UF Taxa_Desemprego        Maior.que.9
+## 13 2015 jan-fev-mar Rondônia           4.396 Menor ou igual a 9
+## 14 2015 abr-mai-jun Rondônia           4.919 Menor ou igual a 9
+## 15 2015 jul-ago-set Rondônia           6.679 Menor ou igual a 9
+## 16 2015 out-nov-dez Rondônia           6.276 Menor ou igual a 9
+## 29 2015 jan-fev-mar     Acre           8.722 Menor ou igual a 9
+## 30 2015 abr-mai-jun     Acre           8.723 Menor ou igual a 9
+## 31 2015 jul-ago-set     Acre           8.759 Menor ou igual a 9
+## 32 2015 out-nov-dez     Acre           7.588 Menor ou igual a 9
+## 45 2015 jan-fev-mar Amazonas           9.358        Maior que 9
+## 46 2015 abr-mai-jun Amazonas           9.457        Maior que 9</code></pre></div></p>
+
+<h2 id="while-repeat-break-next">while, repeat, break, next</h2>
+
+<p>O <code>while()</code> é uma estrutura de controle utilizada para realizar um loop enquanto uma condição for satisfeita. Aqui realizaremos um loop simples somente para demonstrar o funcionamento do <code>while()</code>. Será criado um objeto <code>i</code> igual 1 e iremos mostrá-lo no console enquanto for menor ou igual a 5. A cada iteração será adicionado 1 ao valor de <code>i</code>.</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">i</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="m">1</span>
+<span class="k">while</span><span class="p">(</span><span class="n">i</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">=</span> <span class="m">5</span><span class="p">){</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+  <span class="n">i</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span><span class="n">i</span> <span class="o">+</span> <span class="m">1</span>
+<span class="p">}</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 1
+## [1] 2
+## [1] 3
+## [1] 4
+## [1] 5</code></pre></div></p>
+
+<p>Como você notou no exemplo do <code>if</code> e <code>else</code>, o R permite que um loop seja elaborado com várias estruturas de controle. Usaremos isto para exemplificar o funcionamento do <code>repeat</code> e do <code>break</code>. Além disos, também utilizaremos o <code>if</code>. O <code>repeat</code> realiza as operações que estão entre <code>{}</code> indefinidamente. Obviamente, quase sempre não iremos querer que o loop não termine nunca. Dessa forma, temos que criar uma condição para que ele pare e uma instrução dizendo que o loop deve terminar caso a condição seja satisfeita.</p>
+
+<p>No exemplo abaixo, iremos novamente incrementar o objeto <code>i</code>, mas queremos que estas operações parem se ele superar 6. Veja o código abaixo.</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">i</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="m">1</span>
+<span class="k">repeat</span><span class="p">{</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+  <span class="n">i</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">i</span> <span class="o">+</span> <span class="m">1</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">i</span> <span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="m">6</span><span class="p">){</span>
+    <span class="k">break</span> <span class="c1"># Se a condição é satisfeita, encerra o loop.</span>
+  <span class="p">}</span>
+<span class="p">}</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 1
+## [1] 2
+## [1] 3
+## [1] 4
+## [1] 5
+## [1] 6</code></pre></div></p>
+
+<p>Por fim, o <code>next</code> é usado para pular para a próxima iteração caso uma determinada condição seja satisfeita.</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="k">in</span> <span class="m">1</span><span class="o">:</span><span class="m">10</span><span class="p">){</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">i</span> <span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="m">2</span> <span class="o">&amp;</span><span class="n">amp</span><span class="p">;</span> <span class="n">i</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">=</span> <span class="m">4</span><span class="p">)</span> <span class="k">next</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<span class="p">}</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 1
+## [1] 2
+## [1] 5
+## [1] 6
+## [1] 7
+## [1] 8
+## [1] 9
+## [1] 10</code></pre></div></p>
+
+<p>Perceba que não há necessidades das <code>{}</code> se a operação a ser executada em um estrutura de controle estiver na mesma linha. Você também poderia usar normalmente o <code>{}</code>.</p>
+
+<h2 id="algumas-observaes">Algumas observações</h2>
+
+<p>Muita operações que usam loops podem ser realizadas a partir de outros comandos de maneira mais rápida. Os loops no R são conhecido por serem lentos e dependendo do seu problema eles se tornam inviáveis. No entanto, existem algumas práticas que tornam os loops mais rápidos. Não iremos tratar disso por agora, mas aqueles que tiverem mais curiosidade podem encontrar mais informações <a href="https://www.datacamp.com/community/tutorials/tutorial-on-loops-in-r">aqui</a>.</p>
+
+<h2 id="desafio">Desafio</h2>
+
+<p>Fugindo um pouco dos exemplos dos gráficos, vamos lançar um desafio em relação ao método de <a href="https://pt.wikipedia.org/wiki/M%C3%A9todo_de_Newton-Raphson">Newton-Raphson</a> para que seja encontrada a raiz de uma determinada função. O método consiste em um processo iterativo em que a cada período o valor da variável é atualizado de acordo com uma fórmula e há convergência quando o valor absoluto da função para aquele determinado é inferior a um nível de tolerância.</p>
+
+<p>O objetivo é encontrar a raiz da função:
+<script type="math/tex">f(x) = x^3 - 2x - 6</script></p>
+
+<p>Partindo de um valor inicial, o processo de iteração é o seguinte:</p>
+
+<script type="math/tex; mode=display">x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)} = x_n + \frac{x^3 - 2x - 6}{3x^2 - 2}</script>
+
+<p>Use como critério de parada se $f(x_n) &lt; 0.000001$ e como valor inicial $x_0 = 3$.</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">stop</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="m">0.000001</span>
+<span class="n">x0</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="m">3</span>
+<span class="n">y</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">x0</span><span class="o">^</span><span class="m">3</span> <span class="o">-</span> <span class="m">2</span><span class="o">&lt;</span><span class="n">em</span><span class="o">&gt;</span><span class="n">x0</span> <span class="o">-</span> <span class="m">6</span>
+<span class="n">x.old</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">x0</span>
+<span class="k">while</span><span class="p">(</span><span class="n">abs</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">stop</span><span class="p">){</span>
+  <span class="n">x.new</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">x.old</span> <span class="o">-</span> <span class="p">(</span><span class="n">x.old</span><span class="o">^</span><span class="m">3</span> <span class="o">-</span> <span class="m">2</span><span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;</span><span class="n">x.old</span> <span class="o">-</span> <span class="m">6</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="m">3</span><span class="o">&lt;</span><span class="n">em</span><span class="o">&gt;</span><span class="n">x.old</span><span class="o">^</span><span class="m">2</span> <span class="o">-</span> <span class="m">2</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">x.new</span><span class="o">^</span><span class="m">3</span> <span class="o">-</span> <span class="m">2</span><span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;</span><span class="n">x.new</span> <span class="o">-</span> <span class="m">6</span>
+  <span class="n">x.old</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">x.new</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="p">}</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 3.024
+## [1] 0.2742489
+## [1] 0.003145446
+## [1] 4.304967e-07</code></pre></div></p>
+
+<h2 id="referncias">Referências</h2>
+
+<ul>
+  <li><a href="http://datascienceplus.com/how-to-write-the-loop-in-r/">How to write the first for loop in R</a></li>
+  <li><a href="http://rforpublichealth.blogspot.com.br/2013/01/for-loops-and-how-to-avoid-them.html">For loops (and how to avoid them</a></li>
+  <li><a href="http://stackoverflow.com/questions/2908822/speed-up-the-loop-operation-in-r">Speed up the loop operation in R</a></li>
+</ul>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Kit de sobrevivência em R - Parte 5: Tipos de dados e transformações]]></title>
@@ -356,7 +609,7 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
 
 <p>Apenas para treinar, tente criar uma variável nesse data frame para classificar a taxa de desemprego em <code>alta</code>, <code>média</code> ou <code>baixa</code>, com o critério que quiser. Crie também uma variável armazenando a raiz quadrada da taxa de desemprego.</p>
 
-<p>Muitas outras transformações são possíveis com essa simples base de dados usando atribuição com filtros e funções matemáticas. Consegue imaginar outras transformações? Deixe um comentário sobre os resutlados que conseguiu!</p>
+<p>Muitas outras transformações são possíveis com essa simples base de dados usando atribuição com filtros e funções matemáticas. Consegue imaginar outras transformações? Deixe um comentário sobre os resultados que conseguiu!</p>
 
 <h1 id="referncias">Referências:</h1>
 
@@ -857,124 +1110,6 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
   <li><a href="http://adv-r.had.co.nz/Style.html">Guia de estilo de código - by Hadley Wickham</a></li>
   <li><a href="https://google.github.io/styleguide/Rguide.xml">Guia de estilo de código - by Google</a></li>
 </ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Kit de sobrevivência em R - Parte 1: Visão Geral e Instalação]]></title>
-    <link href="http://fulljoin.com.br/blog/2016/03/23/kit-de-sobrevivencia-em-r-parte-1/"/>
-    <updated>2016-03-23T21:14:06-03:00</updated>
-    <id>http://fulljoin.com.br/blog/2016/03/23/kit-de-sobrevivencia-em-r-parte-1</id>
-    <content type="html"><![CDATA[<p>Nesta sequênciade de posts, iremos tratar o básico necessário para quem deseja iniciar o aprendizado em <a href="https://www.r-project.org/about.html">R</a>. Trata-se de uma linguagem de programação muito usada para cálculos estatísticos. Neste e nos próximos posts, discutiremos tópicos como instalação, importação de dados, tipos de dados, etc.</p>
-
-<p>A nossa expectativa é que, com essa sequência, seja quebrada a barreira inicial para aqueles que prentendem entrar nesse mundo (cuidado que esse é um caminho sem volta!).</p>
-
-<!-- More -->
-
-<h2 id="por-que-aprender-uma-linguagem-estatstica">Por que aprender uma linguagem estatística?</h2>
-
-<p>Qualquer um que trabalhe um pouco mais com dados já esbarrou nas limitações do “excel” ou de softwares de planilha. Nada contra, são ótimos, mas as vezes eles dificultam mais do que ajudam. Abrir a mente e se permitir novas formas de trabalho pode render bons frutos.</p>
-
-<p>Trabalhos de manipulação de dados, verificação, limpeza e junção de dados, ou até alguns cálculos com uma massa de dados um pouco maior podem se tornar um pouco traumáticos se você não usar as ferramentas mais adequadas.</p>
-
-<p>As linguagens de programação estatística ajudam muito nesse sentido. São ferramentas poderosíssimas que praticamente derrubam os limites das possibilidades de se trabalhar com dados: você pode fazer praticamente qualquer coisa!</p>
-
-<p>“Eu trabalho com dados de forma básica, mas não quero me tornar um ciêntista de dados… ainda assim é útil?”. Com certeza! Linguagens de programação estatística, mesmo que aprendendo apenas o básico, aumentam muito a produtividade.</p>
-
-<p>Portanto, sugerimos fortemente que aprenda uma linguagem estatística o quanto antes!</p>
-
-<h2 id="por-que-o-r">Por que o R?</h2>
-
-<p>Um motivo básico é que o R é <strong>livre</strong>. Em circustâncias de restrição orçamentária, isso pode ser um fator determimante. No entanto, a escolha do R ultrapassa a questão dos custos. Algumas pessoas têm o costume de pensar que soluções livres são geralmente inferiores às proprietárias.</p>
-
-<p>Todavia, no caso de ciência de dados, os softwares livres parecem que vieram para ficar em posição dominante. De acordo com <a href="http://blog.dominodatalab.com/open-source-winning-against-proprietary-data-science-vendors/">essa pesquisa</a>, o mercado da ciência de dados está sendo dominado por softwares livres.</p>
-
-<p>Podemos dizer, então, que grande “concorrente” do R no momento é o Python, outro software livre.</p>
-
-<p>E qual seria o melhor? Depende. Como tudo na vida, cada um apresenta vantagens e desvantagens. O importante é tirar proveito das diferenças. Sua necessidade dirá qual é o software mais adequado.</p>
-
-<p>Se a sua necessidade é de realização de estudos e análises que não serão diretamente ligada a outras plataformas, como uma aplicação web por exemplo, o R é o ideal para você. O Python costuma ser mais indicado em casos de análises que resultarão em algo mais sistemático. Este post <a href="http://www.kdnuggets.com/2015/05/r-vs-python-data-science.html">aqui</a> pode ser útil se você desejar saber mais sobre esse ponto.</p>
-
-<h2 id="sobre-o-rstudio">Sobre o RStudio</h2>
-
-<p>O <a href="https://www.rstudio.com/">RStudio</a> é uma interface muito útil pra quem deseja usar o R. Com certeza, a maioria dos usuários de R utilizam o RStudio como <a href="https://pt.wikipedia.org/wiki/Ambiente_de_desenvolvimento_integrado">IDE (integrated development environment)</a>. Nele, você terá um editor de código, um console, um dispositivo para gráficos, um <a href="https://pt.wikipedia.org/wiki/Depura%C3%A7%C3%A3o"><em>debugger</em></a>, além de outras funcionalidades.</p>
-
-<p>Na figura abaixo, está a “cara” do RStudio. Note que há 4 janelas (ambientes) separadas. As 	posições delas podem ser alteradas nas opções (<code>tools</code> -&gt; <code>global options</code>). Além disso, você pode alterar o tema e outras tantas opções.</p>
-
-<p><img src="/images/RStudio_001.png" title="Uma visão geral do RStudio" ></p>
-
-<p>Vamos tratar, ainda que superficialmente, de algumas funcionalidades do RStudio.</p>
-
-<h4 id="editor-de-cdigo">1. Editor de Código</h4>
-<p>No editor de código, você poderá escrever e editar os scripts. <a href="https://pt.wikipedia.org/wiki/Linguagem_de_script">Script</a> nada mais é do que um conjunto de comandos que serão executados em sequência. O editor do RStudio oferece facilidades como indentação, <em>code complete</em>, destaque da sintaxe, etc.</p>
-
-<h4 id="console">2. Console</h4>
-<p>No console aparecerão os resultados dos comandos. Você também pode escrever no console e obter os resultados, sem uso do editor de código. Também pode-se chamar a ajuda diretamente pelo console. Por exemplo: <code>?lm</code>. Voltaremos a falar desse comando <code>?</code> mais pra frente.</p>
-
-<h4 id="workspace-e-history">3. <em>Workspace</em> e <em>History</em></h4>
-<p>No <em>Workspace</em> ficarão guardados todos os objetos que forem criados na sessão. Entenda sessão como o espaço de tempo entre o momento em que você inicia o R e o momento que finaliza. Nesse período tudo que você faz usa memória RAM e o processador do computador. E na aba <em>History</em>, como você deve imaginar, o RStudio cria um histórico de comandos.</p>
-
-<h4 id="files-plots-packages-help-e-viewer">4. <em>Files</em>, <em>Plots</em>, <em>Packages</em>, <em>Help</em> e <em>Viewer</em>.</h4>
-<p>Nessa janela, estão várias funcionalidades do RStudio. Na aba <em>Files</em>, você terá uma navegação de arquivos do seu computador. Também será possível definir o diretório de trabalho (você também pode definir diretamente no código, mas isto será tratado posteriormente), ou seja, o R  entende o seu diretório de trabalho como ponto de partida para localizar arquivos que sejam chamados no script.</p>
-
-<p>A aba <em>Plots</em> trará os gráficos gerados, possibilitando a exportação para alguns formatos diferentes, como png e pdf.</p>
-
-<p>Em <em>Packages</em>, estão listados os pacotes que estão instalados e você pode verificar quais estão carregados e, caso necessário, poderá carregar algum pacote necessário para a sua análise. Também é possível instalar e atualizar pacotes. Novamente, tudo isso é possível fazer diretamente no código.</p>
-
-<p><em>Help</em> o nome já diz tudo. Essa aba será bastante utilizada por você. Saber usar o <em>help</em> é fundamental para evitar desperdiço de tempo. Os usuários de R, em geral, são bastante solícitos. Entretanto, uma olhadinha rápida no help pode evitar que você gaste “créditos” desnecessariamente.</p>
-
-<p>Por fim, o <em>Viewer</em>. Essa funcionalidade é utilizada para visualizar localmente conteúdo web. O gráfico da figura está na aba <em>Viewer</em> porque é uma visualização em <a href="https://pt.wikipedia.org/wiki/JavaScript">javascript</a>, que pode ser adicionada a documentos htmls gerados usando o <a href="http://rmarkdown.rstudio.com/">RMarkdown</a> ou em aplicações web com suporte do <a href="http://shiny.rstudio.com/">Shiny</a>.</p>
-
-<p>Bem, isso foi uma breve explicação. Se você quiser saber mais, esta <a href="http://www.rstudio.com/wp-content/uploads/2016/01/rstudio-IDE-cheatsheet.pdf"><em>cheat sheet</em></a> criada pelo time do RStudio é muito útil.</p>
-
-<h2 id="instalando-o-r-e-o-rstudio">Instalando o R e o RStudio</h2>
-
-<h3 id="windows">Windows</h3>
-
-<p>Para instalar o R no windows basta realizar o download do executável <a href="https://cran.r-project.org/bin/windows/base/">aqui</a> e proceder a instalação como qualquer outro software.</p>
-
-<p>O Rstudio pode ser baixado <a href="https://www.rstudio.com/products/rstudio/download/">neste link</a>. Novamente, a instalação deve ser tranquila, sem a necessidade de maiores detalhes.</p>
-
-<h3 id="ubuntu">Ubuntu</h3>
-
-<p>No ubuntu, você pode instalar o R via terminal ou pela central de programas.</p>
-
-<p>Pelo terminal, tecle <code>ctrl + alt + T</code> e faça o seguinte:</p>
-
-<p><code>
-sudo apt-get update
-sudo apt-get install r-base
-</code></p>
-
-<p>Na central de aplicativos, basta buscar por <code>r-base</code>.</p>
-
-<p>O RStudio pode ser baixado no mesmo <a href="https://www.rstudio.com/products/rstudio/download/">link</a> citado quando foi explicada a instalação no windows.</p>
-
-<h3 id="mac-os-x">Mac OS X</h3>
-
-<p>Para instalar o R no Mac basta realizar o download da última versão do pacote (pkg) <a href="https://cran.rstudio.com/bin/macosx/">aqui</a>, de um duplo click e proceda com a instalação como qualquer outro pacote no Mac.</p>
-
-<p>O Rstudio pode ser baixado <a href="https://www.rstudio.com/products/rstudio/download/">neste link</a>. Procure na lista o instalador para Mac Os. Dessa vez será um arquivo DMG. De um duplo click e arraste o ícone do Rstudio para a pasta Aplicações. Pronto!</p>
-
-<h3 id="buscando-ajuda">Buscando Ajuda</h3>
-
-<p>Esta parte é fundamental. Independente do seu nível de conhecimento, sempre haverá a necessidade de buscar ajuda. A nossa experiência diz que é muito difícil você ficar sem uma solução. No entanto, saber procurar é fundamental tanto para você encontrar uma solução desejável quanto para economizar tempo.</p>
-
-<p>Entre, as fontes de ajuda estão o próprio <em>help</em> do R, o bom e velho google para uma busca mais ampla, o <a href="http://stackoverflow.com/tags/r">stack overflow</a> (ou <a href="http://pt.stackoverflow.com/questions/tagged/r">em português</a>), o <a href="https://www.reddit.com/r/rprogramming">reddit</a> e, é claro, o <strong>full join</strong>. Estaremos aqui para te ajudar.</p>
-
-<p>Se você puder, faça suas pesquisas em inglês. Isto porque as possibilidades de você encontrar alguém que teve uma mesma dúvida crescem consideravalmente.</p>
-
-<p>Se você for realizar uma pergunta em algum fórum ou site de perguntas e respostas, é importante atentar para alguns pontos que deverão ser informados:</p>
-
-<ul>
-  <li>Versão do R;</li>
-  <li>Sistema Operacional;</li>
-  <li>Forneça um exemplo replicável;</li>
-  <li>Veja se a sua dúvida já não foi abordada em outro tópico.</li>
-</ul>
-
-<p>Bom, por enquanto é isso! Nos próximos posts, iremos abordar partes específicas e iniciar a utilização de fato do R. Até lá!</p>
 
 ]]></content>
   </entry>
