@@ -514,7 +514,7 @@ A função será aplicada a todas as linhas do data frame, pois não estamos usa
 
 Apenas para treinar, tente criar uma variável nesse data frame para classificar a taxa de desemprego em `alta`, `média` ou `baixa`, com o critério que quiser. Crie também uma variável armazenando a raiz quadrada da taxa de desemprego. 
 
-Muitas outras transformações são possíveis com essa simples base de dados usando atribuição com filtros e funções matemáticas. Consegue imaginar outras transformações? Deixe um comentário sobre os resutlados que conseguiu!
+Muitas outras transformações são possíveis com essa simples base de dados usando atribuição com filtros e funções matemáticas. Consegue imaginar outras transformações? Deixe um comentário sobre os resultados que conseguiu!
 
 # Referências:
 
