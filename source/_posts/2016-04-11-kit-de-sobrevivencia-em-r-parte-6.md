@@ -4,7 +4,7 @@ title: "Kit de sobrevivência em R - Parte 6: Estruturas de Controle"
 date: 2016-05-18 20:04:00 -0300
 comments: true
 categories: [r, básico, introdução r]
-published: false
+published: true
 ---
   
 
@@ -22,7 +22,7 @@ desemprego.uf <- read.table("desemprego_uf_espaco.txt", sep = " ", dec = ",", st
 {% endhighlight %}
 # Intuição sobre Loops
 
-Trata-se de um dos conceitos mais importntes de qualquer linguagem de programação. Em R não é diferente. Loops (ou laços) repetem uma sequência de comando quantas vezes você desejar, ou até que uma condição aconteça, variando alguns aspectos entre uma repetição e outra.
+Trata-se de um dos conceitos mais importantes de qualquer linguagem de programação. Em R não é diferente. Loops (ou laços) repetem uma sequência de comando quantas vezes você desejar, ou até que uma condição aconteça, variando alguns aspectos entre uma repetição e outra.
 
 Supondo que você queira testar uma simples expressão para 5 valores diferentes, por exemplo:
 
@@ -77,9 +77,9 @@ x <- 5
 ## [1] 3165
 {% endhighlight %}
 
-> Dica: parêntesis em volta de uma expressão faz R mostra o resultado imediatamente 
+> Dica: parênteses em volta de uma expressão faz o R mostrar o resultado imediatamente. 
 
-Repare que você executou 5 vezes o mesmo comando alterando apenas o valor da variável `x`. 5 ainda parece uma quantidade pequena, mas vamos supor que você gostaria de testar essa expressão para 1000 valores? Escreveria ela 1000 vezes? Esse é um típico caso para o uso de loops!
+Repare que você executou 5 vezes o mesmo comando alterando apenas o valor da variável `x`. 5 ainda parece uma quantidade pequena, mas vamos supor que você gostaria de testar essa expressão para 1000 valores? Você a escreveria 1000 vezes? Esse é um típico caso para o uso de loops!
 
 ## for()
 
@@ -87,7 +87,7 @@ O `for()` é usado para realizar uma série de ordens para uma determinada sequ�
 
 
 {% highlight r %}
-for(x in c(1, 2, 3, 4, 5)) {
+for(x in 1:5) {
   print(x + x*2 + x^2 + x^x)
 }
 {% endhighlight %}
@@ -101,7 +101,7 @@ for(x in c(1, 2, 3, 4, 5)) {
 ## [1] 284
 ## [1] 3165
 {% endhighlight %}
-Repare, você escreveu bem menos e o resultado foi idêntico: "para cada `x` igual a cada item na sequência `c(1, 2, 3, 4, 5)`, execute `print(x + x*2 + x^2 + x^x)`". O `for()` irá repetir todas as instruções dentro das chaves `{ }`, tantas quantas forem os elementos da sua sequência (vetor)
+Repare, você escreveu bem menos e o resultado foi idêntico: "para cada `x` igual a cada item na sequência `1:5`, execute `print(x + x*2 + x^2 + x^x)`". O `for()` irá repetir todas as instruções dentro das chaves `{ }` para cada elemento da sua sequência (vetor).
 
 Vamos a um exemplo mais útil que deixa mais claro como o `for()` funciona. Suponha que você necessita gerar um único plot com quatro gráficos, um para cada trimestre de 2015, da taxa de desemprego por unidade da federação.
 
@@ -112,7 +112,7 @@ Para facilitar, iremos criar um novo data.frame em que estejam selecionadas some
 desemprego.uf.2015 <- desemprego.uf[desemprego.uf$Ano == 2015,]
 {% endhighlight %}
 
-Perceba que no código base do R, para selecionar linhas de um data.frame, você utiliza o `[,]`. A vírgula divide as duas dimensões do data.frame. Assim, se o desejo é selecionar linhas, são utilizadas condições antes da vírgula. Para selecionar colunas, utiliza-se códigos após a vírgula. Funciona de maneira similar a uma matriz. 
+Perceba que no código base do R, para selecionar as linhas de um data.frame, você utiliza o `[ , ]`. A vírgula divide as duas dimensões do data.frame. Assim, se o desejo é selecionar linhas, são utilizadas condições antes da vírgula. Para selecionar colunas, utiliza-se códigos após a vírgula. Funciona de maneira similar a uma matriz. 
 
 No entanto, esta não é a única maneira de realizar esse filtro nos dados. Por exemplo, você poderia obter o mesmo resultado usando a função `subset()`. Dê uma olhadinha no help.
 
@@ -172,7 +172,7 @@ for(i in 1:5){
 
 Agora vamos definir alguns parâmetros do plot. Aqui usaremos o recurso base do R para geração dos gráficos. Atualmente, uma boa parte dos usuários (inclusive a gente) utiliza o [ggplot2](http://docs.ggplot2.org/current/). 
 
-Com um pouco de criatividade e uma boa base de dados você poderá criar gráficos como o que está [neste post](https://medium.com/airbnb-engineering/using-r-packages-and-education-to-scale-data-science-at-airbnb-906faa58e12d#.z39ukskpb) do Airbnb. Não entraremos em detalhes sobre gráficos agora, mas prometemos uma sequência de posts ensinando todos os principais aspectos da confecção de gráficos, aguarde!
+Com um pouco de criatividade e com uma boa base de dados, você poderá criar gráficos como o que está [neste post](https://medium.com/airbnb-engineering/using-r-packages-and-education-to-scale-data-science-at-airbnb-906faa58e12d#.z39ukskpb) do Airbnb. Não entraremos em detalhes sobre gráficos agora, mas prometemos uma sequência de posts ensinando todos os principais aspectos da confecção de gráficos, aguarde!
 
 Os parâmetros do plot serão definidos usando a função `par()`. Utilize o `?par` para ver mais detalhes sobre esta função e as opções disponíveis.
 
@@ -217,7 +217,7 @@ O gif abaixo mostra como o R vai inserindo gráfico a gráfico. Adicionei o coma
 
 Outro clássico conceito de programação que você usará muito é o if e else. É uma estrutura condicional, que usa os operadores lógicos apresentados [no post anterior]({{root_url}}/blog/2016/04/21/kit-de-sobrevivencia-em-r-parte-5/). Se a condição do `if()` for verdadeira, executa os comandos dentro das chaves `{ }`, se não for verdadeiro, executa os comando da chave do `else { }`
 
-Para exemplificar o uso do if e else, vamos continuar com o exemplo anterior, mas desta vez queremos que as barras para o trimestre `out-nov-dez` sejam vermelhas. Dessa forma, usaremos os controles if e else. A ideia é realizar um teste sobre `i` que assume um valor do vetor `trimestre`. Assim, se `i` for igual a `out-nov-dez` a cor será ver vermelha (`col = red`), caso contrário utilizaremos o azul (`col = dodgerblue`).
+Para exemplificar o uso do if e else, vamos continuar com o exemplo anterior, mas desta vez queremos que as barras para o trimestre `out-nov-dez` sejam vermelhas. Dessa forma, usaremos os controles if e else. A ideia é realizar um teste sobre `i` que assume um valor do vetor `trimestre`. Assim, se `i` for igual a `out-nov-dez`, a cor será ver vermelha (`col = red`), caso contrário utilizaremos o azul (`col = dodgerblue`).
 
 
 {% highlight r %}
@@ -243,7 +243,7 @@ for(i in trimestre){
 
 ![plot of chunk unnamed-chunk-12](/figures/source/2016-04-11-kit-de-sobrevivencia-em-r-parte-6/unnamed-chunk-12-1.png)
 
-Podemos reescrever o código acima com o comando `ifelse()` e obter o mesmo resultado (veja `?ifelse()`). Para isso, iremos usar o comando `ifelse()` no argumento `col`. O primeiro agumento dessa função é o teste que você deseja realizar (saber se o trimestre é ou não é igual a `out-nov-dez`), o segundo é o valor desejado caso seja verdade e o último é o valor a ser retornado caso a condição não seja satisfeita.
+Podemos reescrever o código acima com o comando `ifelse()` e obter o mesmo resultado (veja `?ifelse()`). Para isso, iremos usar o comando `ifelse()` no argumento `col`. O primeiro argumento dessa função é o teste que você deseja realizar (saber se o trimestre é ou não é igual a `out-nov-dez`), o segundo é o valor desejado caso seja verdade e o último é o valor a ser retornado caso a condição não seja satisfeita.
 
 
 {% highlight r %}
@@ -265,7 +265,7 @@ for(i in trimestre){
 
 ![plot of chunk unnamed-chunk-13](/figures/source/2016-04-11-kit-de-sobrevivencia-em-r-parte-6/unnamed-chunk-13-1.png)
 
-O `ifelse()`tem uma característica importante. Enquanto o `if()` aceita apensas um único teste (comprimento um), o `ifelse` pode receber um vetor para testes e aplicar as condições para este conjunto de teste. Para ficar mais claro veja o exemplo abaixo.
+O `ifelse()` tem uma característica importante. Enquanto o `if()` aceita apenas um único teste (comprimento um), o `ifelse` pode receber um vetor para testes e aplicar as condições para este conjunto de teste. Para ficar mais claro veja o exemplo abaixo.
 
 
 {% highlight r %}
@@ -318,7 +318,7 @@ while(i <= 5){
 
 Como você notou no exemplo do `if` e `else`, o R permite que um loop seja elaborado com várias estruturas de controle. Usaremos isto para exemplificar o funcionamento do `repeat` e do `break`. 
 
-O `repeat` realiza as operações que estão entre `{}` indefinidamente. Obviamente, não iremos querer executar nada para sempre, iremos querer que o loop termine caso alguma coisa aconteça. Dessa forma, temos que criar uma condição para que ele pare e uma instrução dizendo que o loop deve terminar caso a condição seja satisfeita. 
+O `repeat` realiza as operações que estão entre `{ }` indefinidamente. Obviamente, não iremos querer executar nada para sempre, iremos querer que o loop termine caso alguma coisa aconteça. Dessa forma, temos que criar uma condição para que ele pare e uma instrução dizendo que o loop deve terminar caso a condição seja satisfeita. 
 
 No exemplo abaixo, iremos novamente incrementar o objeto `i`, mas queremos que estas operações parem se ele superar 6, ou seja, no meio da execução vamos verificar se a condição de parada acontece. Veja o código abaixo:
 
@@ -345,7 +345,7 @@ repeat{
 ## [1] 6
 {% endhighlight %}
 
-Por fim, o `next` é usado para pular para a próxima iteração caso uma determinada condição seja satisfeita. É muito usado quando você quer ignorar certas repetições, por exemplo?
+Por fim, o `next` é usado para pular para a próxima iteração caso uma determinada condição seja satisfeita. É muito usado quando você quer ignorar certas repetições, por exemplo:
 
 
 {% highlight r %}
@@ -368,7 +368,7 @@ for(i in 1:10){
 ## [1] 10
 {% endhighlight %}
 
-Perceba que não há necessidade das `{}` se a operação a ser executada em um estrutura de controle estiver na mesma linha. Você também poderia usar normalmente o `{}`.
+Perceba que não há necessidade das `{ }` se a operação a ser executada em um estrutura de controle estiver na mesma linha. Você também poderia usar normalmente o `{ }`.
 
 
 ## Algumas observações
