@@ -40,7 +40,7 @@ O R interpreta os seus comandos e dá um resultado apropriado para cada um. Para
 
 Por ser uma linguagem estatística, o R já vem com muitas operações prontas para serem usadas. Por exemplo, todas as operações básicas da matemática. 
 
-Digite os seguintes comandos no console, apertando _enter_ após cada linha, para ver o resutlado:
+Digite os seguintes comandos no console, apertando _enter_ após cada linha, para ver o resultado:
 
 
 {% highlight r %}
@@ -123,7 +123,7 @@ Reparem que, com o que foi dito até agora, já da pra usar o R como uma grande 
 
 # Variáveis
 
-Na maioria dos casos, o tabalho que você precisará fazer vai exigir mais do que uma simples calculadora pode oferecer, será necessário conhecer mais das possiblidades do R. 
+Na maioria dos casos, o trabalho que você precisará fazer vai exigir mais do que uma simples calculadora pode oferecer, será necessário conhecer mais das possibilidades do R. 
 
 A estrutura mais básica que você irá utilizar é chamada *variável*. Mais uma vez, buscando ser simplista, variável nada mais é do que um pequeno espaço na memória do seu computador onde você armazena o resultado de um comando. E para esse pequeno espaço de memória você define o nome que você quiser!
 
@@ -187,7 +187,7 @@ Existem alguns "programas" prontos para uso no R, ou seja, algumas sequências d
 
 Na verdade, uma das coisas que torna o R uma ótima linguagem estatística é a gigantesca quantidade de funções disponíveis. Para (quase) tudo que você quiser fazer, existe uma função que facilita as coisas. Algumas funções já vem com a instalação base do R, outras você precisa instalar um pacote extra (falaremos disso em breve). 
 
-Uma funcão tem dois elementos básicos: o nome e o(s) parâmetro(s). Por exemplo, função para cálculo de raiz quadrada:
+Uma função tem dois elementos básicos: o nome e o(s) parâmetro(s). Por exemplo, função para cálculo de raiz quadrada:
 
 
 {% highlight r %}
@@ -219,7 +219,7 @@ round(x, 2)
 
 Ou seja, `round` é o nome da função para arredondamento. Já o `x`, a variável que armazena `5.34999`, é o primeiro parâmetro, informando o número que você quer arredondar. E temos o `2` como segundo parâmetro, informando até quantas casas decimais você quer arredondar. 
 
-Como dito, a instalação base do R já vem com algumas funções muito utilizadas. Segue [uma](https://stat.ethz.ch/R-manual/R-devel/library/base/html/00Index.html) lista para conhecer melhor cada uma dessas funcões básicas. Na sequência de posts apresentaremos pacotes com muito mais funções importantes disponíveis.
+Como dito, a instalação base do R já vem com algumas funções muito utilizadas. Segue [uma](https://stat.ethz.ch/R-manual/R-devel/library/base/html/00Index.html) lista para conhecer melhor cada uma dessas funções básicas. Na sequência de posts apresentaremos pacotes com muito mais funções importantes disponíveis.
 
 # Script.R (editor)
 

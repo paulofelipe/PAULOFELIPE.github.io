@@ -22,7 +22,7 @@ De maneira geral, você irá encontrar dados disponibilizados basicamente em tr�
 
 ## Dados Estruturados
 
-Basicamente são conjuntos de informações organizadas em colunas (atributos, variáveis, _features_, etc.) e linhas (registros, itens, observacões, etc.). São dados encontrados em bancos de dados, arquivos com algum tipo de separação entre as colunas, excel, arquivos com campos de tamanho fixo, etc.
+Basicamente são conjuntos de informações organizadas em colunas (atributos, variáveis, _features_, etc.) e linhas (registros, itens, observações, etc.). São dados encontrados em bancos de dados, arquivos com algum tipo de separação entre as colunas, excel, arquivos com campos de tamanho fixo, etc.
 
 ## Dados não estruturados
 
@@ -76,9 +76,9 @@ Ok! Agora sim!
 
 # Tipos de carregamento
 
-O R possui algumas funções básicas de carregamento. Essas funções tratam de alguns tipos de arquivo, basicamente diferenciados pelo *delimitador*. Outro aspecto importante é que essas funções básicas pressumpõem que cada linha representa um novo registro de dados.
+O R possui algumas funções básicas de carregamento. Essas funções tratam de alguns tipos de arquivo, basicamente diferenciados pelo *delimitador*. Outro aspecto importante é que essas funções básicas pressupõem que cada linha representa um novo registro de dados.
 
-Para ficar mais claro, delimitadores podem ser qualquer coisa que seja usada para separar dados. Por exemplo, os arquivos podem ser separados por vígulas ([CSV - Comma-separated values](https://pt.wikipedia.org/wiki/Comma-separated_values)), por ponto e vírgula (`;`), por espaçamento TAB (a tecla TAB do teclado mesmo!), por espaços simples ou qualquer outro tipo de símbolo.
+Para ficar mais claro, delimitadores podem ser qualquer coisa que seja usada para separar dados. Por exemplo, os arquivos podem ser separados por vírgulas ([CSV - Comma-separated values](https://pt.wikipedia.org/wiki/Comma-separated_values)), por ponto e vírgula (`;`), por espaçamento TAB (a tecla TAB do teclado mesmo!), por espaços simples ou qualquer outro tipo de símbolo.
 
 E quando não existe delimitador, ou seja, quando os campos estão "colados" uns nos outros? Em alguns casos, arquivos são confeccionados com um tamanho fixo para cada coluna (principalmente em arquivos gigantescos!), e cada linha respeita tamanhos específicos para separar os seus registros.
 

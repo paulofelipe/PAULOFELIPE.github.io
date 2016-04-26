@@ -22,7 +22,7 @@ Nesse sentido, projetos com aplicação de ciência de dados não são diferente
 Não há "o jeito certo" e "o jeito errado" de se estruturar um projeto em ciência de dados, pois os problemas na prática são tão variados, com características tão diferentes, que fica difícil definir uma única forma de executar o trabalho e obter sucesso no final. 
 
 
-No entanto, existem modelos baseados em estudos e experências anteriores que auxiliam bastante na hora de estruturar um projeto desse tipo.
+No entanto, existem modelos baseados em estudos e experiências anteriores que auxiliam bastante na hora de estruturar um projeto desse tipo.
 
 
 Segundo [votação no KDnuggets (2014)](http://www.kdnuggets.com/polls/2014/analytics-data-mining-data-science-methodology.html) a metodologia [CRISP-DM](https://en.wikipedia.org/wiki/Cross_Industry_Standard_Process_for_Data_Mining) é a mais utilizada para projetos em análise de dados, mineração de dados e ciência de dados. Cross Industry Standard Process for Data Mining é um modelo iterativo e incremental que define 6 grandes fases:
@@ -114,10 +114,10 @@ Na apresentação dos resultados, é preciso ter em mente qual é a audiência q
 Como na fase de exploração, a visualização pode ter um papel fundamental. Um bom gráfico, pode conseguir passar a mesma informação de dez tabelas diferentes. Ou, dependendo do objetivo, um dashboard dinâmico para o cliente "explorar" os resultados. Em algumas situações, o resultado poderá ser um algoritmo de uso mais amplo (sistema de recomendação, motor de previsões em tempo real, robô que monitora redes sociais, etc).
 
 
-Outro ponto importante, é sempre deixar claro o que a análise realizada permite e o que ela não permite, aprensetando assim os resultados e suas limitações. É fundamental que os clientes tenham o mínimo de conhecimento sobre a capacidade do produto (relatório, dashboard, algoritmo...) que será entregue para que não haja mal entendidos ou frustrações. 
+Outro ponto importante, é sempre deixar claro o que a análise realizada permite e o que ela não permite, apresentando assim os resultados e suas limitações. É fundamental que os clientes tenham o mínimo de conhecimento sobre a capacidade do produto (relatório, dashboard, algoritmo...) que será entregue para que não haja mal entendidos ou frustrações. 
 
 
-Para apresentar bem os resultados não basta um bom trabalho analítico e bons modelos, é desejável uma boa habilidade de escrita, produzir gráficos interessantes, ["story telling"](https://hbr.org/2013/03/a-data-scientists-real-job-sto/), saber apresentar dados de maneira concisa e objetiva, habilidades interperssoais e, em alguns casos, até uma boa noção de design e interfaces gráficas.
+Para apresentar bem os resultados não basta um bom trabalho analítico e bons modelos, é desejável uma boa habilidade de escrita, produzir gráficos interessantes, ["story telling"](https://hbr.org/2013/03/a-data-scientists-real-job-sto/), saber apresentar dados de maneira concisa e objetiva, habilidades interpessoais e, em alguns casos, até uma boa noção de design e interfaces gráficas.
 
 
 ##Faça loops entre as fases

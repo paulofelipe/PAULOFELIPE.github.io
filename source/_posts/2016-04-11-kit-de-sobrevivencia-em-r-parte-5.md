@@ -177,7 +177,7 @@ tail(dados, 4)
 ## 432 2015 out-nov-dez Distrito Federal           9.707        1
 {% endhighlight %}
 
-Acabamos de criar uma nova coluna e atribuir 1 a todas as linhas dessa coluna. Não é exatamente o que queremos. Queremos atribuir 1 para primeiro semestre e 2 para segundo semestre. Para conseguir isso precisaremos atribuir a variável segundo algumas condicões. 
+Acabamos de criar uma nova coluna e atribuir 1 a todas as linhas dessa coluna. Não é exatamente o que queremos. Queremos atribuir 1 para primeiro semestre e 2 para segundo semestre. Para conseguir isso precisaremos atribuir a variável segundo algumas condições. 
 
 Ou seja, quando for trimestre `jan-fev-mar` ou `abr-mai-jun` vamos atribuir 1, quando for o trimestre `jul-ago-set` ou `out-nov-dez` vamos atribuir 2:
 
@@ -461,7 +461,7 @@ Novamente estamos usando os colchetes para fazer uma filtragem e atribuir `Norte
 
 Nesse caso estamos usando o operador `%in%`, que faz uma comparação para ver se o objeto está dentro de uma listagem (vetor) de outros objetos. Nas linhas em que `dados$UF` estiver "dentro" da listagem de UFs, o filtro retornará TRUE e a atribuição da variável será feita, caso contrário retornará FALSE e não vai atribuir o valor à `dados$Regiao`.
 
-Para finalizar os exemplos de transformações, vamos tentar uma abordagem com funções matemáticas. Imagine que sua equipe está planejando estimar um modelo com base nesses dados e por algum motivo específico surgiu a necessidade de usar o logarítmo da taxa de desemprego. Não é uma informações explícita mas certamente podemos produzir com o que já temos.
+Para finalizar os exemplos de transformações, vamos tentar uma abordagem com funções matemáticas. Imagine que sua equipe está planejando estimar um modelo com base nesses dados e por algum motivo específico surgiu a necessidade de usar o logaritmo da taxa de desemprego. Não é uma informações explícita mas certamente podemos produzir com o que já temos.
 
 
 {% highlight r %}

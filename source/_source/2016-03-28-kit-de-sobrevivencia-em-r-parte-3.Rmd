@@ -7,13 +7,13 @@ categories: [r, básico, introdução r]
 ---
 
 
-Neste post, você aprenderá um pouco sobre os pacotes, trabalhará com o console para fazer algumas operações e ir se familiarizando mais com o R. Aprenderá como usar as funções disponíveis no R e as funcões adicionais em pacotes.
+Neste post, você aprenderá um pouco sobre os pacotes, trabalhará com o console para fazer algumas operações e ir se familiarizando mais com o R. Aprenderá como usar as funções disponíveis no R e as funções adicionais em pacotes.
 
 <!-- More -->
 
 ## Pacotes
 
-Um pacote do R e um conjunto de funções que tem uma temática em comum. As funções de um mesmo pacote são carregadas juntas em memória, ou seja, ficam disponíveis para uso no R. Por ter uma temática específica, cada pacote possue uma documentação explicando suas funcionalidades disponíveis e como usá-las. Além das funções, alguns pacotes também fornecem um conjunto de dados que são usados para replicar os exemplos fornecidos nas documentações.
+Um pacote do R e um conjunto de funções que tem uma temática em comum. As funções de um mesmo pacote são carregadas juntas em memória, ou seja, ficam disponíveis para uso no R. Por ter uma temática específica, cada pacote possui uma documentação explicando suas funcionalidades disponíveis e como usá-las. Além das funções, alguns pacotes também fornecem um conjunto de dados que são usados para replicar os exemplos fornecidos nas documentações.
 
 Por exemplo, o `dplyr` é um pacote que possui um série de funções que facilitam consideravelmente a manipulação de dados. Já o `readxl` é um pacote com funções para leitura de arquivos excel. E o `ggplot2`, um pacote para criação de gráficos.
 
@@ -53,7 +53,7 @@ Esse comando irá carregar o pacote em memória e tornará possível a utilizaç
 
 >Dica: repare que para instalar o pacote você usou o nome dele entre aspas `install.packages("readxl") e não vai funcionar sem aspas. Mas, para carregar o pacote em memória, você pode usar com ou sem aspas library(readxl) ou library("readxl")
 
-Ao trabalhar com pacotes, muitas vezes irá aparecer o termo **CRAN**. Ele significa _Comprehensive R Archive Network_. Este é o principal repositório de pacotes do R. Trata-se de um portal que guarda uma série de pacotes que necessariamente passaram por uma série de requisitos antes de serem publicado. Atualmente, estao disponiveis mais de 8.000 pacotes no CRAN. 
+Ao trabalhar com pacotes, muitas vezes irá aparecer o termo **CRAN**. Ele significa _Comprehensive R Archive Network_. Este é o principal repositório de pacotes do R. Trata-se de um portal que guarda uma série de pacotes que necessariamente passaram por uma série de requisitos antes de serem publicado. Atualmente, estão disponíveis mais de 8.000 pacotes no CRAN. 
 
 Este é o único local onde os pacotes estão disponíveis? Não! 
 
@@ -95,7 +95,7 @@ Não se preocupe muito se o conceito de função ainda não está totalmente cla
 
 # Desafio
 
-Instale e carrege os pacotes `tidyr` e `stringr`. Consegue descobrir para que servem esses pacotes? Consegue visualizar as funções existentes em cada pacote? Para que serve a função `gather()` do pacote `tidyr`?  Para que serve a função `str_count()` do pacote `stringr`? Compartilhe conosco nos comentários o que descobriu!
+Instale e carregue os pacotes `tidyr` e `stringr`. Consegue descobrir para que servem esses pacotes? Consegue visualizar as funções existentes em cada pacote? Para que serve a função `gather()` do pacote `tidyr`?  Para que serve a função `str_count()` do pacote `stringr`? Compartilhe conosco nos comentários o que descobriu!
 
 # Referências:
 * [DataCamp - Functions](https://www.datacamp.com/community/tutorials/functions-in-r-a-tutorial)

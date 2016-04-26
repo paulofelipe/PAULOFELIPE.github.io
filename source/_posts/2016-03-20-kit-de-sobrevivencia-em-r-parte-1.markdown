@@ -7,9 +7,9 @@ categories: [r, básico, rstudio, introdução r]
 published: true
 ---
 
-Nesta sequênciade de posts, iremos tratar o básico necessário para quem deseja iniciar o aprendizado em [R](https://www.r-project.org/about.html). Trata-se de uma linguagem de programação muito usada para cálculos estatísticos. Neste e nos próximos posts, discutiremos tópicos como instalação, importação de dados, tipos de dados, etc. 
+Nesta sequência de de posts, iremos tratar o básico necessário para quem deseja iniciar o aprendizado em [R](https://www.r-project.org/about.html). Trata-se de uma linguagem de programação muito usada para cálculos estatísticos. Neste e nos próximos posts, discutiremos tópicos como instalação, importação de dados, tipos de dados, etc. 
 
-A nossa expectativa é que, com essa sequência, seja quebrada a barreira inicial para aqueles que prentendem entrar nesse mundo (cuidado que esse é um caminho sem volta!).
+A nossa expectativa é que, com essa sequência, seja quebrada a barreira inicial para aqueles que pretendem entrar nesse mundo (cuidado que esse é um caminho sem volta!).
 
 <!-- More -->
 
@@ -21,13 +21,13 @@ Trabalhos de manipulação de dados, verificação, limpeza e junção de dados,
 
 As linguagens de programação estatística ajudam muito nesse sentido. São ferramentas poderosíssimas que praticamente derrubam os limites das possibilidades de se trabalhar com dados: você pode fazer praticamente qualquer coisa!
 
-"Eu trabalho com dados de forma básica, mas não quero me tornar um ciêntista de dados... ainda assim é útil?". Com certeza! Linguagens de programação estatística, mesmo que aprendendo apenas o básico, aumentam muito a produtividade.
+"Eu trabalho com dados de forma básica, mas não quero me tornar um cientista de dados... ainda assim é útil?". Com certeza! Linguagens de programação estatística, mesmo que aprendendo apenas o básico, aumentam muito a produtividade.
 
 Portanto, sugerimos fortemente que aprenda uma linguagem estatística o quanto antes!
 
 ## Por que o R?
 
-Um motivo básico é que o R é **livre**. Em circustâncias de restrição orçamentária, isso pode ser um fator determimante. No entanto, a escolha do R ultrapassa a questão dos custos. Algumas pessoas têm o costume de pensar que soluções livres são geralmente inferiores às proprietárias.
+Um motivo básico é que o R é **livre**. Em circunstâncias de restrição orçamentária, isso pode ser um fator determinante. No entanto, a escolha do R ultrapassa a questão dos custos. Algumas pessoas têm o costume de pensar que soluções livres são geralmente inferiores às proprietárias.
 
 Todavia, no caso de ciência de dados, os softwares livres parecem que vieram para ficar em posição dominante. De acordo com [essa pesquisa](http://blog.dominodatalab.com/open-source-winning-against-proprietary-data-science-vendors/), o mercado da ciência de dados está sendo dominado por softwares livres.
 
@@ -108,7 +108,7 @@ Esta parte é fundamental. Independente do seu nível de conhecimento, sempre ha
 
 Entre, as fontes de ajuda estão o próprio _help_ do R, o bom e velho google para uma busca mais ampla, o [stack overflow](http://stackoverflow.com/tags/r) (ou [em português](http://pt.stackoverflow.com/questions/tagged/r)), o [reddit](https://www.reddit.com/r/rprogramming) e, é claro, o **full join**. Estaremos aqui para te ajudar.
 
-Se você puder, faça suas pesquisas em inglês. Isto porque as possibilidades de você encontrar alguém que teve uma mesma dúvida crescem consideravalmente. 
+Se você puder, faça suas pesquisas em inglês. Isto porque as possibilidades de você encontrar alguém que teve uma mesma dúvida crescem consideravelmente. 
 
 Se você for realizar uma pergunta em algum fórum ou site de perguntas e respostas, é importante atentar para alguns pontos que deverão ser informados:
 
