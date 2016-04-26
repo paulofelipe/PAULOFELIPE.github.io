@@ -53,7 +53,7 @@ A função `class()` recebe como parâmetro uma variável, e como resposta ela a
 
 ### Data.frame
 
-Data frame é um tipo de dado complexo, um dos mais utilizados em R. É nele que você armazena conjuntos de dados estruturados em linhas e colunas. Um data frame possue colunas nomeadas, sendo que todas as colunas possuem a mesma quantidade de linhas.
+Data frame é um tipo de dado complexo, um dos mais utilizados em R. É nele que você armazena conjuntos de dados estruturados em linhas e colunas. Um data frame possui colunas nomeadas, sendo que todas as colunas possuem a mesma quantidade de linhas.
 
 
 ```{r, eval = TRUE}
@@ -71,7 +71,7 @@ Trata-se de um tipo de dado básico que representa um número inteiro. É tão s
 
 ### Factor
 
-É um tipo de dado complexo que representa categorias (levels). Tentando ser o máximo simplesta, é uma lista de categorias enumeradas, ou seja, é uma sequência de informações texutais (palavras) representadas por um número. Você vê as categorias e o R "vê" os números que representam essas categorias. Esse tipo é muito útil para modelos estatísticos.
+É um tipo de dado complexo que representa categorias (levels). Tentando ser o máximo simplista, é uma lista de categorias enumeradas, ou seja, é uma sequência de informações textuais (palavras) representadas por um número. Você vê as categorias e o R "vê" os números que representam essas categorias. Esse tipo é muito útil para modelos estatísticos.
 
 Parece um pouco confuso de entender, mas factor é a forma mais eficiente do R interpretar uma sequência de palavras. Veja o resultado do comando abaixo:
 
@@ -92,13 +92,13 @@ E o que seria essa função `unique()`? É uma função básica do R para listar
 
 ### Numeric
 
-Continuando a exploração dos tipos, temos o `numeric` ou `num`, um tipo básico capaz de representar números decimais. O tipo `numeric` também consegue representar inteiros. Tente `class(dados$Taxa_Desemprego)` e repare que é um tipo numerico.
+Continuando a exploração dos tipos, temos o `numeric` ou `num`, um tipo básico capaz de representar números decimais. O tipo `numeric` também consegue representar inteiros. Tente `class(dados$Taxa_Desemprego)` e repare que é um tipo numérico.
 
 # Transformações
 
 Tendo consciência dos tipos de dados que compõem nosso data frame, já é possível começar a imaginar as análises que podem ser feitas. 
 
-Vamos supor que surgiu a necessidade de analisarmos os dados de desemprego por semestre. Podemos observar nos dados que temos informações explícitas por trimestre e de certa forma por ano também. Para começarmos os cálculos então seria interessanter ter uma variável (coluna) indicando o semestre.
+Vamos supor que surgiu a necessidade de analisarmos os dados de desemprego por semestre. Podemos observar nos dados que temos informações explícitas por trimestre e de certa forma por ano também. Para começarmos os cálculos então seria interessante ter uma variável (coluna) indicando o semestre.
 
 Ora, essa informação já existe no conjunto de dados, afinal, temos trimestres e anos. Porém, não está explícita em nenhuma variável. Então vamos transformar os dados e criar essa variável!
 
@@ -176,9 +176,9 @@ Para entender melhor, segue alguns operadores lógicos e seus significados:
 
 - `==` igual a: compara dois objetos e se forem iguais, retorna TRUE, caso contrário, FALSE;
 - `!=` diferente: compara dois objetos e se forem diferentes, retorna TRUE, caso contrário, FALSE;
-- `|` ou (or): compara dois objetos, se um dos dois for TRUE, retorna TRUE, se os dois forem FASE, retorna FALSE;
+- `|` ou (or): compara dois objetos, se um dos dois for TRUE, retorna TRUE, se os dois forem FALSE, retorna FALSE;
 - `&` e (and): compara dois objetos, se os dois forem TRUE, retorna TRUE, se um dos dois ou os dois forem FALSE, retorna FALSE;
-- `>`, `>=`, `<`, `<=` maior, maior ou igual, menor, menor ou igual: compara grandeza de dois números e retorna TRUE ou FALSE confome a condição;
+- `>`, `>=`, `<`, `<=` maior, maior ou igual, menor, menor ou igual: compara grandeza de dois números e retorna TRUE ou FALSE conforme a condição;
 
 Segue alguns exemplos para entender os operadores lógicos:
 
