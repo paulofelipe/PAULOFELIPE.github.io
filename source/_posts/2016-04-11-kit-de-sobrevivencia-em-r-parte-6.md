@@ -15,15 +15,95 @@ No último post, você aprendeu um pouco sobre os tipos de dados e como realizar
 
 Para exemplificar, utilizaremos os dados de taxas de desemprego que estão disponíveis [neste link](https://www.dropbox.com/s/4tedgnkd85c5q5s/desemprego_uf_pnad.zip?dl=0).
 
-Primeiramente, carregue os dados:
+Antes de mais nada, carregue os dados:
 
 {% highlight r %}
 desemprego.uf <- read.table("desemprego_uf_espaco.txt", sep = " ", dec = ",", stringsAsFactors = FALSE)
 {% endhighlight %}
+# Intuição sobre Loops
+
+Trata-se de um dos conceitos mais importntes de qualquer linguagem de programação. Em R não é diferente. Loops (ou laços) repetem uma sequência de comando quantas vezes você desejar, ou até que uma condição aconteça, variando alguns aspectos entre uma repetição e outra.
+
+Supondo que você queira testar uma simples expressão para 5 valores diferentes, por exemplo:
+
+
+{% highlight r %}
+x <- 2
+(x + x*2 + x^2 + x^x)
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## [1] 14
+{% endhighlight %}
+
+
+
+{% highlight r %}
+x <- 3
+(x + x*2 + x^2 + x^x)
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## [1] 45
+{% endhighlight %}
+
+
+
+{% highlight r %}
+x <- 4
+(x + x*2 + x^2 + x^x)
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## [1] 284
+{% endhighlight %}
+
+
+
+{% highlight r %}
+x <- 5
+(x + x*2 + x^2 + x^x)
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## [1] 3165
+{% endhighlight %}
+
+> Dica: parêntesis em volta de uma expressão faz R mostra o resultado imediatamente 
+
+Repare que você executou 5 vezes o mesmo comando alterando apenas o valor da variável `x`. 5 ainda parece uma quantidade pequena, mas vamos supor que você gostaria de testar essa expressão para 1000 valores? Escreveria ela 1000 vezes? Esse é um típico caso para o uso de loops!
 
 ## for()
 
-O `for()` é usado para realizar uma série de ordens para uma determinada sequência ou índices. No exemplo abaixo, faremos um _loop_ simples, mas que deixa claro como o `for()` funciona. Suponha que você necessita gerar um único plot com quatro gráficos, um para cada trimestre de 2015, da taxa de desemprego por unidade da federação.
+O `for()` é usado para realizar uma série de ordens para uma determinada sequência ou índices. Aplicando ao exemplo acima, temos a seguinte sintaxe:
+
+
+{% highlight r %}
+for(x in c(1, 2, 3, 4, 5)) {
+  print(x + x*2 + x^2 + x^x)
+}
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## [1] 5
+## [1] 14
+## [1] 45
+## [1] 284
+## [1] 3165
+{% endhighlight %}
+Repare, você escreveu bem menos e o resultado foi idêntico: "para cada `x` igual a cada item na sequência `c(1, 2, 3, 4, 5)`, execute `print(x + x*2 + x^2 + x^x)`". O `for()` irá repetir todas as instruções dentro das chaves `{ }`, tantas quantas forem os elementos da sua sequência (vetor)
+
+Vamos a um exemplo mais útil que deixa mais claro como o `for()` funciona. Suponha que você necessita gerar um único plot com quatro gráficos, um para cada trimestre de 2015, da taxa de desemprego por unidade da federação.
 
 Para facilitar, iremos criar um novo data.frame em que estejam selecionadas somente as linhas em que a variável ano é igual a 2015:
 
@@ -32,7 +112,9 @@ Para facilitar, iremos criar um novo data.frame em que estejam selecionadas some
 desemprego.uf.2015 <- desemprego.uf[desemprego.uf$Ano == 2015,]
 {% endhighlight %}
 
-Perceba que no código base do R, para selecionar linhas de um data.frame, você utiliza o `[,]`. A vírgula divide as duas dimensões do data.frame. Assim, se o desejo é selecionar linhas, são utilizadas condições antes da vírgula. Para selecionar colunas, utiliza-se códigos após a vírgula. Funciona de maneira similar a uma matriz. No entanto, esta não é a única maneira de realizar esse filtro nos dados. Por exemplo, você poderia obter o mesmo resultado usando a função `subset()`. Dê uma olhadinha no help.
+Perceba que no código base do R, para selecionar linhas de um data.frame, você utiliza o `[,]`. A vírgula divide as duas dimensões do data.frame. Assim, se o desejo é selecionar linhas, são utilizadas condições antes da vírgula. Para selecionar colunas, utiliza-se códigos após a vírgula. Funciona de maneira similar a uma matriz. 
+
+No entanto, esta não é a única maneira de realizar esse filtro nos dados. Por exemplo, você poderia obter o mesmo resultado usando a função `subset()`. Dê uma olhadinha no help.
 
 Além disso, iremos criar um vetor com os trimestres que serão usados como base para realização do loop.
 
@@ -50,7 +132,8 @@ trimestre
 ## Levels: abr-mai-jun jan-fev-mar jul-ago-set out-nov-dez
 {% endhighlight %}
 
-Antes de criar o plot, vamos realizar um exemplo simples para exemplificar como o `for()` funciona.
+Vamos treinar o `for()` exibindo todos os valores da variável `trimestre`.
+
 
 {% highlight r %}
 for(i in trimestre){
@@ -67,7 +150,8 @@ for(i in trimestre){
 ## [1] "out-nov-dez"
 {% endhighlight %}
 
-Ele realizará a operação que está entre as `{}` para cada `i` do vetor trimestre. Você também pode passar números que poderão ser usados como índices.
+Você também pode passar números que poderão ser usados como índices.
+
 
 {% highlight r %}
 x <- c(1, 4, 5, 6, 10)
@@ -86,9 +170,11 @@ for(i in 1:5){
 ## [1] 10
 {% endhighlight %}
 
-Agora, vamos definir alguns parâmetros do plot. Aqui usaremos o recurso base do R para geração dos gráficos. Atualmente, uma boa parte dos usuários (inclusive a gente) utiliza o [ggplot2](http://docs.ggplot2.org/current/). Com um pouco de criatividade e uma boa base de dados você poderá criar gráficos como o que está [neste post](https://medium.com/airbnb-engineering/using-r-packages-and-education-to-scale-data-science-at-airbnb-906faa58e12d#.z39ukskpb) do Airbnb. Os parâmetros do plot serão definidos usando a função `par()`. Utilize o `?par` para ver mais detalhes sobre esta função e as opções disponíveis.
+Agora vamos definir alguns parâmetros do plot. Aqui usaremos o recurso base do R para geração dos gráficos. Atualmente, uma boa parte dos usuários (inclusive a gente) utiliza o [ggplot2](http://docs.ggplot2.org/current/). 
 
+Com um pouco de criatividade e uma boa base de dados você poderá criar gráficos como o que está [neste post](https://medium.com/airbnb-engineering/using-r-packages-and-education-to-scale-data-science-at-airbnb-906faa58e12d#.z39ukskpb) do Airbnb. Não entraremos em detalhes sobre gráficos agora, mas prometemos uma sequência de posts ensinando todos os principais aspectos da confecção de gráficos, aguarde!
 
+Os parâmetros do plot serão definidos usando a função `par()`. Utilize o `?par` para ver mais detalhes sobre esta função e as opções disponíveis.
 
 
 {% highlight r %}
@@ -100,9 +186,9 @@ par(mfrow = c(2,2), # O plot terá 2 linhas e 2 colunas
 O código abaixo traz o loop. Temos 4 operações dentro do loop:
 
 * Criar o data.frame `dados.tmp` a partir de um filtro no data.frame `desemprego.uf.2015`. Queremos somente as linhas em que o Trimestre é igual a `i`.
-* Usando a função `order()`, ordenar as linhas dos `dados.tmp` de forma decrescente pelo valor da taxa de desemprego.
+* Usando a função `order()`, ordenar as linhas dos `dados.tmp` de forma decrescente pelo valor da taxa de desemprego. Vide `?order()`.
 * Criar um objeto de texto que trará o título de cada gráfico. Usamos a função `paste()` que tem o papel de concatenar o que for passado como argumento. Usamos espaço como separador, mas você pode passar qualquer separador entre as aspas. Esta função tem mais um parâmetro: `collapse`. Dê uma olhada no help para ver alguns exemplos. Note também que ele já tem um valor padrão `NULL`.
-* Por fim, usamos o `barplot()` para criar o gráfico de barra.
+* Por fim, usamos o `barplot()` para criar o gráfico de barra. Vide `?barplot()`.
 
 
 {% highlight r %}
@@ -121,13 +207,15 @@ for(i in trimestre){
 
 Veja o resultado:
 
-![plot of chunk unnamed-chunk-9](/figures/source/2016-04-11-kit-de-sobrevivencia-em-r-parte-6/unnamed-chunk-9-1.png)
+![plot of chunk unnamed-chunk-11](/figures/source/2016-04-11-kit-de-sobrevivencia-em-r-parte-6/unnamed-chunk-11-1.png)
 
-O gif abaixo mostra como o R vai inserindo gráfico a gráfico. Adicionei o comando `Sys.sleep()` para que a execução fosse suspensa durante 1,5 segundo para ficar mais claro a criação de cada gráfico.
+O gif abaixo mostra como o R vai inserindo gráfico a gráfico. Adicionei o comando `Sys.sleep()` para que a execução fosse suspensa durante 1,5 segundo para ficar mais claro a criação de cada gráfico e ter a sensação do loop criando um por um (na realidade isso acontece quase instantaneamente!).
 
 ![alt Usando o for](/images/forloop.gif "Usando o for")
 
 ## if e else
+
+Outro clássico conceito de programação que você usará muito é o if e else. É uma estrutura condicional, que usa os operadores lógicos apresentados [no post anterior]({{root_url}}/blog/2016/04/21/kit-de-sobrevivencia-em-r-parte-5/). Se a condição do `if()` for verdadeira, executa os comandos dentro das chaves `{ }`, se não for verdadeiro, executa os comando da chave do `else { }`
 
 Para exemplificar o uso do if e else, vamos continuar com o exemplo anterior, mas desta vez queremos que as barras para o trimestre `out-nov-dez` sejam vermelhas. Dessa forma, usaremos os controles if e else. A ideia é realizar um teste sobre `i` que assume um valor do vetor `trimestre`. Assim, se `i` for igual a `out-nov-dez` a cor será ver vermelha (`col = red`), caso contrário utilizaremos o azul (`col = dodgerblue`).
 
@@ -153,9 +241,9 @@ for(i in trimestre){
 }
 {% endhighlight %}
 
-![plot of chunk unnamed-chunk-10](/figures/source/2016-04-11-kit-de-sobrevivencia-em-r-parte-6/unnamed-chunk-10-1.png)
+![plot of chunk unnamed-chunk-12](/figures/source/2016-04-11-kit-de-sobrevivencia-em-r-parte-6/unnamed-chunk-12-1.png)
 
-Podemos reescrever o código acima com o comando `ifelse()` e obter o mesmo resultado. Para isso, iremos usar o comando `ifelse()` no argumento `col`. O primeiro agumento dessa função é o teste que você deseja realizar (saber se o trimestre é ou não é igual a `out-nov-dez`), o segundo é o valor desejado caso seja verdade e o último é o valor a ser retornado caso a condição não seja satisfeita.
+Podemos reescrever o código acima com o comando `ifelse()` e obter o mesmo resultado (veja `?ifelse()`). Para isso, iremos usar o comando `ifelse()` no argumento `col`. O primeiro agumento dessa função é o teste que você deseja realizar (saber se o trimestre é ou não é igual a `out-nov-dez`), o segundo é o valor desejado caso seja verdade e o último é o valor a ser retornado caso a condição não seja satisfeita.
 
 
 {% highlight r %}
@@ -175,7 +263,7 @@ for(i in trimestre){
 }
 {% endhighlight %}
 
-![plot of chunk unnamed-chunk-11](/figures/source/2016-04-11-kit-de-sobrevivencia-em-r-parte-6/unnamed-chunk-11-1.png)
+![plot of chunk unnamed-chunk-13](/figures/source/2016-04-11-kit-de-sobrevivencia-em-r-parte-6/unnamed-chunk-13-1.png)
 
 O `ifelse()`tem uma característica importante. Enquanto o `if()` aceita apensas um único teste (comprimento um), o `ifelse` pode receber um vetor para testes e aplicar as condições para este conjunto de teste. Para ficar mais claro veja o exemplo abaixo.
 
@@ -205,6 +293,8 @@ head(desemprego.uf.2015, 10)
 
 ## while, repeat, break, next
 
+Além do `for()`, temos também outras estruturas de loop que funcionam de maneira semelhante, mudando somente a condição para execução das repetições.
+
 O `while()` é uma estrutura de controle utilizada para realizar um loop enquanto uma condição for satisfeita. Aqui realizaremos um loop simples somente para demonstrar o funcionamento do `while()`. Será criado um objeto `i` igual a 1 e iremos mostrá-lo no console enquanto for menor ou igual a 5. A cada iteração será adicionado 1 ao valor de `i`. 
 
 
@@ -212,7 +302,7 @@ O `while()` é uma estrutura de controle utilizada para realizar um loop enquant
 i <- 1
 while(i <= 5){
   print(i)
-  i <-i + 1
+  i <- i + 1
 }
 {% endhighlight %}
 
@@ -226,9 +316,11 @@ while(i <= 5){
 ## [1] 5
 {% endhighlight %}
 
-Como você notou no exemplo do `if` e `else`, o R permite que um loop seja elaborado com várias estruturas de controle. Usaremos isto para exemplificar o funcionamento do `repeat` e do `break`. Além disso, também utilizaremos o `if`. O `repeat` realiza as operações que estão entre `{}` indefinidamente. Obviamente, quase sempre  iremos querer que o loop termine caso alguma coisa aconteça. Dessa forma, temos que criar uma condição para que ele pare e uma instrução dizendo que o loop deve terminar caso a condição seja satisfeita. 
+Como você notou no exemplo do `if` e `else`, o R permite que um loop seja elaborado com várias estruturas de controle. Usaremos isto para exemplificar o funcionamento do `repeat` e do `break`. 
 
-No exemplo abaixo, iremos novamente incrementar o objeto `i`, mas queremos que estas operações parem se ele superar 6. Veja o código abaixo.
+O `repeat` realiza as operações que estão entre `{}` indefinidamente. Obviamente, não iremos querer executar nada para sempre, iremos querer que o loop termine caso alguma coisa aconteça. Dessa forma, temos que criar uma condição para que ele pare e uma instrução dizendo que o loop deve terminar caso a condição seja satisfeita. 
+
+No exemplo abaixo, iremos novamente incrementar o objeto `i`, mas queremos que estas operações parem se ele superar 6, ou seja, no meio da execução vamos verificar se a condição de parada acontece. Veja o código abaixo:
 
 
 {% highlight r %}
@@ -253,7 +345,7 @@ repeat{
 ## [1] 6
 {% endhighlight %}
 
-Por fim, o `next` é usado para pular para a próxima iteração caso uma determinada condição seja satisfeita.
+Por fim, o `next` é usado para pular para a próxima iteração caso uma determinada condição seja satisfeita. É muito usado quando você quer ignorar certas repetições, por exemplo?
 
 
 {% highlight r %}
@@ -281,7 +373,7 @@ Perceba que não há necessidade das `{}` se a operação a ser executada em um 
 
 ## Algumas observações
 
-Muitas operações que usam loops podem ser realizadas a partir de outros comandos de maneira mais rápida. Os loops no R são conhecidos por serem lentos e dependendo do seu problema eles se tornam inviáveis. No entanto, existem algumas práticas que tornam os loops mais rápidos. Não iremos tratar disso por agora, mas aqueles que tiverem mais curiosidade podem encontrar mais informações [aqui](https://www.datacamp.com/community/tutorials/tutorial-on-loops-in-r).
+Muitas operações que usam loops podem ser realizadas a partir de outros comandos de maneira mais rápida (família `apply()`, por exemplo). Os loops no R são conhecidos por serem lentos e dependendo do seu problema eles se tornam inviáveis. No entanto, existem algumas práticas que tornam os loops mais rápidos. Não iremos tratar disso por agora, mas aqueles que tiverem mais curiosidade podem encontrar mais informações [aqui](https://www.datacamp.com/community/tutorials/tutorial-on-loops-in-r).
 
 ## Desafio
 
