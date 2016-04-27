@@ -4,7 +4,7 @@
   <title><![CDATA[r | Full Join]]></title>
   <link href="http://fulljoin.com.br/blog/categories/r/atom.xml" rel="self"/>
   <link href="http://fulljoin.com.br/"/>
-  <updated>2016-04-26T22:10:20-03:00</updated>
+  <updated>2016-04-26T22:21:17-03:00</updated>
   <id>http://fulljoin.com.br/</id>
   <author>
     <name><![CDATA[Full Join]]></name>
@@ -22,7 +22,7 @@
 
 <!-- More -->
 
-<h1 id="porque-transformar-os-dados">Porque transformar os dados?</h1>
+<h1 id="por-que-transformar-os-dados">Por que transformar os dados?</h1>
 
 <p>Durante o processo de análise de dados é bastante comum precisar de mais informações que não estão explícitas em sua base de dados, ou seja, informações além das que estão disponíveis nas linhas e colunas.</p>
 
