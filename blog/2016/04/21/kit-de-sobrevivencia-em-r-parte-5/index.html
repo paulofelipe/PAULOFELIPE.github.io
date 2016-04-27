@@ -177,7 +177,7 @@
 
 <h3 id="dataframe">Data.frame</h3>
 
-<p>Data frame é um tipo de dado complexo, um dos mais utilizados em R. É nele que você armazena conjuntos de dados estruturados em linhas e colunas. Um data frame possue colunas nomeadas, sendo que todas as colunas possuem a mesma quantidade de linhas.</p>
+<p>Data frame é um tipo de dado complexo, um dos mais utilizados em R. É nele que você armazena conjuntos de dados estruturados em linhas e colunas. Um data frame possui colunas nomeadas, sendo que todas as colunas possuem a mesma quantidade de linhas.</p>
 
 <div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">str</span><span class="p">(</span><span class="n">dados</span><span class="p">)</span></code></pre></div>
 
@@ -200,7 +200,7 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
 
 <h3 id="factor">Factor</h3>
 
-<p>É um tipo de dado complexo que representa categorias (levels). Tentando ser o máximo simplesta, é uma lista de categorias enumeradas, ou seja, é uma sequência de informações texutais (palavras) representadas por um número. Você vê as categorias e o R “vê” os números que representam essas categorias. Esse tipo é muito útil para modelos estatísticos.</p>
+<p>É um tipo de dado complexo que representa categorias (levels). Tentando ser o máximo simplista, é uma lista de categorias enumeradas, ou seja, é uma sequência de informações textuais (palavras) representadas por um número. Você vê as categorias e o R “vê” os números que representam essas categorias. Esse tipo é muito útil para modelos estatísticos.</p>
 
 <p>Parece um pouco confuso de entender, mas factor é a forma mais eficiente do R interpretar uma sequência de palavras. Veja o resultado do comando abaixo:</p>
 
@@ -234,13 +234,13 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
 
 <h3 id="numeric">Numeric</h3>
 
-<p>Continuando a exploração dos tipos, temos o <code>numeric</code> ou <code>num</code>, um tipo básico capaz de representar números decimais. O tipo <code>numeric</code> também consegue representar inteiros. Tente <code>class(dados$Taxa_Desemprego)</code> e repare que é um tipo numerico.</p>
+<p>Continuando a exploração dos tipos, temos o <code>numeric</code> ou <code>num</code>, um tipo básico capaz de representar números decimais. O tipo <code>numeric</code> também consegue representar inteiros. Tente <code>class(dados$Taxa_Desemprego)</code> e repare que é um tipo numérico.</p>
 
 <h1 id="transformaes">Transformações</h1>
 
 <p>Tendo consciência dos tipos de dados que compõem nosso data frame, já é possível começar a imaginar as análises que podem ser feitas.</p>
 
-<p>Vamos supor que surgiu a necessidade de analisarmos os dados de desemprego por semestre. Podemos observar nos dados que temos informações explícitas por trimestre e de certa forma por ano também. Para começarmos os cálculos então seria interessanter ter uma variável (coluna) indicando o semestre.</p>
+<p>Vamos supor que surgiu a necessidade de analisarmos os dados de desemprego por semestre. Podemos observar nos dados que temos informações explícitas por trimestre e de certa forma por ano também. Para começarmos os cálculos então seria interessante ter uma variável (coluna) indicando o semestre.</p>
 
 <p>Ora, essa informação já existe no conjunto de dados, afinal, temos trimestres e anos. Porém, não está explícita em nenhuma variável. Então vamos transformar os dados e criar essa variável!</p>
 
@@ -263,7 +263,7 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
 ## 431 2015 jul-ago-set Distrito Federal          10.258        1
 ## 432 2015 out-nov-dez Distrito Federal           9.707        1</code></pre></div>
 
-<p>Acabamos de criar uma nova coluna e atribuir 1 a todas as linhas dessa coluna. Não é exatamente o que queremos. Queremos atribuir 1 para primeiro semestre e 2 para segundo semestre. Para conseguir isso precisaremos atribuir a variável segundo algumas condicões.</p>
+<p>Acabamos de criar uma nova coluna e atribuir 1 a todas as linhas dessa coluna. Não é exatamente o que queremos. Queremos atribuir 1 para primeiro semestre e 2 para segundo semestre. Para conseguir isso precisaremos atribuir a variável segundo algumas condições.</p>
 
 <p>Ou seja, quando for trimestre <code>jan-fev-mar</code> ou <code>abr-mai-jun</code> vamos atribuir 1, quando for o trimestre <code>jul-ago-set</code> ou <code>out-nov-dez</code> vamos atribuir 2:</p>
 
@@ -345,9 +345,9 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
 <ul>
   <li><code>==</code> igual a: compara dois objetos e se forem iguais, retorna TRUE, caso contrário, FALSE;</li>
   <li><code>!=</code> diferente: compara dois objetos e se forem diferentes, retorna TRUE, caso contrário, FALSE;</li>
-  <li><code>|</code> ou (or): compara dois objetos, se um dos dois for TRUE, retorna TRUE, se os dois forem FASE, retorna FALSE;</li>
+  <li><code>|</code> ou (or): compara dois objetos, se um dos dois for TRUE, retorna TRUE, se os dois forem FALSE, retorna FALSE;</li>
   <li><code>&amp;</code> e (and): compara dois objetos, se os dois forem TRUE, retorna TRUE, se um dos dois ou os dois forem FALSE, retorna FALSE;</li>
-  <li><code>&gt;</code>, <code>&gt;=</code>, <code>&lt;</code>, <code>&lt;=</code> maior, maior ou igual, menor, menor ou igual: compara grandeza de dois números e retorna TRUE ou FALSE confome a condição;</li>
+  <li><code>&gt;</code>, <code>&gt;=</code>, <code>&lt;</code>, <code>&lt;=</code> maior, maior ou igual, menor, menor ou igual: compara grandeza de dois números e retorna TRUE ou FALSE conforme a condição;</li>
 </ul>
 
 <p>Segue alguns exemplos para entender os operadores lógicos:</p>
@@ -433,7 +433,7 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
 
 <p>Nesse caso estamos usando o operador <code>%in%</code>, que faz uma comparação para ver se o objeto está dentro de uma listagem (vetor) de outros objetos. Nas linhas em que <code>dados$UF</code> estiver “dentro” da listagem de UFs, o filtro retornará TRUE e a atribuição da variável será feita, caso contrário retornará FALSE e não vai atribuir o valor à <code>dados$Regiao</code>.</p>
 
-<p>Para finalizar os exemplos de transformações, vamos tentar uma abordagem com funções matemáticas. Imagine que sua equipe está planejando estimar um modelo com base nesses dados e por algum motivo específico surgiu a necessidade de usar o logarítmo da taxa de desemprego. Não é uma informações explícita mas certamente podemos produzir com o que já temos.</p>
+<p>Para finalizar os exemplos de transformações, vamos tentar uma abordagem com funções matemáticas. Imagine que sua equipe está planejando estimar um modelo com base nesses dados e por algum motivo específico surgiu a necessidade de usar o logaritmo da taxa de desemprego. Não é uma informações explícita mas certamente podemos produzir com o que já temos.</p>
 
 <div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">dados</span><span class="o">$</span><span class="n">Log_Taxa_Desemprego</span> <span class="o">&lt;-</span> <span class="n">log</span><span class="p">(</span><span class="n">dados</span><span class="o">$</span><span class="n">Taxa_Desemprego</span><span class="p">)</span>
 <span class="n">head</span><span class="p">(</span><span class="n">dados</span><span class="p">,</span> <span class="m">15</span><span class="p">)</span></code></pre></div>

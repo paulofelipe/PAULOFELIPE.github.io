@@ -4,7 +4,7 @@
   <title><![CDATA[equipe | Full Join]]></title>
   <link href="http://fulljoin.com.br/blog/categories/equipe/atom.xml" rel="self"/>
   <link href="http://fulljoin.com.br/"/>
-  <updated>2016-04-23T16:05:58-03:00</updated>
+  <updated>2016-04-26T22:10:20-03:00</updated>
   <id>http://fulljoin.com.br/</id>
   <author>
     <name><![CDATA[Full Join]]></name>
@@ -28,7 +28,7 @@
 
 <p>Não há “o jeito certo” e “o jeito errado” de se estruturar um projeto em ciência de dados, pois os problemas na prática são tão variados, com características tão diferentes, que fica difícil definir uma única forma de executar o trabalho e obter sucesso no final.</p>
 
-<p>No entanto, existem modelos baseados em estudos e experências anteriores que auxiliam bastante na hora de estruturar um projeto desse tipo.</p>
+<p>No entanto, existem modelos baseados em estudos e experiências anteriores que auxiliam bastante na hora de estruturar um projeto desse tipo.</p>
 
 <p>Segundo <a href="http://www.kdnuggets.com/polls/2014/analytics-data-mining-data-science-methodology.html">votação no KDnuggets (2014)</a> a metodologia <a href="https://en.wikipedia.org/wiki/Cross_Industry_Standard_Process_for_Data_Mining">CRISP-DM</a> é a mais utilizada para projetos em análise de dados, mineração de dados e ciência de dados. Cross Industry Standard Process for Data Mining é um modelo iterativo e incremental que define 6 grandes fases:</p>
 
@@ -98,9 +98,9 @@
 
 <p>Como na fase de exploração, a visualização pode ter um papel fundamental. Um bom gráfico, pode conseguir passar a mesma informação de dez tabelas diferentes. Ou, dependendo do objetivo, um dashboard dinâmico para o cliente “explorar” os resultados. Em algumas situações, o resultado poderá ser um algoritmo de uso mais amplo (sistema de recomendação, motor de previsões em tempo real, robô que monitora redes sociais, etc).</p>
 
-<p>Outro ponto importante, é sempre deixar claro o que a análise realizada permite e o que ela não permite, aprensetando assim os resultados e suas limitações. É fundamental que os clientes tenham o mínimo de conhecimento sobre a capacidade do produto (relatório, dashboard, algoritmo…) que será entregue para que não haja mal entendidos ou frustrações.</p>
+<p>Outro ponto importante, é sempre deixar claro o que a análise realizada permite e o que ela não permite, apresentando assim os resultados e suas limitações. É fundamental que os clientes tenham o mínimo de conhecimento sobre a capacidade do produto (relatório, dashboard, algoritmo…) que será entregue para que não haja mal entendidos ou frustrações.</p>
 
-<p>Para apresentar bem os resultados não basta um bom trabalho analítico e bons modelos, é desejável uma boa habilidade de escrita, produzir gráficos interessantes, <a href="https://hbr.org/2013/03/a-data-scientists-real-job-sto/">“story telling”</a>, saber apresentar dados de maneira concisa e objetiva, habilidades interperssoais e, em alguns casos, até uma boa noção de design e interfaces gráficas.</p>
+<p>Para apresentar bem os resultados não basta um bom trabalho analítico e bons modelos, é desejável uma boa habilidade de escrita, produzir gráficos interessantes, <a href="https://hbr.org/2013/03/a-data-scientists-real-job-sto/">“story telling”</a>, saber apresentar dados de maneira concisa e objetiva, habilidades interpessoais e, em alguns casos, até uma boa noção de design e interfaces gráficas.</p>
 
 <h2 id="faa-loops-entre-as-fases">Faça loops entre as fases</h2>
 

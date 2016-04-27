@@ -4,7 +4,7 @@
   <title><![CDATA[Full Join]]></title>
   <link href="http://fulljoin.com.br/atom.xml" rel="self"/>
   <link href="http://fulljoin.com.br/"/>
-  <updated>2016-04-23T16:05:58-03:00</updated>
+  <updated>2016-04-26T22:10:20-03:00</updated>
   <id>http://fulljoin.com.br/</id>
   <author>
     <name><![CDATA[Full Join]]></name>
@@ -54,7 +54,7 @@
 
 <h3 id="dataframe">Data.frame</h3>
 
-<p>Data frame é um tipo de dado complexo, um dos mais utilizados em R. É nele que você armazena conjuntos de dados estruturados em linhas e colunas. Um data frame possue colunas nomeadas, sendo que todas as colunas possuem a mesma quantidade de linhas.</p>
+<p>Data frame é um tipo de dado complexo, um dos mais utilizados em R. É nele que você armazena conjuntos de dados estruturados em linhas e colunas. Um data frame possui colunas nomeadas, sendo que todas as colunas possuem a mesma quantidade de linhas.</p>
 
 <div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">str</span><span class="p">(</span><span class="n">dados</span><span class="p">)</span></code></pre></div>
 
@@ -77,7 +77,7 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
 
 <h3 id="factor">Factor</h3>
 
-<p>É um tipo de dado complexo que representa categorias (levels). Tentando ser o máximo simplesta, é uma lista de categorias enumeradas, ou seja, é uma sequência de informações texutais (palavras) representadas por um número. Você vê as categorias e o R “vê” os números que representam essas categorias. Esse tipo é muito útil para modelos estatísticos.</p>
+<p>É um tipo de dado complexo que representa categorias (levels). Tentando ser o máximo simplista, é uma lista de categorias enumeradas, ou seja, é uma sequência de informações textuais (palavras) representadas por um número. Você vê as categorias e o R “vê” os números que representam essas categorias. Esse tipo é muito útil para modelos estatísticos.</p>
 
 <p>Parece um pouco confuso de entender, mas factor é a forma mais eficiente do R interpretar uma sequência de palavras. Veja o resultado do comando abaixo:</p>
 
@@ -111,13 +111,13 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
 
 <h3 id="numeric">Numeric</h3>
 
-<p>Continuando a exploração dos tipos, temos o <code>numeric</code> ou <code>num</code>, um tipo básico capaz de representar números decimais. O tipo <code>numeric</code> também consegue representar inteiros. Tente <code>class(dados$Taxa_Desemprego)</code> e repare que é um tipo numerico.</p>
+<p>Continuando a exploração dos tipos, temos o <code>numeric</code> ou <code>num</code>, um tipo básico capaz de representar números decimais. O tipo <code>numeric</code> também consegue representar inteiros. Tente <code>class(dados$Taxa_Desemprego)</code> e repare que é um tipo numérico.</p>
 
 <h1 id="transformaes">Transformações</h1>
 
 <p>Tendo consciência dos tipos de dados que compõem nosso data frame, já é possível começar a imaginar as análises que podem ser feitas.</p>
 
-<p>Vamos supor que surgiu a necessidade de analisarmos os dados de desemprego por semestre. Podemos observar nos dados que temos informações explícitas por trimestre e de certa forma por ano também. Para começarmos os cálculos então seria interessanter ter uma variável (coluna) indicando o semestre.</p>
+<p>Vamos supor que surgiu a necessidade de analisarmos os dados de desemprego por semestre. Podemos observar nos dados que temos informações explícitas por trimestre e de certa forma por ano também. Para começarmos os cálculos então seria interessante ter uma variável (coluna) indicando o semestre.</p>
 
 <p>Ora, essa informação já existe no conjunto de dados, afinal, temos trimestres e anos. Porém, não está explícita em nenhuma variável. Então vamos transformar os dados e criar essa variável!</p>
 
@@ -140,7 +140,7 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
 ## 431 2015 jul-ago-set Distrito Federal          10.258        1
 ## 432 2015 out-nov-dez Distrito Federal           9.707        1</code></pre></div>
 
-<p>Acabamos de criar uma nova coluna e atribuir 1 a todas as linhas dessa coluna. Não é exatamente o que queremos. Queremos atribuir 1 para primeiro semestre e 2 para segundo semestre. Para conseguir isso precisaremos atribuir a variável segundo algumas condicões.</p>
+<p>Acabamos de criar uma nova coluna e atribuir 1 a todas as linhas dessa coluna. Não é exatamente o que queremos. Queremos atribuir 1 para primeiro semestre e 2 para segundo semestre. Para conseguir isso precisaremos atribuir a variável segundo algumas condições.</p>
 
 <p>Ou seja, quando for trimestre <code>jan-fev-mar</code> ou <code>abr-mai-jun</code> vamos atribuir 1, quando for o trimestre <code>jul-ago-set</code> ou <code>out-nov-dez</code> vamos atribuir 2:</p>
 
@@ -222,9 +222,9 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
 <ul>
   <li><code>==</code> igual a: compara dois objetos e se forem iguais, retorna TRUE, caso contrário, FALSE;</li>
   <li><code>!=</code> diferente: compara dois objetos e se forem diferentes, retorna TRUE, caso contrário, FALSE;</li>
-  <li><code>|</code> ou (or): compara dois objetos, se um dos dois for TRUE, retorna TRUE, se os dois forem FASE, retorna FALSE;</li>
+  <li><code>|</code> ou (or): compara dois objetos, se um dos dois for TRUE, retorna TRUE, se os dois forem FALSE, retorna FALSE;</li>
   <li><code>&amp;</code> e (and): compara dois objetos, se os dois forem TRUE, retorna TRUE, se um dos dois ou os dois forem FALSE, retorna FALSE;</li>
-  <li><code>&gt;</code>, <code>&gt;=</code>, <code>&lt;</code>, <code>&lt;=</code> maior, maior ou igual, menor, menor ou igual: compara grandeza de dois números e retorna TRUE ou FALSE confome a condição;</li>
+  <li><code>&gt;</code>, <code>&gt;=</code>, <code>&lt;</code>, <code>&lt;=</code> maior, maior ou igual, menor, menor ou igual: compara grandeza de dois números e retorna TRUE ou FALSE conforme a condição;</li>
 </ul>
 
 <p>Segue alguns exemplos para entender os operadores lógicos:</p>
@@ -310,7 +310,7 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
 
 <p>Nesse caso estamos usando o operador <code>%in%</code>, que faz uma comparação para ver se o objeto está dentro de uma listagem (vetor) de outros objetos. Nas linhas em que <code>dados$UF</code> estiver “dentro” da listagem de UFs, o filtro retornará TRUE e a atribuição da variável será feita, caso contrário retornará FALSE e não vai atribuir o valor à <code>dados$Regiao</code>.</p>
 
-<p>Para finalizar os exemplos de transformações, vamos tentar uma abordagem com funções matemáticas. Imagine que sua equipe está planejando estimar um modelo com base nesses dados e por algum motivo específico surgiu a necessidade de usar o logarítmo da taxa de desemprego. Não é uma informações explícita mas certamente podemos produzir com o que já temos.</p>
+<p>Para finalizar os exemplos de transformações, vamos tentar uma abordagem com funções matemáticas. Imagine que sua equipe está planejando estimar um modelo com base nesses dados e por algum motivo específico surgiu a necessidade de usar o logaritmo da taxa de desemprego. Não é uma informações explícita mas certamente podemos produzir com o que já temos.</p>
 
 <div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">dados</span><span class="o">$</span><span class="n">Log_Taxa_Desemprego</span> <span class="o">&lt;-</span> <span class="n">log</span><span class="p">(</span><span class="n">dados</span><span class="o">$</span><span class="n">Taxa_Desemprego</span><span class="p">)</span>
 <span class="n">head</span><span class="p">(</span><span class="n">dados</span><span class="p">,</span> <span class="m">15</span><span class="p">)</span></code></pre></div>
@@ -388,7 +388,7 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
 
 <h2 id="dados-estruturados">Dados Estruturados</h2>
 
-<p>Basicamente são conjuntos de informações organizadas em colunas (atributos, variáveis, <em>features</em>, etc.) e linhas (registros, itens, observacões, etc.). São dados encontrados em bancos de dados, arquivos com algum tipo de separação entre as colunas, excel, arquivos com campos de tamanho fixo, etc.</p>
+<p>Basicamente são conjuntos de informações organizadas em colunas (atributos, variáveis, <em>features</em>, etc.) e linhas (registros, itens, observações, etc.). São dados encontrados em bancos de dados, arquivos com algum tipo de separação entre as colunas, excel, arquivos com campos de tamanho fixo, etc.</p>
 
 <h2 id="dados-no-estruturados">Dados não estruturados</h2>
 
@@ -441,9 +441,9 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
 
 <h1 id="tipos-de-carregamento">Tipos de carregamento</h1>
 
-<p>O R possui algumas funções básicas de carregamento. Essas funções tratam de alguns tipos de arquivo, basicamente diferenciados pelo <em>delimitador</em>. Outro aspecto importante é que essas funções básicas pressumpõem que cada linha representa um novo registro de dados.</p>
+<p>O R possui algumas funções básicas de carregamento. Essas funções tratam de alguns tipos de arquivo, basicamente diferenciados pelo <em>delimitador</em>. Outro aspecto importante é que essas funções básicas pressupõem que cada linha representa um novo registro de dados.</p>
 
-<p>Para ficar mais claro, delimitadores podem ser qualquer coisa que seja usada para separar dados. Por exemplo, os arquivos podem ser separados por vígulas (<a href="https://pt.wikipedia.org/wiki/Comma-separated_values">CSV - Comma-separated values</a>), por ponto e vírgula (<code>;</code>), por espaçamento TAB (a tecla TAB do teclado mesmo!), por espaços simples ou qualquer outro tipo de símbolo.</p>
+<p>Para ficar mais claro, delimitadores podem ser qualquer coisa que seja usada para separar dados. Por exemplo, os arquivos podem ser separados por vírgulas (<a href="https://pt.wikipedia.org/wiki/Comma-separated_values">CSV - Comma-separated values</a>), por ponto e vírgula (<code>;</code>), por espaçamento TAB (a tecla TAB do teclado mesmo!), por espaços simples ou qualquer outro tipo de símbolo.</p>
 
 <p>E quando não existe delimitador, ou seja, quando os campos estão “colados” uns nos outros? Em alguns casos, arquivos são confeccionados com um tamanho fixo para cada coluna (principalmente em arquivos gigantescos!), e cada linha respeita tamanhos específicos para separar os seus registros.</p>
 
@@ -588,13 +588,13 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
     <link href="http://fulljoin.com.br/blog/2016/04/03/kit-de-sobrevivencia-em-r-parte-3/"/>
     <updated>2016-04-03T22:10:52-03:00</updated>
     <id>http://fulljoin.com.br/blog/2016/04/03/kit-de-sobrevivencia-em-r-parte-3</id>
-    <content type="html"><![CDATA[<p>Neste post, você aprenderá um pouco sobre os pacotes, trabalhará com o console para fazer algumas operações e ir se familiarizando mais com o R. Aprenderá como usar as funções disponíveis no R e as funcões adicionais em pacotes.</p>
+    <content type="html"><![CDATA[<p>Neste post, você aprenderá um pouco sobre os pacotes, trabalhará com o console para fazer algumas operações e ir se familiarizando mais com o R. Aprenderá como usar as funções disponíveis no R e as funções adicionais em pacotes.</p>
 
 <!-- More -->
 
 <h2 id="pacotes">Pacotes</h2>
 
-<p>Um pacote do R e um conjunto de funções que tem uma temática em comum. As funções de um mesmo pacote são carregadas juntas em memória, ou seja, ficam disponíveis para uso no R. Por ter uma temática específica, cada pacote possue uma documentação explicando suas funcionalidades disponíveis e como usá-las. Além das funções, alguns pacotes também fornecem um conjunto de dados que são usados para replicar os exemplos fornecidos nas documentações.</p>
+<p>Um pacote do R e um conjunto de funções que tem uma temática em comum. As funções de um mesmo pacote são carregadas juntas em memória, ou seja, ficam disponíveis para uso no R. Por ter uma temática específica, cada pacote possui uma documentação explicando suas funcionalidades disponíveis e como usá-las. Além das funções, alguns pacotes também fornecem um conjunto de dados que são usados para replicar os exemplos fornecidos nas documentações.</p>
 
 <p>Por exemplo, o <code>dplyr</code> é um pacote que possui um série de funções que facilitam consideravelmente a manipulação de dados. Já o <code>readxl</code> é um pacote com funções para leitura de arquivos excel. E o <code>ggplot2</code>, um pacote para criação de gráficos.</p>
 
@@ -632,7 +632,7 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
   <p>Dica: repare que para instalar o pacote você usou o nome dele entre aspas `install.packages(“readxl”) e não vai funcionar sem aspas. Mas, para carregar o pacote em memória, você pode usar com ou sem aspas library(readxl) ou library(“readxl”)</p>
 </blockquote>
 
-<p>Ao trabalhar com pacotes, muitas vezes irá aparecer o termo <strong>CRAN</strong>. Ele significa <em>Comprehensive R Archive Network</em>. Este é o principal repositório de pacotes do R. Trata-se de um portal que guarda uma série de pacotes que necessariamente passaram por uma série de requisitos antes de serem publicado. Atualmente, estao disponiveis mais de 8.000 pacotes no CRAN.</p>
+<p>Ao trabalhar com pacotes, muitas vezes irá aparecer o termo <strong>CRAN</strong>. Ele significa <em>Comprehensive R Archive Network</em>. Este é o principal repositório de pacotes do R. Trata-se de um portal que guarda uma série de pacotes que necessariamente passaram por uma série de requisitos antes de serem publicado. Atualmente, estão disponíveis mais de 8.000 pacotes no CRAN.</p>
 
 <p>Este é o único local onde os pacotes estão disponíveis? Não!</p>
 
@@ -669,7 +669,7 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
 
 <h1 id="desafio">Desafio</h1>
 
-<p>Instale e carrege os pacotes <code>tidyr</code> e <code>stringr</code>. Consegue descobrir para que servem esses pacotes? Consegue visualizar as funções existentes em cada pacote? Para que serve a função <code>gather()</code> do pacote <code>tidyr</code>?  Para que serve a função <code>str_count()</code> do pacote <code>stringr</code>? Compartilhe conosco nos comentários o que descobriu!</p>
+<p>Instale e carregue os pacotes <code>tidyr</code> e <code>stringr</code>. Consegue descobrir para que servem esses pacotes? Consegue visualizar as funções existentes em cada pacote? Para que serve a função <code>gather()</code> do pacote <code>tidyr</code>?  Para que serve a função <code>str_count()</code> do pacote <code>stringr</code>? Compartilhe conosco nos comentários o que descobriu!</p>
 
 <h1 id="referncias">Referências:</h1>
 <ul>
@@ -712,7 +712,7 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
 
 <p>Por ser uma linguagem estatística, o R já vem com muitas operações prontas para serem usadas. Por exemplo, todas as operações básicas da matemática.</p>
 
-<p>Digite os seguintes comandos no console, apertando <em>enter</em> após cada linha, para ver o resutlado:</p>
+<p>Digite os seguintes comandos no console, apertando <em>enter</em> após cada linha, para ver o resultado:</p>
 
 <div class="highlight"><pre><code class="language-r" data-lang="r"><span class="m">5</span> <span class="o">+</span> <span class="m">3</span></code></pre></div>
 
@@ -750,7 +750,7 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
 
 <h1 id="variveis">Variáveis</h1>
 
-<p>Na maioria dos casos, o tabalho que você precisará fazer vai exigir mais do que uma simples calculadora pode oferecer, será necessário conhecer mais das possiblidades do R.</p>
+<p>Na maioria dos casos, o trabalho que você precisará fazer vai exigir mais do que uma simples calculadora pode oferecer, será necessário conhecer mais das possibilidades do R.</p>
 
 <p>A estrutura mais básica que você irá utilizar é chamada <em>variável</em>. Mais uma vez, buscando ser simplista, variável nada mais é do que um pequeno espaço na memória do seu computador onde você armazena o resultado de um comando. E para esse pequeno espaço de memória você define o nome que você quiser!</p>
 
@@ -795,7 +795,7 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
 
 <p>Na verdade, uma das coisas que torna o R uma ótima linguagem estatística é a gigantesca quantidade de funções disponíveis. Para (quase) tudo que você quiser fazer, existe uma função que facilita as coisas. Algumas funções já vem com a instalação base do R, outras você precisa instalar um pacote extra (falaremos disso em breve).</p>
 
-<p>Uma funcão tem dois elementos básicos: o nome e o(s) parâmetro(s). Por exemplo, função para cálculo de raiz quadrada:</p>
+<p>Uma função tem dois elementos básicos: o nome e o(s) parâmetro(s). Por exemplo, função para cálculo de raiz quadrada:</p>
 
 <div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">raiz.quadrada</span> <span class="o">&lt;-</span> <span class="n">sqrt</span><span class="p">(</span><span class="m">16</span><span class="p">)</span> 
 <span class="n">raiz.quadrada</span></code></pre></div>
@@ -813,7 +813,7 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
 
 <p>Ou seja, <code>round</code> é o nome da função para arredondamento. Já o <code>x</code>, a variável que armazena <code>5.34999</code>, é o primeiro parâmetro, informando o número que você quer arredondar. E temos o <code>2</code> como segundo parâmetro, informando até quantas casas decimais você quer arredondar.</p>
 
-<p>Como dito, a instalação base do R já vem com algumas funções muito utilizadas. Segue <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/00Index.html">uma</a> lista para conhecer melhor cada uma dessas funcões básicas. Na sequência de posts apresentaremos pacotes com muito mais funções importantes disponíveis.</p>
+<p>Como dito, a instalação base do R já vem com algumas funções muito utilizadas. Segue <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/00Index.html">uma</a> lista para conhecer melhor cada uma dessas funções básicas. Na sequência de posts apresentaremos pacotes com muito mais funções importantes disponíveis.</p>
 
 <h1 id="scriptr-editor">Script.R (editor)</h1>
 
@@ -866,9 +866,9 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
     <link href="http://fulljoin.com.br/blog/2016/03/23/kit-de-sobrevivencia-em-r-parte-1/"/>
     <updated>2016-03-23T21:14:06-03:00</updated>
     <id>http://fulljoin.com.br/blog/2016/03/23/kit-de-sobrevivencia-em-r-parte-1</id>
-    <content type="html"><![CDATA[<p>Nesta sequênciade de posts, iremos tratar o básico necessário para quem deseja iniciar o aprendizado em <a href="https://www.r-project.org/about.html">R</a>. Trata-se de uma linguagem de programação muito usada para cálculos estatísticos. Neste e nos próximos posts, discutiremos tópicos como instalação, importação de dados, tipos de dados, etc.</p>
+    <content type="html"><![CDATA[<p>Nesta sequência de de posts, iremos tratar o básico necessário para quem deseja iniciar o aprendizado em <a href="https://www.r-project.org/about.html">R</a>. Trata-se de uma linguagem de programação muito usada para cálculos estatísticos. Neste e nos próximos posts, discutiremos tópicos como instalação, importação de dados, tipos de dados, etc.</p>
 
-<p>A nossa expectativa é que, com essa sequência, seja quebrada a barreira inicial para aqueles que prentendem entrar nesse mundo (cuidado que esse é um caminho sem volta!).</p>
+<p>A nossa expectativa é que, com essa sequência, seja quebrada a barreira inicial para aqueles que pretendem entrar nesse mundo (cuidado que esse é um caminho sem volta!).</p>
 
 <!-- More -->
 
@@ -880,13 +880,13 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
 
 <p>As linguagens de programação estatística ajudam muito nesse sentido. São ferramentas poderosíssimas que praticamente derrubam os limites das possibilidades de se trabalhar com dados: você pode fazer praticamente qualquer coisa!</p>
 
-<p>“Eu trabalho com dados de forma básica, mas não quero me tornar um ciêntista de dados… ainda assim é útil?”. Com certeza! Linguagens de programação estatística, mesmo que aprendendo apenas o básico, aumentam muito a produtividade.</p>
+<p>“Eu trabalho com dados de forma básica, mas não quero me tornar um cientista de dados… ainda assim é útil?”. Com certeza! Linguagens de programação estatística, mesmo que aprendendo apenas o básico, aumentam muito a produtividade.</p>
 
 <p>Portanto, sugerimos fortemente que aprenda uma linguagem estatística o quanto antes!</p>
 
 <h2 id="por-que-o-r">Por que o R?</h2>
 
-<p>Um motivo básico é que o R é <strong>livre</strong>. Em circustâncias de restrição orçamentária, isso pode ser um fator determimante. No entanto, a escolha do R ultrapassa a questão dos custos. Algumas pessoas têm o costume de pensar que soluções livres são geralmente inferiores às proprietárias.</p>
+<p>Um motivo básico é que o R é <strong>livre</strong>. Em circunstâncias de restrição orçamentária, isso pode ser um fator determinante. No entanto, a escolha do R ultrapassa a questão dos custos. Algumas pessoas têm o costume de pensar que soluções livres são geralmente inferiores às proprietárias.</p>
 
 <p>Todavia, no caso de ciência de dados, os softwares livres parecem que vieram para ficar em posição dominante. De acordo com <a href="http://blog.dominodatalab.com/open-source-winning-against-proprietary-data-science-vendors/">essa pesquisa</a>, o mercado da ciência de dados está sendo dominado por softwares livres.</p>
 
@@ -963,7 +963,7 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
 
 <p>Entre, as fontes de ajuda estão o próprio <em>help</em> do R, o bom e velho google para uma busca mais ampla, o <a href="http://stackoverflow.com/tags/r">stack overflow</a> (ou <a href="http://pt.stackoverflow.com/questions/tagged/r">em português</a>), o <a href="https://www.reddit.com/r/rprogramming">reddit</a> e, é claro, o <strong>full join</strong>. Estaremos aqui para te ajudar.</p>
 
-<p>Se você puder, faça suas pesquisas em inglês. Isto porque as possibilidades de você encontrar alguém que teve uma mesma dúvida crescem consideravalmente.</p>
+<p>Se você puder, faça suas pesquisas em inglês. Isto porque as possibilidades de você encontrar alguém que teve uma mesma dúvida crescem consideravelmente.</p>
 
 <p>Se você for realizar uma pergunta em algum fórum ou site de perguntas e respostas, é importante atentar para alguns pontos que deverão ser informados:</p>
 
@@ -994,7 +994,7 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
 
 <p>Não há “o jeito certo” e “o jeito errado” de se estruturar um projeto em ciência de dados, pois os problemas na prática são tão variados, com características tão diferentes, que fica difícil definir uma única forma de executar o trabalho e obter sucesso no final.</p>
 
-<p>No entanto, existem modelos baseados em estudos e experências anteriores que auxiliam bastante na hora de estruturar um projeto desse tipo.</p>
+<p>No entanto, existem modelos baseados em estudos e experiências anteriores que auxiliam bastante na hora de estruturar um projeto desse tipo.</p>
 
 <p>Segundo <a href="http://www.kdnuggets.com/polls/2014/analytics-data-mining-data-science-methodology.html">votação no KDnuggets (2014)</a> a metodologia <a href="https://en.wikipedia.org/wiki/Cross_Industry_Standard_Process_for_Data_Mining">CRISP-DM</a> é a mais utilizada para projetos em análise de dados, mineração de dados e ciência de dados. Cross Industry Standard Process for Data Mining é um modelo iterativo e incremental que define 6 grandes fases:</p>
 
@@ -1064,9 +1064,9 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
 
 <p>Como na fase de exploração, a visualização pode ter um papel fundamental. Um bom gráfico, pode conseguir passar a mesma informação de dez tabelas diferentes. Ou, dependendo do objetivo, um dashboard dinâmico para o cliente “explorar” os resultados. Em algumas situações, o resultado poderá ser um algoritmo de uso mais amplo (sistema de recomendação, motor de previsões em tempo real, robô que monitora redes sociais, etc).</p>
 
-<p>Outro ponto importante, é sempre deixar claro o que a análise realizada permite e o que ela não permite, aprensetando assim os resultados e suas limitações. É fundamental que os clientes tenham o mínimo de conhecimento sobre a capacidade do produto (relatório, dashboard, algoritmo…) que será entregue para que não haja mal entendidos ou frustrações.</p>
+<p>Outro ponto importante, é sempre deixar claro o que a análise realizada permite e o que ela não permite, apresentando assim os resultados e suas limitações. É fundamental que os clientes tenham o mínimo de conhecimento sobre a capacidade do produto (relatório, dashboard, algoritmo…) que será entregue para que não haja mal entendidos ou frustrações.</p>
 
-<p>Para apresentar bem os resultados não basta um bom trabalho analítico e bons modelos, é desejável uma boa habilidade de escrita, produzir gráficos interessantes, <a href="https://hbr.org/2013/03/a-data-scientists-real-job-sto/">“story telling”</a>, saber apresentar dados de maneira concisa e objetiva, habilidades interperssoais e, em alguns casos, até uma boa noção de design e interfaces gráficas.</p>
+<p>Para apresentar bem os resultados não basta um bom trabalho analítico e bons modelos, é desejável uma boa habilidade de escrita, produzir gráficos interessantes, <a href="https://hbr.org/2013/03/a-data-scientists-real-job-sto/">“story telling”</a>, saber apresentar dados de maneira concisa e objetiva, habilidades interpessoais e, em alguns casos, até uma boa noção de design e interfaces gráficas.</p>
 
 <h2 id="faa-loops-entre-as-fases">Faça loops entre as fases</h2>
 
