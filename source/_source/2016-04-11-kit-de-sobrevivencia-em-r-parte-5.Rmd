@@ -11,7 +11,7 @@ Você já aprendeu como carregar um arquivo de dados no R para começar a trabal
 
 <!-- More -->
 
-# Porque transformar os dados?
+# Por que transformar os dados?
 
 Durante o processo de análise de dados é bastante comum precisar de mais informações que não estão explícitas em sua base de dados, ou seja, informações além das que estão disponíveis nas linhas e colunas. 
 
