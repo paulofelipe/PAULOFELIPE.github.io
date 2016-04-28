@@ -4,7 +4,7 @@
   <title><![CDATA[básico | Full Join]]></title>
   <link href="http://fulljoin.com.br/blog/categories/basico/atom.xml" rel="self"/>
   <link href="http://fulljoin.com.br/"/>
-  <updated>2016-04-26T22:21:17-03:00</updated>
+  <updated>2016-04-27T22:31:57-03:00</updated>
   <id>http://fulljoin.com.br/</id>
   <author>
     <name><![CDATA[Full Join]]></name>
@@ -594,7 +594,7 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
 
 <h2 id="pacotes">Pacotes</h2>
 
-<p>Um pacote do R e um conjunto de funções que tem uma temática em comum. As funções de um mesmo pacote são carregadas juntas em memória, ou seja, ficam disponíveis para uso no R. Por ter uma temática específica, cada pacote possui uma documentação explicando suas funcionalidades disponíveis e como usá-las. Além das funções, alguns pacotes também fornecem um conjunto de dados que são usados para replicar os exemplos fornecidos nas documentações.</p>
+<p>Um pacote do R é um conjunto de funções que têm uma temática em comum. As funções de um mesmo pacote são carregadas juntas em memória, ou seja, ficam disponíveis para uso no R. Por ter uma temática específica, cada pacote possui uma documentação explicando suas funcionalidades disponíveis e como usá-las. Além das funções, alguns pacotes também fornecem um conjunto de dados que são usados para replicar os exemplos fornecidos nas documentações.</p>
 
 <p>Por exemplo, o <code>dplyr</code> é um pacote que possui um série de funções que facilitam consideravelmente a manipulação de dados. Já o <code>readxl</code> é um pacote com funções para leitura de arquivos excel. E o <code>ggplot2</code>, um pacote para criação de gráficos.</p>
 
@@ -866,7 +866,7 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
     <link href="http://fulljoin.com.br/blog/2016/03/23/kit-de-sobrevivencia-em-r-parte-1/"/>
     <updated>2016-03-23T21:14:06-03:00</updated>
     <id>http://fulljoin.com.br/blog/2016/03/23/kit-de-sobrevivencia-em-r-parte-1</id>
-    <content type="html"><![CDATA[<p>Nesta sequência de de posts, iremos tratar o básico necessário para quem deseja iniciar o aprendizado em <a href="https://www.r-project.org/about.html">R</a>. Trata-se de uma linguagem de programação muito usada para cálculos estatísticos. Neste e nos próximos posts, discutiremos tópicos como instalação, importação de dados, tipos de dados, etc.</p>
+    <content type="html"><![CDATA[<p>Nesta sequência de posts, iremos tratar o básico necessário para quem deseja iniciar o aprendizado em <a href="https://www.r-project.org/about.html">R</a>. Trata-se de uma linguagem de programação muito usada para cálculos estatísticos. Neste e nos próximos posts, discutiremos tópicos como instalação, importação de dados, tipos de dados, etc.</p>
 
 <p>A nossa expectativa é que, com essa sequência, seja quebrada a barreira inicial para aqueles que pretendem entrar nesse mundo (cuidado que esse é um caminho sem volta!).</p>
 
@@ -912,8 +912,8 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
 <h4 id="console">2. Console</h4>
 <p>No console aparecerão os resultados dos comandos. Você também pode escrever no console e obter os resultados, sem uso do editor de código. Também pode-se chamar a ajuda diretamente pelo console. Por exemplo: <code>?lm</code>. Voltaremos a falar desse comando <code>?</code> mais pra frente.</p>
 
-<h4 id="workspace-e-history">3. <em>Workspace</em> e <em>History</em></h4>
-<p>No <em>Workspace</em> ficarão guardados todos os objetos que forem criados na sessão. Entenda sessão como o espaço de tempo entre o momento em que você inicia o R e o momento que finaliza. Nesse período tudo que você faz usa memória RAM e o processador do computador. E na aba <em>History</em>, como você deve imaginar, o RStudio cria um histórico de comandos.</p>
+<h4 id="environment-e-history">3. <em>Environment</em> e <em>History</em></h4>
+<p>No <em>Environment</em> ficarão guardados todos os objetos que forem criados na sessão. Entenda sessão como o espaço de tempo entre o momento em que você inicia o R e o momento que finaliza. Nesse período tudo que você faz usa memória RAM e o processador do computador. E na aba <em>History</em>, como você deve imaginar, o RStudio cria um histórico de comandos.</p>
 
 <h4 id="files-plots-packages-help-e-viewer">4. <em>Files</em>, <em>Plots</em>, <em>Packages</em>, <em>Help</em> e <em>Viewer</em>.</h4>
 <p>Nessa janela, estão várias funcionalidades do RStudio. Na aba <em>Files</em>, você terá uma navegação de arquivos do seu computador. Também será possível definir o diretório de trabalho (você também pode definir diretamente no código, mas isto será tratado posteriormente), ou seja, o R  entende o seu diretório de trabalho como ponto de partida para localizar arquivos que sejam chamados no script.</p>
@@ -922,7 +922,7 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
 
 <p>Em <em>Packages</em>, estão listados os pacotes que estão instalados e você pode verificar quais estão carregados e, caso necessário, poderá carregar algum pacote necessário para a sua análise. Também é possível instalar e atualizar pacotes. Novamente, tudo isso é possível fazer diretamente no código.</p>
 
-<p><em>Help</em> o nome já diz tudo. Essa aba será bastante utilizada por você. Saber usar o <em>help</em> é fundamental para evitar desperdiço de tempo. Os usuários de R, em geral, são bastante solícitos. Entretanto, uma olhadinha rápida no help pode evitar que você gaste “créditos” desnecessariamente.</p>
+<p><em>Help</em> o nome já diz tudo. Essa aba será bastante utilizada por você. Saber usar o <em>help</em> é fundamental para evitar desperdício de tempo. Os usuários de R, em geral, são bastante solícitos. Entretanto, uma olhadinha rápida no help pode evitar que você gaste “créditos” desnecessariamente.</p>
 
 <p>Por fim, o <em>Viewer</em>. Essa funcionalidade é utilizada para visualizar localmente conteúdo web. O gráfico da figura está na aba <em>Viewer</em> porque é uma visualização em <a href="https://pt.wikipedia.org/wiki/JavaScript">javascript</a>, que pode ser adicionada a documentos htmls gerados usando o <a href="http://rmarkdown.rstudio.com/">RMarkdown</a> ou em aplicações web com suporte do <a href="http://shiny.rstudio.com/">Shiny</a>.</p>
 
@@ -940,12 +940,10 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
 
 <p>No ubuntu, você pode instalar o R via terminal ou pela central de programas.</p>
 
-<p>Pelo terminal, tecle <code>ctrl + alt + T</code> e faça o seguinte:</p>
+<p>Para instalar via terminal, tecle <code>ctrl + alt + T</code> para abrir a janela do terminal e digite os seguintes comandos:</p>
 
-<p><code>
-sudo apt-get update
-sudo apt-get install r-base
-</code></p>
+<p><div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span>
+<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">r</span><span class="o">-</span><span class="n">base</span></code></pre></div></p>
 
 <p>Na central de aplicativos, basta buscar por <code>r-base</code>.</p>
 
@@ -961,9 +959,9 @@ sudo apt-get install r-base
 
 <p>Esta parte é fundamental. Independente do seu nível de conhecimento, sempre haverá a necessidade de buscar ajuda. A nossa experiência diz que é muito difícil você ficar sem uma solução. No entanto, saber procurar é fundamental tanto para você encontrar uma solução desejável quanto para economizar tempo.</p>
 
-<p>Entre, as fontes de ajuda estão o próprio <em>help</em> do R, o bom e velho google para uma busca mais ampla, o <a href="http://stackoverflow.com/tags/r">stack overflow</a> (ou <a href="http://pt.stackoverflow.com/questions/tagged/r">em português</a>), o <a href="https://www.reddit.com/r/rprogramming">reddit</a> e, é claro, o <strong>full join</strong>. Estaremos aqui para te ajudar.</p>
+<p>Entre, as fontes de ajuda estão o próprio <em>help</em> do R, o bom e velho google para uma busca mais ampla, o <a href="http://stackoverflow.com/tags/r">stack overflow</a> (ou <a href="http://pt.stackoverflow.com/questions/tagged/r">em português</a>), o <a href="https://www.reddit.com/r/rprogramming">reddit</a> e, é claro, o <strong>full join</strong>. Estaremos aqui para te ajudar. Basta deixar um comentário em qualquer post.</p>
 
-<p>Se você puder, faça suas pesquisas em inglês. Isto porque as possibilidades de você encontrar alguém que teve uma mesma dúvida crescem consideravelmente.</p>
+<p>Se você estiver buscando no google, faça suas pesquisas em inglês. Isto porque as possibilidades de você encontrar alguém que teve uma mesma dúvida crescem consideravelmente.</p>
 
 <p>Se você for realizar uma pergunta em algum fórum ou site de perguntas e respostas, é importante atentar para alguns pontos que deverão ser informados:</p>
 
