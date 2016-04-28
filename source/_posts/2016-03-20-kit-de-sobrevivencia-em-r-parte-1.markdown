@@ -9,13 +9,13 @@ published: true
 
 Nesta sequência de posts, iremos tratar o básico necessário para quem deseja iniciar o aprendizado em [R](https://www.r-project.org/about.html). Trata-se de uma linguagem de programação muito usada para cálculos estatísticos. Neste e nos próximos posts, discutiremos tópicos como instalação, importação de dados, tipos de dados, etc. 
 
-A nossa expectativa é que, com essa sequência, seja quebrada a barreira inicial para aqueles que pretendem entrar nesse mundo (cuidado, esse é um caminho sem volta!).
+A nossa expectativa é que, com essa sequência, seja quebrada a barreira inicial para aqueles que pretendem entrar nesse mundo (cuidado que esse é um caminho sem volta!).
 
 <!-- More -->
 
 ## Por que aprender uma linguagem estatística?
 
-Qualquer um que trabalhe um pouco mais com dados já esbarrou nas limitações do "excel" ou de softwares de planilha. Nada contra, são ótimos, mas às vezes eles dificultam mais do que ajudam. Abrir a mente e se permitir novas formas de trabalho pode render bons frutos.
+Qualquer um que trabalhe um pouco mais com dados já esbarrou nas limitações do "excel" ou de softwares de planilha. Nada contra, são ótimos, mas as vezes eles dificultam mais do que ajudam. Abrir a mente e se permitir novas formas de trabalho pode render bons frutos.
 
 Trabalhos de manipulação de dados, verificação, limpeza e junção de dados, ou até alguns cálculos com uma massa de dados um pouco maior podem se tornar um pouco traumáticos se você não usar as ferramentas mais adequadas.
 
@@ -31,7 +31,7 @@ Um motivo básico é que o R é **livre**. Em circunstâncias de restrição or�
 
 Todavia, no caso de ciência de dados, os softwares livres parecem que vieram para ficar em posição dominante. De acordo com [essa pesquisa](http://blog.dominodatalab.com/open-source-winning-against-proprietary-data-science-vendors/), o mercado da ciência de dados está sendo dominado por softwares livres.
 
-Podemos dizer, então, que o grande "concorrente" do R no momento é o Python, outro software livre. 
+Podemos dizer, então, que grande "concorrente" do R no momento é o Python, outro software livre. 
 
 E qual seria o melhor? Depende. Como tudo na vida, cada um apresenta vantagens e desvantagens. O importante é tirar proveito das diferenças. Sua necessidade dirá qual é o software mais adequado. 
 

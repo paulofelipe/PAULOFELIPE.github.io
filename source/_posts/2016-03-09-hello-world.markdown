@@ -27,7 +27,7 @@ Apesar de ser um termo que vem ganhando bastante relevância, não se trata de u
 Sendo bem simplista, data science nada mais é do que extrair algum tipo de conhecimento, interpretar informações ou realizar descobertas, tudo isso utilizando massas de dados. Normalmente essa atividade é multidisciplinar e envolve matemática, estatística, computação, e, principalmente, capacidade de entender e explorar os dados com os quais se vai trabalhar. 
 
 
-##Se não é novidade, por que o tema está tão relevante? 
+##Se não é novidade, porque o tema está tão relevante? 
 
 É inquestionável que a capacidade de produção de dados e a capacidade de processamento de dados aumentou muito nas últimas décadas (internet!). 
 
