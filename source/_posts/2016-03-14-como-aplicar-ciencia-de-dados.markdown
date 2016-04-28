@@ -25,7 +25,7 @@ Não há "o jeito certo" e "o jeito errado" de se estruturar um projeto em ciên
 No entanto, existem modelos baseados em estudos e experiências anteriores que auxiliam bastante na hora de estruturar um projeto desse tipo.
 
 
-Segundo [votação no KDnuggets (2014)](http://www.kdnuggets.com/polls/2014/analytics-data-mining-data-science-methodology.html) a metodologia [CRISP-DM](https://en.wikipedia.org/wiki/Cross_Industry_Standard_Process_for_Data_Mining) é a mais utilizada para projetos em análise de dados, mineração de dados e ciência de dados. Cross Industry Standard Process for Data Mining é um modelo iterativo e incremental que define 6 grandes fases:
+Segundo [votação no KDnuggets (2014)](http://www.kdnuggets.com/polls/2014/analytics-data-mining-data-science-methodology.html) a metodologia [CRISP-DM](https://en.wikipedia.org/wiki/Cross_Industry_Standard_Process_for_Data_Mining) é a mais utilizada para projetos em análise de dados, mineração de dados e ciência de dados. _Cross Industry Standard Process for Data Mining_ é um modelo iterativo e incremental que define 6 grandes fases:
 
 
 * Entendimento do negócio

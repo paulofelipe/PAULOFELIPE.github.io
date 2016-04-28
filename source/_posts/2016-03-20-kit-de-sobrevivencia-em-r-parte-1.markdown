@@ -7,7 +7,7 @@ categories: [r, básico, rstudio, introdução r]
 published: true
 ---
 
-Nesta sequência de de posts, iremos tratar o básico necessário para quem deseja iniciar o aprendizado em [R](https://www.r-project.org/about.html). Trata-se de uma linguagem de programação muito usada para cálculos estatísticos. Neste e nos próximos posts, discutiremos tópicos como instalação, importação de dados, tipos de dados, etc. 
+Nesta sequência de posts, iremos tratar o básico necessário para quem deseja iniciar o aprendizado em [R](https://www.r-project.org/about.html). Trata-se de uma linguagem de programação muito usada para cálculos estatísticos. Neste e nos próximos posts, discutiremos tópicos como instalação, importação de dados, tipos de dados, etc. 
 
 A nossa expectativa é que, com essa sequência, seja quebrada a barreira inicial para aqueles que pretendem entrar nesse mundo (cuidado que esse é um caminho sem volta!).
 
@@ -54,8 +54,8 @@ No editor de código, você poderá escrever e editar os scripts. [Script](https
 #### 2. Console
 No console aparecerão os resultados dos comandos. Você também pode escrever no console e obter os resultados, sem uso do editor de código. Também pode-se chamar a ajuda diretamente pelo console. Por exemplo: `?lm`. Voltaremos a falar desse comando `?` mais pra frente.
 
-#### 3. _Workspace_ e _History_
-No _Workspace_ ficarão guardados todos os objetos que forem criados na sessão. Entenda sessão como o espaço de tempo entre o momento em que você inicia o R e o momento que finaliza. Nesse período tudo que você faz usa memória RAM e o processador do computador. E na aba _History_, como você deve imaginar, o RStudio cria um histórico de comandos. 
+#### 3. _Environment_ e _History_
+No _Environment_ ficarão guardados todos os objetos que forem criados na sessão. Entenda sessão como o espaço de tempo entre o momento em que você inicia o R e o momento que finaliza. Nesse período tudo que você faz usa memória RAM e o processador do computador. E na aba _History_, como você deve imaginar, o RStudio cria um histórico de comandos. 
 
 #### 4. _Files_, _Plots_, _Packages_, _Help_ e _Viewer_.
 Nessa janela, estão várias funcionalidades do RStudio. Na aba _Files_, você terá uma navegação de arquivos do seu computador. Também será possível definir o diretório de trabalho (você também pode definir diretamente no código, mas isto será tratado posteriormente), ou seja, o R  entende o seu diretório de trabalho como ponto de partida para localizar arquivos que sejam chamados no script.
@@ -64,7 +64,7 @@ A aba _Plots_ trará os gráficos gerados, possibilitando a exportação para al
 
 Em _Packages_, estão listados os pacotes que estão instalados e você pode verificar quais estão carregados e, caso necessário, poderá carregar algum pacote necessário para a sua análise. Também é possível instalar e atualizar pacotes. Novamente, tudo isso é possível fazer diretamente no código.
 
-_Help_ o nome já diz tudo. Essa aba será bastante utilizada por você. Saber usar o _help_ é fundamental para evitar desperdiço de tempo. Os usuários de R, em geral, são bastante solícitos. Entretanto, uma olhadinha rápida no help pode evitar que você gaste "créditos" desnecessariamente. 
+_Help_ o nome já diz tudo. Essa aba será bastante utilizada por você. Saber usar o _help_ é fundamental para evitar desperdício de tempo. Os usuários de R, em geral, são bastante solícitos. Entretanto, uma olhadinha rápida no help pode evitar que você gaste "créditos" desnecessariamente. 
 
 Por fim, o _Viewer_. Essa funcionalidade é utilizada para visualizar localmente conteúdo web. O gráfico da figura está na aba _Viewer_ porque é uma visualização em [javascript](https://pt.wikipedia.org/wiki/JavaScript), que pode ser adicionada a documentos htmls gerados usando o [RMarkdown](http://rmarkdown.rstudio.com/) ou em aplicações web com suporte do [Shiny](http://shiny.rstudio.com/).
 
@@ -84,12 +84,12 @@ O Rstudio pode ser baixado [neste link](https://www.rstudio.com/products/rstudio
 
 No ubuntu, você pode instalar o R via terminal ou pela central de programas.
 
-Pelo terminal, tecle `ctrl + alt + T` e faça o seguinte:
+Para instalar via terminal, tecle `ctrl + alt + T` para abrir a janela do terminal e digite os seguintes comandos:
 
-```
+{% highlight ruby %}
 sudo apt-get update
 sudo apt-get install r-base
-```
+{% endhighlight %}
 
 Na central de aplicativos, basta buscar por `r-base`.
 
@@ -106,9 +106,9 @@ O Rstudio pode ser baixado [neste link](https://www.rstudio.com/products/rstudio
 
 Esta parte é fundamental. Independente do seu nível de conhecimento, sempre haverá a necessidade de buscar ajuda. A nossa experiência diz que é muito difícil você ficar sem uma solução. No entanto, saber procurar é fundamental tanto para você encontrar uma solução desejável quanto para economizar tempo. 
 
-Entre, as fontes de ajuda estão o próprio _help_ do R, o bom e velho google para uma busca mais ampla, o [stack overflow](http://stackoverflow.com/tags/r) (ou [em português](http://pt.stackoverflow.com/questions/tagged/r)), o [reddit](https://www.reddit.com/r/rprogramming) e, é claro, o **full join**. Estaremos aqui para te ajudar.
+Entre, as fontes de ajuda estão o próprio _help_ do R, o bom e velho google para uma busca mais ampla, o [stack overflow](http://stackoverflow.com/tags/r) (ou [em português](http://pt.stackoverflow.com/questions/tagged/r)), o [reddit](https://www.reddit.com/r/rprogramming) e, é claro, o **full join**. Estaremos aqui para te ajudar. Basta deixar um comentário em qualquer post.
 
-Se você puder, faça suas pesquisas em inglês. Isto porque as possibilidades de você encontrar alguém que teve uma mesma dúvida crescem consideravelmente. 
+Se você estiver buscando no google, faça suas pesquisas em inglês. Isto porque as possibilidades de você encontrar alguém que teve uma mesma dúvida crescem consideravelmente. 
 
 Se você for realizar uma pergunta em algum fórum ou site de perguntas e respostas, é importante atentar para alguns pontos que deverão ser informados:
 
