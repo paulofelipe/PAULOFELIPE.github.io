@@ -23,7 +23,7 @@ No geral, você fará muito uso de pacotes para facilitar tarefas que as funçõ
 
 Existem duas opções para instalar um pacote: via comando ou usando a funcionalidade nos menus do RStudio.
 
-Para instalar via comando, você pode digitar o seguinte comando no console:
+Para instalar via comando, você pode digitar o seguinte código no console:
 
 ```{r, eval=FALSE}
 install.packages('readxl')
