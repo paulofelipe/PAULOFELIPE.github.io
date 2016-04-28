@@ -4,7 +4,7 @@
   <title><![CDATA[Full Join]]></title>
   <link href="http://fulljoin.com.br/atom.xml" rel="self"/>
   <link href="http://fulljoin.com.br/"/>
-  <updated>2016-04-27T23:43:56-03:00</updated>
+  <updated>2016-04-27T23:52:15-03:00</updated>
   <id>http://fulljoin.com.br/</id>
   <author>
     <name><![CDATA[Full Join]]></name>
@@ -604,7 +604,7 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
 
 <p>Existem duas opções para instalar um pacote: via comando ou usando a funcionalidade nos menus do RStudio.</p>
 
-<p>Para instalar via comando, você pode digitar o seguinte comando no console:</p>
+<p>Para instalar via comando, você pode digitar o seguinte código no console:</p>
 
 <div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">install.packages</span><span class="p">(</span><span class="s1">'readxl'</span><span class="p">)</span></code></pre></div>
 
