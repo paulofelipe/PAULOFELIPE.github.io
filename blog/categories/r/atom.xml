@@ -4,7 +4,7 @@
   <title><![CDATA[r | Full Join]]></title>
   <link href="http://fulljoin.com.br/blog/categories/r/atom.xml" rel="self"/>
   <link href="http://fulljoin.com.br/"/>
-  <updated>2016-04-27T22:31:57-03:00</updated>
+  <updated>2016-04-27T23:28:58-03:00</updated>
   <id>http://fulljoin.com.br/</id>
   <author>
     <name><![CDATA[Full Join]]></name>
@@ -178,17 +178,17 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
 
 <p>As dimensões são separadas por vírgulas. Por exemplo, no caso do data frame, como existem duas dimensões (linhas e colunas) será preciso dizer em qual nós estamos interessados. Por exemplo, teste os seguintes comandos:</p>
 
-<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Selecionar as 5 primeiras linhas</span>
-<span class="n">dados</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">,</span> <span class="p">]</span>
-<span class="c1"># Selecionar as 5 primeiras linhas e as duas primeiras colunas</span>
-<span class="n">dados</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">,</span> <span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">]</span>
-<span class="c1"># Selecionar todas as linhas e as duas primeiras colunas</span>
-<span class="n">dados</span><span class="p">[,</span> <span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">]</span></code></pre></div></p>
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Selecionar as 5 primeiras linhas
+</span><span class="n">dados</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">,</span> <span class="p">]</span>
+<span class="c1"># Selecionar as 5 primeiras linhas e as duas primeiras colunas
+</span><span class="n">dados</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">,</span> <span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">]</span>
+<span class="c1"># Selecionar todas as linhas e as duas primeiras colunas
+</span><span class="n">dados</span><span class="p">[,</span> <span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">]</span></code></pre></div></p>
 
 <p>Apesar de ter sido usado apenas números, você pode usar condições e nomes das colunas. Tente o seguinte:</p>
 
-<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Selecionar as 5 primeiras linhas e a coluna UF e Taxa_Desemprego</span>
-<span class="n">dados</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">,</span> <span class="n">c</span><span class="p">(</span><span class="err">“</span><span class="n">UF</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">Taxa_Desemprego</span><span class="err">”</span><span class="p">)]</span></code></pre></div></p>
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Selecionar as 5 primeiras linhas e a coluna UF e Taxa_Desemprego
+</span><span class="n">dados</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">,</span> <span class="n">c</span><span class="p">(</span><span class="err">“</span><span class="n">UF</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">Taxa_Desemprego</span><span class="err">”</span><span class="p">)]</span></code></pre></div></p>
 
 <p>Nesse caso usamos um vetor <code>c()</code> para informar a listagem de nomes de colunas. No próximo post aprofundaremos mais no uso das filtragens de linha e coluna dentro do data frame.</p>
 
@@ -459,12 +459,12 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
 
 <p>Para importar dados com delimitadores utilizaremos a função <code>read.table()</code>. Essa função permite definir qualquer delimitador para a leitura do arquivo, conforme os exemplos abaixo.</p>
 
-<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Separado por tabulação</span>
-<span class="n">dados.tab</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">read.table</span><span class="p">(</span><span class="err">‘</span><span class="n">desemprego_uf_tab.txt</span><span class="err">’</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="err">“\</span><span class="n">t</span><span class="err">”</span><span class="p">,</span> <span class="n">dec</span> <span class="o">=</span> <span class="err">“</span><span class="p">,</span><span class="err">”</span><span class="p">,</span> <span class="n">header</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span> 
-<span class="c1"># Separado por ;</span>
-<span class="n">dados.ponto.virgula</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">read.table</span><span class="p">(</span><span class="err">‘</span><span class="n">desemprego_uf_ponto_virgula.txt</span><span class="err">’</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="err">“</span><span class="p">;</span><span class="err">”</span><span class="p">,</span> <span class="n">dec</span> <span class="o">=</span> <span class="err">“</span><span class="p">,</span><span class="err">”</span><span class="p">,</span> <span class="n">header</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span> 
-<span class="c1"># Separado por espaço</span>
-<span class="n">dados.espaco</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">read.table</span><span class="p">(</span><span class="err">‘</span><span class="n">desemprego_uf_espaco.txt</span><span class="err">’</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="err">“</span> <span class="err">“</span><span class="p">,</span> <span class="n">dec</span> <span class="o">=</span> <span class="err">“</span><span class="p">,</span><span class="err">”</span><span class="p">,</span> <span class="n">header</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span></code></pre></div></p>
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Separado por tabulação
+</span><span class="n">dados.tab</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">read.table</span><span class="p">(</span><span class="err">‘</span><span class="n">desemprego_uf_tab.txt</span><span class="err">’</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="err">“\</span><span class="n">t</span><span class="err">”</span><span class="p">,</span> <span class="n">dec</span> <span class="o">=</span> <span class="err">“</span><span class="p">,</span><span class="err">”</span><span class="p">,</span> <span class="n">header</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span> 
+<span class="c1"># Separado por ;
+</span><span class="n">dados.ponto.virgula</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">read.table</span><span class="p">(</span><span class="err">‘</span><span class="n">desemprego_uf_ponto_virgula.txt</span><span class="err">’</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="err">“</span><span class="p">;</span><span class="err">”</span><span class="p">,</span> <span class="n">dec</span> <span class="o">=</span> <span class="err">“</span><span class="p">,</span><span class="err">”</span><span class="p">,</span> <span class="n">header</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span> 
+<span class="c1"># Separado por espaço
+</span><span class="n">dados.espaco</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">read.table</span><span class="p">(</span><span class="err">‘</span><span class="n">desemprego_uf_espaco.txt</span><span class="err">’</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="err">“</span> <span class="err">“</span><span class="p">,</span> <span class="n">dec</span> <span class="o">=</span> <span class="err">“</span><span class="p">,</span><span class="err">”</span><span class="p">,</span> <span class="n">header</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span></code></pre></div></p>
 
 <p>Reparem no parâmetro <code>header = TRUE</code>, isso significa dizer que a primeira linha do arquivo contem o nome das colunas, ou seja, não é um dado propriamente dito, e sim um metadado pois é uma informação sobre os registros. Caso seu arquivo não contenha o nome das colunas, basta usar <code>header = FALSE</code>.</p>
 
@@ -640,8 +640,8 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
 
 <p>Para realizar a instalação desses pacotes “fora do CRAN”, será necessária a instalação do <code>devtools</code> (que é um pacote!). Por exemplo, o <code>ggplot2</code>, ótimo pacote para gráficos, já possui uma versão estável no CRAN. No entanto, se você desejar instalar a versão que está em desenvolvimento, que pode possuir uma nova funcionalidade, faça o seguinte:</p>
 
-<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">install.packages</span><span class="p">(</span><span class="err">‘</span><span class="n">devtools</span><span class="err">’</span><span class="p">)</span> <span class="c1"># Caso não esteja instalado ainda</span>
-<span class="n">devtools</span><span class="o">::</span><span class="n">install_github</span><span class="p">(</span><span class="err">“</span><span class="n">hadley</span><span class="o">/</span><span class="n">ggplot2</span><span class="err">”</span><span class="p">)</span></code></pre></div></p>
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">install.packages</span><span class="p">(</span><span class="err">‘</span><span class="n">devtools</span><span class="err">’</span><span class="p">)</span> <span class="c1"># Caso não esteja instalado ainda
+</span><span class="n">devtools</span><span class="o">::</span><span class="n">install_github</span><span class="p">(</span><span class="err">“</span><span class="n">hadley</span><span class="o">/</span><span class="n">ggplot2</span><span class="err">”</span><span class="p">)</span></code></pre></div></p>
 
 <p>Aqui temos um ponto interessante. Para usar funções de um pacote, usualmente carrega-se usando o <code>library()</code>. Contudo, se você quiser pontualmente uma função de um pacote, pode-se optar pela forma acima: <code>nome_do_pacote::nome_da_função</code>. Dessa forma você evitaria carregar todas as funções do pacote em memória. Isso pode ser muito útil!</p>
 
@@ -653,9 +653,9 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
 
 <p>Para buscar ajuda sobre uma função específica, existem algumas possibilidades a depender se o pacote já está carregado ou não. Por exemplo:</p>
 
-<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="o">?</span><span class="n">read_excel</span> <span class="c1"># se o pacote já estiver sido carregado com library(readxl)</span>
-<span class="o">?</span><span class="n">readxl</span><span class="o">::</span><span class="n">read_excel</span> <span class="c1"># Se o pacote não estiver carregado</span>
-<span class="o">??</span><span class="n">read_excel</span>  <span class="c1"># Pacote não carregado. Demora mais para apresentar um resultado</span></code></pre></div></p>
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="o">?</span><span class="n">read_excel</span> <span class="c1"># se o pacote já estiver sido carregado com library(readxl)
+</span><span class="o">?</span><span class="n">readxl</span><span class="o">::</span><span class="n">read_excel</span> <span class="c1"># Se o pacote não estiver carregado
+</span><span class="o">??</span><span class="n">read_excel</span>  <span class="err">#</span> <span class="n">Pacote</span> <span class="n">n</span><span class="err">ã</span><span class="n">o</span> <span class="n">carregado.</span> <span class="n">Demora</span> <span class="n">mais</span> <span class="n">para</span> <span class="n">apresentar</span> <span class="n">um</span> <span class="n">resultado</span></code></pre></div></p>
 
 <p>É importante destacar o <code>??</code>, que faz uma busca mais ampla por funções, demonstrações e arquivos que trazem uma visão geral (vignette) de algum pacote/função.</p>
 
@@ -734,7 +734,7 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
 
 <p><div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 125</code></pre></div></p>
 
-<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="m">2</span> <span class="o">^</span> <span class="p">(</span><span class="m">4</span> <span class="o">-</span> <span class="m">2</span><span class="p">)</span> <span class="o">*</span> <span class="m">-8</span> <span class="o">/</span> <span class="p">(</span><span class="m">5</span> <span class="o">*</span> <span class="p">(</span><span class="m">10</span> <span class="o">+</span> <span class="m">3</span><span class="p">))</span> <span class="c1">#Precedentes matemáticos</span></code></pre></div></p>
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="m">2</span> <span class="o">^</span> <span class="p">(</span><span class="m">4</span> <span class="o">-</span> <span class="m">2</span><span class="p">)</span> <span class="o">*</span> <span class="m">-8</span> <span class="o">/</span> <span class="p">(</span><span class="m">5</span> <span class="o">*</span> <span class="p">(</span><span class="m">10</span> <span class="o">+</span> <span class="m">3</span><span class="p">))</span> <span class="err">#</span><span class="n">Precedentes</span> <span class="n">matem</span><span class="err">á</span><span class="n">ticos</span></code></pre></div></p>
 
 <p><div class="highlight"><pre><code class="language-text" data-lang="text">## [1] -0.4923077</code></pre></div></p>
 
@@ -758,7 +758,7 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
 
 <p>Para armazenar uma variável no R, você deve usar o seguinte símbolo <code>&lt;-</code>, formando uma setinha direcionada para a esquerda. Você pode chamar suas variáveis do que você quiser! Elas podem conter letras, números, ponto <code>.</code>, e <em>underscore</em> <code>_</code>, e podem ter o tamanho qualquer tamanho. Há apenas uma regra: o nome das variáveis deve começar com letras (maiúsculas ou minúsculas). Se o R, por algum motivo, for retornar uma variável que tenha o nome iniciando com número, automaticamente será adicionado ``` no início e no fim.</p>
 
-<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">minha_PRIMEIRA.variavel</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="m">9</span> <span class="o">^</span> <span class="m">10</span> <span class="c1">#Nome esdrúxulo de variável apenas para exemplificar!</span></code></pre></div></p>
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">minha_PRIMEIRA.variavel</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="m">9</span> <span class="o">^</span> <span class="m">10</span> <span class="err">#</span><span class="n">Nome</span> <span class="n">esdr</span><span class="err">ú</span><span class="n">xulo</span> <span class="n">de</span> <span class="n">vari</span><span class="err">á</span><span class="n">vel</span> <span class="n">apenas</span> <span class="n">para</span> <span class="n">exemplificar</span><span class="o">!</span></code></pre></div></p>
 
 <p>“Ué, apertei enter e nada aconteceu?”. Aconteceu sim! Você colocou o resultado de <code>9 ^ 10</code> dentro da variável chamada <code>minha_PRIMEIRA.variavel</code>. Para comprovar e para ver o que tem “dentro da variável”, digite apenas o nome da variável e aperte enter:</p>
 
@@ -770,8 +770,8 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
 
 <p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">x</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="m">5</span> <span class="o">/</span> <span class="m">2</span>
 <span class="n">y</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="m">3</span> <span class="o">^</span> <span class="m">2</span>
-<span class="n">z</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">y</span> <span class="o">-</span> <span class="n">x</span> <span class="c1">#Resultado da operação y menos o resultado da operação x</span>
-<span class="n">z</span></code></pre></div></p>
+<span class="n">z</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">y</span> <span class="o">-</span> <span class="n">x</span> <span class="c1">#Resultado da operação y menos o resultado da operação x
+</span><span class="n">z</span></code></pre></div></p>
 
 <p><div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 6.5</code></pre></div></p>
 
@@ -779,9 +779,9 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
   <p>Dica: use nomes explicativos! Talvez não pareça muito útil agora, mas existem alguns padrões e boas práticas para escrever comando em R que vai ajudar muito na hora de você mesmo ou outras pessoas entenderem o que foi feito. Recomendamos a leitura de alguns padrões de nomenclatura, <a href="http://adv-r.had.co.nz/Style.html">como este aqui</a>.</p>
 </blockquote>
 
-<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">primeira.variavel</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="m">-5</span> <span class="o">*</span> <span class="m">4</span> <span class="c1">#padrão com ponto, mais comum em R</span>
-<span class="n">primeiraVariavel</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="m">-5</span> <span class="o">*</span> <span class="m">4</span> <span class="c1">#padrão camel case, comum em outras linguagens de programação</span>
-<span class="n">primeira_variavel</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="m">-5</span> <span class="o">*</span> <span class="m">4</span> <span class="c1">#padrão underscore</span></code></pre></div></p>
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">primeira.variavel</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="m">-5</span> <span class="o">*</span> <span class="m">4</span> <span class="c1">#padrão com ponto, mais comum em R
+</span><span class="n">primeiraVariavel</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="m">-5</span> <span class="o">*</span> <span class="m">4</span> <span class="c1">#padrão camel case, comum em outras linguagens de programação
+</span><span class="n">primeira_variavel</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="m">-5</span> <span class="o">*</span> <span class="m">4</span> <span class="err">#</span><span class="n">padr</span><span class="err">ã</span><span class="n">o</span> <span class="n">underscore</span></code></pre></div></p>
 
 <p>Pronto, você já sabe usar o console para comandos com os operadores matemáticos básicos e sabe armazenar resultados em variáveis.</p>
 
@@ -868,13 +868,13 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
     <id>http://fulljoin.com.br/blog/2016/03/23/kit-de-sobrevivencia-em-r-parte-1</id>
     <content type="html"><![CDATA[<p>Nesta sequência de posts, iremos tratar o básico necessário para quem deseja iniciar o aprendizado em <a href="https://www.r-project.org/about.html">R</a>. Trata-se de uma linguagem de programação muito usada para cálculos estatísticos. Neste e nos próximos posts, discutiremos tópicos como instalação, importação de dados, tipos de dados, etc.</p>
 
-<p>A nossa expectativa é que, com essa sequência, seja quebrada a barreira inicial para aqueles que pretendem entrar nesse mundo (cuidado que esse é um caminho sem volta!).</p>
+<p>A nossa expectativa é que, com essa sequência, seja quebrada a barreira inicial para aqueles que pretendem entrar nesse mundo (cuidado, esse é um caminho sem volta!).</p>
 
 <!-- More -->
 
 <h2 id="por-que-aprender-uma-linguagem-estatstica">Por que aprender uma linguagem estatística?</h2>
 
-<p>Qualquer um que trabalhe um pouco mais com dados já esbarrou nas limitações do “excel” ou de softwares de planilha. Nada contra, são ótimos, mas as vezes eles dificultam mais do que ajudam. Abrir a mente e se permitir novas formas de trabalho pode render bons frutos.</p>
+<p>Qualquer um que trabalhe um pouco mais com dados já esbarrou nas limitações do “excel” ou de softwares de planilha. Nada contra, são ótimos, mas às vezes eles dificultam mais do que ajudam. Abrir a mente e se permitir novas formas de trabalho pode render bons frutos.</p>
 
 <p>Trabalhos de manipulação de dados, verificação, limpeza e junção de dados, ou até alguns cálculos com uma massa de dados um pouco maior podem se tornar um pouco traumáticos se você não usar as ferramentas mais adequadas.</p>
 
@@ -890,7 +890,7 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
 
 <p>Todavia, no caso de ciência de dados, os softwares livres parecem que vieram para ficar em posição dominante. De acordo com <a href="http://blog.dominodatalab.com/open-source-winning-against-proprietary-data-science-vendors/">essa pesquisa</a>, o mercado da ciência de dados está sendo dominado por softwares livres.</p>
 
-<p>Podemos dizer, então, que grande “concorrente” do R no momento é o Python, outro software livre.</p>
+<p>Podemos dizer, então, que o grande “concorrente” do R no momento é o Python, outro software livre.</p>
 
 <p>E qual seria o melhor? Depende. Como tudo na vida, cada um apresenta vantagens e desvantagens. O importante é tirar proveito das diferenças. Sua necessidade dirá qual é o software mais adequado.</p>
 
