@@ -114,7 +114,7 @@ Na apresentação dos resultados, é preciso ter em mente qual é a audiência q
 Como na fase de exploração, a visualização pode ter um papel fundamental. Um bom gráfico, pode conseguir passar a mesma informação de dez tabelas diferentes. Ou, dependendo do objetivo, um dashboard dinâmico para o cliente "explorar" os resultados. Em algumas situações, o resultado poderá ser um algoritmo de uso mais amplo (sistema de recomendação, motor de previsões em tempo real, robô que monitora redes sociais, etc).
 
 
-Outro ponto importante, é sempre deixar claro o que a análise realizada permite e o que ela não permite, apresentando assim os resultados e suas limitações. É fundamental que os clientes tenham o mínimo de conhecimento sobre a capacidade do produto (relatório, dashboard, algoritmo...) que será entregue para que não haja mal entendidos ou frustrações. 
+Outro ponto importante é sempre deixar claro o que a análise realizada permite e o que ela não permite, apresentando assim os resultados e suas limitações. É fundamental que os clientes tenham o mínimo de conhecimento sobre a capacidade do produto (relatório, dashboard, algoritmo...) que será entregue para que não haja mal entendidos ou frustrações. 
 
 
 Para apresentar bem os resultados não basta um bom trabalho analítico e bons modelos, é desejável uma boa habilidade de escrita, produzir gráficos interessantes, ["story telling"](https://hbr.org/2013/03/a-data-scientists-real-job-sto/), saber apresentar dados de maneira concisa e objetiva, habilidades interpessoais e, em alguns casos, até uma boa noção de design e interfaces gráficas.
@@ -125,7 +125,7 @@ Para apresentar bem os resultados não basta um bom trabalho analítico e bons m
 
 Em qualquer fase e a qualquer momento, é normal que se retorne a fases anteriores ou se avance a fases posteriores. 
 
-Por exemplo: redefinir os objetivos após a fase de exploração; necessidade de se obter mais dados ou explorar melhor os dados após a apresentação dos resultados; repensar os objetivos do projeto após o cliente usar o produto final; etc. Esse exercícios do loop é saudável para o projeto.
+Por exemplo: redefinir os objetivos após a fase de exploração; necessidade de se obter mais dados ou explorar melhor os dados após a apresentação dos resultados; repensar os objetivos do projeto após o cliente usar o produto final; etc. Esse exercício do loop é saudável para o projeto.
 
 
 Tenha em mente que todas as fases são iterativas, parcialmente sobrepostas e complementares, de forma que, juntas, integram um grande loop de aprimoramento e refinamento até que se obtenha um resultado satisfatório.
