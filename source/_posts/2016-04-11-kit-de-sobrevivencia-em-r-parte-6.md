@@ -4,12 +4,12 @@ title: "Kit de sobrevivência em R - Parte 6: Estruturas de Controle"
 date: 2016-05-18 20:04:00 -0300
 comments: true
 categories: [r, básico, introdução r]
-published: false
+published: true
 ---
   
 
 
-No último post, você aprendeu um pouco sobre os tipos de dados e como realizar algumas transformações. Neste post, trataremos um pouco sobre estruturas de controles (for, if, else, while etc.). Estruturas de controles serão bastantes usadas durante o processo de análise de dados, sendo importante que você domine esse tópico.
+No último post, você aprendeu um pouco sobre os tipos de dados e como realizar algumas transformações. Neste post, trataremos um pouco sobre estruturas de controles (for, if, else, while etc.). Estruturas de controles serão bastante usadas durante o processo de análise de dados, sendo importante que você domine esse tópico.
 
 <!-- More -->
 
@@ -29,7 +29,7 @@ Supondo que você queira testar uma simples expressão para 5 valores diferentes
 
 {% highlight r %}
 x <- 2
-(x + x*2 + x^2 + x^x)
+x + x*2 + x^2 + x^x
 {% endhighlight %}
 
 
@@ -42,7 +42,7 @@ x <- 2
 
 {% highlight r %}
 x <- 3
-(x + x*2 + x^2 + x^x)
+x + x*2 + x^2 + x^x
 {% endhighlight %}
 
 
@@ -55,7 +55,7 @@ x <- 3
 
 {% highlight r %}
 x <- 4
-(x + x*2 + x^2 + x^x)
+x + x*2 + x^2 + x^x
 {% endhighlight %}
 
 
@@ -68,7 +68,7 @@ x <- 4
 
 {% highlight r %}
 x <- 5
-(x + x*2 + x^2 + x^x)
+x + x*2 + x^2 + x^x
 {% endhighlight %}
 
 
@@ -77,9 +77,8 @@ x <- 5
 ## [1] 3165
 {% endhighlight %}
 
-> Dica: parênteses em volta de uma expressão faz o R mostrar o resultado imediatamente. 
 
-Repare que você executou 5 vezes o mesmo comando alterando apenas o valor da variável `x`. 5 ainda parece uma quantidade pequena, mas vamos supor que você gostaria de testar essa expressão para 1000 valores? Você a escreveria 1000 vezes? Esse é um típico caso para o uso de loops!
+Repare que você executou 5 vezes o mesmo comando alterando apenas o valor da variável `x`. 5 ainda parece uma quantidade pequena, mas vamos supor que você gostaria de testar essa expressão para 1000 valores? Você a escreveria 1000 vezes? Apesar de você poder calcular todos esses valores a partir de um vetor `x <- 2:5`, em uma situação específica você pode ser ver obrigado a usar um loop pra não ter que ficar fazendo repetições cansativas.
 
 ## for()
 
@@ -87,7 +86,7 @@ O `for()` é usado para realizar uma série de ordens para uma determinada sequ�
 
 
 {% highlight r %}
-for(x in 1:5) {
+for(x in 2:5) {
   print(x + x*2 + x^2 + x^x)
 }
 {% endhighlight %}
@@ -95,13 +94,32 @@ for(x in 1:5) {
 
 
 {% highlight text %}
-## [1] 5
 ## [1] 14
 ## [1] 45
 ## [1] 284
 ## [1] 3165
 {% endhighlight %}
-Repare, você escreveu bem menos e o resultado foi idêntico: "para cada `x` igual a cada item na sequência `1:5`, execute `print(x + x*2 + x^2 + x^x)`". O `for()` irá repetir todas as instruções dentro das chaves `{ }` para cada elemento da sua sequência (vetor).
+Repare, você escreveu bem menos e o resultado foi idêntico: "para cada `x` igual a cada item na sequência `2:5`, execute `print(x + x*2 + x^2 + x^x)`". O `for()` irá repetir todas as instruções dentro das chaves `{ }` para cada elemento da sua sequência (vetor).
+
+Você também pode passar números que poderão ser usados como índices.
+
+
+{% highlight r %}
+x <- c(1, 4, 5, 6, 10)
+for(i in 1:5){
+  print(x[i])
+}
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## [1] 1
+## [1] 4
+## [1] 5
+## [1] 6
+## [1] 10
+{% endhighlight %}
 
 Vamos a um exemplo mais útil que deixa mais claro como o `for()` funciona. Suponha que você necessita gerar um único plot com quatro gráficos, um para cada trimestre de 2015, da taxa de desemprego por unidade da federação.
 
@@ -112,7 +130,7 @@ Para facilitar, iremos criar um novo data.frame em que estejam selecionadas some
 desemprego.uf.2015 <- desemprego.uf[desemprego.uf$Ano == 2015,]
 {% endhighlight %}
 
-Perceba que no código base do R, para selecionar as linhas de um data.frame, você utiliza o `[ , ]`. A vírgula divide as duas dimensões do data.frame. Assim, se o desejo é selecionar linhas, são utilizadas condições antes da vírgula. Para selecionar colunas, utiliza-se códigos após a vírgula. Funciona de maneira similar a uma matriz. 
+Perceba que no código base do R, para selecionar as linhas de um data.frame, você utiliza o `[ , ]`. A vírgula divide as duas dimensões do data.frame. Assim, se o desejo é selecionar linhas, são utilizadas condições antes da vírgula. Para selecionar colunas, serão necessários códigos após a vírgula. Funciona de maneira similar a uma matriz. 
 
 No entanto, esta não é a única maneira de realizar esse filtro nos dados. Por exemplo, você poderia obter o mesmo resultado usando a função `subset()`. Dê uma olhadinha no help.
 
@@ -150,26 +168,6 @@ for(i in trimestre){
 ## [1] "out-nov-dez"
 {% endhighlight %}
 
-Você também pode passar números que poderão ser usados como índices.
-
-
-{% highlight r %}
-x <- c(1, 4, 5, 6, 10)
-for(i in 1:5){
-  print(x[i])
-}
-{% endhighlight %}
-
-
-
-{% highlight text %}
-## [1] 1
-## [1] 4
-## [1] 5
-## [1] 6
-## [1] 10
-{% endhighlight %}
-
 Agora vamos definir alguns parâmetros do plot. Aqui usaremos o recurso base do R para geração dos gráficos. Atualmente, uma boa parte dos usuários (inclusive a gente) utiliza o [ggplot2](http://docs.ggplot2.org/current/). 
 
 Com um pouco de criatividade e com uma boa base de dados, você poderá criar gráficos como o que está [neste post](https://medium.com/airbnb-engineering/using-r-packages-and-education-to-scale-data-science-at-airbnb-906faa58e12d#.z39ukskpb) do Airbnb. Não entraremos em detalhes sobre gráficos agora, mas prometemos uma sequência de posts ensinando todos os principais aspectos da confecção de gráficos, aguarde!
@@ -187,7 +185,7 @@ O código abaixo traz o loop. Temos 4 operações dentro do loop:
 
 * Criar o data.frame `dados.tmp` a partir de um filtro no data.frame `desemprego.uf.2015`. Queremos somente as linhas em que o Trimestre é igual a `i`.
 * Usando a função `order()`, ordenar as linhas dos `dados.tmp` de forma decrescente pelo valor da taxa de desemprego. Vide `?order()`.
-* Criar um objeto de texto que trará o título de cada gráfico. Usamos a função `paste()` que tem o papel de concatenar o que for passado como argumento. Usamos espaço como separador, mas você pode passar qualquer separador entre as aspas. Esta função tem mais um parâmetro: `collapse`. Dê uma olhada no help para ver alguns exemplos. Note também que ele já tem um valor padrão `NULL`.
+* Criar um objeto de texto que trará o título de cada gráfico. Usamos a função `paste()` que tem o papel de concatenar o que for passado como argumento. Usamos espaço como separador, mas você pode passar qualquer separador entre as aspas. Esta função tem mais um parâmetro: `collapse`. Não precisaremos desse parâmetro aqui, mas dê uma olhada no help para ver alguns exemplos. Note também que ele já tem um valor padrão `NULL`.
 * Por fim, usamos o `barplot()` para criar o gráfico de barra. Vide `?barplot()`.
 
 
@@ -215,7 +213,7 @@ O gif abaixo mostra como o R vai inserindo gráfico a gráfico. Adicionei o coma
 
 ## if e else
 
-Outro clássico conceito de programação que você usará muito é o if e else. É uma estrutura condicional, que usa os operadores lógicos apresentados [no post anterior]({{root_url}}/blog/2016/04/21/kit-de-sobrevivencia-em-r-parte-5/). Se a condição do `if()` for verdadeira, executa os comandos dentro das chaves `{ }`, se não for verdadeiro, executa os comando da chave do `else { }`
+Outro clássico conceito de programação que você usará muito é o if e else. É uma estrutura condicional, que usa os operadores lógicos apresentados [no post anterior]({{root_url}}/blog/2016/04/21/kit-de-sobrevivencia-em-r-parte-5/). Se a condição do `if()` for verdadeira, executa os comandos dentro das chaves `{ }`, se for falsa, executa os comando da chave do `else { }`
 
 Para exemplificar o uso do if e else, vamos continuar com o exemplo anterior, mas desta vez queremos que as barras para o trimestre `out-nov-dez` sejam vermelhas. Dessa forma, usaremos os controles if e else. A ideia é realizar um teste sobre `i` que assume um valor do vetor `trimestre`. Assim, se `i` for igual a `out-nov-dez`, a cor será ver vermelha (`col = red`), caso contrário utilizaremos o azul (`col = dodgerblue`).
 
@@ -384,7 +382,7 @@ $$ f(x) = x^3 - 2x - 6 $$
 
 Partindo de um valor inicial, o processo de iteração é o seguinte:
 
-$$x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)} = x_n + \frac{x^3 - 2x - 6}{3x^2 - 2}$$
+$$x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)} = x_n + \frac{x_n^3 - 2x_n - 6}{3x_n^2 - 2}$$
 
 Use como critério de parada se $f(x_n) < 0.000001$ e como valor inicial $x_0 = -10$.
 
