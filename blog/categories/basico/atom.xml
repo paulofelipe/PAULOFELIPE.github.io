@@ -4,7 +4,7 @@
   <title><![CDATA[básico | Full Join]]></title>
   <link href="http://fulljoin.com.br/blog/categories/basico/atom.xml" rel="self"/>
   <link href="http://fulljoin.com.br/"/>
-  <updated>2016-05-01T21:24:58-03:00</updated>
+  <updated>2016-05-01T21:34:54-03:00</updated>
   <id>http://fulljoin.com.br/</id>
   <author>
     <name><![CDATA[Full Join]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Kit de sobrevivência em R - Parte 6: Estruturas de Controle]]></title>
-    <link href="http://fulljoin.com.br/blog/2016/05/18/kit-de-sobrevivencia-em-r-parte-6/"/>
-    <updated>2016-05-18T20:04:00-03:00</updated>
-    <id>http://fulljoin.com.br/blog/2016/05/18/kit-de-sobrevivencia-em-r-parte-6</id>
+    <link href="http://fulljoin.com.br/blog/2016/05/01/kit-de-sobrevivencia-em-r-parte-6/"/>
+    <updated>2016-05-01T20:04:00-03:00</updated>
+    <id>http://fulljoin.com.br/blog/2016/05/01/kit-de-sobrevivencia-em-r-parte-6</id>
     <content type="html"><![CDATA[<p>No último post, você aprendeu um pouco sobre os tipos de dados e como realizar algumas transformações. Neste post, trataremos um pouco sobre estruturas de controles (for, if, else, while etc.). Estruturas de controles serão bastante usadas durante o processo de análise de dados, sendo importante que você domine esse tópico.</p>
 
 <!-- More -->
@@ -145,7 +145,7 @@ Repare, você escreveu bem menos e o resultado foi idêntico: “para cada <code
 
 <p>Veja o resultado:</p>
 
-<p><img src="/figures/source/2016-04-11-kit-de-sobrevivencia-em-r-parte-6/unnamed-chunk-11-1.png" alt="plot of chunk unnamed-chunk-11" /></p>
+<p><img src="/figures/source/2016-05-01-kit-de-sobrevivencia-em-r-parte-6/unnamed-chunk-11-1.png" alt="plot of chunk unnamed-chunk-11" /></p>
 
 <p>O gif abaixo mostra como o R vai inserindo gráfico a gráfico. Adicionei o comando <code>Sys.sleep()</code> para que a execução fosse suspensa durante 1,5 segundo para ficar mais claro a criação de cada gráfico e ter a sensação do loop criando um por um (na realidade isso acontece quase instantaneamente!).</p>
 
@@ -176,7 +176,7 @@ Repare, você escreveu bem menos e o resultado foi idêntico: “para cada <code
   <span class="p">}</span>
 <span class="p">}</span></code></pre></div></p>
 
-<p><img src="/figures/source/2016-04-11-kit-de-sobrevivencia-em-r-parte-6/unnamed-chunk-12-1.png" alt="plot of chunk unnamed-chunk-12" /></p>
+<p><img src="/figures/source/2016-05-01-kit-de-sobrevivencia-em-r-parte-6/unnamed-chunk-12-1.png" alt="plot of chunk unnamed-chunk-12" /></p>
 
 <p>Podemos reescrever o código acima com o comando <code>ifelse()</code> e obter o mesmo resultado (veja <code>?ifelse()</code>). Para isso, iremos usar o comando <code>ifelse()</code> no argumento <code>col</code>. O primeiro argumento dessa função é o teste que você deseja realizar (saber se o trimestre é ou não é igual a <code>out-nov-dez</code>), o segundo é o valor desejado caso seja verdade e o último é o valor a ser retornado caso a condição não seja satisfeita.</p>
 
@@ -195,7 +195,7 @@ Repare, você escreveu bem menos e o resultado foi idêntico: “para cada <code
 
 <span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">}</span></code></pre></div></p>
 
-<p><img src="/figures/source/2016-04-11-kit-de-sobrevivencia-em-r-parte-6/unnamed-chunk-13-1.png" alt="plot of chunk unnamed-chunk-13" /></p>
+<p><img src="/figures/source/2016-05-01-kit-de-sobrevivencia-em-r-parte-6/unnamed-chunk-13-1.png" alt="plot of chunk unnamed-chunk-13" /></p>
 
 <p>O <code>ifelse()</code> tem uma característica importante. Enquanto o <code>if()</code> aceita apenas um único teste (comprimento um), o <code>ifelse</code> pode receber um vetor para testes e aplicar as condições para este conjunto de teste. Para ficar mais claro veja o exemplo abaixo.</p>
 
