@@ -1,0 +1,58 @@
+---
+layout: post
+title: "Kit de sobrevivência em R - Parte 6: Estruturas de Controle"
+date: 2016-05-01 20:04:00 -0300
+comments: true
+categories: [r, básico, introdução r]
+published: true
+---
+  
+```{r, echo = FALSE}
+if(file.exists("~/Documentos/Dados Exemplos/desemprego_uf_espaco.txt")){
+  desemprego.uf <- read.table('~/Documentos/Dados Exemplos/desemprego_uf_espaco.txt', sep = " ", dec = ",")
+} else {
+  desemprego.uf <- read.table('~/Documents/Dados Exemplos/desemprego_uf_espaco.txt', sep = " ", dec = ",")
+}
+```
+
+Chegamos ao fim do [kit de sobrevivência em R](({{root_url}}/categories/introducao-r). Nesse último post da série vamos retomar alguns pontos que merecem ser complementados e revisados, além de apresentar um pouco mais de transformações e operações usando apenas funções básicas do R.
+
+<!-- More -->
+
+Se você seguiu a sequência e chegou até aqui, parabéns! Você provavelmente conhece o básico de R e o suficiente para começar a aprofundar em aspectos mais interessantes sobre operações com massas de dados.
+
+## Variáveis
+
+Além da simples atribuição de variáveis, existe uma mecância muito usada em R (e qualquer outra linguagem): variáveis incrementais. Incrementar variáveis é atribuir a uma variável seu proprio valor modificado de alguma forma:
+```
+x <- 5
+x <- x + x
+x <- x + x
+```
+
+Essa construção de variável incremental é muito utilizada em loops e cálculos acumulativos. Um exemplo clássico é ....
+
+```{r}
+
+```
+## Breve revisão sobre pacotes 
+
+Mostramos que pactoes são conjuntos de funções específicas agrupadas para objetivos temáticos: carregar dados, gráficos, machine learning. É muito simples carregar e utilizar pacotes. Vamos relembrar os principais comandos envolvidos:
+
+```{r}
+??dplyr #conhecendo um pacote que não foi carregado ainda
+install.packages('dplyr') #instalando um pacote
+library(dplyr) #carregando um pacote para uso
+?dplyr::filter #conhecendo alguma função do pacote
+```
+
+## Carregando dados
+
+Lembre-se que antes de carregar um arquivo de dados você precisa informar onde o R deve ler o arquivo. Para isso usamos o comando `setwd()`.
+
+A função mais básica para leitura de dados estruturados (csv, tabular, tamanho fixo, com separadores, etc.) é o `read.table()`. Lembra dos principais parâmetros? Nome do arquivo, separador, se tem cabeçalho ou não, e, no caso de campos com tamanho fixo, o tamanho de cada campo.
+
+
+## Referências
+
+* []()
