@@ -8,22 +8,20 @@ published: true
 ---
   
 ```{r, echo = FALSE}
-if(file.exists("~/Documentos/Dados Exemplos/desemprego_uf_espaco.txt")){
-  desemprego.uf <- read.table('~/Documentos/Dados Exemplos/desemprego_uf_espaco.txt', sep = " ", dec = ",")
-} else {
-  desemprego.uf <- read.table('~/Documents/Dados Exemplos/desemprego_uf_espaco.txt', sep = " ", dec = ",")
-}
+desemprego.uf <- read.table("https://www.dropbox.com/s/beqwi0zxltcchb0/desemprego_uf_ponto_virgula.txt?raw=1",
+                            dec = ",", sep = ';')
 ```
 
 Chegamos ao fim do [kit de sobrevivência em R]({{root_url}}/blog/categories/introducao-r). Nesse último post da série vamos retomar alguns pontos que merecem ser complementados e revisados, além de apresentar um pouco mais de transformações e operações usando apenas funções básicas do R.
 
 <!-- More -->
 
+
 Se você seguiu a sequência e chegou até aqui, parabéns! Você provavelmente conhece o básico de R e o suficiente para começar a aprofundar em aspectos mais interessantes sobre operações com massas de dados.
 
 ## Variáveis
 
-Além da simples atribuição de variáveis, existe uma mecância muito usada em R (e qualquer outra linguagem): variáveis incrementais. Incrementar variáveis é atribuir a uma variável seu proprio valor modificado de alguma forma:
+Além da simples atribuição de variáveis, existe uma mecância muito usada em R (e qualquer outra linguagem): variáveis incrementais. Incrementar variáveis é atribuir a uma variável seu próprio valor modificado de alguma forma:
 ```{r}
 x <- 5
 x <- x + x
@@ -37,7 +35,7 @@ Essa construção de variável incremental é muito utilizada em loops e cálcul
 ```
 ## Breve revisão sobre pacotes 
 
-Mostramos que pactoes são conjuntos de funções específicas agrupadas para objetivos temáticos: carregar dados, gráficos, machine learning. É muito simples carregar e utilizar pacotes. Vamos relembrar os principais comandos envolvidos:
+Mostramos que pacotes são conjuntos de funções específicas agrupadas para objetivos temáticos: carregar dados, gráficos, machine learning. É muito simples carregar e utilizar pacotes. Vamos relembrar os principais comandos envolvidos:
 
 ```{r, eval = FALSE}
 ??dplyr #conhecendo um pacote que não foi carregado ainda
@@ -70,10 +68,13 @@ Conhecer os tipos e estruturas de dados em R será fundamental daqui pra frente.
 
 ### Tipos básicos
 
+| Tipo | Descrição |
+|------|-------------|
 | logical | Valor lógico, `TRUE` ou `FALSE`. Usado com os operadores lógicos `&, |, ==, !=, >, <, >=, <=` |
 | integer | Valores de números inteiros |
 | numeric | Valores de números decimais. Também representam números inteiros |
 | character | Valores textuais, também conhecidos como string |
+
 
 
 Existem algumas operações de conversões entre os tipos. São bastante usadas em transformações de campos. Por exemplo:
@@ -83,17 +84,67 @@ as.numeric("20")
 as.character(20)
 as.integer(3.14)
 ```
-
+  
+  
 ### Estruturas básicas
 
-| vector | Coleção de elementos simples. Todos os elementos precisam ser do mesmo tipo básico de dado |
-| array | Coleção que se parece com o vector, mas é possível adicionar atributos às posicões e dimensões |
-| matrix | Tipo especial de array com mais de uma dimensão |
-| list | Objeto complexo com elementos que podem ser de diferentes tipos |
-| data.frame | Tipo especial de lista onde cada campo é um vetor de apenas um tipo e todos os campos tem o mesmo número de registros. É o tipo mais utilizado se trabalhar com dados |
-| factor | Tipo especial de vector que só contém valores pré definidos (levels) e categóricos (characters). Não é possível adicionar novas categorias sem criação de novos levels |
+Conhecer as estruturas de dados do R será fundamental no desenvolvimento das suas análises. Inicialmente, a ideia de estrutura de dados pode parecer um pouco abstrata, mas conhecê-las e saber suas características será útil para você perceber quais são as possibilidades.
 
-Complementando, vectors possuem algumas propriedades muito úteis como `length()`, `typeof()` e `unique()`.
+Além do tipo e descrição, incluímos uma coluna sobre o número de dimensões do objeto. Isso fará diferença na hora de usar `[ ]`. No caso das listas, usaremos `[[]]`. O que implica dizer que um objeto tem duas dimensões? Na prática, isso afetará como você usará partes desse objeto. Por exemplo, um objeto com duas dimensões tem linhas e colunas. Assim, você usará `[ , ]` (com vírgula) para separar a dimensão que você deseja selecionar.
+
+Além disso, os objetos diferenciam em relação ao variedade de tipos que eles podem receber. Por exemplo, vetores só aceitam um tipo de dado. Assim, se você atribuir dois tipos diferentes, ele forçará para um único tipo.
+
+A tabela abaixo apresenta um resumo das estruturas básicas. Ela está baseada na explicação que está no livro do [_Advanced R_](http://adv-r.had.co.nz/Data-structures.html) do Hadley Wickham (leitura recomendada pra quem deseja aprofundar seus conhecimento em R).
+
+```{r}
+```
+
+| Tipo | Descrição | Dimensões | Homogêneo |
+|---|---|---|---|---|
+| vector | Coleção de elementos simples. Todos os elementos precisam ser do mesmo tipo básico de dado | 1 | Sim |
+| array | Coleção que se parece com o vector, mas é possível adicionar atributos às posicões e dimensões | n | Sim |
+| matrix | Tipo especial de array com mais de uma dimensão | 2 | Sim |
+| list | Objeto complexo com elementos que podem ser de diferentes tipos | 1 | Não |
+| data.frame | Tipo especial de lista onde cada campo é um vetor de apenas um tipo e todos os campos tem o mesmo número de registros. É o tipo mais utilizado se trabalhar com dados | 2 | Não |
+| factor | Tipo especial de vector que só contém valores pré definidos (levels) e categóricos (characters). Não é possível adicionar novas categorias sem criação de novos levels | 1 |  Não |
+
+<br/>  
+
+Para ficar mais claro, vamos dar um exemplo de uma lista. Como já dito em outros posts, o R e seus pacotes fornecem bases de dados para teste das funções. Iremos criar uma lista com duas dessas bases de dados. Assim, ficará mais fácil de entender com ela funciona. 
+
+Primeiramente, iremos carregar duas bases de dados:
+
+```{r}
+data("mtcars")
+data("iris")
+class(mtcars)
+class(iris)
+```
+
+Veja que temos dois data frames. Agora, vamos criar um objeto único que irá receber essas duas bases. Além disso, a fim de mostrar a heterogeneidade, iremos incluir um objeto que será um vetor. Veja abaixo:
+
+```{r}
+x <- 1:10
+lista.teste <- list(mtcars, iris, x)
+```
+
+Faça um teste e digite `lista.teste` no console para ver o resultado. E como eu faço pra acessar partes específicas? Como dissemos a lista tem uma pequena diferença, será necessário usar o `[[ ]]`. Lembre-se que, como a lista é um objeto de dimensão 1, só precisaremos passar o índice que temos interesse. O vetor `x` é o terceiro elemento. Logo, para acessá-lo podemos fazer o seguinte:
+```{r}
+lista.teste[[3]]
+```
+
+Para terminar essa breve explicação sobre listas, vamos mostrar que cada objeto de uma lista pode ter um nome:
+```{r}
+lista.teste <- list(base1 = mtcars, base2 = iris, vetor1 = x)
+```
+
+Dessa forma, você *também* poderá acessar usando o nome com o auxílio do `$`:
+```{r}
+lista.teste$vetor1
+```
+
+
+Complementando as informações sobre os outros tipos, vectors possuem algumas propriedades muito úteis como `length()`, `typeof()` e `unique()`. Você também poderá usar o `length()` para saber o tamanho de uma lista. As funções `nrow()` e `ncol()` podem ser usadas para saber, respectivamente, o número de linhas e colunas de um data.frame ou de uma matriz.
 
 ## Data frame e transformações
 

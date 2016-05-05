@@ -19,17 +19,17 @@ pre {
 }
 /* Zebra striping */
 * + table tr:nth-of-type(odd) { 
-  background: #eee; 
+  background: #f8f8f8; 
 }
 * + table th { 
-  background: #268bd2; 
-  color: white; 
+  background: #fff; 
+  color: black; 
   font-weight: bold; 
 }
 * + table td,
 * + table th { 
   padding: 6px; 
-  border: 0px solid #ccc; 
+  border: 1px solid #ccc; 
   text-align: center; 
 }
 
