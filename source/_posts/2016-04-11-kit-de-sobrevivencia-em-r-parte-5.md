@@ -407,7 +407,7 @@ dados$Regiao[dados$UF %in% c('Rondônia', 'Acre', 'Amazonas', 'Roraima', 'Pará'
 dados$Regiao[dados$UF %in% c('Maranhão', 'Piauí', 'Ceará', 'Rio Grande do Norte', 'Paraíba', 'Pernambuco', 'Alagoas', 'Sergipe', 'Bahia')] <- 'Nordeste' 
 dados$Regiao[dados$UF %in% c('Minas Gerais', 'Espírito Santo', 'Rio de Janeiro', 'São Paulo')] <- 'Sudeste'   
 dados$Regiao[dados$UF %in% c('Paraná', 'Santa Catarina', 'Rio Grande do Sul')] <- 'Sul'
-dados$Regiao[dados$UF %in% c('Mato Grosso do Sul', 'Mato Grosso Goiás', 'Distrito Federal')] <- 'Centro Oeste'
+dados$Regiao[dados$UF %in% c('Mato Grosso do Sul', 'Mato Grosso', 'Goiás', 'Distrito Federal')] <- 'Centro Oeste'
 head(dados, 15)
 {% endhighlight %}
 

@@ -13,7 +13,6 @@ Chegamos ao fim do [kit de sobrevivência em R]({{root_url}}/blog/categories/int
 
 <!-- More -->
 
-
 Se você seguiu a sequência e chegou até aqui, parabéns! Você provavelmente conhece o básico de R e o suficiente para começar a aprofundar em aspectos mais interessantes sobre operações com massas de dados.
 
 ## Variáveis
@@ -67,13 +66,13 @@ Conhecer os tipos e estruturas de dados em R será fundamental daqui pra frente.
 ### Tipos básicos
 
 | Tipo | Descrição |
-|------|-------------|
-| logical | Valor lógico, `TRUE` ou `FALSE`. Usado com os operadores lógicos `&, |, ==, !=, >, <, >=, <=` |
-| integer | Valores de números inteiros |
-| numeric | Valores de números decimais. Também representam números inteiros |
-| character | Valores textuais, também conhecidos como string |
+|------|:-------------|
+| **logical** | Valor lógico, `TRUE` ou `FALSE`. Usado com os operadores lógicos `&, |, ==, !=, >, <, >=, <=` |
+| **integer** | Valores de números inteiros |
+| **numeric** | Valores de números decimais. Também representam números inteiros |
+| **character** | Valores textuais, também conhecidos como string |
 
-
+### Conversões
 
 Existem algumas operações de conversões entre os tipos. São bastante usadas em transformações de campos. Por exemplo:
 
@@ -112,33 +111,35 @@ as.integer(3.14)
 ## [1] 3
 {% endhighlight %}
   
-  
 ### Estruturas básicas
 
-Conhecer as estruturas de dados do R será fundamental no desenvolvimento das suas análises. Inicialmente, a ideia de estrutura de dados pode parecer um pouco abstrata, mas conhecê-las e saber suas características será útil para você perceber quais são as possibilidades.
-
-Além do tipo e descrição, incluímos uma coluna sobre o número de dimensões do objeto. Isso fará diferença na hora de usar `[ ]`. No caso das listas, usaremos `[[]]`. O que implica dizer que um objeto tem duas dimensões? Na prática, isso afetará como você usará partes desse objeto. Por exemplo, um objeto com duas dimensões tem linhas e colunas. Assim, você usará `[ , ]` (com vírgula) para separar a dimensão que você deseja selecionar.
-
-Além disso, os objetos diferenciam em relação ao variedade de tipos que eles podem receber. Por exemplo, vetores só aceitam um tipo de dado. Assim, se você atribuir dois tipos diferentes, ele forçará para um único tipo.
+Dominar as estruturas de dados do R será fundamental no desenvolvimento das suas análises. Inicialmente, a ideia de estrutura de dados pode parecer um pouco abstrata, mas conhecê-las e saber suas características será útil para você perceber quais são as possibilidades.
 
 A tabela abaixo apresenta um resumo das estruturas básicas. Ela está baseada na explicação que está no livro do [_Advanced R_](http://adv-r.had.co.nz/Data-structures.html) do Hadley Wickham (leitura recomendada pra quem deseja aprofundar seus conhecimento em R).
 
+Do que se trata o campo `Dimensões` na tabela? Na prática, isso afetará como você usará partes desse objeto. Por exemplo, um objeto com duas dimensões tem linhas e colunas. Assim, você usará `[ , ]` (com vírgula separando linha e coluna, respectivamente) para acessar a dimensão que você deseja selecionar. Já um objeto unidimensional terá seus elementos acessados usando apenas `[ ]`. A lista, por sua vez, tem seus elemtnos acessados com `[[ ]]`.
+
+E o campo `Homogêneo` da tabela? Trata-se de mais uma características das estruturas de dados. Diz respeito à variedade de tipos básicos que um objeto pode conter. Por exemplo, vetores só aceitam um tipo de dado. Assim, se você atribuir dois tipos diferentes, ele forçará para um único tipo. Listas e data frames aceitam diferentes tipos de dados.
 
 
 | Tipo | Descrição | Dimensões | Homogêneo |
-|---|---|---|---|---|
-| vector | Coleção de elementos simples. Todos os elementos precisam ser do mesmo tipo básico de dado | 1 | Sim |
-| array | Coleção que se parece com o vector, mas é possível adicionar atributos às posicões e dimensões | n | Sim |
-| matrix | Tipo especial de array com mais de uma dimensão | 2 | Sim |
-| list | Objeto complexo com elementos que podem ser de diferentes tipos | 1 | Não |
-| data.frame | Tipo especial de lista onde cada campo é um vetor de apenas um tipo e todos os campos tem o mesmo número de registros. É o tipo mais utilizado se trabalhar com dados | 2 | Não |
-| factor | Tipo especial de vector que só contém valores pré definidos (levels) e categóricos (characters). Não é possível adicionar novas categorias sem criação de novos levels | 1 |  Não |
+|---|:---|---|---|---|
+| **vector** | Coleção de elementos simples. Todos os elementos precisam ser do mesmo tipo básico de dado | 1 | Sim |
+| **array** | Coleção que se parece com o vector, mas é possível adicionar atributos às posicões e dimensões | n | Sim |
+| **matrix** | Tipo especial de array com mais de uma dimensão | 2 | Sim |
+| **list** | Objeto complexo com elementos que podem ser de diferentes tipos | 1 | Não |
+| **data.frame** | Tipo especial de lista onde cada campo é um vetor de apenas um tipo e todos os campos tem o mesmo número de registros. É o tipo mais utilizado se trabalhar com dados | 2 | Não |
+| **factor** | Tipo especial de vector que só contém valores pré definidos (levels) e categóricos (characters). Não é possível adicionar novas categorias sem criação de novos levels | 1 |  Não |
 
 <br/>  
 
-Para ficar mais claro, vamos dar um exemplo de uma lista. Como já dito em outros posts, o R e seus pacotes fornecem bases de dados para teste das funções. Iremos criar uma lista com duas dessas bases de dados. Assim, ficará mais fácil de entender com ela funciona. 
+### Observações sobre listas 
 
-Primeiramente, iremos carregar duas bases de dados:
+Lista pode causar um pouco de confusão no começo. Daremos alguns exemplos para explicar melhor.
+
+Iremos criar listas com duas bases de dados que já vem fornecidas como exemplo no próprio R.
+
+Primeiramente, iremos carregar as duas bases de dados:
 
 
 {% highlight r %}
@@ -173,7 +174,10 @@ x <- 1:10
 lista.teste <- list(mtcars, iris, x)
 {% endhighlight %}
 
-Faça um teste e digite `lista.teste` no console para ver o resultado. E como eu faço pra acessar partes específicas? Como dissemos a lista tem uma pequena diferença, será necessário usar o `[[ ]]`. Lembre-se que, como a lista é um objeto de dimensão 1, só precisaremos passar o índice que temos interesse. O vetor `x` é o terceiro elemento. Logo, para acessá-lo podemos fazer o seguinte:
+Faça um teste e digite `lista.teste` no console para ver o resultado. 
+
+E como eu faço pra acessar partes específicas? Como dissemos a lista tem uma pequena diferença, será necessário usar o `[[ ]]`. Lembre-se que, como a lista é um objeto de dimensão 1, só precisaremos passar o índice que temos interesse. O vetor `x` é o terceiro elemento. Logo, para acessá-lo podemos fazer o seguinte:
+
 
 {% highlight r %}
 lista.teste[[3]]
@@ -203,8 +207,64 @@ lista.teste$vetor1
 ##  [1]  1  2  3  4  5  6  7  8  9 10
 {% endhighlight %}
 
+### Observações sobre vectors
 
-Complementando as informações sobre os outros tipos, vectors possuem algumas propriedades muito úteis como `length()`, `typeof()` e `unique()`. Você também poderá usar o `length()` para saber o tamanho de uma lista. As funções `nrow()` e `ncol()` podem ser usadas para saber, respectivamente, o número de linhas e colunas de um data.frame ou de uma matriz.
+Vectors possuem algumas propriedades muito úteis como `length()`, `typeof()` e `unique()`. Você também poderá usar o `length()` para saber o tamanho de uma lista. 
+
+### Observações sobre data.frames
+
+As funções `nrow()` e `ncol()` podem ser usadas para saber, respectivamente, o número de linhas e colunas de um data.frame (ou de uma matriz).
+
+Data.frames também podem ter o nome das colunas alterados. Veja o exemplo a seguir:
+
+
+{% highlight r %}
+head(iris)
+{% endhighlight %}
+
+
+
+{% highlight text %}
+##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+## 1          5.1         3.5          1.4         0.2  setosa
+## 2          4.9         3.0          1.4         0.2  setosa
+## 3          4.7         3.2          1.3         0.2  setosa
+## 4          4.6         3.1          1.5         0.2  setosa
+## 5          5.0         3.6          1.4         0.2  setosa
+## 6          5.4         3.9          1.7         0.4  setosa
+{% endhighlight %}
+
+
+
+{% highlight r %}
+names(iris)
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## [1] "Sepal.Length" "Sepal.Width"  "Petal.Length" "Petal.Width" 
+## [5] "Species"
+{% endhighlight %}
+
+
+
+{% highlight r %}
+names(iris) <- c("campo1", "campo2", "campo3", "campo4", "campo5")
+head(iris)
+{% endhighlight %}
+
+
+
+{% highlight text %}
+##   campo1 campo2 campo3 campo4 campo5
+## 1    5.1    3.5    1.4    0.2 setosa
+## 2    4.9    3.0    1.4    0.2 setosa
+## 3    4.7    3.2    1.3    0.2 setosa
+## 4    4.6    3.1    1.5    0.2 setosa
+## 5    5.0    3.6    1.4    0.2 setosa
+## 6    5.4    3.9    1.7    0.4 setosa
+{% endhighlight %}
 
 ## Data frame e transformações
 
