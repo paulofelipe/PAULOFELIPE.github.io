@@ -266,13 +266,116 @@ head(iris)
 ## 6    5.4    3.9    1.7    0.4 setosa
 {% endhighlight %}
 
-## Data frame e transformações
+## Exemplo final: Titanic
 
-data frame, atribuição, propriedades...
+Vamos dar um exemplo final de algumas transformações e manipulações de dados na tentativa de resumir todos os aspectos tratados no kit de sobrevivência em R.
 
-## Exemplo de uso das funções básicas
+Escolhemos a base de dados dos passageiros do Titanic! É uma base muito utilizada como tutorial de machine learning onde o objetivo é criar um modelo para prever os sobreviventes do acidente. Se você pretende aprender machine learning, certamente vai esbarrar (ou já esbarrou) com essa base de dados. Inclusive há uma série de [tutoriais de machine learning com essa base no Kaggle](https://www.kaggle.com/c/titanic).
 
-carregar um dado, manipular, transformar e visualizar
+Nosso objetivo não é criar nenhum modelo nem ensinar a fazer isso, vamos apenas explorar a base, manipular, transformar e criar algumas variáveis. Teremos muitos posts em breve sobre modelos preditivos e machine learning!
+
+Primeiro criamos um novo script, lembre-se sempre de salvar o seu trabalho para não perder nada. Em seguida vamos limpar o ambiente de memória para começar.
+
+
+{% highlight r %}
+rm(list = ls())
+{% endhighlight %}
+
+Vamos instalar e carregar o pacote R que disponibiliza os dados.
+
+
+{% highlight r %}
+install.packages('titanic')
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## Error in contrib.url(repos, "source"): trying to use CRAN without setting a mirror
+{% endhighlight %}
+
+
+
+{% highlight r %}
+library(titanic)
+{% endhighlight %}
+
+O data frame que iremos usar já estará carregado na memória e se chama `titanic_train`. Trata-se da base de treinamento usada para treinar modelos. Vamos dar uma olhada. As bases de treinamento já vem com a resposta na variável que você quer descobrir na base de teste. Nesse caso os modelos que usam essa base são treinados para descobrir a variável `Survived`.
+
+
+{% highlight r %}
+str(titanic_train)
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## 'data.frame':	891 obs. of  12 variables:
+##  $ PassengerId: int  1 2 3 4 5 6 7 8 9 10 ...
+##  $ Survived   : int  0 1 1 1 0 0 0 0 1 1 ...
+##  $ Pclass     : int  3 1 3 1 3 3 1 3 3 2 ...
+##  $ Name       : chr  "Braund, Mr. Owen Harris" "Cumings, Mrs. John Bradley (Florence Briggs Thayer)" "Heikkinen, Miss. Laina" "Futrelle, Mrs. Jacques Heath (Lily May Peel)" ...
+##  $ Sex        : chr  "male" "female" "female" "female" ...
+##  $ Age        : num  22 38 26 35 35 NA 54 2 27 14 ...
+##  $ SibSp      : int  1 1 0 1 0 0 0 3 0 1 ...
+##  $ Parch      : int  0 0 0 0 0 0 0 1 2 0 ...
+##  $ Ticket     : chr  "A/5 21171" "PC 17599" "STON/O2. 3101282" "113803" ...
+##  $ Fare       : num  7.25 71.28 7.92 53.1 8.05 ...
+##  $ Cabin      : chr  "" "C85" "" "C123" ...
+##  $ Embarked   : chr  "S" "C" "S" "S" ...
+{% endhighlight %}
+
+
+
+{% highlight r %}
+head(titanic_train)
+{% endhighlight %}
+
+
+
+{% highlight text %}
+##   PassengerId Survived Pclass
+## 1           1        0      3
+## 2           2        1      1
+## 3           3        1      3
+## 4           4        1      1
+## 5           5        0      3
+## 6           6        0      3
+##                                                  Name    Sex Age
+## 1                             Braund, Mr. Owen Harris   male  22
+## 2 Cumings, Mrs. John Bradley (Florence Briggs Thayer) female  38
+## 3                              Heikkinen, Miss. Laina female  26
+## 4        Futrelle, Mrs. Jacques Heath (Lily May Peel) female  35
+## 5                            Allen, Mr. William Henry   male  35
+## 6                                    Moran, Mr. James   male  NA
+##   SibSp Parch           Ticket    Fare Cabin Embarked
+## 1     1     0        A/5 21171  7.2500              S
+## 2     1     0         PC 17599 71.2833   C85        C
+## 3     0     0 STON/O2. 3101282  7.9250              S
+## 4     1     0           113803 53.1000  C123        S
+## 5     0     0           373450  8.0500              S
+## 6     0     0           330877  8.4583              Q
+{% endhighlight %}
+
+Repare que cada linha representa um passageiro e cada campo representa uma característica desse passageiro. As variáveis (campos) estão em inglês e talvez não sejam tão óbvias. Segue explicação de cada uma:
+
+Nome do campo | Descrição do campo
+--------------|:-------------
+Survived      | Passageiro sobrevivente (1) ou morto (0)
+Pclass        | Classe do passageiro
+Name          | Nome do passageiro
+Sex           | Genero do passageiro (male ou female)
+Age           | Idade do passageiro
+SibSp         | Número de irmãos ou conjuges a bordo
+Parch         | Número de pais ou filhos a bordo
+Ticket        | Número do tíquete
+Fare          | Preço do tíquete
+Cabin         | Cabine
+Embarked      | Portão de embarque
+
+Como o objetivo dessa base de dados é treinar um modelo para descobrir se o passageiro vai sobreviver ou não, vamos manipular e criar variáveis para tentar ajudar a atingir esse objetivo.
+
+
 
 ## Referências
 

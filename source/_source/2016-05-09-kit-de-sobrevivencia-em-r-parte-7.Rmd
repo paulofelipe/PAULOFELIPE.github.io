@@ -163,13 +163,53 @@ names(iris) <- c("campo1", "campo2", "campo3", "campo4", "campo5")
 head(iris)
 ```
 
-## Data frame e transformações
+## Exemplo final: Titanic
 
-data frame, atribuição, propriedades...
+Vamos dar um exemplo final de algumas transformações e manipulações de dados na tentativa de resumir todos os aspectos tratados no kit de sobrevivência em R.
 
-## Exemplo de uso das funções básicas
+Escolhemos a base de dados dos passageiros do Titanic! É uma base muito utilizada como tutorial de machine learning onde o objetivo é criar um modelo para prever os sobreviventes do acidente. Se você pretende aprender machine learning, certamente vai esbarrar (ou já esbarrou) com essa base de dados. Inclusive há uma série de [tutoriais de machine learning com essa base no Kaggle](https://www.kaggle.com/c/titanic).
 
-carregar um dado, manipular, transformar e visualizar
+Nosso objetivo não é criar nenhum modelo nem ensinar a fazer isso, vamos apenas explorar a base, manipular, transformar e criar algumas variáveis. Teremos muitos posts em breve sobre modelos preditivos e machine learning!
+
+Primeiro criamos um novo script, lembre-se sempre de salvar o seu trabalho para não perder nada. Em seguida vamos limpar o ambiente de memória para começar.
+
+```{r}
+rm(list = ls())
+```
+
+Vamos instalar e carregar o pacote R que disponibiliza os dados.
+
+```{r, message = FALSE, warning = FALSE}
+install.packages('titanic')
+library(titanic)
+```
+
+O data frame que iremos usar já estará carregado na memória e se chama `titanic_train`. Trata-se da base de treinamento usada para treinar modelos. Vamos dar uma olhada. As bases de treinamento já vem com a resposta na variável que você quer descobrir na base de teste. Nesse caso os modelos que usam essa base são treinados para descobrir a variável `Survived`.
+
+```{r}
+str(titanic_train)
+head(titanic_train)
+```
+
+Repare que cada linha representa um passageiro e cada campo representa uma característica desse passageiro. As variáveis (campos) estão em inglês e talvez não sejam tão óbvias. Segue explicação de cada uma:
+
+Nome do campo | Descrição do campo
+--------------|:-------------
+Survived      | Passageiro sobrevivente (1) ou morto (0)
+Pclass        | Classe do passageiro
+Name          | Nome do passageiro
+Sex           | Genero do passageiro (male ou female)
+Age           | Idade do passageiro
+SibSp         | Número de irmãos ou conjuges a bordo
+Parch         | Número de pais ou filhos a bordo
+Ticket        | Número do tíquete
+Fare          | Preço do tíquete
+Cabin         | Cabine
+Embarked      | Portão de embarque
+
+Como o objetivo dessa base de dados é treinar um modelo para descobrir se o passageiro vai sobreviver ou não, vamos manipular e criar variáveis para tentar ajudar a atingir esse objetivo.
+
+
 
 ## Referências
 
