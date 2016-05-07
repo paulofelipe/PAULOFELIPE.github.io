@@ -59,6 +59,8 @@ Conhecer os tipos e estruturas de dados em R será fundamental daqui pra frente.
 | **numeric** | Valores de números decimais. Também representam números inteiros |
 | **character** | Valores textuais, também conhecidos como string |
 
+<br/>  
+
 ### Conversões
 
 Existem algumas operações de conversões entre os tipos. São bastante usadas em transformações de campos. Por exemplo:
@@ -255,9 +257,16 @@ head(iris)
 
 ## Valores Faltantes (Missing)
 
-O R atribui `NA` para valores faltantes. Ou seja, se por acaso uma determinada posição de um vetor ou de uma coluna de um data.frame não possui valor algum, o R mostrará `NA`. Em algumas bases de dados, quem gera o dado atribui valores genéricos como 999. Nesse caso, você provavelmente terá que substituir o 999 por `NA`. E como eu lido com `NA` no R? Vamos explicar as funções básicas para começar.
+O R atribui `NA` para valores faltantes. Ou seja, se por acaso uma determinada posição de um vetor ou de uma coluna de um data.frame não possui valor algum, o R mostrará `NA`. 
 
-Em primeiro lugar, vamos criar um simples data.frame para exemplificar:
+
+É muito comum lidar com conjuntos de dados que tenham ocorrências de `NA` em alguns campos. É importante saber o que fazer em casos de `NA`, e nem sempre a solução será a mesma, vai variar de acordo com suas necessidades.
+
+Em algumas bases de dados, quem gera o dado atribui valores genéricos como 999 ou até mesmo um "texto vazio" `' '`. Nesse caso, você provavelmente terá que substituir esses valores "omissos" por `NA`. 
+
+Vamos explicar as funções básicas para começar a lidar com `NA` no R.
+
+Em primeiro lugar, criaremos um simples data.frame para exemplificar:
 
 
 {% highlight r %}
@@ -296,7 +305,9 @@ summary(data.ex)
 ##        NA's   :2
 {% endhighlight %}
 
-Usamos o `letters` que é uma constante embutida no R que retorna as 26 letras do alfabeto. No caso, usamos só as seis primeiras. Na seguda columa, colocamos alguns NA's. A função `summary` mostra que existem dois NA's na `col2`. Nesse exemplo, fica fácil para encontrar onde estão os NA's e fazer alguma modificação caso deseje, mas considere um caso em que seu data.frame é grande. Você não iria conseguir identificar no olho. Assim, é necessário usar algumas funções. Vamos começar como o `is.na()`:
+Usamos o `letters` que é uma lista pré construída no R e que retorna as 26 letras do alfabeto. No caso, usamos só as seis primeiras. Na seguda coluna, colocamos alguns NA's. 
+
+A função `summary` mostra que existem dois NA's na `col2`. Nesse exemplo fica fácil para encontrar onde estão os NA's e fazer alguma modificação caso deseje, mas considere um caso em que seu data.frame é grande. Você não iria conseguir identificar no olho. Assim, é necessário usar algumas funções. Vamos começar como o `is.na()`:
 
 
 {% highlight r %}
@@ -321,7 +332,7 @@ which(is.na(data.ex$col2))
 ## [1] 4 6
 {% endhighlight %}
 
-O `is.na()` realiza um teste para saber se cada elemento da variável `col2` é um missing. Além disso, se usarmos o `is.na()` dentro da função `which()` saberemos quais os índices que possuem o `NA`. Um detalhe importante sobre funções que retornam `TRUE` ou `FALSE` como o `is.na()` é que você pode usar a `!` para fazer o teste ao contrário. Isto é, se quisermos saber quais não são `NA`, faremos o seguinte:
+O `is.na()` realiza um teste para saber se cada elemento da variável `col2` é um missing. Além disso, se usarmos o `is.na()` dentro da função `which()` saberemos quais as posições que possuem o `NA`. Um detalhe importante sobre funções que retornam `TRUE` ou `FALSE` como o `is.na()` é que você pode usar a `!` para fazer o teste ao contrário. Isto é, se quisermos saber quais não são `NA`, faremos o seguinte:
 
 
 {% highlight r %}
@@ -336,7 +347,7 @@ O `is.na()` realiza um teste para saber se cada elemento da variável `col2` é 
 
 Notou que a função retornou o contrário de `is.na(data.ex$col2)`? 
 
-Agora iremos introduzir a função `complete.cases()`. Essa função retorna `TRUE` para as linhas em que todas as colunas possuem valores válidos e `FALSE` para as linhas em que em alguma coluna existe um `NA`.
+Agora iremos introduzir a função `complete.cases()`. Bastante utilizada, essa função retorna `TRUE` para as linhas em que todas as colunas possuem valores válidos e `FALSE` para as linhas em que em alguma coluna existe um `NA`. Ou seja, essa função diz quais são as linhas (amostras) completas em todas suas características (campos).
 
 
 {% highlight r %}
@@ -445,6 +456,8 @@ data.ex
 
 Note que na função `mean()` usamos o argumento `na.rm`. Ele significa "remover NA", o que é necessário nesse cálculo, pois se os NA's não forem retirados, a média será `NA` também.
 
+Imputar dados em casos de `NA` é uma das várias estratégias para lidar com ocorrência de missing no conjunto dos dados.
+
 ## Exemplo final: Titanic
 
 Vamos dar um exemplo final de algumas transformações e manipulações de dados na tentativa de resumir todos os aspectos tratados no kit de sobrevivência em R.
@@ -470,7 +483,7 @@ install.packages('titanic')
 
 
 {% highlight text %}
-## Error in contrib.url(repos, type): trying to use CRAN without setting a mirror
+## Error in contrib.url(repos, "source"): trying to use CRAN without setting a mirror
 {% endhighlight %}
 
 
@@ -571,13 +584,13 @@ names(titanic_train)
 
 {% highlight r %}
 names(titanic_train) <- c('id_passageiro', 'sobrevivente', 
-						'classe', 'nome', 'sexo', 'idade',
-						'irmaos_conjuge', 'pais_filhos', 'numero_ticket', 'valor_ticket', 'cabine', 'porta_embarque')
+			'classe', 'nome', 'sexo', 'idade',
+			'irmaos_conjuge', 'pais_filhos', 'numero_ticket', 'valor_ticket', 'cabine', 'porta_embarque')
 {% endhighlight %}
 
 Como o objetivo dessa base de dados é treinar um modelo para descobrir se o passageiro vai sobreviver ou não, vamos manipular e criar variáveis para tentar ajudar a atingir esse objetivo.
 
-Vamos começar com a variável `idade`. Há um comportamento interessante nessa variável:
+Vamos começar com a variável `idade`. Há um comportamento interessante nessa variável: missings!
 
 
 {% highlight r %}
@@ -598,9 +611,7 @@ unique(titanic_train$idade)
 ## [89] 74.00
 {% endhighlight %}
 
-Repare que dentre os valores únicos temos um `NA`. Isso significa que existem linhas nessa coluna que estão vazias. É muito comum lidar com conjuntos de dados que tenham ocorrências de `NA` em alguns campos. É importante saber o que fazer em casos de `NA`, e nem sempre a solução será a mesma, vai variar de acordo com suas necessidades.
-
-Nesse nosso caso específico, vamos interpretar `NA` como se o passageiro tivesse a idade desconhecida. Dependendo do algoritmo de machine learning que será aplicado a esses dados, a presença de `NA` não é bem vinda.
+Nesse nosso caso específico, vamos interpretar `NA` como se o passageiro tivesse a idade desconhecida, seja lá qual for o motivo. Dependendo do algoritmo de machine learning que será aplicado a esses dados, a presença de `NA` não é bem vinda. Portanto, precisamos lidar com os `NA`s dessa variável.
 
 A título de exemplificação, vamos adicionar a média geral das idades quando não soubermos a idade do passageiro. (Veja, essa nem sempre é uma boa estratégia para imputação de dados. Vamos usá-la agora apenas por ser bem simples).
 
@@ -624,7 +635,9 @@ titanic_train$idade <- ifelse(is.na(titanic_train$idade), round(media), titanic_
 
 Calculamos a média desconsiderando ocorrências de `NA`, em seguida atribuímos a média (arredondada) às ocorrências de `NA`. 
 
-Agora todos os passageiros tem idade. Alguns a idade correta, outros uma idade atribuída. Vamos criar agora uma classificação de `jovem`, `adulto` ou `idoso` para essa variável. Até 20 anos chamaremos de `jovem`, de 21 a 54 chamaremos de `adulto`, e acima de 55 chamaremos de `idoso`. Vamos chamar essa variável de `faixa_etaria`.
+Agora todos os passageiros tem idade, alguns a idade correta, outros uma idade atribuída. Vamos criar agora uma classificação de `jovem`, `adulto` ou `idoso` para essa variável. Pode ser que isso ajude algum algoritmo a prever melhor quem vive ou quem morre no acidente, pois, intuitivamente, pode ser que jovens imaturos fiquem mais assustados, idosos tenham menos habilidade de fuga e adultos talvez lidem melhor com situações de emergência. 
+
+Até 20 anos chamaremos de `jovem`, de 21 a 54 chamaremos de `adulto`, e acima de 55 chamaremos de `idoso`. Vamos chamar essa variável de `faixa_etaria`.
 
 
 {% highlight r %}
@@ -653,6 +666,14 @@ head(titanic_train[,c('idade', 'faixa_etaria')], 15)
 ## 15    14        jovem
 {% endhighlight %}
 
+Uma outra variável que pode ser interessante para ajudar modelos preditivos pode ser o total de parentes. Será que quanto mais parentes o passageiro tiver, mais ele se preocupe em salvar a vida dos seus entes queridos, botando a sua vida em risco?
+
+Há uma variável para irmãos e conjuges, e outra para crianças ou pais. Vamos somá-las e criar o `total_parentes`.
+
+
+{% highlight r %}
+titanic_train$total_parentes <- titanic_train$irmaos_conjuge + titanic_train$pais_filhos
+{% endhighlight %}
 
 
 ## Referências

@@ -280,7 +280,10 @@ Vamos começar com a variável `idade`. Há um comportamento interessante nessa 
 
 ```{r}
 unique(titanic_train$idade)
+sum(is.na(titanic_train$idade))
 ```
+
+Usando `sum()` junto com `is.na()` conseguimos contar a quantidade total de `NA` na variável.
 
 Nesse nosso caso específico, vamos interpretar `NA` como se o passageiro tivesse a idade desconhecida, seja lá qual for o motivo. Dependendo do algoritmo de machine learning que será aplicado a esses dados, a presença de `NA` não é bem vinda. Portanto, precisamos lidar com os `NA`s dessa variável.
 
