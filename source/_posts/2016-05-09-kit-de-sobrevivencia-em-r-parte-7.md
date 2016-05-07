@@ -253,6 +253,198 @@ head(iris)
 ## 6    5.4    3.9    1.7    0.4 setosa
 {% endhighlight %}
 
+## Valores Faltantes (Missing)
+
+O R atribui `NA` para valores faltantes. Ou seja, se por acaso uma determinada posição de um vetor ou de uma coluna de um data.frame não possui valor algum, o R mostrará `NA`. Em algumas bases de dados, quem gera o dado atribui valores genéricos como 999. Nesse caso, você provavelmente terá que substituir o 999 por `NA`. E como eu lido com `NA` no R? Vamos explicar as funções básicas para começar.
+
+Em primeiro lugar, vamos criar um simples data.frame para exemplificar:
+
+
+{% highlight r %}
+data.ex <- data.frame(col1 = letters[1:6], col2 = c(10, 20, 30, NA, 50, NA))
+data.ex
+{% endhighlight %}
+
+
+
+{% highlight text %}
+##   col1 col2
+## 1    a   10
+## 2    b   20
+## 3    c   30
+## 4    d   NA
+## 5    e   50
+## 6    f   NA
+{% endhighlight %}
+
+
+
+{% highlight r %}
+summary(data.ex)
+{% endhighlight %}
+
+
+
+{% highlight text %}
+##  col1       col2     
+##  a:1   Min.   :10.0  
+##  b:1   1st Qu.:17.5  
+##  c:1   Median :25.0  
+##  d:1   Mean   :27.5  
+##  e:1   3rd Qu.:35.0  
+##  f:1   Max.   :50.0  
+##        NA's   :2
+{% endhighlight %}
+
+Usamos o `letters` que é uma constante embutida no R que retorna as 26 letras do alfabeto. No caso, usamos só as seis primeiras. Na seguda columa, colocamos alguns NA's. A função `summary` mostra que existem dois NA's na `col2`. Nesse exemplo, fica fácil para encontrar onde estão os NA's e fazer alguma modificação caso deseje, mas considere um caso em que seu data.frame é grande. Você não iria conseguir identificar no olho. Assim, é necessário usar algumas funções. Vamos começar como o `is.na()`:
+
+
+{% highlight r %}
+is.na(data.ex$col2)
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## [1] FALSE FALSE FALSE  TRUE FALSE  TRUE
+{% endhighlight %}
+
+
+
+{% highlight r %}
+which(is.na(data.ex$col2))
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## [1] 4 6
+{% endhighlight %}
+
+O `is.na()` realiza um teste para saber se cada elemento da variável `col2` é um missing. Além disso, se usarmos o `is.na()` dentro da função `which()` saberemos quais os índices que possuem o `NA`. Um detalhe importante sobre funções que retornam `TRUE` ou `FALSE` como o `is.na()` é que você pode usar a `!` para fazer o teste ao contrário. Isto é, se quisermos saber quais não são `NA`, faremos o seguinte:
+
+
+{% highlight r %}
+!is.na(data.ex$col2)
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## [1]  TRUE  TRUE  TRUE FALSE  TRUE FALSE
+{% endhighlight %}
+
+Notou que a função retornou o contrário de `is.na(data.ex$col2)`? 
+
+Agora iremos introduzir a função `complete.cases()`. Essa função retorna `TRUE` para as linhas em que todas as colunas possuem valores válidos e `FALSE` para as linhas em que em alguma coluna existe um `NA`.
+
+
+{% highlight r %}
+complete.cases(data.ex)
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## [1]  TRUE  TRUE  TRUE FALSE  TRUE FALSE
+{% endhighlight %}
+
+
+
+{% highlight r %}
+!complete.cases(data.ex)
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## [1] FALSE FALSE FALSE  TRUE FALSE  TRUE
+{% endhighlight %}
+
+Podemos usar o retorno dessa função para selecionar linhas do nosso data.frame:
+
+
+{% highlight r %}
+data.ex[!complete.cases(data.ex),]
+{% endhighlight %}
+
+
+
+{% highlight text %}
+##   col1 col2
+## 4    d   NA
+## 6    f   NA
+{% endhighlight %}
+
+
+
+{% highlight r %}
+data.ex[complete.cases(data.ex),]
+{% endhighlight %}
+
+
+
+{% highlight text %}
+##   col1 col2
+## 1    a   10
+## 2    b   20
+## 3    c   30
+## 5    e   50
+{% endhighlight %}
+
+Você poderiar usar a função `na.omit()` para obter o mesmo resultado da seleção de linhas com o `complete.cases()`:
+
+
+{% highlight r %}
+na.omit(data.ex)
+{% endhighlight %}
+
+
+
+{% highlight text %}
+##   col1 col2
+## 1    a   10
+## 2    b   20
+## 3    c   30
+## 5    e   50
+{% endhighlight %}
+
+Por fim, iremos imputar a média da `col2` nas linhas em que há `NA`. Para isso, usaremos o `ifelse()` que tratamos na [parte 6]({{root_url}}/blog/2016/05/01/kit-de-sobrevivencia-em-r-parte-6/) e os `is.na()`, além da função `mean()`.
+
+
+{% highlight r %}
+# Calcular a média da col2
+media.col2 <- mean(data.ex$col2, na.rm = TRUE)
+media.col2
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## [1] 27.5
+{% endhighlight %}
+
+
+
+{% highlight r %}
+data.ex$col2[is.na(data.ex$col2)] <- media.col2
+data.ex
+{% endhighlight %}
+
+
+
+{% highlight text %}
+##   col1 col2
+## 1    a 10.0
+## 2    b 20.0
+## 3    c 30.0
+## 4    d 27.5
+## 5    e 50.0
+## 6    f 27.5
+{% endhighlight %}
+
+Note que na função `mean()` usamos o argumento `na.rm`. Ele significa "remover NA", o que é necessário nesse cálculo, pois se os NA's não forem retirados, a média será `NA` também.
+
 ## Exemplo final: Titanic
 
 Vamos dar um exemplo final de algumas transformações e manipulações de dados na tentativa de resumir todos os aspectos tratados no kit de sobrevivência em R.
@@ -278,7 +470,7 @@ install.packages('titanic')
 
 
 {% highlight text %}
-## Error in contrib.url(repos, "source"): trying to use CRAN without setting a mirror
+## Error in contrib.url(repos, type): trying to use CRAN without setting a mirror
 {% endhighlight %}
 
 
