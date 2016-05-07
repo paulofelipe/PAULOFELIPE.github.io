@@ -163,6 +163,65 @@ names(iris) <- c("campo1", "campo2", "campo3", "campo4", "campo5")
 head(iris)
 ```
 
+## Valores Faltantes (Missing)
+
+O R atribui `NA` para valores faltantes. Ou seja, se por acaso uma determinada posição de um vetor ou de uma coluna de um data.frame não possui valor algum, o R mostrará `NA`. Em algumas bases de dados, quem gera o dado atribui valores genéricos como 999. Nesse caso, você provavelmente terá que substituir o 999 por `NA`. E como eu lido com `NA` no R? Vamos explicar as funções básicas para começar.
+
+Em primeiro lugar, vamos criar um simples data.frame para exemplificar:
+
+```{r}
+data.ex <- data.frame(col1 = letters[1:6], col2 = c(10, 20, 30, NA, 50, NA))
+data.ex
+summary(data.ex)
+```
+
+Usamos o `letters` que é uma constante embutida no R que retorna as 26 letras do alfabeto. No caso, usamos só as seis primeiras. Na seguda columa, colocamos alguns NA's. A função `summary` mostra que existem dois NA's na `col2`. Nesse exemplo, fica fácil para encontrar onde estão os NA's e fazer alguma modificação caso deseje, mas considere um caso em que seu data.frame é grande. Você não iria conseguir identificar no olho. Assim, é necessário usar algumas funções. Vamos começar como o `is.na()`:
+
+```{r}
+is.na(data.ex$col2)
+which(is.na(data.ex$col2))
+```
+
+O `is.na()` realiza um teste para saber se cada elemento da variável `col2` é um missing. Além disso, se usarmos o `is.na()` dentro da função `which()` saberemos quais os índices que possuem o `NA`. Um detalhe importante sobre funções que retornam `TRUE` ou `FALSE` como o `is.na()` é que você pode usar a `!` para fazer o teste ao contrário. Isto é, se quisermos saber quais não são `NA`, faremos o seguinte:
+
+```{r}
+!is.na(data.ex$col2)
+```
+
+Notou que a função retornou o contrário de `is.na(data.ex$col2)`? 
+
+Agora iremos introduzir a função `complete.cases()`. Essa função retorna `TRUE` para as linhas em que todas as colunas possuem valores válidos e `FALSE` para as linhas em que em alguma coluna existe um `NA`.
+
+```{r}
+complete.cases(data.ex)
+!complete.cases(data.ex)
+```
+
+Podemos usar o retorno dessa função para selecionar linhas do nosso data.frame:
+
+```{r}
+data.ex[!complete.cases(data.ex),]
+data.ex[complete.cases(data.ex),]
+```
+
+Você poderiar usar a função `na.omit()` para obter o mesmo resultado da seleção de linhas com o `complete.cases()`:
+
+```{r}
+na.omit(data.ex)
+```
+
+Por fim, iremos imputar a média da `col2` nas linhas em que há `NA`. Para isso, usaremos o `ifelse()` que tratamos na [parte 6]({{root_url}}/blog/2016/05/01/kit-de-sobrevivencia-em-r-parte-6/) e os `is.na()`, além da função `mean()`.
+
+```{r}
+# Calcular a média da col2
+media.col2 <- mean(data.ex$col2, na.rm = TRUE)
+media.col2
+data.ex$col2[is.na(data.ex$col2)] <- media.col2
+data.ex
+```
+
+Note que na função `mean()` usamos o argumento `na.rm`. Ele significa "remover NA", o que é necessário nesse cálculo, pois se os NA's não forem retirados, a média será `NA` também.
+
 ## Exemplo final: Titanic
 
 Vamos dar um exemplo final de algumas transformações e manipulações de dados na tentativa de resumir todos os aspectos tratados no kit de sobrevivência em R.
