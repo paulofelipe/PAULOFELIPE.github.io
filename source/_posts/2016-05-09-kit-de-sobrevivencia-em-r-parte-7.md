@@ -15,19 +15,6 @@ Chegamos ao fim do [kit de sobrevivência em R]({{root_url}}/blog/categories/int
 
 Se você seguiu a sequência e chegou até aqui, parabéns! Você provavelmente conhece o básico de R e o suficiente para começar a aprofundar em aspectos mais interessantes sobre operações com massas de dados.
 
-## Variáveis
-
-Além da simples atribuição de variáveis, existe uma mecância muito usada em R (e qualquer outra linguagem): variáveis incrementais. Incrementar variáveis é atribuir a uma variável seu próprio valor modificado de alguma forma:
-
-{% highlight r %}
-x <- 5
-x <- x + x
-x <- x + x
-{% endhighlight %}
-
-Essa construção de variável incremental é muito utilizada em loops e cálculos acumulativos. Um exemplo clássico é ....
-
-
 ## Breve revisão sobre pacotes 
 
 Mostramos que pacotes são conjuntos de funções específicas agrupadas para objetivos temáticos: carregar dados, gráficos, machine learning. É muito simples carregar e utilizar pacotes. Vamos relembrar os principais comandos envolvidos:
@@ -373,7 +360,106 @@ Fare          | Preço do tíquete
 Cabin         | Cabine
 Embarked      | Portão de embarque
 
+Vamos traduzir os nomes dos campos para facilitar o entendimento. Para isso usaremos a função `names()`
+
+
+{% highlight r %}
+names(titanic_train)
+{% endhighlight %}
+
+
+
+{% highlight text %}
+##  [1] "PassengerId" "Survived"    "Pclass"      "Name"       
+##  [5] "Sex"         "Age"         "SibSp"       "Parch"      
+##  [9] "Ticket"      "Fare"        "Cabin"       "Embarked"
+{% endhighlight %}
+
+
+
+{% highlight r %}
+names(titanic_train) <- c('id_passageiro', 'sobrevivente', 
+						'classe', 'nome', 'sexo', 'idade',
+						'irmaos_conjuge', 'pais_filhos', 'numero_ticket', 'valor_ticket', 'cabine', 'porta_embarque')
+{% endhighlight %}
+
 Como o objetivo dessa base de dados é treinar um modelo para descobrir se o passageiro vai sobreviver ou não, vamos manipular e criar variáveis para tentar ajudar a atingir esse objetivo.
+
+Vamos começar com a variável `idade`. Há um comportamento interessante nessa variável:
+
+
+{% highlight r %}
+unique(titanic_train$idade)
+{% endhighlight %}
+
+
+
+{% highlight text %}
+##  [1] 22.00 38.00 26.00 35.00    NA 54.00  2.00 27.00 14.00  4.00 58.00
+## [12] 20.00 39.00 55.00 31.00 34.00 15.00 28.00  8.00 19.00 40.00 66.00
+## [23] 42.00 21.00 18.00  3.00  7.00 49.00 29.00 65.00 28.50  5.00 11.00
+## [34] 45.00 17.00 32.00 16.00 25.00  0.83 30.00 33.00 23.00 24.00 46.00
+## [45] 59.00 71.00 37.00 47.00 14.50 70.50 32.50 12.00  9.00 36.50 51.00
+## [56] 55.50 40.50 44.00  1.00 61.00 56.00 50.00 36.00 45.50 20.50 62.00
+## [67] 41.00 52.00 63.00 23.50  0.92 43.00 60.00 10.00 64.00 13.00 48.00
+## [78]  0.75 53.00 57.00 80.00 70.00 24.50  6.00  0.67 30.50  0.42 34.50
+## [89] 74.00
+{% endhighlight %}
+
+Repare que dentre os valores únicos temos um `NA`. Isso significa que existem linhas nessa coluna que estão vazias. É muito comum lidar com conjuntos de dados que tenham ocorrências de `NA` em alguns campos. É importante saber o que fazer em casos de `NA`, e nem sempre a solução será a mesma, vai variar de acordo com suas necessidades.
+
+Nesse nosso caso específico, vamos interpretar `NA` como se o passageiro tivesse a idade desconhecida. Dependendo do algoritmo de machine learning que será aplicado a esses dados, a presença de `NA` não é bem vinda.
+
+A título de exemplificação, vamos adicionar a média geral das idades quando não soubermos a idade do passageiro. (Veja, essa nem sempre é uma boa estratégia para imputação de dados. Vamos usá-la agora apenas por ser bem simples).
+
+
+{% highlight r %}
+media <- mean(titanic_train$idade, na.rm = TRUE)
+media
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## [1] 29.69912
+{% endhighlight %}
+
+
+
+{% highlight r %}
+titanic_train$idade <- ifelse(is.na(titanic_train$idade), round(media), titanic_train$idade)
+{% endhighlight %}
+
+Calculamos a média desconsiderando ocorrências de `NA`, em seguida atribuímos a média (arredondada) às ocorrências de `NA`. 
+
+Agora todos os passageiros tem idade. Alguns a idade correta, outros uma idade atribuída. Vamos criar agora uma classificação de `jovem`, `adulto` ou `idoso` para essa variável. Até 20 anos chamaremos de `jovem`, de 21 a 54 chamaremos de `adulto`, e acima de 55 chamaremos de `idoso`. Vamos chamar essa variável de `faixa_etaria`.
+
+
+{% highlight r %}
+titanic_train$faixa_etaria <- ifelse(titanic_train$idade <= 20, 'jovem', ifelse(titanic_train$idade > 21 & titanic_train$idade < 55, 'adulto', 'idoso'))
+head(titanic_train[,c('idade', 'faixa_etaria')], 15)
+{% endhighlight %}
+
+
+
+{% highlight text %}
+##    idade faixa_etaria
+## 1     22       adulto
+## 2     38       adulto
+## 3     26       adulto
+## 4     35       adulto
+## 5     35       adulto
+## 6     30       adulto
+## 7     54       adulto
+## 8      2        jovem
+## 9     27       adulto
+## 10    14        jovem
+## 11     4        jovem
+## 12    58        idoso
+## 13    20        jovem
+## 14    39       adulto
+## 15    14        jovem
+{% endhighlight %}
 
 
 
