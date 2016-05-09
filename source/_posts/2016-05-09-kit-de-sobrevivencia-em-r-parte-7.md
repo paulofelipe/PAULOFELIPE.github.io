@@ -99,17 +99,12 @@ as.integer(3.14)
 {% highlight text %}
 ## [1] 3
 {% endhighlight %}
-  
+
 ### Estruturas básicas
 
 Dominar as estruturas de dados do R será fundamental no desenvolvimento das suas análises. Inicialmente, a ideia de estrutura de dados pode parecer um pouco abstrata, mas conhecê-las e saber suas características será útil para você perceber quais são as possibilidades.
 
 A tabela abaixo apresenta um resumo das estruturas básicas. Ela está baseada na explicação que está no livro do [_Advanced R_](http://adv-r.had.co.nz/Data-structures.html) do Hadley Wickham (leitura recomendada pra quem deseja aprofundar seus conhecimento em R).
-
-Do que se trata o campo `Dimensões` na tabela? Na prática, isso afetará como você usará partes desse objeto. Por exemplo, um objeto com duas dimensões tem linhas e colunas. Assim, você usará `[ , ]` (com vírgula separando linha e coluna, respectivamente) para acessar a dimensão que você deseja selecionar. Já um objeto unidimensional terá seus elementos acessados usando apenas `[ ]`. A lista, por sua vez, tem seus elemtnos acessados com `[[ ]]`.
-
-E o campo `Homogêneo` da tabela? Trata-se de mais uma características das estruturas de dados. Diz respeito à variedade de tipos básicos que um objeto pode conter. Por exemplo, vetores só aceitam um tipo de dado. Assim, se você atribuir dois tipos diferentes, ele forçará para um único tipo. Listas e data frames aceitam diferentes tipos de dados.
-
 
 | Tipo | Descrição | Dimensões | Homogêneo |
 |---|:---|---|---|---|
@@ -122,13 +117,15 @@ E o campo `Homogêneo` da tabela? Trata-se de mais uma características das estr
 
 <br/>  
 
+Do que se trata o campo `Dimensões` na tabela? Na prática, isso afetará como você usará partes desse objeto. Por exemplo, um objeto com duas dimensões tem linhas e colunas. Assim, você usará `[ , ]` (com vírgula separando linha e coluna, respectivamente) para acessar a dimensão que você deseja selecionar. Já um objeto unidimensional terá seus elementos acessados usando apenas `[ ]`. A lista, por sua vez, tem seus elemtnos acessados com `[[ ]]`.
+
+E o campo `Homogêneo` da tabela? Trata-se de mais uma características das estruturas de dados. Diz respeito à variedade de tipos básicos que um objeto pode conter. Por exemplo, vetores só aceitam um tipo de dado. Assim, se você atribuir dois tipos diferentes, ele forçará para um único tipo. Listas e data frames aceitam diferentes tipos de dados.
+
 ### Observações sobre listas 
 
 Lista pode causar um pouco de confusão no começo. Daremos alguns exemplos para explicar melhor.
 
-Iremos criar listas com duas bases de dados que já vem fornecidas como exemplo no próprio R.
-
-Primeiramente, iremos carregar as duas bases de dados:
+Iremos criar listas com duas bases de dados que já vem fornecidas como exemplo no próprio R. Primeiramente, vamos carregar as duas bases de dados:
 
 
 {% highlight r %}
@@ -195,6 +192,8 @@ lista.teste$vetor1
 {% highlight text %}
 ##  [1]  1  2  3  4  5  6  7  8  9 10
 {% endhighlight %}
+
+<br/>
 
 ### Observações sobre vectors
 
@@ -305,9 +304,9 @@ summary(data.ex)
 ##        NA's   :2
 {% endhighlight %}
 
-Usamos o `letters` que é uma lista pré construída no R e que retorna as 26 letras do alfabeto. No caso, usamos só as seis primeiras. Na seguda coluna, colocamos alguns NA's. 
+Usamos o `letters` que é uma lista pré construída no R e que retorna as 26 letras do alfabeto. No caso, usamos só as seis primeiras. Na seguda coluna, colocamos alguns `NA`'s. 
 
-A função `summary` mostra que existem dois NA's na `col2`. Nesse exemplo fica fácil para encontrar onde estão os NA's e fazer alguma modificação caso deseje, mas considere um caso em que seu data.frame é grande. Você não iria conseguir identificar no olho. Assim, é necessário usar algumas funções. Vamos começar como o `is.na()`:
+A função `summary` mostra que existem dois `NA`'s na `col2`. Nesse exemplo fica fácil para encontrar onde estão os NA's e fazer alguma modificação caso deseje, mas considere um caso em que seu data.frame é grande. Você não iria conseguir identificar no olho. Assim, é necessário usar algumas funções. Vamos começar como o `is.na()`:
 
 
 {% highlight r %}
@@ -454,7 +453,7 @@ data.ex
 ## 6    f 27.5
 {% endhighlight %}
 
-Note que na função `mean()` usamos o argumento `na.rm`. Ele significa "remover NA", o que é necessário nesse cálculo, pois se os NA's não forem retirados, a média será `NA` também.
+Note que na função `mean()` usamos o argumento `na.rm`. Ele significa "remover `NA`", o que é necessário nesse cálculo, pois se os NA's não forem retirados, a média será `NA` também.
 
 Imputar dados em casos de `NA` é uma das várias estratégias para lidar com ocorrência de missing no conjunto dos dados.
 
@@ -476,19 +475,10 @@ rm(list = ls())
 Vamos instalar e carregar o pacote R que disponibiliza os dados.
 
 
+
+
 {% highlight r %}
 install.packages('titanic')
-{% endhighlight %}
-
-
-
-{% highlight text %}
-## Error in contrib.url(repos, "source"): trying to use CRAN without setting a mirror
-{% endhighlight %}
-
-
-
-{% highlight r %}
 library(titanic)
 {% endhighlight %}
 
@@ -553,17 +543,19 @@ Repare que cada linha representa um passageiro e cada campo representa uma carac
 
 Nome do campo | Descrição do campo
 --------------|:-------------
-Survived      | Passageiro sobrevivente (1) ou morto (0)
-Pclass        | Classe do passageiro
-Name          | Nome do passageiro
-Sex           | Genero do passageiro (male ou female)
-Age           | Idade do passageiro
-SibSp         | Número de irmãos ou conjuges a bordo
-Parch         | Número de pais ou filhos a bordo
-Ticket        | Número do tíquete
-Fare          | Preço do tíquete
-Cabin         | Cabine
-Embarked      | Portão de embarque
+**Survived**  | Passageiro sobrevivente (1) ou morto (0)
+**Pclass**    | Classe do passageiro
+**Name**      | Nome do passageiro
+**Sex**       | Genero do passageiro (male ou female)
+**Age**       | Idade do passageiro
+**SibSp**     | Número de irmãos ou conjuges a bordo
+**Parch**     | Número de pais ou filhos a bordo
+**Ticket**    | Número do tíquete
+**Fare**      | Preço do tíquete
+**Cabin**     | Cabine
+**Embarked**  | Portão de embarque
+
+<br/>
 
 Vamos traduzir os nomes dos campos para facilitar o entendimento. Para isso usaremos a função `names()`
 
@@ -588,7 +580,7 @@ names(titanic_train) <- c('id_passageiro', 'sobrevivente',
 			'irmaos_conjuge', 'pais_filhos', 'numero_ticket', 'valor_ticket', 'cabine', 'porta_embarque')
 {% endhighlight %}
 
-Como o objetivo dessa base de dados é treinar um modelo para descobrir se o passageiro vai sobreviver ou não, vamos manipular e criar variáveis para tentar ajudar a atingir esse objetivo.
+Como o objetivo dessa base de dados é treinar um modelo para descobrir se um passageiro vai sobreviver ou não, vamos manipular e criar variáveis para tentar ajudar a atingir esse objetivo. O ideal é fazer uma bela análise exploratória dos dados, com auxílio de gráficos e estatística básica, mas nosso foco agora é apenas na transformação de dados, portanto, tentaremos um pouco de intuição e criatividade para criar variávies possivelmente úteis.
 
 Vamos começar com a variável `idade`. Há um comportamento interessante nessa variável: missings!
 
@@ -610,6 +602,20 @@ unique(titanic_train$idade)
 ## [78]  0.75 53.00 57.00 80.00 70.00 24.50  6.00  0.67 30.50  0.42 34.50
 ## [89] 74.00
 {% endhighlight %}
+
+
+
+{% highlight r %}
+sum(is.na(titanic_train$idade))
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## [1] 177
+{% endhighlight %}
+
+Usando `sum()` junto com `is.na()` conseguimos contar a quantidade total de `NA` na variável.
 
 Nesse nosso caso específico, vamos interpretar `NA` como se o passageiro tivesse a idade desconhecida, seja lá qual for o motivo. Dependendo do algoritmo de machine learning que será aplicado a esses dados, a presença de `NA` não é bem vinda. Portanto, precisamos lidar com os `NA`s dessa variável.
 
@@ -635,9 +641,11 @@ titanic_train$idade <- ifelse(is.na(titanic_train$idade), round(media), titanic_
 
 Calculamos a média desconsiderando ocorrências de `NA`, em seguida atribuímos a média (arredondada) às ocorrências de `NA`. 
 
-Agora todos os passageiros tem idade, alguns a idade correta, outros uma idade atribuída. Vamos criar agora uma classificação de `jovem`, `adulto` ou `idoso` para essa variável. Pode ser que isso ajude algum algoritmo a prever melhor quem vive ou quem morre no acidente, pois, intuitivamente, pode ser que jovens imaturos fiquem mais assustados, idosos tenham menos habilidade de fuga e adultos talvez lidem melhor com situações de emergência. 
+Agora todos os passageiros tem idade, alguns a idade correta, outros uma idade atribuída. Vamos criar agora uma classificação de `jovem`, `adulto` ou `idoso` para essa variável. 
 
-Até 20 anos chamaremos de `jovem`, de 21 a 54 chamaremos de `adulto`, e acima de 55 chamaremos de `idoso`. Vamos chamar essa variável de `faixa_etaria`.
+Pode ser que isso ajude algum algoritmo a prever melhor quem vive ou quem morre no acidente, pois, intuitivamente, talvez jovens sejam imaturos fiquem mais assustados, talvez idosos tenham menos habilidade de fuga e adultos talvez lidem melhor com situações de emergência. 
+
+Sendo assi, até 20 anos chamaremos de `jovem`, de 21 a 54 chamaremos de `adulto`, e acima de 55 chamaremos de `idoso`. Vamos chamar essa variável de `faixa_etaria`.
 
 
 {% highlight r %}
@@ -666,7 +674,7 @@ head(titanic_train[,c('idade', 'faixa_etaria')], 15)
 ## 15    14        jovem
 {% endhighlight %}
 
-Uma outra variável que pode ser interessante para ajudar modelos preditivos pode ser o total de parentes. Será que quanto mais parentes o passageiro tiver, mais ele se preocupe em salvar a vida dos seus entes queridos, botando a sua vida em risco?
+Uma outra variável que pode ser interessante para ajudar modelos preditivos pode ser o total de parentes. Será que quanto mais parentes o passageiro tiver, mais ele se preocupe em salvar a vida dos seus entes queridos, botando a sua vida em risco? Ou será que a prioridade "mulheres e crianças primeiro" ajudou quem tinha família a sobreviver? 
 
 Há uma variável para irmãos e conjuges, e outra para crianças ou pais. Vamos somá-las e criar o `total_parentes`.
 
@@ -674,6 +682,48 @@ Há uma variável para irmãos e conjuges, e outra para crianças ou pais. Vamos
 {% highlight r %}
 titanic_train$total_parentes <- titanic_train$irmaos_conjuge + titanic_train$pais_filhos
 {% endhighlight %}
+
+Para complementar essa ideia, vamos tentar distinguir quem tinha família e quem não tinha, criando uma variável categórica simplesmente indicando se o passageiro tem família ou não:
+
+
+{% highlight r %}
+titanic_train$familia <- ifelse(titanic_train$total_parentes > 0, 'Sim', 'Nao')
+{% endhighlight %}
+
+Seguindo com as transformações, o título do passageiro pode dizer algo sobre ele. Vamos tentar isolar o título em uma varíavel para explicitar isso aos possíveis algorítmos:
+
+
+{% highlight r %}
+titanic_train$titulo <- lapply(strsplit(titanic_train$Name, '[,.]'), "[", 2)
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## Error in strsplit(titanic_train$Name, "[,.]"): argumento modo não caractere
+{% endhighlight %}
+
+
+
+{% highlight r %}
+head(titanic_train[,c('nome', 'titulo')], 15)
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## Error in `[.data.frame`(titanic_train, , c("nome", "titulo")): colunas indefinidas selecionadas
+{% endhighlight %}
+
+O comando usado talvez seja um pouco avançado, mas vamos tentar explicar por partes. Primeiramente usamos o `strsplit()`, uma função que lida com caracteres e divide uma string baseado numa marcação. Nesse caso, estamos dividindo o nome do passageiro em dois pontos: vírgula `,` e ponto `.`, que é justamente o padrão textual que separa o título no nome.
+
+O resultado do `strsplit()` é uma lista com as partes da separação. Para acessar exatamente o segundo elemento da lista, que é ond está o título, usamos o `lapply()`, uma função da família `apply`, que executa um comando repetidamente ao longo de uma estrutura (coluna, array, listas, matrizes, etc...). O efeito prático das funções da família `apply` se assemelha muito à loops.
+
+Dominar a família `apply` pode ser muito interessante para se tornar um bom analista de dados. Certamente faremos uma sequência de posts explicando detalhadamente todas as funções da família `apply`, aguarde!
+
+## Conclusão
+
+E é isso pessoal. Chegamos ao fim da sequência. Esperamos que tenha gostado e aprendido o kit básico de sobrevivência em R. Daqui em diante os posts serão intermediários e avançados, tratando de questões mais profundas como junção de dados, visualização de dados, análise exploratória, estatística, machine learning.
 
 
 ## Referências
