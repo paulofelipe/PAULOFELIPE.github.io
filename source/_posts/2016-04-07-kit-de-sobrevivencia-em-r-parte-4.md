@@ -270,4 +270,3 @@ Teve alguma dificuldade? Comente abaixo para que possamos ajudar!
 * [R Data Import/Export](https://cran.r-project.org/doc/manuals/r-release/R-data.pdf)
 * [New packages for reading data into R — fast](http://blog.revolutionanalytics.com/2015/04/new-packages-for-reading-data-into-r-fast.html)
 * [Reading and Importing Files - DataCamp](https://www.datacamp.com/community/tutorials/r-tutorial-read-excel-into-r)
-

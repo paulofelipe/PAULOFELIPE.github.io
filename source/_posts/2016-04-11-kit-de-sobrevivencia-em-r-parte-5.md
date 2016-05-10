@@ -522,4 +522,3 @@ Muitas outras transformações são possíveis com essa simples base de dados us
 * [Basic Data Types II](http://www.r-tutor.com/r-introduction/basic-data-types)
 * [4 data wrangling tasks in R for advanced beginners](http://www.computerworld.com/article/2486425/business-intelligence/business-intelligence-4-data-wrangling-tasks-in-r-for-advanced-beginners.html)
 
-
