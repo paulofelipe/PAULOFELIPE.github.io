@@ -35,7 +35,7 @@ A função mais básica para leitura de dados estruturados (csv, tabular, tamanh
 
 Se quiser exercitar com diversos arquivos de dados diferentes, tente o [Portal Brasileiro de Dados Abertos](http://dados.gov.br/) ou [esse repositório de dados públicos](https://github.com/caesar0301/awesome-public-datasets) (em inglês).
 
-Comentamos de algumas funções básicas para começar a explorar seus dados carregados. Você lembra?
+Comentamos sobre algumas funções básicas para começar a explorar seus dados carregados. Você lembra?
 
 
 {% highlight r %}
@@ -109,15 +109,15 @@ A tabela abaixo apresenta um resumo das estruturas básicas. Ela está baseada n
 | Tipo | Descrição | Dimensões | Homogêneo |
 |---|:---|---|---|---|
 | **vector** | Coleção de elementos simples. Todos os elementos precisam ser do mesmo tipo básico de dado | 1 | Sim |
-| **array** | Coleção que se parece com o vector, mas é possível adicionar atributos às posicões e dimensões | n | Sim |
-| **matrix** | Tipo especial de array com mais de uma dimensão | 2 | Sim |
+| **array** | Coleção que se parece com o vector, mas é multidimensional | n | Sim |
+| **matrix** | Tipo especial de array com duas dimensões | 2 | Sim |
 | **list** | Objeto complexo com elementos que podem ser de diferentes tipos | 1 | Não |
-| **data.frame** | Tipo especial de lista onde cada campo é um vetor de apenas um tipo e todos os campos tem o mesmo número de registros. É o tipo mais utilizado se trabalhar com dados | 2 | Não |
+| **data.frame** | Tipo especial de lista onde cada coluna é um vetor de apenas um tipo e todos as colunas têm o mesmo número de registros. É o tipo mais utilizado se trabalhar com dados | 2 | Não |
 | **factor** | Tipo especial de vector que só contém valores pré definidos (levels) e categóricos (characters). Não é possível adicionar novas categorias sem criação de novos levels | 1 |  Não |
 
 <br/>  
 
-Do que se trata o campo `Dimensões` na tabela? Na prática, isso afetará como você usará partes desse objeto. Por exemplo, um objeto com duas dimensões tem linhas e colunas. Assim, você usará `[ , ]` (com vírgula separando linha e coluna, respectivamente) para acessar a dimensão que você deseja selecionar. Já um objeto unidimensional terá seus elementos acessados usando apenas `[ ]`. A lista, por sua vez, tem seus elemtnos acessados com `[[ ]]`.
+Do que se trata o campo `Dimensões` na tabela? Na prática, isso afetará como você usará partes desse objeto. Por exemplo, um objeto com duas dimensões tem linhas e colunas. Assim, você usará `[ , ]` (com vírgula separando linha e coluna, respectivamente) para acessar a dimensão que você deseja selecionar. Já um objeto unidimensional terá seus elementos acessados usando apenas `[ ]`. A lista, por sua vez, tem seus elementos acessados com `[[ ]]`.
 
 E o campo `Homogêneo` da tabela? Trata-se de mais uma características das estruturas de dados. Diz respeito à variedade de tipos básicos que um objeto pode conter. Por exemplo, vetores só aceitam um tipo de dado. Assim, se você atribuir dois tipos diferentes, ele forçará para um único tipo. Listas e data frames aceitam diferentes tipos de dados.
 
@@ -125,7 +125,7 @@ E o campo `Homogêneo` da tabela? Trata-se de mais uma características das estr
 
 Lista pode causar um pouco de confusão no começo. Daremos alguns exemplos para explicar melhor.
 
-Iremos criar listas com duas bases de dados que já vem fornecidas como exemplo no próprio R. Primeiramente, vamos carregar as duas bases de dados:
+Iremos criar listas com duas bases de dados que já são fornecidas como exemplos no próprio R. Primeiramente, vamos carregar as duas bases de dados:
 
 
 {% highlight r %}
@@ -152,7 +152,7 @@ class(iris)
 ## [1] "data.frame"
 {% endhighlight %}
 
-Veja que temos dois data frames. Agora, vamos criar um objeto único que irá receber essas duas bases. Além disso, a fim de mostrar a heterogeneidade, iremos incluir um objeto que será um vetor. Veja abaixo:
+Veja que temos dois data frames. Agora, vamos criar um objeto único que irá receber essas duas bases. Além disso, a fim de mostrar a heterogeneidade, iremos incluir um objeto que será um vetor. 
 
 
 {% highlight r %}
@@ -258,8 +258,7 @@ head(iris)
 
 O R atribui `NA` para valores faltantes. Ou seja, se por acaso uma determinada posição de um vetor ou de uma coluna de um data.frame não possui valor algum, o R mostrará `NA`. 
 
-
-É muito comum lidar com conjuntos de dados que tenham ocorrências de `NA` em alguns campos. É importante saber o que fazer em casos de `NA`, e nem sempre a solução será a mesma, vai variar de acordo com suas necessidades.
+É muito comum lidar com conjuntos de dados que tenham ocorrências de `NA` em alguns campos. É importante saber o que fazer em casos de `NA`, e nem sempre a solução será a mesma, vai variar de acordo com as suas necessidades.
 
 Em algumas bases de dados, quem gera o dado atribui valores genéricos como 999 ou até mesmo um "texto vazio" `' '`. Nesse caso, você provavelmente terá que substituir esses valores "omissos" por `NA`. 
 
@@ -304,9 +303,9 @@ summary(data.ex)
 ##        NA's   :2
 {% endhighlight %}
 
-Usamos o `letters` que é uma lista pré construída no R e que retorna as 26 letras do alfabeto. No caso, usamos só as seis primeiras. Na seguda coluna, colocamos alguns `NA`'s. 
+Usamos o `letters` que é uma lista pré construída no R e que retorna as 26 letras do alfabeto. No caso, usamos só as seis primeiras. Na segunda coluna, colocamos alguns `NA`'s. 
 
-A função `summary` mostra que existem dois `NA`'s na `col2`. Nesse exemplo fica fácil para encontrar onde estão os NA's e fazer alguma modificação caso deseje, mas considere um caso em que seu data.frame é grande. Você não iria conseguir identificar no olho. Assim, é necessário usar algumas funções. Vamos começar como o `is.na()`:
+A função `summary` mostra que existem dois `NA`'s na `col2`. Nesse exemplo fica fácil para encontrar onde estão os `NA`'s e fazer alguma modificação caso deseje, mas considere um caso em que seu data.frame é grande. Você não iria conseguir identificar no olho. Assim, é necessário usar algumas funções. Vamos começar como o `is.na()`:
 
 
 {% highlight r %}
@@ -402,7 +401,7 @@ data.ex[complete.cases(data.ex),]
 ## 5    e   50
 {% endhighlight %}
 
-Você poderiar usar a função `na.omit()` para obter o mesmo resultado da seleção de linhas com o `complete.cases()`:
+Você poderia usar a função `na.omit()` para obter o mesmo resultado da seleção de linhas com o `complete.cases()`:
 
 
 {% highlight r %}
@@ -419,7 +418,7 @@ na.omit(data.ex)
 ## 5    e   50
 {% endhighlight %}
 
-Por fim, iremos imputar a média da `col2` nas linhas em que há `NA`. Para isso, usaremos o `ifelse()` que tratamos na [parte 6]({{root_url}}/blog/2016/05/01/kit-de-sobrevivencia-em-r-parte-6/) e os `is.na()`, além da função `mean()`.
+Por fim, iremos imputar a média da `col2` nas linhas em que há `NA`. Para isso, usaremos o `ifelse()` que tratamos na [parte 6]({{root_url}}/blog/2016/05/01/kit-de-sobrevivencia-em-r-parte-6/) e o `is.na()`, além da função `mean()`.
 
 
 {% highlight r %}
@@ -453,7 +452,7 @@ data.ex
 ## 6    f 27.5
 {% endhighlight %}
 
-Note que na função `mean()` usamos o argumento `na.rm`. Ele significa "remover `NA`", o que é necessário nesse cálculo, pois se os NA's não forem retirados, a média será `NA` também.
+Note que na função `mean()` usamos o argumento `na.rm`. Ele significa "remover `NA`", o que é necessário nesse cálculo, pois se os `NA`'s não forem retirados, a média será `NA` também.
 
 Imputar dados em casos de `NA` é uma das várias estratégias para lidar com ocorrência de missing no conjunto dos dados.
 
@@ -546,9 +545,9 @@ Nome do campo | Descrição do campo
 **Survived**  | Passageiro sobrevivente (1) ou morto (0)
 **Pclass**    | Classe do passageiro
 **Name**      | Nome do passageiro
-**Sex**       | Genero do passageiro (male ou female)
+**Sex**       | Gênero do passageiro (male ou female)
 **Age**       | Idade do passageiro
-**SibSp**     | Número de irmãos ou conjuges a bordo
+**SibSp**     | Número de irmãos ou cônjuges a bordo
 **Parch**     | Número de pais ou filhos a bordo
 **Ticket**    | Número do tíquete
 **Fare**      | Preço do tíquete
@@ -580,7 +579,7 @@ names(titanic_train) <- c('id_passageiro', 'sobrevivente',
 			'irmaos_conjuge', 'pais_filhos', 'numero_ticket', 'valor_ticket', 'cabine', 'porta_embarque')
 {% endhighlight %}
 
-Como o objetivo dessa base de dados é treinar um modelo para descobrir se um passageiro vai sobreviver ou não, vamos manipular e criar variáveis para tentar ajudar a atingir esse objetivo. O ideal é fazer uma bela análise exploratória dos dados, com auxílio de gráficos e estatística básica, mas nosso foco agora é apenas na transformação de dados, portanto, tentaremos um pouco de intuição e criatividade para criar variávies possivelmente úteis.
+Como o objetivo dessa base de dados é treinar um modelo para descobrir se um passageiro vai sobreviver ou não, vamos manipular e criar variáveis para tentar ajudar a atingir esse objetivo. O ideal é fazer uma bela análise exploratória dos dados, com auxílio de gráficos e estatística básica, mas nosso foco agora é apenas na transformação de dados, portanto, tentaremos um pouco de intuição e criatividade para criar variáveis possivelmente úteis.
 
 Vamos começar com a variável `idade`. Há um comportamento interessante nessa variável: missings!
 
@@ -645,7 +644,7 @@ Agora todos os passageiros tem idade, alguns a idade correta, outros uma idade a
 
 Pode ser que isso ajude algum algoritmo a prever melhor quem vive ou quem morre no acidente, pois, intuitivamente, talvez jovens sejam imaturos fiquem mais assustados, talvez idosos tenham menos habilidade de fuga e adultos talvez lidem melhor com situações de emergência. 
 
-Sendo assi, até 20 anos chamaremos de `jovem`, de 21 a 54 chamaremos de `adulto`, e acima de 55 chamaremos de `idoso`. Vamos chamar essa variável de `faixa_etaria`.
+Sendo assim, até 20 anos chamaremos de `jovem`, de 21 a 54 chamaremos de `adulto`, e acima de 55 chamaremos de `idoso`. Vamos chamar essa variável de `faixa_etaria`.
 
 
 {% highlight r %}
@@ -676,7 +675,7 @@ head(titanic_train[,c('idade', 'faixa_etaria')], 15)
 
 Uma outra variável que pode ser interessante para ajudar modelos preditivos pode ser o total de parentes. Será que quanto mais parentes o passageiro tiver, mais ele se preocupe em salvar a vida dos seus entes queridos, botando a sua vida em risco? Ou será que a prioridade "mulheres e crianças primeiro" ajudou quem tinha família a sobreviver? 
 
-Há uma variável para irmãos e conjuges, e outra para crianças ou pais. Vamos somá-las e criar o `total_parentes`.
+Há uma variável para irmãos e cônjuges, e outra para crianças ou pais. Vamos somá-las e criar o `total_parentes`.
 
 
 {% highlight r %}
@@ -690,34 +689,38 @@ Para complementar essa ideia, vamos tentar distinguir quem tinha família e quem
 titanic_train$familia <- ifelse(titanic_train$total_parentes > 0, 'Sim', 'Nao')
 {% endhighlight %}
 
-Seguindo com as transformações, o título do passageiro pode dizer algo sobre ele. Vamos tentar isolar o título em uma varíavel para explicitar isso aos possíveis algorítmos:
+Seguindo com as transformações, o título do passageiro pode dizer algo sobre ele. Vamos tentar isolar o título em uma variável para explicitar isso aos possíveis algoritmos:
 
 
 {% highlight r %}
-titanic_train$titulo <- lapply(strsplit(titanic_train$Name, '[,.]'), "[", 2)
-{% endhighlight %}
-
-
-
-{% highlight text %}
-## Error in strsplit(titanic_train$Name, "[,.]"): argumento modo não caractere
-{% endhighlight %}
-
-
-
-{% highlight r %}
+titanic_train$titulo <- lapply(strsplit(titanic_train$nome, '[,.]'), "[", 2)
 head(titanic_train[,c('nome', 'titulo')], 15)
 {% endhighlight %}
 
 
 
 {% highlight text %}
-## Error in `[.data.frame`(titanic_train, , c("nome", "titulo")): colunas indefinidas selecionadas
+##                                                   nome  titulo
+## 1                              Braund, Mr. Owen Harris      Mr
+## 2  Cumings, Mrs. John Bradley (Florence Briggs Thayer)     Mrs
+## 3                               Heikkinen, Miss. Laina    Miss
+## 4         Futrelle, Mrs. Jacques Heath (Lily May Peel)     Mrs
+## 5                             Allen, Mr. William Henry      Mr
+## 6                                     Moran, Mr. James      Mr
+## 7                              McCarthy, Mr. Timothy J      Mr
+## 8                       Palsson, Master. Gosta Leonard  Master
+## 9    Johnson, Mrs. Oscar W (Elisabeth Vilhelmina Berg)     Mrs
+## 10                 Nasser, Mrs. Nicholas (Adele Achem)     Mrs
+## 11                     Sandstrom, Miss. Marguerite Rut    Miss
+## 12                            Bonnell, Miss. Elizabeth    Miss
+## 13                      Saundercock, Mr. William Henry      Mr
+## 14                         Andersson, Mr. Anders Johan      Mr
+## 15                Vestrom, Miss. Hulda Amanda Adolfina    Miss
 {% endhighlight %}
 
 O comando usado talvez seja um pouco avançado, mas vamos tentar explicar por partes. Primeiramente usamos o `strsplit()`, uma função que lida com caracteres e divide uma string baseado numa marcação. Nesse caso, estamos dividindo o nome do passageiro em dois pontos: vírgula `,` e ponto `.`, que é justamente o padrão textual que separa o título no nome.
 
-O resultado do `strsplit()` é uma lista com as partes da separação. Para acessar exatamente o segundo elemento da lista, que é ond está o título, usamos o `lapply()`, uma função da família `apply`, que executa um comando repetidamente ao longo de uma estrutura (coluna, array, listas, matrizes, etc...). O efeito prático das funções da família `apply` se assemelha muito à loops.
+O resultado do `strsplit()` é uma lista com as partes da separação. Para acessar exatamente o segundo elemento da lista, que é onde está o título, usamos o `lapply()`, uma função da família `apply`, que executa um comando repetidamente ao longo de uma estrutura (coluna, array, listas, matrizes, etc...). O efeito prático das funções da família `apply` se assemelha muito à loops.
 
 Dominar a família `apply` pode ser muito interessante para se tornar um bom analista de dados. Certamente faremos uma sequência de posts explicando detalhadamente todas as funções da família `apply`, aguarde!
 
