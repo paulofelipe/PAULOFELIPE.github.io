@@ -151,10 +151,10 @@
 
 <p>Mostramos que pacotes são conjuntos de funções específicas agrupadas para objetivos temáticos: carregar dados, gráficos, machine learning. É muito simples carregar e utilizar pacotes. Vamos relembrar os principais comandos envolvidos:</p>
 
-<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="o">??</span><span class="n">dplyr</span> <span class="c1">#conhecendo um pacote que não foi carregado ainda
-</span><span class="n">install.packages</span><span class="p">(</span><span class="s1">'dplyr'</span><span class="p">)</span> <span class="c1">#instalando um pacote
-</span><span class="n">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span> <span class="c1">#carregando um pacote para uso
-</span><span class="o">?</span><span class="n">dplyr</span><span class="o">::</span><span class="n">filter</span> <span class="err">#</span><span class="n">conhecendo</span> <span class="n">alguma</span> <span class="n">fun</span><span class="err">çã</span><span class="n">o</span> <span class="n">do</span> <span class="n">pacote</span></code></pre></div>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="o">??</span><span class="n">dplyr</span> <span class="c1">#conhecendo um pacote que não foi carregado ainda</span>
+<span class="n">install.packages</span><span class="p">(</span><span class="s1">'dplyr'</span><span class="p">)</span> <span class="c1">#instalando um pacote</span>
+<span class="n">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span> <span class="c1">#carregando um pacote para uso</span>
+<span class="o">?</span><span class="n">dplyr</span><span class="o">::</span><span class="n">filter</span> <span class="c1">#conhecendo alguma função do pacote</span></code></pre></div>
 
 <h2 id="carregando-dados">Carregando dados</h2>
 
@@ -455,8 +455,8 @@
 
 <p>Por fim, iremos imputar a média da <code>col2</code> nas linhas em que há <code>NA</code>. Para isso, usaremos o <code>ifelse()</code> que tratamos na <a href="/blog/2016/05/01/kit-de-sobrevivencia-em-r-parte-6/">parte 6</a> e o <code>is.na()</code>, além da função <code>mean()</code>.</p>
 
-<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Calcular a média da col2
-</span><span class="n">media.col2</span> <span class="o">&lt;-</span> <span class="n">mean</span><span class="p">(</span><span class="n">data.ex</span><span class="o">$</span><span class="n">col2</span><span class="p">,</span> <span class="n">na.rm</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Calcular a média da col2</span>
+<span class="n">media.col2</span> <span class="o">&lt;-</span> <span class="n">mean</span><span class="p">(</span><span class="n">data.ex</span><span class="o">$</span><span class="n">col2</span><span class="p">,</span> <span class="n">na.rm</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span>
 <span class="n">media.col2</span></code></pre></div>
 
 <div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 27.5</code></pre></div>
