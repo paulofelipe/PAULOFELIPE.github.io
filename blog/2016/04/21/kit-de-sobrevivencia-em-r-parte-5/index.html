@@ -11,7 +11,7 @@
   <meta name="author" content="Full Join">
 
   
-  <meta name="description" content="Kit De Sobrevivência Em R - Parte 5: Tipos De Dados E Transformações 21/04/2016 7:00 pm | básico, introdução r, r Você já aprendeu como carregar um &hellip;">
+  <meta name="description" content="Kit De Sobrevivência Em R - Parte 5: Tipos De Dados E Transformações 21/04/2016 7:00 pm | básico, introdução ao r, r Você já aprendeu como carregar &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -85,7 +85,7 @@
   <header role="banner"><hgroup>
   <h1><a href="/">Full Join</a></h1>
   
-    <h2>Um blog sobre Data Science.</h2>
+    <h2>Análise de Dados de um jeito fácil.</h2>
   
 </hgroup>
 
@@ -131,7 +131,7 @@
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/basico/'>básico</a>, <a class='category' href='/blog/categories/introducao-r/'>introdução r</a>, <a class='category' href='/blog/categories/r/'>r</a>
+    <a class='category' href='/blog/categories/basico/'>básico</a>, <a class='category' href='/blog/categories/introducao-ao-r/'>introdução ao r</a>, <a class='category' href='/blog/categories/r/'>r</a>
   
 </span>
 
@@ -392,7 +392,7 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
 <span class="n">dados</span><span class="o">$</span><span class="n">Regiao</span><span class="p">[</span><span class="n">dados</span><span class="o">$</span><span class="n">UF</span> <span class="o">%</span><span class="k">in</span><span class="o">%</span> <span class="n">c</span><span class="p">(</span><span class="s1">'Maranhão'</span><span class="p">,</span> <span class="s1">'Piauí'</span><span class="p">,</span> <span class="s1">'Ceará'</span><span class="p">,</span> <span class="s1">'Rio Grande do Norte'</span><span class="p">,</span> <span class="s1">'Paraíba'</span><span class="p">,</span> <span class="s1">'Pernambuco'</span><span class="p">,</span> <span class="s1">'Alagoas'</span><span class="p">,</span> <span class="s1">'Sergipe'</span><span class="p">,</span> <span class="s1">'Bahia'</span><span class="p">)]</span> <span class="o">&lt;-</span> <span class="s1">'Nordeste'</span> 
 <span class="n">dados</span><span class="o">$</span><span class="n">Regiao</span><span class="p">[</span><span class="n">dados</span><span class="o">$</span><span class="n">UF</span> <span class="o">%</span><span class="k">in</span><span class="o">%</span> <span class="n">c</span><span class="p">(</span><span class="s1">'Minas Gerais'</span><span class="p">,</span> <span class="s1">'Espírito Santo'</span><span class="p">,</span> <span class="s1">'Rio de Janeiro'</span><span class="p">,</span> <span class="s1">'São Paulo'</span><span class="p">)]</span> <span class="o">&lt;-</span> <span class="s1">'Sudeste'</span>   
 <span class="n">dados</span><span class="o">$</span><span class="n">Regiao</span><span class="p">[</span><span class="n">dados</span><span class="o">$</span><span class="n">UF</span> <span class="o">%</span><span class="k">in</span><span class="o">%</span> <span class="n">c</span><span class="p">(</span><span class="s1">'Paraná'</span><span class="p">,</span> <span class="s1">'Santa Catarina'</span><span class="p">,</span> <span class="s1">'Rio Grande do Sul'</span><span class="p">)]</span> <span class="o">&lt;-</span> <span class="s1">'Sul'</span>
-<span class="n">dados</span><span class="o">$</span><span class="n">Regiao</span><span class="p">[</span><span class="n">dados</span><span class="o">$</span><span class="n">UF</span> <span class="o">%</span><span class="k">in</span><span class="o">%</span> <span class="n">c</span><span class="p">(</span><span class="s1">'Mato Grosso do Sul'</span><span class="p">,</span> <span class="s1">'Mato Grosso Goiás'</span><span class="p">,</span> <span class="s1">'Distrito Federal'</span><span class="p">)]</span> <span class="o">&lt;-</span> <span class="s1">'Centro Oeste'</span>
+<span class="n">dados</span><span class="o">$</span><span class="n">Regiao</span><span class="p">[</span><span class="n">dados</span><span class="o">$</span><span class="n">UF</span> <span class="o">%</span><span class="k">in</span><span class="o">%</span> <span class="n">c</span><span class="p">(</span><span class="s1">'Mato Grosso do Sul'</span><span class="p">,</span> <span class="s1">'Mato Grosso'</span><span class="p">,</span> <span class="s1">'Goiás'</span><span class="p">,</span> <span class="s1">'Distrito Federal'</span><span class="p">)]</span> <span class="o">&lt;-</span> <span class="s1">'Centro Oeste'</span>
 <span class="n">head</span><span class="p">(</span><span class="n">dados</span><span class="p">,</span> <span class="m">15</span><span class="p">)</span></code></pre></div>
 
 <div class="highlight"><pre><code class="language-text" data-lang="text">##     Ano   Trimestre       UF Taxa_Desemprego Semestre Regiao
@@ -512,7 +512,7 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/basico/'>básico</a>, <a class='category' href='/blog/categories/introducao-r/'>introdução r</a>, <a class='category' href='/blog/categories/r/'>r</a>
+    <a class='category' href='/blog/categories/basico/'>básico</a>, <a class='category' href='/blog/categories/introducao-ao-r/'>introdução ao r</a>, <a class='category' href='/blog/categories/r/'>r</a>
   
 </span>
 
@@ -554,6 +554,10 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/05/09/kit-de-sobrevivencia-em-r-parte-7/">Kit De Sobrevivência Em R - Parte 7: Avançando E Aprofundando</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/05/01/kit-de-sobrevivencia-em-r-parte-6/">Kit De Sobrevivência Em R - Parte 6: Estruturas De Controle</a>
       </li>
     
@@ -567,10 +571,6 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
     
       <li class="post">
         <a href="/blog/2016/04/03/kit-de-sobrevivencia-em-r-parte-3/">Kit De Sobrevivência Em R - Parte 3: Pacotes</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/04/03/kit-de-sobrevivencia-em-r-parte-2/">Kit De Sobrevivência Em R - Parte 2: Operações, Variáveis E Funções</a>
       </li>
     
   </ul>

@@ -1,0 +1,872 @@
+
+
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Kit De Sobrevivência Em R - Parte 7: Avançando E Aprofundando - Full Join</title>
+  <meta name="author" content="Full Join">
+
+  
+  <meta name="description" content="Kit De Sobrevivência Em R - Parte 7: Avançando E Aprofundando 09/05/2016 8:04 pm | básico, introdução ao r, r Chegamos ao fim do kit de &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://fulljoin.com.br/blog/2016/05/09/kit-de-sobrevivencia-em-r-parte-7/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Full Join" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!-- MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript"
+   src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-75406624-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Full Join</a></h1>
+  
+    <h2>Análise de Dados de um jeito fácil.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="fulljoin.com.br">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Arquivo</a></li>
+  <li><a href="/authors">Sobre</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Kit De Sobrevivência Em R - Parte 7: Avançando E Aprofundando</h1>
+        
+          
+    <p class="meta">
+    
+
+
+
+
+<time class='entry-date' datetime='2016-05-09T20:04:00-03:00'><span class='date'>09/05/2016</span> <span class='time'>8:04 pm</span></time>
+        
+        | 
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/basico/'>básico</a>, <a class='category' href='/blog/categories/introducao-ao-r/'>introdução ao r</a>, <a class='category' href='/blog/categories/r/'>r</a>
+  
+</span>
+
+
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Chegamos ao fim do <a href="/blog/categories/introducao-r">kit de sobrevivência em R</a>. Nesse último post da série vamos retomar alguns pontos que merecem ser complementados e revisados, além de apresentar um pouco mais de transformações e operações usando apenas funções básicas do R.</p>
+
+<!-- More -->
+
+<p>Se você seguiu a sequência e chegou até aqui, parabéns! Você provavelmente conhece o básico de R e o suficiente para começar a aprofundar em aspectos mais interessantes sobre operações com massas de dados.</p>
+
+<h2 id="breve-reviso-sobre-pacotes">Breve revisão sobre pacotes</h2>
+
+<p>Mostramos que pacotes são conjuntos de funções específicas agrupadas para objetivos temáticos: carregar dados, gráficos, machine learning. É muito simples carregar e utilizar pacotes. Vamos relembrar os principais comandos envolvidos:</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="o">??</span><span class="n">dplyr</span> <span class="c1">#conhecendo um pacote que não foi carregado ainda
+</span><span class="n">install.packages</span><span class="p">(</span><span class="s1">'dplyr'</span><span class="p">)</span> <span class="c1">#instalando um pacote
+</span><span class="n">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span> <span class="c1">#carregando um pacote para uso
+</span><span class="o">?</span><span class="n">dplyr</span><span class="o">::</span><span class="n">filter</span> <span class="err">#</span><span class="n">conhecendo</span> <span class="n">alguma</span> <span class="n">fun</span><span class="err">çã</span><span class="n">o</span> <span class="n">do</span> <span class="n">pacote</span></code></pre></div>
+
+<h2 id="carregando-dados">Carregando dados</h2>
+
+<p>Lembre-se que antes de carregar um arquivo de dados você precisa informar onde o R deve ler o arquivo. Para isso usamos o comando <code>setwd()</code>.</p>
+
+<p>A função mais básica para leitura de dados estruturados (csv, tabular, tamanho fixo, com separadores, etc.) é o famoso <code>read.table()</code>. Lembra dos principais parâmetros? Nome do arquivo, separador, se tem cabeçalho ou não, e, no caso de campos com tamanho fixo, o tamanho de cada campo.</p>
+
+<p>Se quiser exercitar com diversos arquivos de dados diferentes, tente o <a href="http://dados.gov.br/">Portal Brasileiro de Dados Abertos</a> ou <a href="https://github.com/caesar0301/awesome-public-datasets">esse repositório de dados públicos</a> (em inglês).</p>
+
+<p>Comentamos sobre algumas funções básicas para começar a explorar seus dados carregados. Você lembra?</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="o">?</span><span class="n">head</span><span class="p">()</span>
+<span class="o">?</span><span class="n">tail</span><span class="p">()</span>
+<span class="o">?</span><span class="n">str</span><span class="p">()</span></code></pre></div>
+
+<blockquote>
+  <p>Dica: se estiver usando o RStudio, tente visualizar seu data.frame com a função <code>View()</code> (com V maiúsculo). Ela cria uma planilha para ver melhor os dados!</p>
+</blockquote>
+
+<h2 id="tipos-e-estrutura-de-dados">Tipos e estrutura de dados</h2>
+
+<p>Conhecer os tipos e estruturas de dados em R será fundamental daqui pra frente. Achamos importante revisar e apresentar alguns dos principais.</p>
+
+<h3 id="tipos-bsicos">Tipos básicos</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Tipo</th>
+      <th style="text-align: left">Descrição</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>logical</strong></td>
+      <td style="text-align: left">Valor lógico, <code>TRUE</code> ou <code>FALSE</code>. Usado com os operadores lógicos <code>&amp;, |, ==, !=, &gt;, &lt;, &gt;=, &lt;=</code></td>
+    </tr>
+    <tr>
+      <td><strong>integer</strong></td>
+      <td style="text-align: left">Valores de números inteiros</td>
+    </tr>
+    <tr>
+      <td><strong>numeric</strong></td>
+      <td style="text-align: left">Valores de números decimais. Também representam números inteiros</td>
+    </tr>
+    <tr>
+      <td><strong>character</strong></td>
+      <td style="text-align: left">Valores textuais, também conhecidos como string</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><br /></p>
+
+<h3 id="converses">Conversões</h3>
+
+<p>Existem algumas operações de conversões entre os tipos. São bastante usadas em transformações de campos. Por exemplo:</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">as.numeric</span><span class="p">(</span><span class="s2">"20"</span><span class="p">)</span></code></pre></div>
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 20</code></pre></div>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">as.character</span><span class="p">(</span><span class="m">20</span><span class="p">)</span></code></pre></div>
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">## [1] "20"</code></pre></div>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">as.integer</span><span class="p">(</span><span class="m">3.14</span><span class="p">)</span></code></pre></div>
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 3</code></pre></div>
+
+<h3 id="estruturas-bsicas">Estruturas básicas</h3>
+
+<p>Dominar as estruturas de dados do R será fundamental no desenvolvimento das suas análises. Inicialmente, a ideia de estrutura de dados pode parecer um pouco abstrata, mas conhecê-las e saber suas características será útil para você perceber quais são as possibilidades.</p>
+
+<p>A tabela abaixo apresenta um resumo das estruturas básicas. Ela está baseada na explicação que está no livro do <a href="http://adv-r.had.co.nz/Data-structures.html"><em>Advanced R</em></a> do Hadley Wickham (leitura recomendada pra quem deseja aprofundar seus conhecimento em R).</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Tipo</th>
+      <th style="text-align: left">Descrição</th>
+      <th>Dimensões</th>
+      <th>Homogêneo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>vector</strong></td>
+      <td style="text-align: left">Coleção de elementos simples. Todos os elementos precisam ser do mesmo tipo básico de dado</td>
+      <td>1</td>
+      <td>Sim</td>
+    </tr>
+    <tr>
+      <td><strong>array</strong></td>
+      <td style="text-align: left">Coleção que se parece com o vector, mas é multidimensional</td>
+      <td>n</td>
+      <td>Sim</td>
+    </tr>
+    <tr>
+      <td><strong>matrix</strong></td>
+      <td style="text-align: left">Tipo especial de array com duas dimensões</td>
+      <td>2</td>
+      <td>Sim</td>
+    </tr>
+    <tr>
+      <td><strong>list</strong></td>
+      <td style="text-align: left">Objeto complexo com elementos que podem ser de diferentes tipos</td>
+      <td>1</td>
+      <td>Não</td>
+    </tr>
+    <tr>
+      <td><strong>data.frame</strong></td>
+      <td style="text-align: left">Tipo especial de lista onde cada coluna é um vetor de apenas um tipo e todos as colunas têm o mesmo número de registros. É o tipo mais utilizado se trabalhar com dados</td>
+      <td>2</td>
+      <td>Não</td>
+    </tr>
+    <tr>
+      <td><strong>factor</strong></td>
+      <td style="text-align: left">Tipo especial de vector que só contém valores pré definidos (levels) e categóricos (characters). Não é possível adicionar novas categorias sem criação de novos levels</td>
+      <td>1</td>
+      <td>Não</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><br /></p>
+
+<p>Do que se trata o campo <code>Dimensões</code> na tabela? Na prática, isso afetará como você usará partes desse objeto. Por exemplo, um objeto com duas dimensões tem linhas e colunas. Assim, você usará <code>[ , ]</code> (com vírgula separando linha e coluna, respectivamente) para acessar a dimensão que você deseja selecionar. Já um objeto unidimensional terá seus elementos acessados usando apenas <code>[ ]</code>. A lista, por sua vez, tem seus elementos acessados com <code>[[ ]]</code>.</p>
+
+<p>E o campo <code>Homogêneo</code> da tabela? Trata-se de mais uma características das estruturas de dados. Diz respeito à variedade de tipos básicos que um objeto pode conter. Por exemplo, vetores só aceitam um tipo de dado. Assim, se você atribuir dois tipos diferentes, ele forçará para um único tipo. Listas e data frames aceitam diferentes tipos de dados.</p>
+
+<h3 id="observaes-sobre-listas">Observações sobre listas</h3>
+
+<p>Lista pode causar um pouco de confusão no começo. Daremos alguns exemplos para explicar melhor.</p>
+
+<p>Iremos criar listas com duas bases de dados que já são fornecidas como exemplos no próprio R. Primeiramente, vamos carregar as duas bases de dados:</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">data</span><span class="p">(</span><span class="s2">"mtcars"</span><span class="p">)</span>
+<span class="n">data</span><span class="p">(</span><span class="s2">"iris"</span><span class="p">)</span>
+<span class="n">class</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span></code></pre></div>
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">## [1] "data.frame"</code></pre></div>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">class</span><span class="p">(</span><span class="n">iris</span><span class="p">)</span></code></pre></div>
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">## [1] "data.frame"</code></pre></div>
+
+<p>Veja que temos dois data frames. Agora, vamos criar um objeto único que irá receber essas duas bases. Além disso, a fim de mostrar a heterogeneidade, iremos incluir um objeto que será um vetor.</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">x</span> <span class="o">&lt;-</span> <span class="m">1</span><span class="o">:</span><span class="m">10</span>
+<span class="n">lista.teste</span> <span class="o">&lt;-</span> <span class="n">list</span><span class="p">(</span><span class="n">mtcars</span><span class="p">,</span> <span class="n">iris</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span></code></pre></div>
+
+<p>Faça um teste e digite <code>lista.teste</code> no console para ver o resultado.</p>
+
+<p>E como eu faço pra acessar partes específicas? Como dissemos a lista tem uma pequena diferença, será necessário usar o <code>[[ ]]</code>. Lembre-se que, como a lista é um objeto de dimensão 1, só precisaremos passar o índice que temos interesse. O vetor <code>x</code> é o terceiro elemento. Logo, para acessá-lo podemos fazer o seguinte:</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">lista.teste</span><span class="p">[[</span><span class="m">3</span><span class="p">]]</span></code></pre></div>
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">##  [1]  1  2  3  4  5  6  7  8  9 10</code></pre></div>
+
+<p>Para terminar essa breve explicação sobre listas, vamos mostrar que cada objeto de uma lista pode ter um nome:</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">lista.teste</span> <span class="o">&lt;-</span> <span class="n">list</span><span class="p">(</span><span class="n">base1</span> <span class="o">=</span> <span class="n">mtcars</span><span class="p">,</span> <span class="n">base2</span> <span class="o">=</span> <span class="n">iris</span><span class="p">,</span> <span class="n">vetor1</span> <span class="o">=</span> <span class="n">x</span><span class="p">)</span></code></pre></div>
+
+<p>Dessa forma, você <em>também</em> poderá acessar usando o nome com o auxílio do <code>$</code>:</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">lista.teste</span><span class="o">$</span><span class="n">vetor1</span></code></pre></div>
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">##  [1]  1  2  3  4  5  6  7  8  9 10</code></pre></div>
+
+<p><br /></p>
+
+<h3 id="observaes-sobre-vectors">Observações sobre vectors</h3>
+
+<p>Vectors possuem algumas propriedades muito úteis como <code>length()</code>, <code>typeof()</code> e <code>unique()</code>. Você também poderá usar o <code>length()</code> para saber o tamanho de uma lista.</p>
+
+<h3 id="observaes-sobre-dataframes">Observações sobre data.frames</h3>
+
+<p>As funções <code>nrow()</code> e <code>ncol()</code> podem ser usadas para saber, respectivamente, o número de linhas e colunas de um data.frame (ou de uma matriz).</p>
+
+<p>Data.frames também podem ter o nome das colunas alterados. Veja o exemplo a seguir:</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">head</span><span class="p">(</span><span class="n">iris</span><span class="p">)</span></code></pre></div>
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+## 1          5.1         3.5          1.4         0.2  setosa
+## 2          4.9         3.0          1.4         0.2  setosa
+## 3          4.7         3.2          1.3         0.2  setosa
+## 4          4.6         3.1          1.5         0.2  setosa
+## 5          5.0         3.6          1.4         0.2  setosa
+## 6          5.4         3.9          1.7         0.4  setosa</code></pre></div>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">names</span><span class="p">(</span><span class="n">iris</span><span class="p">)</span></code></pre></div>
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">## [1] "Sepal.Length" "Sepal.Width"  "Petal.Length" "Petal.Width" 
+## [5] "Species"</code></pre></div>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">names</span><span class="p">(</span><span class="n">iris</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="n">c</span><span class="p">(</span><span class="s2">"campo1"</span><span class="p">,</span> <span class="s2">"campo2"</span><span class="p">,</span> <span class="s2">"campo3"</span><span class="p">,</span> <span class="s2">"campo4"</span><span class="p">,</span> <span class="s2">"campo5"</span><span class="p">)</span>
+<span class="n">head</span><span class="p">(</span><span class="n">iris</span><span class="p">)</span></code></pre></div>
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">##   campo1 campo2 campo3 campo4 campo5
+## 1    5.1    3.5    1.4    0.2 setosa
+## 2    4.9    3.0    1.4    0.2 setosa
+## 3    4.7    3.2    1.3    0.2 setosa
+## 4    4.6    3.1    1.5    0.2 setosa
+## 5    5.0    3.6    1.4    0.2 setosa
+## 6    5.4    3.9    1.7    0.4 setosa</code></pre></div>
+
+<h2 id="valores-faltantes-missing">Valores Faltantes (Missing)</h2>
+
+<p>O R atribui <code>NA</code> para valores faltantes. Ou seja, se por acaso uma determinada posição de um vetor ou de uma coluna de um data.frame não possui valor algum, o R mostrará <code>NA</code>.</p>
+
+<p>É muito comum lidar com conjuntos de dados que tenham ocorrências de <code>NA</code> em alguns campos. É importante saber o que fazer em casos de <code>NA</code>, e nem sempre a solução será a mesma, vai variar de acordo com as suas necessidades.</p>
+
+<p>Em algumas bases de dados, quem gera o dado atribui valores genéricos como 999 ou até mesmo um “texto vazio” <code>' '</code>. Nesse caso, você provavelmente terá que substituir esses valores “omissos” por <code>NA</code>.</p>
+
+<p>Vamos explicar as funções básicas para começar a lidar com <code>NA</code> no R.</p>
+
+<p>Em primeiro lugar, criaremos um simples data.frame para exemplificar:</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">data.ex</span> <span class="o">&lt;-</span> <span class="n">data.frame</span><span class="p">(</span><span class="n">col1</span> <span class="o">=</span> <span class="n">letters</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">6</span><span class="p">],</span> <span class="n">col2</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="m">10</span><span class="p">,</span> <span class="m">20</span><span class="p">,</span> <span class="m">30</span><span class="p">,</span> <span class="n">NA</span><span class="p">,</span> <span class="m">50</span><span class="p">,</span> <span class="n">NA</span><span class="p">))</span>
+<span class="n">data.ex</span></code></pre></div>
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">##   col1 col2
+## 1    a   10
+## 2    b   20
+## 3    c   30
+## 4    d   NA
+## 5    e   50
+## 6    f   NA</code></pre></div>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">summary</span><span class="p">(</span><span class="n">data.ex</span><span class="p">)</span></code></pre></div>
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">##  col1       col2     
+##  a:1   Min.   :10.0  
+##  b:1   1st Qu.:17.5  
+##  c:1   Median :25.0  
+##  d:1   Mean   :27.5  
+##  e:1   3rd Qu.:35.0  
+##  f:1   Max.   :50.0  
+##        NA's   :2</code></pre></div>
+
+<p>Usamos o <code>letters</code> que é uma lista pré construída no R e que retorna as 26 letras do alfabeto. No caso, usamos só as seis primeiras. Na segunda coluna, colocamos alguns <code>NA</code>’s.</p>
+
+<p>A função <code>summary</code> mostra que existem dois <code>NA</code>’s na <code>col2</code>. Nesse exemplo fica fácil para encontrar onde estão os <code>NA</code>’s e fazer alguma modificação caso deseje, mas considere um caso em que seu data.frame é grande. Você não iria conseguir identificar no olho. Assim, é necessário usar algumas funções. Vamos começar como o <code>is.na()</code>:</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">is.na</span><span class="p">(</span><span class="n">data.ex</span><span class="o">$</span><span class="n">col2</span><span class="p">)</span></code></pre></div>
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">## [1] FALSE FALSE FALSE  TRUE FALSE  TRUE</code></pre></div>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">which</span><span class="p">(</span><span class="n">is.na</span><span class="p">(</span><span class="n">data.ex</span><span class="o">$</span><span class="n">col2</span><span class="p">))</span></code></pre></div>
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 4 6</code></pre></div>
+
+<p>O <code>is.na()</code> realiza um teste para saber se cada elemento da variável <code>col2</code> é um missing. Além disso, se usarmos o <code>is.na()</code> dentro da função <code>which()</code> saberemos quais as posições que possuem o <code>NA</code>. Um detalhe importante sobre funções que retornam <code>TRUE</code> ou <code>FALSE</code> como o <code>is.na()</code> é que você pode usar a <code>!</code> para fazer o teste ao contrário. Isto é, se quisermos saber quais não são <code>NA</code>, faremos o seguinte:</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="o">!</span><span class="n">is.na</span><span class="p">(</span><span class="n">data.ex</span><span class="o">$</span><span class="n">col2</span><span class="p">)</span></code></pre></div>
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">## [1]  TRUE  TRUE  TRUE FALSE  TRUE FALSE</code></pre></div>
+
+<p>Notou que a função retornou o contrário de <code>is.na(data.ex$col2)</code>?</p>
+
+<p>Agora iremos introduzir a função <code>complete.cases()</code>. Bastante utilizada, essa função retorna <code>TRUE</code> para as linhas em que todas as colunas possuem valores válidos e <code>FALSE</code> para as linhas em que em alguma coluna existe um <code>NA</code>. Ou seja, essa função diz quais são as linhas (amostras) completas em todas suas características (campos).</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">complete.cases</span><span class="p">(</span><span class="n">data.ex</span><span class="p">)</span></code></pre></div>
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">## [1]  TRUE  TRUE  TRUE FALSE  TRUE FALSE</code></pre></div>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="o">!</span><span class="n">complete.cases</span><span class="p">(</span><span class="n">data.ex</span><span class="p">)</span></code></pre></div>
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">## [1] FALSE FALSE FALSE  TRUE FALSE  TRUE</code></pre></div>
+
+<p>Podemos usar o retorno dessa função para selecionar linhas do nosso data.frame:</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">data.ex</span><span class="p">[</span><span class="o">!</span><span class="n">complete.cases</span><span class="p">(</span><span class="n">data.ex</span><span class="p">),]</span></code></pre></div>
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">##   col1 col2
+## 4    d   NA
+## 6    f   NA</code></pre></div>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">data.ex</span><span class="p">[</span><span class="n">complete.cases</span><span class="p">(</span><span class="n">data.ex</span><span class="p">),]</span></code></pre></div>
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">##   col1 col2
+## 1    a   10
+## 2    b   20
+## 3    c   30
+## 5    e   50</code></pre></div>
+
+<p>Você poderia usar a função <code>na.omit()</code> para obter o mesmo resultado da seleção de linhas com o <code>complete.cases()</code>:</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">na.omit</span><span class="p">(</span><span class="n">data.ex</span><span class="p">)</span></code></pre></div>
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">##   col1 col2
+## 1    a   10
+## 2    b   20
+## 3    c   30
+## 5    e   50</code></pre></div>
+
+<p>Por fim, iremos imputar a média da <code>col2</code> nas linhas em que há <code>NA</code>. Para isso, usaremos o <code>ifelse()</code> que tratamos na <a href="/blog/2016/05/01/kit-de-sobrevivencia-em-r-parte-6/">parte 6</a> e o <code>is.na()</code>, além da função <code>mean()</code>.</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Calcular a média da col2
+</span><span class="n">media.col2</span> <span class="o">&lt;-</span> <span class="n">mean</span><span class="p">(</span><span class="n">data.ex</span><span class="o">$</span><span class="n">col2</span><span class="p">,</span> <span class="n">na.rm</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span>
+<span class="n">media.col2</span></code></pre></div>
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 27.5</code></pre></div>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">data.ex</span><span class="o">$</span><span class="n">col2</span><span class="p">[</span><span class="n">is.na</span><span class="p">(</span><span class="n">data.ex</span><span class="o">$</span><span class="n">col2</span><span class="p">)]</span> <span class="o">&lt;-</span> <span class="n">media.col2</span>
+<span class="n">data.ex</span></code></pre></div>
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">##   col1 col2
+## 1    a 10.0
+## 2    b 20.0
+## 3    c 30.0
+## 4    d 27.5
+## 5    e 50.0
+## 6    f 27.5</code></pre></div>
+
+<p>Note que na função <code>mean()</code> usamos o argumento <code>na.rm</code>. Ele significa “remover <code>NA</code>”, o que é necessário nesse cálculo, pois se os <code>NA</code>’s não forem retirados, a média será <code>NA</code> também.</p>
+
+<p>Imputar dados em casos de <code>NA</code> é uma das várias estratégias para lidar com ocorrência de missing no conjunto dos dados.</p>
+
+<h2 id="exemplo-final-titanic">Exemplo final: Titanic</h2>
+
+<p>Vamos dar um exemplo final de algumas transformações e manipulações de dados na tentativa de resumir todos os aspectos tratados no kit de sobrevivência em R.</p>
+
+<p>Escolhemos a base de dados dos passageiros do Titanic! É uma base muito utilizada como tutorial de machine learning onde o objetivo é criar um modelo para prever os sobreviventes do acidente. Se você pretende aprender machine learning, certamente vai esbarrar (ou já esbarrou) com essa base de dados. Inclusive há uma série de <a href="https://www.kaggle.com/c/titanic">tutoriais de machine learning com essa base no Kaggle</a>.</p>
+
+<p>Nosso objetivo não é criar nenhum modelo nem ensinar a fazer isso, vamos apenas explorar a base, manipular, transformar e criar algumas variáveis. Teremos muitos posts em breve sobre modelos preditivos e machine learning!</p>
+
+<p>Primeiro criamos um novo script, lembre-se sempre de salvar o seu trabalho para não perder nada. Em seguida vamos limpar o ambiente de memória para começar.</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">rm</span><span class="p">(</span><span class="n">list</span> <span class="o">=</span> <span class="n">ls</span><span class="p">())</span></code></pre></div>
+
+<p>Vamos instalar e carregar o pacote R que disponibiliza os dados.</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">install.packages</span><span class="p">(</span><span class="s1">'titanic'</span><span class="p">)</span>
+<span class="n">library</span><span class="p">(</span><span class="n">titanic</span><span class="p">)</span></code></pre></div>
+
+<p>O data frame que iremos usar já estará carregado na memória e se chama <code>titanic_train</code>. Trata-se da base de treinamento usada para treinar modelos. Vamos dar uma olhada. As bases de treinamento já vem com a resposta na variável que você quer descobrir na base de teste. Nesse caso os modelos que usam essa base são treinados para descobrir a variável <code>Survived</code>.</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">str</span><span class="p">(</span><span class="n">titanic_train</span><span class="p">)</span></code></pre></div>
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">## 'data.frame':	891 obs. of  12 variables:
+##  $ PassengerId: int  1 2 3 4 5 6 7 8 9 10 ...
+##  $ Survived   : int  0 1 1 1 0 0 0 0 1 1 ...
+##  $ Pclass     : int  3 1 3 1 3 3 1 3 3 2 ...
+##  $ Name       : chr  "Braund, Mr. Owen Harris" "Cumings, Mrs. John Bradley (Florence Briggs Thayer)" "Heikkinen, Miss. Laina" "Futrelle, Mrs. Jacques Heath (Lily May Peel)" ...
+##  $ Sex        : chr  "male" "female" "female" "female" ...
+##  $ Age        : num  22 38 26 35 35 NA 54 2 27 14 ...
+##  $ SibSp      : int  1 1 0 1 0 0 0 3 0 1 ...
+##  $ Parch      : int  0 0 0 0 0 0 0 1 2 0 ...
+##  $ Ticket     : chr  "A/5 21171" "PC 17599" "STON/O2. 3101282" "113803" ...
+##  $ Fare       : num  7.25 71.28 7.92 53.1 8.05 ...
+##  $ Cabin      : chr  "" "C85" "" "C123" ...
+##  $ Embarked   : chr  "S" "C" "S" "S" ...</code></pre></div>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">head</span><span class="p">(</span><span class="n">titanic_train</span><span class="p">)</span></code></pre></div>
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">##   PassengerId Survived Pclass
+## 1           1        0      3
+## 2           2        1      1
+## 3           3        1      3
+## 4           4        1      1
+## 5           5        0      3
+## 6           6        0      3
+##                                                  Name    Sex Age
+## 1                             Braund, Mr. Owen Harris   male  22
+## 2 Cumings, Mrs. John Bradley (Florence Briggs Thayer) female  38
+## 3                              Heikkinen, Miss. Laina female  26
+## 4        Futrelle, Mrs. Jacques Heath (Lily May Peel) female  35
+## 5                            Allen, Mr. William Henry   male  35
+## 6                                    Moran, Mr. James   male  NA
+##   SibSp Parch           Ticket    Fare Cabin Embarked
+## 1     1     0        A/5 21171  7.2500              S
+## 2     1     0         PC 17599 71.2833   C85        C
+## 3     0     0 STON/O2. 3101282  7.9250              S
+## 4     1     0           113803 53.1000  C123        S
+## 5     0     0           373450  8.0500              S
+## 6     0     0           330877  8.4583              Q</code></pre></div>
+
+<p>Repare que cada linha representa um passageiro e cada campo representa uma característica desse passageiro. As variáveis (campos) estão em inglês e talvez não sejam tão óbvias. Segue explicação de cada uma:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nome do campo</th>
+      <th style="text-align: left">Descrição do campo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Survived</strong></td>
+      <td style="text-align: left">Passageiro sobrevivente (1) ou morto (0)</td>
+    </tr>
+    <tr>
+      <td><strong>Pclass</strong></td>
+      <td style="text-align: left">Classe do passageiro</td>
+    </tr>
+    <tr>
+      <td><strong>Name</strong></td>
+      <td style="text-align: left">Nome do passageiro</td>
+    </tr>
+    <tr>
+      <td><strong>Sex</strong></td>
+      <td style="text-align: left">Gênero do passageiro (male ou female)</td>
+    </tr>
+    <tr>
+      <td><strong>Age</strong></td>
+      <td style="text-align: left">Idade do passageiro</td>
+    </tr>
+    <tr>
+      <td><strong>SibSp</strong></td>
+      <td style="text-align: left">Número de irmãos ou cônjuges a bordo</td>
+    </tr>
+    <tr>
+      <td><strong>Parch</strong></td>
+      <td style="text-align: left">Número de pais ou filhos a bordo</td>
+    </tr>
+    <tr>
+      <td><strong>Ticket</strong></td>
+      <td style="text-align: left">Número do tíquete</td>
+    </tr>
+    <tr>
+      <td><strong>Fare</strong></td>
+      <td style="text-align: left">Preço do tíquete</td>
+    </tr>
+    <tr>
+      <td><strong>Cabin</strong></td>
+      <td style="text-align: left">Cabine</td>
+    </tr>
+    <tr>
+      <td><strong>Embarked</strong></td>
+      <td style="text-align: left">Portão de embarque</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><br /></p>
+
+<p>Vamos traduzir os nomes dos campos para facilitar o entendimento. Para isso usaremos a função <code>names()</code></p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">names</span><span class="p">(</span><span class="n">titanic_train</span><span class="p">)</span></code></pre></div>
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">##  [1] "PassengerId" "Survived"    "Pclass"      "Name"       
+##  [5] "Sex"         "Age"         "SibSp"       "Parch"      
+##  [9] "Ticket"      "Fare"        "Cabin"       "Embarked"</code></pre></div>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">names</span><span class="p">(</span><span class="n">titanic_train</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="n">c</span><span class="p">(</span><span class="s1">'id_passageiro'</span><span class="p">,</span> <span class="s1">'sobrevivente'</span><span class="p">,</span> 
+			<span class="s1">'classe'</span><span class="p">,</span> <span class="s1">'nome'</span><span class="p">,</span> <span class="s1">'sexo'</span><span class="p">,</span> <span class="s1">'idade'</span><span class="p">,</span>
+			<span class="s1">'irmaos_conjuge'</span><span class="p">,</span> <span class="s1">'pais_filhos'</span><span class="p">,</span> <span class="s1">'numero_ticket'</span><span class="p">,</span> <span class="s1">'valor_ticket'</span><span class="p">,</span> <span class="s1">'cabine'</span><span class="p">,</span> <span class="s1">'porta_embarque'</span><span class="p">)</span></code></pre></div>
+
+<p>Como o objetivo dessa base de dados é treinar um modelo para descobrir se um passageiro vai sobreviver ou não, vamos manipular e criar variáveis para tentar ajudar a atingir esse objetivo. O ideal é fazer uma bela análise exploratória dos dados, com auxílio de gráficos e estatística básica, mas nosso foco agora é apenas na transformação de dados, portanto, tentaremos um pouco de intuição e criatividade para criar variáveis possivelmente úteis.</p>
+
+<p>Vamos começar com a variável <code>idade</code>. Há um comportamento interessante nessa variável: missings!</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">unique</span><span class="p">(</span><span class="n">titanic_train</span><span class="o">$</span><span class="n">idade</span><span class="p">)</span></code></pre></div>
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">##  [1] 22.00 38.00 26.00 35.00    NA 54.00  2.00 27.00 14.00  4.00 58.00
+## [12] 20.00 39.00 55.00 31.00 34.00 15.00 28.00  8.00 19.00 40.00 66.00
+## [23] 42.00 21.00 18.00  3.00  7.00 49.00 29.00 65.00 28.50  5.00 11.00
+## [34] 45.00 17.00 32.00 16.00 25.00  0.83 30.00 33.00 23.00 24.00 46.00
+## [45] 59.00 71.00 37.00 47.00 14.50 70.50 32.50 12.00  9.00 36.50 51.00
+## [56] 55.50 40.50 44.00  1.00 61.00 56.00 50.00 36.00 45.50 20.50 62.00
+## [67] 41.00 52.00 63.00 23.50  0.92 43.00 60.00 10.00 64.00 13.00 48.00
+## [78]  0.75 53.00 57.00 80.00 70.00 24.50  6.00  0.67 30.50  0.42 34.50
+## [89] 74.00</code></pre></div>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">sum</span><span class="p">(</span><span class="n">is.na</span><span class="p">(</span><span class="n">titanic_train</span><span class="o">$</span><span class="n">idade</span><span class="p">))</span></code></pre></div>
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 177</code></pre></div>
+
+<p>Usando <code>sum()</code> junto com <code>is.na()</code> conseguimos contar a quantidade total de <code>NA</code> na variável.</p>
+
+<p>Nesse nosso caso específico, vamos interpretar <code>NA</code> como se o passageiro tivesse a idade desconhecida, seja lá qual for o motivo. Dependendo do algoritmo de machine learning que será aplicado a esses dados, a presença de <code>NA</code> não é bem vinda. Portanto, precisamos lidar com os <code>NA</code>s dessa variável.</p>
+
+<p>A título de exemplificação, vamos adicionar a média geral das idades quando não soubermos a idade do passageiro. (Veja, essa nem sempre é uma boa estratégia para imputação de dados. Vamos usá-la agora apenas por ser bem simples).</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">media</span> <span class="o">&lt;-</span> <span class="n">mean</span><span class="p">(</span><span class="n">titanic_train</span><span class="o">$</span><span class="n">idade</span><span class="p">,</span> <span class="n">na.rm</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span>
+<span class="n">media</span></code></pre></div>
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 29.69912</code></pre></div>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">titanic_train</span><span class="o">$</span><span class="n">idade</span> <span class="o">&lt;-</span> <span class="n">ifelse</span><span class="p">(</span><span class="n">is.na</span><span class="p">(</span><span class="n">titanic_train</span><span class="o">$</span><span class="n">idade</span><span class="p">),</span> <span class="n">round</span><span class="p">(</span><span class="n">media</span><span class="p">),</span> <span class="n">titanic_train</span><span class="o">$</span><span class="n">idade</span><span class="p">)</span></code></pre></div>
+
+<p>Calculamos a média desconsiderando ocorrências de <code>NA</code>, em seguida atribuímos a média (arredondada) às ocorrências de <code>NA</code>.</p>
+
+<p>Agora todos os passageiros tem idade, alguns a idade correta, outros uma idade atribuída. Vamos criar agora uma classificação de <code>jovem</code>, <code>adulto</code> ou <code>idoso</code> para essa variável.</p>
+
+<p>Pode ser que isso ajude algum algoritmo a prever melhor quem vive ou quem morre no acidente, pois, intuitivamente, talvez jovens sejam imaturos fiquem mais assustados, talvez idosos tenham menos habilidade de fuga e adultos talvez lidem melhor com situações de emergência.</p>
+
+<p>Sendo assim, até 20 anos chamaremos de <code>jovem</code>, de 21 a 54 chamaremos de <code>adulto</code>, e acima de 55 chamaremos de <code>idoso</code>. Vamos chamar essa variável de <code>faixa_etaria</code>.</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">titanic_train</span><span class="o">$</span><span class="n">faixa_etaria</span> <span class="o">&lt;-</span> <span class="n">ifelse</span><span class="p">(</span><span class="n">titanic_train</span><span class="o">$</span><span class="n">idade</span> <span class="o">&lt;=</span> <span class="m">20</span><span class="p">,</span> <span class="s1">'jovem'</span><span class="p">,</span> <span class="n">ifelse</span><span class="p">(</span><span class="n">titanic_train</span><span class="o">$</span><span class="n">idade</span> <span class="o">&gt;</span> <span class="m">21</span> <span class="o">&amp;</span> <span class="n">titanic_train</span><span class="o">$</span><span class="n">idade</span> <span class="o">&lt;</span> <span class="m">55</span><span class="p">,</span> <span class="s1">'adulto'</span><span class="p">,</span> <span class="s1">'idoso'</span><span class="p">))</span>
+<span class="n">head</span><span class="p">(</span><span class="n">titanic_train</span><span class="p">[,</span><span class="n">c</span><span class="p">(</span><span class="s1">'idade'</span><span class="p">,</span> <span class="s1">'faixa_etaria'</span><span class="p">)],</span> <span class="m">15</span><span class="p">)</span></code></pre></div>
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">##    idade faixa_etaria
+## 1     22       adulto
+## 2     38       adulto
+## 3     26       adulto
+## 4     35       adulto
+## 5     35       adulto
+## 6     30       adulto
+## 7     54       adulto
+## 8      2        jovem
+## 9     27       adulto
+## 10    14        jovem
+## 11     4        jovem
+## 12    58        idoso
+## 13    20        jovem
+## 14    39       adulto
+## 15    14        jovem</code></pre></div>
+
+<p>Uma outra variável que pode ser interessante para ajudar modelos preditivos pode ser o total de parentes. Será que quanto mais parentes o passageiro tiver, mais ele se preocupe em salvar a vida dos seus entes queridos, botando a sua vida em risco? Ou será que a prioridade “mulheres e crianças primeiro” ajudou quem tinha família a sobreviver?</p>
+
+<p>Há uma variável para irmãos e cônjuges, e outra para crianças ou pais. Vamos somá-las e criar o <code>total_parentes</code>.</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">titanic_train</span><span class="o">$</span><span class="n">total_parentes</span> <span class="o">&lt;-</span> <span class="n">titanic_train</span><span class="o">$</span><span class="n">irmaos_conjuge</span> <span class="o">+</span> <span class="n">titanic_train</span><span class="o">$</span><span class="n">pais_filhos</span></code></pre></div>
+
+<p>Para complementar essa ideia, vamos tentar distinguir quem tinha família e quem não tinha, criando uma variável categórica simplesmente indicando se o passageiro tem família ou não:</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">titanic_train</span><span class="o">$</span><span class="n">familia</span> <span class="o">&lt;-</span> <span class="n">ifelse</span><span class="p">(</span><span class="n">titanic_train</span><span class="o">$</span><span class="n">total_parentes</span> <span class="o">&gt;</span> <span class="m">0</span><span class="p">,</span> <span class="s1">'Sim'</span><span class="p">,</span> <span class="s1">'Nao'</span><span class="p">)</span></code></pre></div>
+
+<p>Seguindo com as transformações, o título do passageiro pode dizer algo sobre ele. Vamos tentar isolar o título em uma variável para explicitar isso aos possíveis algoritmos:</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">titanic_train</span><span class="o">$</span><span class="n">titulo</span> <span class="o">&lt;-</span> <span class="n">lapply</span><span class="p">(</span><span class="n">strsplit</span><span class="p">(</span><span class="n">titanic_train</span><span class="o">$</span><span class="n">nome</span><span class="p">,</span> <span class="s1">'[,.]'</span><span class="p">),</span> <span class="s2">"["</span><span class="p">,</span> <span class="m">2</span><span class="p">)</span>
+<span class="n">head</span><span class="p">(</span><span class="n">titanic_train</span><span class="p">[,</span><span class="n">c</span><span class="p">(</span><span class="s1">'nome'</span><span class="p">,</span> <span class="s1">'titulo'</span><span class="p">)],</span> <span class="m">15</span><span class="p">)</span></code></pre></div>
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">##                                                   nome  titulo
+## 1                              Braund, Mr. Owen Harris      Mr
+## 2  Cumings, Mrs. John Bradley (Florence Briggs Thayer)     Mrs
+## 3                               Heikkinen, Miss. Laina    Miss
+## 4         Futrelle, Mrs. Jacques Heath (Lily May Peel)     Mrs
+## 5                             Allen, Mr. William Henry      Mr
+## 6                                     Moran, Mr. James      Mr
+## 7                              McCarthy, Mr. Timothy J      Mr
+## 8                       Palsson, Master. Gosta Leonard  Master
+## 9    Johnson, Mrs. Oscar W (Elisabeth Vilhelmina Berg)     Mrs
+## 10                 Nasser, Mrs. Nicholas (Adele Achem)     Mrs
+## 11                     Sandstrom, Miss. Marguerite Rut    Miss
+## 12                            Bonnell, Miss. Elizabeth    Miss
+## 13                      Saundercock, Mr. William Henry      Mr
+## 14                         Andersson, Mr. Anders Johan      Mr
+## 15                Vestrom, Miss. Hulda Amanda Adolfina    Miss</code></pre></div>
+
+<p>O comando usado talvez seja um pouco avançado, mas vamos tentar explicar por partes. Primeiramente usamos o <code>strsplit()</code>, uma função que lida com caracteres e divide uma string baseado numa marcação. Nesse caso, estamos dividindo o nome do passageiro em dois pontos: vírgula <code>,</code> e ponto <code>.</code>, que é justamente o padrão textual que separa o título no nome.</p>
+
+<p>O resultado do <code>strsplit()</code> é uma lista com as partes da separação. Para acessar exatamente o segundo elemento da lista, que é onde está o título, usamos o <code>lapply()</code>, uma função da família <code>apply</code>, que executa um comando repetidamente ao longo de uma estrutura (coluna, array, listas, matrizes, etc…). O efeito prático das funções da família <code>apply</code> se assemelha muito à loops.</p>
+
+<p>Dominar a família <code>apply</code> pode ser muito interessante para se tornar um bom analista de dados. Certamente faremos uma sequência de posts explicando detalhadamente todas as funções da família <code>apply</code>, aguarde!</p>
+
+<h2 id="concluso">Conclusão</h2>
+
+<p>E é isso pessoal. Chegamos ao fim da sequência. Esperamos que tenha gostado e aprendido o kit básico de sobrevivência em R. Daqui em diante os posts serão intermediários e avançados, tratando de questões mais profundas como junção de dados, visualização de dados, análise exploratória, estatística, machine learning.</p>
+
+<h2 id="referncias">Referências</h2>
+
+<ul>
+  <li><a href="http://www.uni-kiel.de/psychologie/rexrepos/posts/missingData.html">Deal with missing data</a></li>
+  <li><a href="http://www.statmethods.net/input/missingdata.html">Missing data</a></li>
+  <li><a href="https://nsaunders.wordpress.com/2010/08/20/a-brief-introduction-to-apply-in-r/">A brief introduction to “apply” in R</a></li>
+  <li><a href="https://www.datacamp.com/community/tutorials/r-tutorial-apply-family">R tutorial on the Apply family of functions</a></li>
+</ul>
+</div>
+
+
+  <p class="meta" style="text-align:center">
+    <i>Tem alguma dúvida, crítica ou sugestão? Deixe o seu comentário! Ficaremos felizes em ajudar.<i>
+  </p>
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Postado por <span class="fn">Full Join</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2016-05-09T20:04:00-03:00'><span class='date'>09/05/2016</span> <span class='time'>8:04 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/basico/'>básico</a>, <a class='category' href='/blog/categories/introducao-ao-r/'>introdução ao r</a>, <a class='category' href='/blog/categories/r/'>r</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://fulljoin.com.br/blog/2016/05/09/kit-de-sobrevivencia-em-r-parte-7/" data-via="" data-counturl="http://fulljoin.com.br/blog/2016/05/09/kit-de-sobrevivencia-em-r-parte-7/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2016/05/01/kit-de-sobrevivencia-em-r-parte-6/" title="Previous Post: Kit de sobrevivência em R - Parte 6: Estruturas de Controle">&laquo; Kit de sobrevivência em R - Parte 6: Estruturas de Controle</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comentários</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/05/09/kit-de-sobrevivencia-em-r-parte-7/">Kit De Sobrevivência Em R - Parte 7: Avançando E Aprofundando</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/01/kit-de-sobrevivencia-em-r-parte-6/">Kit De Sobrevivência Em R - Parte 6: Estruturas De Controle</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/04/21/kit-de-sobrevivencia-em-r-parte-5/">Kit De Sobrevivência Em R - Parte 5: Tipos De Dados E Transformações</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/04/12/kit-de-sobrevivencia-em-r-parte-4/">Kit De Sobrevivência Em R - Parte 4: Carregando Dados</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/04/03/kit-de-sobrevivencia-em-r-parte-3/">Kit De Sobrevivência Em R - Parte 3: Pacotes</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Full Join -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'fulljoin';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://fulljoin.com.br/blog/2016/05/09/kit-de-sobrevivencia-em-r-parte-7/';
+        var disqus_url = 'http://fulljoin.com.br/blog/2016/05/09/kit-de-sobrevivencia-em-r-parte-7/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+<script>
+function addBlankTargetForLinks () {
+  $('a[href^="http"]').each(function(){
+		$(this).attr('target', '_blank');
+	});
+}
+
+$(document).bind('DOMNodeInserted', function(event) {
+	addBlankTargetForLinks();
+});
+</script>
+
+</body>
+</html>
