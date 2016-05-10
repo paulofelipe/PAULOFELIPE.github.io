@@ -163,3 +163,4 @@ Foi um longo post, mas finalmente chegamos ao fim! Esperamos que esse post tenha
 * [Guia de estilo de código - by Hadley Wickham](http://adv-r.had.co.nz/Style.html)
 * [Guia de estilo de código - by Google](https://google.github.io/styleguide/Rguide.xml)
 
+

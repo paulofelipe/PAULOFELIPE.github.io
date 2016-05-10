@@ -119,4 +119,3 @@ Se você for realizar uma pergunta em algum fórum ou site de perguntas e respos
 
 Bom, por enquanto é isso! Nos próximos posts, iremos abordar partes específicas e iniciar a utilização de fato do R. Até lá!
 
-
