@@ -3,7 +3,7 @@ layout: post
 title: "Kit de sobrevivência em R - Parte 5: Tipos de dados e transformações"
 date: 2016-04-21 19:00:00 -0300
 comments: true
-categories: [r, básico, introdução r]
+categories: [r, básico, introdução ao r]
 published: true
 ---
 

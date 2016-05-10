@@ -3,7 +3,7 @@ layout: post
 title: "Kit de sobrevivência em R - Parte 6: Estruturas de Controle"
 date: 2016-05-01 20:04:00 -0300
 comments: true
-categories: [r, básico, introdução r]
+categories: [r, básico, introdução ao r]
 published: true
 ---
   

@@ -3,7 +3,7 @@ layout: post
 title: "Kit de sobrevivência em R - Parte 4: Carregando Dados"
 date: 2016-04-12 21:00:00 -0300
 comments: true
-categories: [r, básico, introdução r]
+categories: [r, básico, introdução ao r]
 published: true
 ---
 

@@ -3,7 +3,7 @@ layout: post
 title: "Kit de sobrevivência em R - Parte 7: Avançando e Aprofundando"
 date: 2016-05-09 20:04:00 -0300
 comments: true
-categories: [r, básico, introdução r]
+categories: [r, básico, introdução ao r]
 published: true
 ---
   
@@ -731,4 +731,7 @@ E é isso pessoal. Chegamos ao fim da sequência. Esperamos que tenha gostado e 
 
 ## Referências
 
-* []()
+* [Deal with missing data](http://www.uni-kiel.de/psychologie/rexrepos/posts/missingData.html)
+* [Missing data](http://www.statmethods.net/input/missingdata.html)
+* [A brief introduction to “apply” in R](https://nsaunders.wordpress.com/2010/08/20/a-brief-introduction-to-apply-in-r/)
+* [R tutorial on the Apply family of functions](https://www.datacamp.com/community/tutorials/r-tutorial-apply-family)

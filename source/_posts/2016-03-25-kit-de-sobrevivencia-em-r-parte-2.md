@@ -3,7 +3,7 @@ layout: post
 title: "Kit de sobrevivência em R - Parte 2: Operações, Variáveis e Funções"
 date: 2016-04-03 15:20:01 -0300
 comments: true
-categories: [r, básico, introdução r]
+categories: [r, básico, introdução ao r]
 published: true
 ---
 
