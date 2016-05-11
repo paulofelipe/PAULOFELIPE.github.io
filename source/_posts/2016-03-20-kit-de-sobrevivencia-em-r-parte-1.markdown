@@ -119,3 +119,12 @@ Se você for realizar uma pergunta em algum fórum ou site de perguntas e respos
 
 Bom, por enquanto é isso! Nos próximos posts, iremos abordar partes específicas e iniciar a utilização de fato do R. Até lá!
 
+## Demais posts da sequência:
+
+* [Kit de sobrevivência em R - Parte 1: Visão Geral e Instalação]({{root_url}}/blog/2016/03/23/kit-de-sobrevivencia-em-r-parte-1)
+* [Kit de sobrevivência em R - Parte 2: Operações, Variáveis e Funções]({{root_url}}/blog/2016/04/03/kit-de-sobrevivencia-em-r-parte-2)
+* [Kit de sobrevivência em R - Parte 3: Pacotes]({{root_url}}/blog/2016/04/03/kit-de-sobrevivencia-em-r-parte-3)
+* [Kit de sobrevivência em R - Parte 4: Carregando Dados]({{root_url}}/blog/2016/04/12/kit-de-sobrevivencia-em-r-parte-4)
+* [Kit de sobrevivência em R - Parte 5: Tipos de Dados e Transformações]({{root_url}}/blog/2016/04/21/kit-de-sobrevivencia-em-r-parte-5)
+* [Kit de sobrevivência em R - Parte 6: Estruturas de Controle]({{root_url}}/blog/2016/05/01/kit-de-sobrevivencia-em-r-parte-6)
+* [Kit de sobrevivência em R - Parte 7: Avançando e Aprofundando]({{root_url}}/blog/2016/05/09/kit-de-sobrevivencia-em-r-parte-7)

@@ -393,3 +393,13 @@ Use como critério de parada se $f(x_n) < 0.000001$ e como valor inicial $x_0 = 
 * [How to write the first for loop in R](http://datascienceplus.com/how-to-write-the-loop-in-r/)
 * [For loops (and how to avoid them)](http://rforpublichealth.blogspot.com.br/2013/01/for-loops-and-how-to-avoid-them.html)
 * [Speed up the loop operation in R](http://stackoverflow.com/questions/2908822/speed-up-the-loop-operation-in-r)
+
+## Demais posts da sequência:
+
+* [Kit de sobrevivência em R - Parte 1: Visão Geral e Instalação]({{root_url}}/blog/2016/03/23/kit-de-sobrevivencia-em-r-parte-1)
+* [Kit de sobrevivência em R - Parte 2: Operações, Variáveis e Funções]({{root_url}}/blog/2016/04/03/kit-de-sobrevivencia-em-r-parte-2)
+* [Kit de sobrevivência em R - Parte 3: Pacotes]({{root_url}}/blog/2016/04/03/kit-de-sobrevivencia-em-r-parte-3)
+* [Kit de sobrevivência em R - Parte 4: Carregando Dados]({{root_url}}/blog/2016/04/12/kit-de-sobrevivencia-em-r-parte-4)
+* [Kit de sobrevivência em R - Parte 5: Tipos de Dados e Transformações]({{root_url}}/blog/2016/04/21/kit-de-sobrevivencia-em-r-parte-5)
+* [Kit de sobrevivência em R - Parte 6: Estruturas de Controle]({{root_url}}/blog/2016/05/01/kit-de-sobrevivencia-em-r-parte-6)
+* [Kit de sobrevivência em R - Parte 7: Avançando e Aprofundando]({{root_url}}/blog/2016/05/09/kit-de-sobrevivencia-em-r-parte-7)
