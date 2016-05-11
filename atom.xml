@@ -4,7 +4,7 @@
   <title><![CDATA[Full Join]]></title>
   <link href="http://fulljoin.com.br/atom.xml" rel="self"/>
   <link href="http://fulljoin.com.br/"/>
-  <updated>2016-05-10T23:37:52-03:00</updated>
+  <updated>2016-05-10T23:57:05-03:00</updated>
   <id>http://fulljoin.com.br/</id>
   <author>
     <name><![CDATA[Full Join]]></name>
@@ -28,10 +28,10 @@
 
 <p>Mostramos que pacotes são conjuntos de funções específicas agrupadas para objetivos temáticos: carregar dados, gráficos, machine learning. É muito simples carregar e utilizar pacotes. Vamos relembrar os principais comandos envolvidos:</p>
 
-<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="o">??</span><span class="n">dplyr</span> <span class="c1">#conhecendo um pacote que não foi carregado ainda
-</span><span class="n">install.packages</span><span class="p">(</span><span class="s1">'dplyr'</span><span class="p">)</span> <span class="c1">#instalando um pacote
-</span><span class="n">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span> <span class="c1">#carregando um pacote para uso
-</span><span class="o">?</span><span class="n">dplyr</span><span class="o">::</span><span class="n">filter</span> <span class="err">#</span><span class="n">conhecendo</span> <span class="n">alguma</span> <span class="n">fun</span><span class="err">çã</span><span class="n">o</span> <span class="n">do</span> <span class="n">pacote</span></code></pre></div>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="o">??</span><span class="n">dplyr</span> <span class="c1">#conhecendo um pacote que não foi carregado ainda</span>
+<span class="n">install.packages</span><span class="p">(</span><span class="s1">'dplyr'</span><span class="p">)</span> <span class="c1">#instalando um pacote</span>
+<span class="n">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span> <span class="c1">#carregando um pacote para uso</span>
+<span class="o">?</span><span class="n">dplyr</span><span class="o">::</span><span class="n">filter</span> <span class="c1">#conhecendo alguma função do pacote</span></code></pre></div>
 
 <h2 id="carregando-dados">Carregando dados</h2>
 
@@ -332,8 +332,8 @@
 
 <p>Por fim, iremos imputar a média da <code>col2</code> nas linhas em que há <code>NA</code>. Para isso, usaremos o <code>ifelse()</code> que tratamos na <a href="http://fulljoin.com.br/blog/2016/05/01/kit-de-sobrevivencia-em-r-parte-6/">parte 6</a> e o <code>is.na()</code>, além da função <code>mean()</code>.</p>
 
-<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Calcular a média da col2
-</span><span class="n">media.col2</span> <span class="o">&lt;-</span> <span class="n">mean</span><span class="p">(</span><span class="n">data.ex</span><span class="o">$</span><span class="n">col2</span><span class="p">,</span> <span class="n">na.rm</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Calcular a média da col2</span>
+<span class="n">media.col2</span> <span class="o">&lt;-</span> <span class="n">mean</span><span class="p">(</span><span class="n">data.ex</span><span class="o">$</span><span class="n">col2</span><span class="p">,</span> <span class="n">na.rm</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span>
 <span class="n">media.col2</span></code></pre></div>
 
 <div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 27.5</code></pre></div>
@@ -693,8 +693,8 @@
 
 <p>Além disso, iremos criar um vetor com os trimestres que serão usados como base para realização do loop.</p>
 
-<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Selecionar valores únicos da coluna Trimestre
-</span><span class="n">trimestre</span> <span class="o">&lt;-</span> <span class="n">unique</span><span class="p">(</span><span class="n">desemprego.uf.2015</span><span class="o">$</span><span class="n">Trimestre</span><span class="p">)</span>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Selecionar valores únicos da coluna Trimestre</span>
+<span class="n">trimestre</span> <span class="o">&lt;-</span> <span class="n">unique</span><span class="p">(</span><span class="n">desemprego.uf.2015</span><span class="o">$</span><span class="n">Trimestre</span><span class="p">)</span>
 <span class="n">trimestre</span></code></pre></div>
 
 <div class="highlight"><pre><code class="language-text" data-lang="text">## [1] jan-fev-mar abr-mai-jun jul-ago-set out-nov-dez
@@ -717,9 +717,9 @@
 
 <p>Os parâmetros do plot serão definidos usando a função <code>par()</code>. Utilize o <code>?par</code> para ver mais detalhes sobre esta função e as opções disponíveis.</p>
 
-<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">par</span><span class="p">(</span><span class="n">mfrow</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">),</span> <span class="c1"># O plot terá 2 linhas e 2 colunas
-</span>    <span class="n">mar</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="m">8</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">2</span><span class="p">),</span> <span class="c1"># margens inferior, esquerda, superior, direita
-</span>    <span class="n">las</span> <span class="o">=</span> <span class="m">2</span><span class="p">)</span> <span class="err">#</span> <span class="n">r</span><span class="err">ó</span><span class="n">tulos</span> <span class="n">perpendicular</span> <span class="n">aos</span> <span class="n">eixos</span></code></pre></div>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">par</span><span class="p">(</span><span class="n">mfrow</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">),</span> <span class="c1"># O plot terá 2 linhas e 2 colunas</span>
+    <span class="n">mar</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="m">8</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">2</span><span class="p">),</span> <span class="c1"># margens inferior, esquerda, superior, direita</span>
+    <span class="n">las</span> <span class="o">=</span> <span class="m">2</span><span class="p">)</span> <span class="c1"># rótulos perpendicular aos eixos</span></code></pre></div>
 
 <p>O código abaixo traz o loop. Temos 4 operações dentro do loop:</p>
 
@@ -734,10 +734,10 @@
   <span class="n">dados.tmp</span> <span class="o">&lt;-</span> <span class="n">desemprego.uf.2015</span><span class="p">[</span><span class="n">desemprego.uf.2015</span><span class="o">$</span><span class="n">Trimestre</span> <span class="o">==</span> <span class="n">i</span><span class="p">,</span>
                                   <span class="n">c</span><span class="p">(</span><span class="s1">'UF'</span><span class="p">,</span> <span class="s1">'Taxa_Desemprego'</span><span class="p">)]</span>
   <span class="n">dados.tmp</span> <span class="o">&lt;-</span> <span class="n">dados.tmp</span><span class="p">[</span><span class="n">order</span><span class="p">(</span><span class="n">dados.tmp</span><span class="o">$</span><span class="n">Taxa_Desemprego</span><span class="p">,</span> <span class="n">decreasing</span> <span class="o">=</span> <span class="n">T</span><span class="p">),]</span>
-  <span class="c1"># Cria o título do plot
-</span>  <span class="n">title</span> <span class="o">&lt;-</span> <span class="n">paste</span><span class="p">(</span><span class="s2">"Taxa de Desemprego 2015:"</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s2">" "</span><span class="p">)</span>
-  <span class="c1"># Gera o gráfico de barras
-</span>  <span class="n">barplot</span><span class="p">(</span><span class="n">dados.tmp</span><span class="o">$</span><span class="n">Taxa_Desemprego</span><span class="p">,</span> <span class="n">names.arg</span> <span class="o">=</span> <span class="n">dados.tmp</span><span class="o">$</span><span class="n">UF</span><span class="p">,</span>
+  <span class="c1"># Cria o título do plot</span>
+  <span class="n">title</span> <span class="o">&lt;-</span> <span class="n">paste</span><span class="p">(</span><span class="s2">"Taxa de Desemprego 2015:"</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s2">" "</span><span class="p">)</span>
+  <span class="c1"># Gera o gráfico de barras</span>
+  <span class="n">barplot</span><span class="p">(</span><span class="n">dados.tmp</span><span class="o">$</span><span class="n">Taxa_Desemprego</span><span class="p">,</span> <span class="n">names.arg</span> <span class="o">=</span> <span class="n">dados.tmp</span><span class="o">$</span><span class="n">UF</span><span class="p">,</span>
           <span class="n">col</span> <span class="o">=</span> <span class="s2">"dodgerblue"</span><span class="p">,</span> <span class="n">border</span> <span class="o">=</span> <span class="n">NA</span><span class="p">,</span> <span class="n">main</span> <span class="o">=</span> <span class="n">title</span><span class="p">,</span>
           <span class="n">ylab</span><span class="o">=</span><span class="s2">"%"</span><span class="p">)</span>
 <span class="p">}</span></code></pre></div>
@@ -756,10 +756,10 @@
 
 <p>Para exemplificar o uso do if e else, vamos continuar com o exemplo anterior, mas desta vez queremos que as barras para o trimestre <code>out-nov-dez</code> sejam vermelhas. Dessa forma, usaremos os controles if e else. A ideia é realizar um teste sobre <code>i</code> que assume um valor do vetor <code>trimestre</code>. Assim, se <code>i</code> for igual a <code>out-nov-dez</code>, a cor será ver vermelha (<code>col = red</code>), caso contrário utilizaremos o azul (<code>col = dodgerblue</code>).</p>
 
-<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">par</span><span class="p">(</span><span class="n">mfrow</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">),</span> <span class="c1"># O plot terá 2 linas e 2 colunas
-</span>    <span class="n">mar</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="m">10</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">2</span><span class="p">),</span> <span class="c1"># margens inferior, esquerda, superior, direita
-</span>    <span class="n">las</span> <span class="o">=</span> <span class="m">2</span><span class="p">)</span> <span class="c1"># rótulos perpendicular aos eixos
-</span><span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="k">in</span> <span class="n">trimestre</span><span class="p">){</span>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">par</span><span class="p">(</span><span class="n">mfrow</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">),</span> <span class="c1"># O plot terá 2 linas e 2 colunas</span>
+    <span class="n">mar</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="m">10</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">2</span><span class="p">),</span> <span class="c1"># margens inferior, esquerda, superior, direita</span>
+    <span class="n">las</span> <span class="o">=</span> <span class="m">2</span><span class="p">)</span> <span class="c1"># rótulos perpendicular aos eixos</span>
+<span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="k">in</span> <span class="n">trimestre</span><span class="p">){</span>
   <span class="n">dados.tmp</span> <span class="o">&lt;-</span> <span class="n">desemprego.uf.2015</span><span class="p">[</span><span class="n">desemprego.uf.2015</span><span class="o">$</span><span class="n">Trimestre</span> <span class="o">==</span> <span class="n">i</span><span class="p">,</span>
                                   <span class="n">c</span><span class="p">(</span><span class="s1">'UF'</span><span class="p">,</span> <span class="s1">'Taxa_Desemprego'</span><span class="p">)]</span>
   <span class="n">dados.tmp</span> <span class="o">&lt;-</span> <span class="n">dados.tmp</span><span class="p">[</span><span class="n">order</span><span class="p">(</span><span class="n">dados.tmp</span><span class="o">$</span><span class="n">Taxa_Desemprego</span><span class="p">,</span> <span class="n">decreasing</span> <span class="o">=</span> <span class="n">T</span><span class="p">),]</span>
@@ -779,10 +779,10 @@
 
 <p>Podemos reescrever o código acima com o comando <code>ifelse()</code> e obter o mesmo resultado (veja <code>?ifelse()</code>). Para isso, iremos usar o comando <code>ifelse()</code> no argumento <code>col</code>. O primeiro argumento dessa função é o teste que você deseja realizar (saber se o trimestre é ou não é igual a <code>out-nov-dez</code>), o segundo é o valor desejado caso seja verdade e o último é o valor a ser retornado caso a condição não seja satisfeita.</p>
 
-<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">par</span><span class="p">(</span><span class="n">mfrow</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">),</span> <span class="c1"># O plot terá 2 linas e 2 colunas
-</span>    <span class="n">mar</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="m">10</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">2</span><span class="p">),</span> <span class="c1"># margens inferior, esquerda, superior, direita
-</span>    <span class="n">las</span> <span class="o">=</span> <span class="m">2</span><span class="p">)</span> <span class="c1"># rótulos perpendicular aos eixos
-</span><span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="k">in</span> <span class="n">trimestre</span><span class="p">){</span>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">par</span><span class="p">(</span><span class="n">mfrow</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">),</span> <span class="c1"># O plot terá 2 linas e 2 colunas</span>
+    <span class="n">mar</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="m">10</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">2</span><span class="p">),</span> <span class="c1"># margens inferior, esquerda, superior, direita</span>
+    <span class="n">las</span> <span class="o">=</span> <span class="m">2</span><span class="p">)</span> <span class="c1"># rótulos perpendicular aos eixos</span>
+<span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="k">in</span> <span class="n">trimestre</span><span class="p">){</span>
   <span class="n">dados.tmp</span> <span class="o">&lt;-</span> <span class="n">desemprego.uf.2015</span><span class="p">[</span><span class="n">desemprego.uf.2015</span><span class="o">$</span><span class="n">Trimestre</span> <span class="o">==</span> <span class="n">i</span><span class="p">,</span>
                                   <span class="n">c</span><span class="p">(</span><span class="s1">'UF'</span><span class="p">,</span> <span class="s1">'Taxa_Desemprego'</span><span class="p">)]</span>
   <span class="n">dados.tmp</span> <span class="o">&lt;-</span> <span class="n">dados.tmp</span><span class="p">[</span><span class="n">order</span><span class="p">(</span><span class="n">dados.tmp</span><span class="o">$</span><span class="n">Taxa_Desemprego</span><span class="p">,</span> <span class="n">decreasing</span> <span class="o">=</span> <span class="n">T</span><span class="p">),]</span>
@@ -844,8 +844,8 @@
   <span class="n">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
   <span class="n">i</span> <span class="o">&lt;-</span> <span class="n">i</span> <span class="o">+</span> <span class="m">1</span>
   <span class="k">if</span><span class="p">(</span><span class="n">i</span> <span class="o">&gt;</span> <span class="m">6</span><span class="p">){</span>
-    <span class="k">break</span> <span class="c1"># Se a condição é satisfeita, encerra o loop.
-</span>  <span class="p">}</span>
+    <span class="k">break</span> <span class="c1"># Se a condição é satisfeita, encerra o loop.</span>
+  <span class="p">}</span>
 <span class="p">}</span></code></pre></div>
 
 <div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 1
@@ -1077,17 +1077,17 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
 
 <p>As dimensões são separadas por vírgulas. Por exemplo, no caso do data frame, como existem duas dimensões (linhas e colunas) será preciso dizer em qual nós estamos interessados. Por exemplo, teste os seguintes comandos:</p>
 
-<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Selecionar as 5 primeiras linhas
-</span><span class="n">dados</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">,</span> <span class="p">]</span>
-<span class="c1"># Selecionar as 5 primeiras linhas e as duas primeiras colunas
-</span><span class="n">dados</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">,</span> <span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">]</span>
-<span class="c1"># Selecionar todas as linhas e as duas primeiras colunas
-</span><span class="n">dados</span><span class="p">[,</span> <span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">]</span></code></pre></div>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Selecionar as 5 primeiras linhas</span>
+<span class="n">dados</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">,</span> <span class="p">]</span>
+<span class="c1"># Selecionar as 5 primeiras linhas e as duas primeiras colunas</span>
+<span class="n">dados</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">,</span> <span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">]</span>
+<span class="c1"># Selecionar todas as linhas e as duas primeiras colunas</span>
+<span class="n">dados</span><span class="p">[,</span> <span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">]</span></code></pre></div>
 
 <p>Apesar de ter sido usado apenas números, você pode usar condições e nomes das colunas. Tente o seguinte:</p>
 
-<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Selecionar as 5 primeiras linhas e a coluna UF e Taxa_Desemprego
-</span><span class="n">dados</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">,</span> <span class="n">c</span><span class="p">(</span><span class="s2">"UF"</span><span class="p">,</span> <span class="s2">"Taxa_Desemprego"</span><span class="p">)]</span></code></pre></div>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Selecionar as 5 primeiras linhas e a coluna UF e Taxa_Desemprego</span>
+<span class="n">dados</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">,</span> <span class="n">c</span><span class="p">(</span><span class="s2">"UF"</span><span class="p">,</span> <span class="s2">"Taxa_Desemprego"</span><span class="p">)]</span></code></pre></div>
 
 <p>Nesse caso usamos um vetor <code>c()</code> para informar a listagem de nomes de colunas. No próximo post aprofundaremos mais no uso das filtragens de linha e coluna dentro do data frame.</p>
 
@@ -1369,12 +1369,12 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
 
 <p>Para importar dados com delimitadores utilizaremos a função <code>read.table()</code>. Essa função permite definir qualquer delimitador para a leitura do arquivo, conforme os exemplos abaixo.</p>
 
-<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Separado por tabulação
-</span><span class="n">dados.tab</span> <span class="o">&lt;-</span> <span class="n">read.table</span><span class="p">(</span><span class="s1">'desemprego_uf_tab.txt'</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s2">"\t"</span><span class="p">,</span> <span class="n">dec</span> <span class="o">=</span> <span class="s2">","</span><span class="p">,</span> <span class="n">header</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span> 
-<span class="c1"># Separado por ;
-</span><span class="n">dados.ponto.virgula</span> <span class="o">&lt;-</span> <span class="n">read.table</span><span class="p">(</span><span class="s1">'desemprego_uf_ponto_virgula.txt'</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s2">";"</span><span class="p">,</span> <span class="n">dec</span> <span class="o">=</span> <span class="s2">","</span><span class="p">,</span> <span class="n">header</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span> 
-<span class="c1"># Separado por espaço
-</span><span class="n">dados.espaco</span> <span class="o">&lt;-</span> <span class="n">read.table</span><span class="p">(</span><span class="s1">'desemprego_uf_espaco.txt'</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s2">" "</span><span class="p">,</span> <span class="n">dec</span> <span class="o">=</span> <span class="s2">","</span><span class="p">,</span> <span class="n">header</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span></code></pre></div>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Separado por tabulação</span>
+<span class="n">dados.tab</span> <span class="o">&lt;-</span> <span class="n">read.table</span><span class="p">(</span><span class="s1">'desemprego_uf_tab.txt'</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s2">"\t"</span><span class="p">,</span> <span class="n">dec</span> <span class="o">=</span> <span class="s2">","</span><span class="p">,</span> <span class="n">header</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span> 
+<span class="c1"># Separado por ;</span>
+<span class="n">dados.ponto.virgula</span> <span class="o">&lt;-</span> <span class="n">read.table</span><span class="p">(</span><span class="s1">'desemprego_uf_ponto_virgula.txt'</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s2">";"</span><span class="p">,</span> <span class="n">dec</span> <span class="o">=</span> <span class="s2">","</span><span class="p">,</span> <span class="n">header</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span> 
+<span class="c1"># Separado por espaço</span>
+<span class="n">dados.espaco</span> <span class="o">&lt;-</span> <span class="n">read.table</span><span class="p">(</span><span class="s1">'desemprego_uf_espaco.txt'</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s2">" "</span><span class="p">,</span> <span class="n">dec</span> <span class="o">=</span> <span class="s2">","</span><span class="p">,</span> <span class="n">header</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span></code></pre></div>
 
 <p>Reparem no parâmetro <code>header = TRUE</code>, isso significa dizer que a primeira linha do arquivo contem o nome das colunas, ou seja, não é um dado propriamente dito, e sim um metadado pois é uma informação sobre os registros. Caso seu arquivo não contenha o nome das colunas, basta usar <code>header = FALSE</code>.</p>
 
@@ -1561,8 +1561,8 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
 
 <p>Para realizar a instalação desses pacotes “fora do CRAN”, será necessária a instalação do <code>devtools</code> (que é um pacote!). Por exemplo, o <code>ggplot2</code>, ótimo pacote para gráficos, já possui uma versão estável no CRAN. No entanto, se você desejar instalar a versão que está em desenvolvimento, que pode possuir uma nova funcionalidade, faça o seguinte:</p>
 
-<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">install.packages</span><span class="p">(</span><span class="s1">'devtools'</span><span class="p">)</span> <span class="c1"># Caso não esteja instalado ainda
-</span><span class="n">devtools</span><span class="o">::</span><span class="n">install_github</span><span class="p">(</span><span class="s2">"hadley/ggplot2"</span><span class="p">)</span></code></pre></div>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">install.packages</span><span class="p">(</span><span class="s1">'devtools'</span><span class="p">)</span> <span class="c1"># Caso não esteja instalado ainda</span>
+<span class="n">devtools</span><span class="o">::</span><span class="n">install_github</span><span class="p">(</span><span class="s2">"hadley/ggplot2"</span><span class="p">)</span></code></pre></div>
 
 <p>Aqui temos um ponto interessante. Para usar funções de um pacote, usualmente carrega-se usando o <code>library()</code>. Contudo, se você quiser pontualmente uma função de um pacote, pode-se optar pela forma acima: <code>nome_do_pacote::nome_da_função</code>. Dessa forma você evitaria carregar todas as funções do pacote em memória. Isso pode ser muito útil!</p>
 
@@ -1574,9 +1574,9 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
 
 <p>Para buscar ajuda sobre uma função específica, existem algumas possibilidades a depender se o pacote já está carregado ou não. Por exemplo:</p>
 
-<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="o">?</span><span class="n">read_excel</span> <span class="c1"># se o pacote já estiver sido carregado com library(readxl)
-</span><span class="o">?</span><span class="n">readxl</span><span class="o">::</span><span class="n">read_excel</span> <span class="c1"># Se o pacote não estiver carregado
-</span><span class="o">??</span><span class="n">read_excel</span>  <span class="err">#</span> <span class="n">Pacote</span> <span class="n">n</span><span class="err">ã</span><span class="n">o</span> <span class="n">carregado.</span> <span class="n">Demora</span> <span class="n">mais</span> <span class="n">para</span> <span class="n">apresentar</span> <span class="n">um</span> <span class="n">resultado</span></code></pre></div>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="o">?</span><span class="n">read_excel</span> <span class="c1"># se o pacote já estiver sido carregado com library(readxl)</span>
+<span class="o">?</span><span class="n">readxl</span><span class="o">::</span><span class="n">read_excel</span> <span class="c1"># Se o pacote não estiver carregado</span>
+<span class="o">??</span><span class="n">read_excel</span>  <span class="c1"># Pacote não carregado. Demora mais para apresentar um resultado</span></code></pre></div>
 
 <p>É importante destacar o <code>??</code>, que faz uma busca mais ampla por funções, demonstrações e arquivos que trazem uma visão geral (vignette) de algum pacote/função.</p>
 
@@ -1667,7 +1667,7 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
 
 <div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 125</code></pre></div>
 
-<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="m">2</span> <span class="o">^</span> <span class="p">(</span><span class="m">4</span> <span class="o">-</span> <span class="m">2</span><span class="p">)</span> <span class="o">*</span> <span class="m">-8</span> <span class="o">/</span> <span class="p">(</span><span class="m">5</span> <span class="o">*</span> <span class="p">(</span><span class="m">10</span> <span class="o">+</span> <span class="m">3</span><span class="p">))</span> <span class="err">#</span><span class="n">Precedentes</span> <span class="n">matem</span><span class="err">á</span><span class="n">ticos</span></code></pre></div>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="m">2</span> <span class="o">^</span> <span class="p">(</span><span class="m">4</span> <span class="o">-</span> <span class="m">2</span><span class="p">)</span> <span class="o">*</span> <span class="m">-8</span> <span class="o">/</span> <span class="p">(</span><span class="m">5</span> <span class="o">*</span> <span class="p">(</span><span class="m">10</span> <span class="o">+</span> <span class="m">3</span><span class="p">))</span> <span class="c1">#Precedentes matemáticos</span></code></pre></div>
 
 <div class="highlight"><pre><code class="language-text" data-lang="text">## [1] -0.4923077</code></pre></div>
 
@@ -1691,7 +1691,7 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
 
 <p>Para armazenar uma variável no R, você deve usar o seguinte símbolo <code>&lt;-</code>, formando uma setinha direcionada para a esquerda. Você pode chamar suas variáveis do que você quiser! Elas podem conter letras, números, ponto <code>.</code>, e <em>underscore</em> <code>_</code>, e podem ter o tamanho qualquer tamanho. Há apenas uma regra: o nome das variáveis deve começar com letras (maiúsculas ou minúsculas). Se o R, por algum motivo, for retornar uma variável que tenha o nome iniciando com número, automaticamente será adicionado ``` no início e no fim.</p>
 
-<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">minha_PRIMEIRA.variavel</span> <span class="o">&lt;-</span> <span class="m">9</span> <span class="o">^</span> <span class="m">10</span> <span class="err">#</span><span class="n">Nome</span> <span class="n">esdr</span><span class="err">ú</span><span class="n">xulo</span> <span class="n">de</span> <span class="n">vari</span><span class="err">á</span><span class="n">vel</span> <span class="n">apenas</span> <span class="n">para</span> <span class="n">exemplificar</span><span class="o">!</span></code></pre></div>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">minha_PRIMEIRA.variavel</span> <span class="o">&lt;-</span> <span class="m">9</span> <span class="o">^</span> <span class="m">10</span> <span class="c1">#Nome esdrúxulo de variável apenas para exemplificar!</span></code></pre></div>
 
 <p>“Ué, apertei enter e nada aconteceu?”. Aconteceu sim! Você colocou o resultado de <code>9 ^ 10</code> dentro da variável chamada <code>minha_PRIMEIRA.variavel</code>. Para comprovar e para ver o que tem “dentro da variável”, digite apenas o nome da variável e aperte enter:</p>
 
@@ -1703,8 +1703,8 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
 
 <div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">x</span> <span class="o">&lt;-</span> <span class="m">5</span> <span class="o">/</span> <span class="m">2</span>
 <span class="n">y</span> <span class="o">&lt;-</span> <span class="m">3</span> <span class="o">^</span> <span class="m">2</span>
-<span class="n">z</span> <span class="o">&lt;-</span> <span class="n">y</span> <span class="o">-</span> <span class="n">x</span> <span class="c1">#Resultado da operação y menos o resultado da operação x
-</span><span class="n">z</span></code></pre></div>
+<span class="n">z</span> <span class="o">&lt;-</span> <span class="n">y</span> <span class="o">-</span> <span class="n">x</span> <span class="c1">#Resultado da operação y menos o resultado da operação x</span>
+<span class="n">z</span></code></pre></div>
 
 <div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 6.5</code></pre></div>
 
@@ -1712,9 +1712,9 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
   <p>Dica: use nomes explicativos! Talvez não pareça muito útil agora, mas existem alguns padrões e boas práticas para escrever comando em R que vai ajudar muito na hora de você mesmo ou outras pessoas entenderem o que foi feito. Recomendamos a leitura de alguns padrões de nomenclatura, <a href="http://adv-r.had.co.nz/Style.html">como este aqui</a>.</p>
 </blockquote>
 
-<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">primeira.variavel</span> <span class="o">&lt;-</span> <span class="m">-5</span> <span class="o">*</span> <span class="m">4</span> <span class="c1">#padrão com ponto, mais comum em R
-</span><span class="n">primeiraVariavel</span> <span class="o">&lt;-</span> <span class="m">-5</span> <span class="o">*</span> <span class="m">4</span> <span class="c1">#padrão camel case, comum em outras linguagens de programação
-</span><span class="n">primeira_variavel</span> <span class="o">&lt;-</span> <span class="m">-5</span> <span class="o">*</span> <span class="m">4</span> <span class="err">#</span><span class="n">padr</span><span class="err">ã</span><span class="n">o</span> <span class="n">underscore</span></code></pre></div>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">primeira.variavel</span> <span class="o">&lt;-</span> <span class="m">-5</span> <span class="o">*</span> <span class="m">4</span> <span class="c1">#padrão com ponto, mais comum em R</span>
+<span class="n">primeiraVariavel</span> <span class="o">&lt;-</span> <span class="m">-5</span> <span class="o">*</span> <span class="m">4</span> <span class="c1">#padrão camel case, comum em outras linguagens de programação</span>
+<span class="n">primeira_variavel</span> <span class="o">&lt;-</span> <span class="m">-5</span> <span class="o">*</span> <span class="m">4</span> <span class="c1">#padrão underscore</span></code></pre></div>
 
 <p>Pronto, você já sabe usar o console para comandos com os operadores matemáticos básicos e sabe armazenar resultados em variáveis.</p>
 

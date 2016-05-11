@@ -301,17 +301,17 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
 
 <p>As dimensões são separadas por vírgulas. Por exemplo, no caso do data frame, como existem duas dimensões (linhas e colunas) será preciso dizer em qual nós estamos interessados. Por exemplo, teste os seguintes comandos:</p>
 
-<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Selecionar as 5 primeiras linhas
-</span><span class="n">dados</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">,</span> <span class="p">]</span>
-<span class="c1"># Selecionar as 5 primeiras linhas e as duas primeiras colunas
-</span><span class="n">dados</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">,</span> <span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">]</span>
-<span class="c1"># Selecionar todas as linhas e as duas primeiras colunas
-</span><span class="n">dados</span><span class="p">[,</span> <span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">]</span></code></pre></div>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Selecionar as 5 primeiras linhas</span>
+<span class="n">dados</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">,</span> <span class="p">]</span>
+<span class="c1"># Selecionar as 5 primeiras linhas e as duas primeiras colunas</span>
+<span class="n">dados</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">,</span> <span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">]</span>
+<span class="c1"># Selecionar todas as linhas e as duas primeiras colunas</span>
+<span class="n">dados</span><span class="p">[,</span> <span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">]</span></code></pre></div>
 
 <p>Apesar de ter sido usado apenas números, você pode usar condições e nomes das colunas. Tente o seguinte:</p>
 
-<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Selecionar as 5 primeiras linhas e a coluna UF e Taxa_Desemprego
-</span><span class="n">dados</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">,</span> <span class="n">c</span><span class="p">(</span><span class="s2">"UF"</span><span class="p">,</span> <span class="s2">"Taxa_Desemprego"</span><span class="p">)]</span></code></pre></div>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Selecionar as 5 primeiras linhas e a coluna UF e Taxa_Desemprego</span>
+<span class="n">dados</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">,</span> <span class="n">c</span><span class="p">(</span><span class="s2">"UF"</span><span class="p">,</span> <span class="s2">"Taxa_Desemprego"</span><span class="p">)]</span></code></pre></div>
 
 <p>Nesse caso usamos um vetor <code>c()</code> para informar a listagem de nomes de colunas. No próximo post aprofundaremos mais no uso das filtragens de linha e coluna dentro do data frame.</p>
 

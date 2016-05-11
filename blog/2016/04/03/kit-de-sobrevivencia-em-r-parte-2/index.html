@@ -189,7 +189,7 @@
 
 <div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 125</code></pre></div>
 
-<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="m">2</span> <span class="o">^</span> <span class="p">(</span><span class="m">4</span> <span class="o">-</span> <span class="m">2</span><span class="p">)</span> <span class="o">*</span> <span class="m">-8</span> <span class="o">/</span> <span class="p">(</span><span class="m">5</span> <span class="o">*</span> <span class="p">(</span><span class="m">10</span> <span class="o">+</span> <span class="m">3</span><span class="p">))</span> <span class="err">#</span><span class="n">Precedentes</span> <span class="n">matem</span><span class="err">á</span><span class="n">ticos</span></code></pre></div>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="m">2</span> <span class="o">^</span> <span class="p">(</span><span class="m">4</span> <span class="o">-</span> <span class="m">2</span><span class="p">)</span> <span class="o">*</span> <span class="m">-8</span> <span class="o">/</span> <span class="p">(</span><span class="m">5</span> <span class="o">*</span> <span class="p">(</span><span class="m">10</span> <span class="o">+</span> <span class="m">3</span><span class="p">))</span> <span class="c1">#Precedentes matemáticos</span></code></pre></div>
 
 <div class="highlight"><pre><code class="language-text" data-lang="text">## [1] -0.4923077</code></pre></div>
 
@@ -213,7 +213,7 @@
 
 <p>Para armazenar uma variável no R, você deve usar o seguinte símbolo <code>&lt;-</code>, formando uma setinha direcionada para a esquerda. Você pode chamar suas variáveis do que você quiser! Elas podem conter letras, números, ponto <code>.</code>, e <em>underscore</em> <code>_</code>, e podem ter o tamanho qualquer tamanho. Há apenas uma regra: o nome das variáveis deve começar com letras (maiúsculas ou minúsculas). Se o R, por algum motivo, for retornar uma variável que tenha o nome iniciando com número, automaticamente será adicionado ``` no início e no fim.</p>
 
-<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">minha_PRIMEIRA.variavel</span> <span class="o">&lt;-</span> <span class="m">9</span> <span class="o">^</span> <span class="m">10</span> <span class="err">#</span><span class="n">Nome</span> <span class="n">esdr</span><span class="err">ú</span><span class="n">xulo</span> <span class="n">de</span> <span class="n">vari</span><span class="err">á</span><span class="n">vel</span> <span class="n">apenas</span> <span class="n">para</span> <span class="n">exemplificar</span><span class="o">!</span></code></pre></div>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">minha_PRIMEIRA.variavel</span> <span class="o">&lt;-</span> <span class="m">9</span> <span class="o">^</span> <span class="m">10</span> <span class="c1">#Nome esdrúxulo de variável apenas para exemplificar!</span></code></pre></div>
 
 <p>“Ué, apertei enter e nada aconteceu?”. Aconteceu sim! Você colocou o resultado de <code>9 ^ 10</code> dentro da variável chamada <code>minha_PRIMEIRA.variavel</code>. Para comprovar e para ver o que tem “dentro da variável”, digite apenas o nome da variável e aperte enter:</p>
 
@@ -225,8 +225,8 @@
 
 <div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">x</span> <span class="o">&lt;-</span> <span class="m">5</span> <span class="o">/</span> <span class="m">2</span>
 <span class="n">y</span> <span class="o">&lt;-</span> <span class="m">3</span> <span class="o">^</span> <span class="m">2</span>
-<span class="n">z</span> <span class="o">&lt;-</span> <span class="n">y</span> <span class="o">-</span> <span class="n">x</span> <span class="c1">#Resultado da operação y menos o resultado da operação x
-</span><span class="n">z</span></code></pre></div>
+<span class="n">z</span> <span class="o">&lt;-</span> <span class="n">y</span> <span class="o">-</span> <span class="n">x</span> <span class="c1">#Resultado da operação y menos o resultado da operação x</span>
+<span class="n">z</span></code></pre></div>
 
 <div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 6.5</code></pre></div>
 
@@ -234,9 +234,9 @@
   <p>Dica: use nomes explicativos! Talvez não pareça muito útil agora, mas existem alguns padrões e boas práticas para escrever comando em R que vai ajudar muito na hora de você mesmo ou outras pessoas entenderem o que foi feito. Recomendamos a leitura de alguns padrões de nomenclatura, <a href="http://adv-r.had.co.nz/Style.html">como este aqui</a>.</p>
 </blockquote>
 
-<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">primeira.variavel</span> <span class="o">&lt;-</span> <span class="m">-5</span> <span class="o">*</span> <span class="m">4</span> <span class="c1">#padrão com ponto, mais comum em R
-</span><span class="n">primeiraVariavel</span> <span class="o">&lt;-</span> <span class="m">-5</span> <span class="o">*</span> <span class="m">4</span> <span class="c1">#padrão camel case, comum em outras linguagens de programação
-</span><span class="n">primeira_variavel</span> <span class="o">&lt;-</span> <span class="m">-5</span> <span class="o">*</span> <span class="m">4</span> <span class="err">#</span><span class="n">padr</span><span class="err">ã</span><span class="n">o</span> <span class="n">underscore</span></code></pre></div>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">primeira.variavel</span> <span class="o">&lt;-</span> <span class="m">-5</span> <span class="o">*</span> <span class="m">4</span> <span class="c1">#padrão com ponto, mais comum em R</span>
+<span class="n">primeiraVariavel</span> <span class="o">&lt;-</span> <span class="m">-5</span> <span class="o">*</span> <span class="m">4</span> <span class="c1">#padrão camel case, comum em outras linguagens de programação</span>
+<span class="n">primeira_variavel</span> <span class="o">&lt;-</span> <span class="m">-5</span> <span class="o">*</span> <span class="m">4</span> <span class="c1">#padrão underscore</span></code></pre></div>
 
 <p>Pronto, você já sabe usar o console para comandos com os operadores matemáticos básicos e sabe armazenar resultados em variáveis.</p>
 
