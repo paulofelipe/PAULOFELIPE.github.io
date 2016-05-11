@@ -219,8 +219,8 @@
 
 <p>Além disso, iremos criar um vetor com os trimestres que serão usados como base para realização do loop.</p>
 
-<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Selecionar valores únicos da coluna Trimestre</span>
-<span class="n">trimestre</span> <span class="o">&lt;-</span> <span class="n">unique</span><span class="p">(</span><span class="n">desemprego.uf.2015</span><span class="o">$</span><span class="n">Trimestre</span><span class="p">)</span>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Selecionar valores únicos da coluna Trimestre
+</span><span class="n">trimestre</span> <span class="o">&lt;-</span> <span class="n">unique</span><span class="p">(</span><span class="n">desemprego.uf.2015</span><span class="o">$</span><span class="n">Trimestre</span><span class="p">)</span>
 <span class="n">trimestre</span></code></pre></div>
 
 <div class="highlight"><pre><code class="language-text" data-lang="text">## [1] jan-fev-mar abr-mai-jun jul-ago-set out-nov-dez
@@ -243,9 +243,9 @@
 
 <p>Os parâmetros do plot serão definidos usando a função <code>par()</code>. Utilize o <code>?par</code> para ver mais detalhes sobre esta função e as opções disponíveis.</p>
 
-<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">par</span><span class="p">(</span><span class="n">mfrow</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">),</span> <span class="c1"># O plot terá 2 linhas e 2 colunas</span>
-    <span class="n">mar</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="m">8</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">2</span><span class="p">),</span> <span class="c1"># margens inferior, esquerda, superior, direita</span>
-    <span class="n">las</span> <span class="o">=</span> <span class="m">2</span><span class="p">)</span> <span class="c1"># rótulos perpendicular aos eixos</span></code></pre></div>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">par</span><span class="p">(</span><span class="n">mfrow</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">),</span> <span class="c1"># O plot terá 2 linhas e 2 colunas
+</span>    <span class="n">mar</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="m">8</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">2</span><span class="p">),</span> <span class="c1"># margens inferior, esquerda, superior, direita
+</span>    <span class="n">las</span> <span class="o">=</span> <span class="m">2</span><span class="p">)</span> <span class="err">#</span> <span class="n">r</span><span class="err">ó</span><span class="n">tulos</span> <span class="n">perpendicular</span> <span class="n">aos</span> <span class="n">eixos</span></code></pre></div>
 
 <p>O código abaixo traz o loop. Temos 4 operações dentro do loop:</p>
 
@@ -260,10 +260,10 @@
   <span class="n">dados.tmp</span> <span class="o">&lt;-</span> <span class="n">desemprego.uf.2015</span><span class="p">[</span><span class="n">desemprego.uf.2015</span><span class="o">$</span><span class="n">Trimestre</span> <span class="o">==</span> <span class="n">i</span><span class="p">,</span>
                                   <span class="n">c</span><span class="p">(</span><span class="s1">'UF'</span><span class="p">,</span> <span class="s1">'Taxa_Desemprego'</span><span class="p">)]</span>
   <span class="n">dados.tmp</span> <span class="o">&lt;-</span> <span class="n">dados.tmp</span><span class="p">[</span><span class="n">order</span><span class="p">(</span><span class="n">dados.tmp</span><span class="o">$</span><span class="n">Taxa_Desemprego</span><span class="p">,</span> <span class="n">decreasing</span> <span class="o">=</span> <span class="n">T</span><span class="p">),]</span>
-  <span class="c1"># Cria o título do plot</span>
-  <span class="n">title</span> <span class="o">&lt;-</span> <span class="n">paste</span><span class="p">(</span><span class="s2">"Taxa de Desemprego 2015:"</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s2">" "</span><span class="p">)</span>
-  <span class="c1"># Gera o gráfico de barras</span>
-  <span class="n">barplot</span><span class="p">(</span><span class="n">dados.tmp</span><span class="o">$</span><span class="n">Taxa_Desemprego</span><span class="p">,</span> <span class="n">names.arg</span> <span class="o">=</span> <span class="n">dados.tmp</span><span class="o">$</span><span class="n">UF</span><span class="p">,</span>
+  <span class="c1"># Cria o título do plot
+</span>  <span class="n">title</span> <span class="o">&lt;-</span> <span class="n">paste</span><span class="p">(</span><span class="s2">"Taxa de Desemprego 2015:"</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s2">" "</span><span class="p">)</span>
+  <span class="c1"># Gera o gráfico de barras
+</span>  <span class="n">barplot</span><span class="p">(</span><span class="n">dados.tmp</span><span class="o">$</span><span class="n">Taxa_Desemprego</span><span class="p">,</span> <span class="n">names.arg</span> <span class="o">=</span> <span class="n">dados.tmp</span><span class="o">$</span><span class="n">UF</span><span class="p">,</span>
           <span class="n">col</span> <span class="o">=</span> <span class="s2">"dodgerblue"</span><span class="p">,</span> <span class="n">border</span> <span class="o">=</span> <span class="n">NA</span><span class="p">,</span> <span class="n">main</span> <span class="o">=</span> <span class="n">title</span><span class="p">,</span>
           <span class="n">ylab</span><span class="o">=</span><span class="s2">"%"</span><span class="p">)</span>
 <span class="p">}</span></code></pre></div>
@@ -282,10 +282,10 @@
 
 <p>Para exemplificar o uso do if e else, vamos continuar com o exemplo anterior, mas desta vez queremos que as barras para o trimestre <code>out-nov-dez</code> sejam vermelhas. Dessa forma, usaremos os controles if e else. A ideia é realizar um teste sobre <code>i</code> que assume um valor do vetor <code>trimestre</code>. Assim, se <code>i</code> for igual a <code>out-nov-dez</code>, a cor será ver vermelha (<code>col = red</code>), caso contrário utilizaremos o azul (<code>col = dodgerblue</code>).</p>
 
-<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">par</span><span class="p">(</span><span class="n">mfrow</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">),</span> <span class="c1"># O plot terá 2 linas e 2 colunas</span>
-    <span class="n">mar</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="m">10</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">2</span><span class="p">),</span> <span class="c1"># margens inferior, esquerda, superior, direita</span>
-    <span class="n">las</span> <span class="o">=</span> <span class="m">2</span><span class="p">)</span> <span class="c1"># rótulos perpendicular aos eixos</span>
-<span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="k">in</span> <span class="n">trimestre</span><span class="p">){</span>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">par</span><span class="p">(</span><span class="n">mfrow</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">),</span> <span class="c1"># O plot terá 2 linas e 2 colunas
+</span>    <span class="n">mar</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="m">10</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">2</span><span class="p">),</span> <span class="c1"># margens inferior, esquerda, superior, direita
+</span>    <span class="n">las</span> <span class="o">=</span> <span class="m">2</span><span class="p">)</span> <span class="c1"># rótulos perpendicular aos eixos
+</span><span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="k">in</span> <span class="n">trimestre</span><span class="p">){</span>
   <span class="n">dados.tmp</span> <span class="o">&lt;-</span> <span class="n">desemprego.uf.2015</span><span class="p">[</span><span class="n">desemprego.uf.2015</span><span class="o">$</span><span class="n">Trimestre</span> <span class="o">==</span> <span class="n">i</span><span class="p">,</span>
                                   <span class="n">c</span><span class="p">(</span><span class="s1">'UF'</span><span class="p">,</span> <span class="s1">'Taxa_Desemprego'</span><span class="p">)]</span>
   <span class="n">dados.tmp</span> <span class="o">&lt;-</span> <span class="n">dados.tmp</span><span class="p">[</span><span class="n">order</span><span class="p">(</span><span class="n">dados.tmp</span><span class="o">$</span><span class="n">Taxa_Desemprego</span><span class="p">,</span> <span class="n">decreasing</span> <span class="o">=</span> <span class="n">T</span><span class="p">),]</span>
@@ -305,10 +305,10 @@
 
 <p>Podemos reescrever o código acima com o comando <code>ifelse()</code> e obter o mesmo resultado (veja <code>?ifelse()</code>). Para isso, iremos usar o comando <code>ifelse()</code> no argumento <code>col</code>. O primeiro argumento dessa função é o teste que você deseja realizar (saber se o trimestre é ou não é igual a <code>out-nov-dez</code>), o segundo é o valor desejado caso seja verdade e o último é o valor a ser retornado caso a condição não seja satisfeita.</p>
 
-<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">par</span><span class="p">(</span><span class="n">mfrow</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">),</span> <span class="c1"># O plot terá 2 linas e 2 colunas</span>
-    <span class="n">mar</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="m">10</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">2</span><span class="p">),</span> <span class="c1"># margens inferior, esquerda, superior, direita</span>
-    <span class="n">las</span> <span class="o">=</span> <span class="m">2</span><span class="p">)</span> <span class="c1"># rótulos perpendicular aos eixos</span>
-<span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="k">in</span> <span class="n">trimestre</span><span class="p">){</span>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">par</span><span class="p">(</span><span class="n">mfrow</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">),</span> <span class="c1"># O plot terá 2 linas e 2 colunas
+</span>    <span class="n">mar</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="m">10</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">2</span><span class="p">),</span> <span class="c1"># margens inferior, esquerda, superior, direita
+</span>    <span class="n">las</span> <span class="o">=</span> <span class="m">2</span><span class="p">)</span> <span class="c1"># rótulos perpendicular aos eixos
+</span><span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="k">in</span> <span class="n">trimestre</span><span class="p">){</span>
   <span class="n">dados.tmp</span> <span class="o">&lt;-</span> <span class="n">desemprego.uf.2015</span><span class="p">[</span><span class="n">desemprego.uf.2015</span><span class="o">$</span><span class="n">Trimestre</span> <span class="o">==</span> <span class="n">i</span><span class="p">,</span>
                                   <span class="n">c</span><span class="p">(</span><span class="s1">'UF'</span><span class="p">,</span> <span class="s1">'Taxa_Desemprego'</span><span class="p">)]</span>
   <span class="n">dados.tmp</span> <span class="o">&lt;-</span> <span class="n">dados.tmp</span><span class="p">[</span><span class="n">order</span><span class="p">(</span><span class="n">dados.tmp</span><span class="o">$</span><span class="n">Taxa_Desemprego</span><span class="p">,</span> <span class="n">decreasing</span> <span class="o">=</span> <span class="n">T</span><span class="p">),]</span>
@@ -370,8 +370,8 @@
   <span class="n">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
   <span class="n">i</span> <span class="o">&lt;-</span> <span class="n">i</span> <span class="o">+</span> <span class="m">1</span>
   <span class="k">if</span><span class="p">(</span><span class="n">i</span> <span class="o">&gt;</span> <span class="m">6</span><span class="p">){</span>
-    <span class="k">break</span> <span class="c1"># Se a condição é satisfeita, encerra o loop.</span>
-  <span class="p">}</span>
+    <span class="k">break</span> <span class="c1"># Se a condição é satisfeita, encerra o loop.
+</span>  <span class="p">}</span>
 <span class="p">}</span></code></pre></div>
 
 <div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 1
@@ -422,6 +422,18 @@
   <li><a href="http://datascienceplus.com/how-to-write-the-loop-in-r/">How to write the first for loop in R</a></li>
   <li><a href="http://rforpublichealth.blogspot.com.br/2013/01/for-loops-and-how-to-avoid-them.html">For loops (and how to avoid them)</a></li>
   <li><a href="http://stackoverflow.com/questions/2908822/speed-up-the-loop-operation-in-r">Speed up the loop operation in R</a></li>
+</ul>
+
+<h2 id="demais-posts-da-sequncia">Demais posts da sequência:</h2>
+
+<ul>
+  <li><a href="/blog/2016/03/23/kit-de-sobrevivencia-em-r-parte-1">Kit de sobrevivência em R - Parte 1: Visão Geral e Instalação</a></li>
+  <li><a href="/blog/2016/04/03/kit-de-sobrevivencia-em-r-parte-2">Kit de sobrevivência em R - Parte 2: Operações, Variáveis e Funções</a></li>
+  <li><a href="/blog/2016/04/03/kit-de-sobrevivencia-em-r-parte-3">Kit de sobrevivência em R - Parte 3: Pacotes</a></li>
+  <li><a href="/blog/2016/04/12/kit-de-sobrevivencia-em-r-parte-4">Kit de sobrevivência em R - Parte 4: Carregando Dados</a></li>
+  <li><a href="/blog/2016/04/21/kit-de-sobrevivencia-em-r-parte-5">Kit de sobrevivência em R - Parte 5: Tipos de Dados e Transformações</a></li>
+  <li><a href="/blog/2016/05/01/kit-de-sobrevivencia-em-r-parte-6">Kit de sobrevivência em R - Parte 6: Estruturas de Controle</a></li>
+  <li><a href="/blog/2016/05/09/kit-de-sobrevivencia-em-r-parte-7">Kit de sobrevivência em R - Parte 7: Avançando e Aprofundando</a></li>
 </ul>
 </div>
 

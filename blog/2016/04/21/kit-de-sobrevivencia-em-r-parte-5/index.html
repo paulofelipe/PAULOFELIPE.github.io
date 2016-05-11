@@ -301,17 +301,17 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
 
 <p>As dimensões são separadas por vírgulas. Por exemplo, no caso do data frame, como existem duas dimensões (linhas e colunas) será preciso dizer em qual nós estamos interessados. Por exemplo, teste os seguintes comandos:</p>
 
-<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Selecionar as 5 primeiras linhas</span>
-<span class="n">dados</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">,</span> <span class="p">]</span>
-<span class="c1"># Selecionar as 5 primeiras linhas e as duas primeiras colunas</span>
-<span class="n">dados</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">,</span> <span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">]</span>
-<span class="c1"># Selecionar todas as linhas e as duas primeiras colunas</span>
-<span class="n">dados</span><span class="p">[,</span> <span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">]</span></code></pre></div>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Selecionar as 5 primeiras linhas
+</span><span class="n">dados</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">,</span> <span class="p">]</span>
+<span class="c1"># Selecionar as 5 primeiras linhas e as duas primeiras colunas
+</span><span class="n">dados</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">,</span> <span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">]</span>
+<span class="c1"># Selecionar todas as linhas e as duas primeiras colunas
+</span><span class="n">dados</span><span class="p">[,</span> <span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">]</span></code></pre></div>
 
 <p>Apesar de ter sido usado apenas números, você pode usar condições e nomes das colunas. Tente o seguinte:</p>
 
-<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Selecionar as 5 primeiras linhas e a coluna UF e Taxa_Desemprego</span>
-<span class="n">dados</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">,</span> <span class="n">c</span><span class="p">(</span><span class="s2">"UF"</span><span class="p">,</span> <span class="s2">"Taxa_Desemprego"</span><span class="p">)]</span></code></pre></div>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Selecionar as 5 primeiras linhas e a coluna UF e Taxa_Desemprego
+</span><span class="n">dados</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">,</span> <span class="n">c</span><span class="p">(</span><span class="s2">"UF"</span><span class="p">,</span> <span class="s2">"Taxa_Desemprego"</span><span class="p">)]</span></code></pre></div>
 
 <p>Nesse caso usamos um vetor <code>c()</code> para informar a listagem de nomes de colunas. No próximo post aprofundaremos mais no uso das filtragens de linha e coluna dentro do data frame.</p>
 
@@ -489,6 +489,17 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
   <li><a href="http://www.computerworld.com/article/2486425/business-intelligence/business-intelligence-4-data-wrangling-tasks-in-r-for-advanced-beginners.html">4 data wrangling tasks in R for advanced beginners</a></li>
 </ul>
 
+<h2 id="demais-posts-da-sequncia">Demais posts da sequência:</h2>
+
+<ul>
+  <li><a href="/blog/2016/03/23/kit-de-sobrevivencia-em-r-parte-1">Kit de sobrevivência em R - Parte 1: Visão Geral e Instalação</a></li>
+  <li><a href="/blog/2016/04/03/kit-de-sobrevivencia-em-r-parte-2">Kit de sobrevivência em R - Parte 2: Operações, Variáveis e Funções</a></li>
+  <li><a href="/blog/2016/04/03/kit-de-sobrevivencia-em-r-parte-3">Kit de sobrevivência em R - Parte 3: Pacotes</a></li>
+  <li><a href="/blog/2016/04/12/kit-de-sobrevivencia-em-r-parte-4">Kit de sobrevivência em R - Parte 4: Carregando Dados</a></li>
+  <li><a href="/blog/2016/04/21/kit-de-sobrevivencia-em-r-parte-5">Kit de sobrevivência em R - Parte 5: Tipos de Dados e Transformações</a></li>
+  <li><a href="/blog/2016/05/01/kit-de-sobrevivencia-em-r-parte-6">Kit de sobrevivência em R - Parte 6: Estruturas de Controle</a></li>
+  <li><a href="/blog/2016/05/09/kit-de-sobrevivencia-em-r-parte-7">Kit de sobrevivência em R - Parte 7: Avançando e Aprofundando</a></li>
+</ul>
 </div>
 
 
