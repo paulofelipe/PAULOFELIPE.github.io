@@ -1,0 +1,52 @@
+---
+layout: post
+title: "Tudo sobre Joins (merge) em R"
+date: 2016-05-12 21:00:00 -0300
+comments: true
+categories: [r, intermediario]
+published: true
+---
+
+Nessa sequência de posts aprenderemos tudo sobre Joins (merges) em R, abordando questões teóricas e práticas e exemplificando com as 3 formas mais comuns: R base, pacote dplyr e pacote data table. Após ler esse post, você vai saber o que é, para que serve e como usar os diversos tipo de join (inner, outer, cross, anti e self), bem como conhecer o conceito de natural, equi e theta join
+
+<!-- More -->
+
+Join é um conceito bastante comum para quem já trabalha com bancos de dados (principalmente SQL). Porém, para quem está se desenvolvendo em Análise de Dados sem um background em programção de sistemas, talvez esse conceito não seja básico.
+
+## Afinal, o que é Join (ou merge)? 
+
+Nada mais é do que juntar dois conjuntos de dados por meio de um ou mais campos em comum.
+Esses campos em comum são geralmente chamados de chaves e para que o join aconteça ele deve estar presente nos dois conjuntos de dados. Por exemplo: (**PENSAR EM UM EXEMPLO SIMPLES E INTUITIVO**)
+
+Existem vários tipos de joins, dos mais simples aos mais complexos, cada um com sua utilidade e momento certo de uso. Além disso existem várias questões que devem ser observadas no uso de joins, como a granularidade dos dados e ocorrência das amostras.
+
+## Por que usar joins?
+
+Se você é novo no mundo da manipulação de dados, talvez já tenha se perguntado: "De onde vem essa necessidade de usar joins? Por que insistem em usar tantos códigos e separar os dados uns dos outros em tabelas e arquivos diferentes? Por que não simplificar as coisas?". 
+
+Pois saiba que o uso dos joins é uma consequência direta de uma boa prática imposta pelos bancos de dados relacionais: a normalização. Normalização são "regras" para estrutruar seus dados de forma que eles ocupem o menor espaço possível e fiquem bastante consistentes na hora de inserir, alterar ou excluir dados do seu conjunto de dados. No entanto, essas regras adicionam complexidade à estrutura dos dados, e graças à essa complexidade estrutural que surge a necessidade dos joins: juntar dados separados num lugar só.
+
+Em um conjunto de dados normalizado (praticamente TODOS originados de sistemas), existe o conceito de chave: um código que representa uma ocorrência. Um exemplo de chave intuitiva seria o CPF, o CNPJ, a matrícula da faculdade, o título de eleitor, ou seja, números que representam algo de forma única e inconfundível. 
+
+Existem vários tipos de chaves (chave natural, surrogate, composta, chave estrageira, etc...), mas não vamos entrar nesse nível de detalhe, o importante aqui é delinear bem o conceito de campo chave. Para aprofundar sobre tipos de chaves, sugiro [essa leitura](LINK).
+
+Vamos aos joins!
+
+## Inner join (ou apenas join)
+
+Sem mais delonga, montamos uma pequena base de dados para fins didáticos e podermos ver na prática o resultado de cada join!
+
+codigo <- 1:10
+nome <- c('Renato', 'Miguel', 'Paulo', 'Patrícia', 'Inês', 'Saulo', 'Diego', 'Maria', 'Jose', 'Julia')
+idade <- c(30, 31, 29, 30, 25, 30, 30, 35, 24, 31)
+dados <- data.frame(codigo, nome, idade)
+
+
+JOIN (OU INNER JOIN)
+
+O join mais usado e o mais básico de todos é o inner join, ou simplesmente join.
+
+## Referências
+
+* []()
+
