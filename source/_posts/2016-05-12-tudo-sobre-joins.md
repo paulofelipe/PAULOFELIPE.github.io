@@ -11,7 +11,7 @@ Nessa sequência de posts aprenderemos tudo sobre Joins (merges) em R, abordando
 
 <!-- More -->
 
-Join é um conceito bastante comum para quem já trabalha com bancos de dados (principalmente com SQL). Porém, para quem está se desenvolvendo em Análise de Dados sem um background em programção de sistemas, talvez esse conceito não seja básico.
+Join é um conceito bastante comum para quem já trabalha com bancos de dados (principalmente com SQL). Porém, para quem está se desenvolvendo em Análise de Dados sem um background em programação de sistemas, talvez esse conceito não seja básico.
 
 ## Afinal, o que é Join (ou merge)? 
 
@@ -23,13 +23,13 @@ Existem vários tipos de joins, dos mais simples aos mais complexos, cada um com
 
 Se você é novo no mundo da manipulação de dados, talvez já tenha se perguntado: "De onde vem essa necessidade de usar joins? Por que insistem em usar tantos códigos e separar os dados uns dos outros em tabelas e arquivos diferentes? Por que não simplificar as coisas?". 
 
-Pois saiba que o uso dos joins é uma consequência direta de uma boa prática imposta pelos bancos de dados relacionais: a normalização. Normalização são "regras" para estrutruar seus dados de forma que eles ocupem o menor espaço possível e fiquem bastante consistentes na hora de inserir, alterar ou excluir dados do seu conjunto de dados. 
+Pois saiba que o uso dos joins é uma consequência direta de uma boa prática imposta pelos bancos de dados relacionais: a normalização. Normalização são "regras" para estruturar seus dados de forma que eles ocupem o menor espaço possível e fiquem bastante consistentes na hora de inserir, alterar ou excluir dados do seu conjunto de dados. 
 
 No entanto, essas regras adicionam complexidade à estrutura dos dados, e graças à essa complexidade estrutural que surge a necessidade dos joins: juntar dados separados num lugar só.
 
 Em um conjunto de dados normalizado (praticamente TODOS originados de sistemas), existe o conceito de chave: um código que representa uma ocorrência de forma única e inconfundível. Exemplos intuitivos de chave seriam o CPF, o CNPJ, código de um produto, o título de eleitor, etc...
 
-Existem vários tipos de chaves (chave natural, surrogate, chave estrageira, etc...), mas não vamos entrar nesse nível de detalhe. Para aprofundar mais sobre isso, sugiro [essa leitura](LINK).
+Existem vários tipos de chaves (chave natural, surrogate, chave estrangeira, etc...), mas não vamos entrar nesse nível de detalhe. Para aprofundar mais sobre isso, sugiro [essa leitura](LINK).
 
 Apenas mais uma observação: Os termos e conceitos usados a seguir são originários do mundo dos bancos de dados e SQL, mas, acredite, vale muito a pena conhecer os termos. Portanto, não se assuste! Os conceitos e a utilidade dos tipos de junções são mais importantes do que as nomenclaturas.
 
@@ -99,7 +99,7 @@ Se olharmos apenas `empregados`, cada ocorrência possui um código de cargo que
 
 Para calcular a média por UF, precisaremos juntar esses dois conjuntos. Nesse caso, faremos isso usando o *INNER JOIN*. 
 
-Esse tipo de join cria um data frame com todos os campos de ambos conjuntos, mas  retornando somente as ocorrências (linhas) que poussuem chaves iguais. Nossa chave é o campo `id.cargo`. Veja:
+Esse tipo de join cria um data frame com todos os campos de ambos conjuntos, mas  retornando somente as ocorrências (linhas) que possuem chaves iguais. Nossa chave é o campo `id.cargo`. Veja:
 
 
 {% highlight r %}
@@ -260,7 +260,7 @@ controle
 
 Em `pacientes` temos uma lista de pessoas hospitalizadas com uma mesma doença e o resultado de seus exames. Em `controle` temos uma lista controlada de pessoas que participaram de um experimento tomando tipo A e tipo B de um remédio. 
 
-Você precisa montar um conjunto consolidado para avaliar o se houve impacto dos remédios nos exames dos pacientes hospitalizados, para isso, precisa comparar o exame dos que tomaram remédio e dos que não tomaram. Mas nesse caso queremos um join que preserve todos os registros dos `pacientes`, e queremos desprezar os registros de `controle` que não correspondem a paciêntes hospitalizados.
+Você precisa montar um conjunto consolidado para avaliar o se houve impacto dos remédios nos exames dos pacientes hospitalizados, para isso, precisa comparar o exame dos que tomaram remédio e dos que não tomaram. Mas nesse caso queremos um join que preserve todos os registros dos `pacientes`, e queremos desprezar os registros de `controle` que não correspondem a pacientes hospitalizados.
 
 ### Left outer join (Left join)
 
@@ -415,9 +415,9 @@ valor <- c(983125, 71983, 61328, 51939, 10928810, 979192, 6019278, 352918, 17826
 ## 12       Z  1620129
 {% endhighlight %}
 
-Você recebeu dois conjuntos de dados que representam as importações e as exportações de produtos de um pequeno país. Sua missão é fazer uma simples análise de saldo, balaça e fluxo de comércio exterior desse país, e produzir alguns relatórios e gráficos comparando produto a produto.
+Você recebeu dois conjuntos de dados que representam as importações e as exportações de produtos de um pequeno país. Sua missão é fazer uma simples análise de saldo, balança e fluxo de comércio exterior desse país, e produzir alguns relatórios e gráficos comparando produto a produto.
 
-Sendo assim, não é interessante perder nenhum registro de nenhum dos dois data.frames, ambos devem ser prezervados para a comparação.
+Sendo assim, não é interessante perder nenhum registro de nenhum dos dois data.frames, ambos devem ser preservados para a comparação.
 
 O join da vez é o full join (nome do blog!). Vejamos:
 
@@ -478,7 +478,7 @@ Repare que em nosso exemplo há uma particularidade com as chaves. Quando não e
 
 O full join preserva todos os registros de ambos os conjuntos. Quando as chaves são iguais, retorna preenchido em todos os campos, quando não são iguais, retorna `NA` em qualquer um dos "lados".
 
-Em nosso exemplo, alguns produtos foram somente exportados e alguns foram somente imoprtandos, bem como alguns foram exportados e importados. Como precisamos da totalidade das exportações e importações, o full join atende bem nossa necessidade. Com esse resultado já poderíamos partir para analise do comércio desse país.
+Em nosso exemplo, alguns produtos foram somente exportados e alguns foram somente importados, bem como alguns foram exportados e importados. Como precisamos da totalidade das exportações e importações, o full join atende bem nossa necessidade. Com esse resultado já poderíamos partir para analise do comércio desse país.
 
 ## Próximos posts
 
@@ -492,6 +492,5 @@ Até o momento apresentamos junções baseadas na igualdade de joins (equi joins
 * [R for Excel users: Merging Data Frames](http://www.rforexcelusers.com/book/shape-your-data/merging-data-frames/)
 * [How to Use the merge() Function with Data Sets in R](http://www.dummies.com/how-to/content/how-to-use-the-merge-function-with-data-sets-in-r.html)
 * [R for Stat users: Join datasets](http://www.princeton.edu/~mattg/statar/join-and-reshape.html)
-
 
 
