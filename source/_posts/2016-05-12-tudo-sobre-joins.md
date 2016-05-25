@@ -131,12 +131,6 @@ Esse tipo de join cria um data frame com todos os campos de ambos conjuntos, mas
 
 
 {% highlight text %}
-## Joining by: "id.cargo"
-{% endhighlight %}
-
-
-
-{% highlight text %}
 ##    id.empregado nome.empregado idade uf id.cargo nome.cargo salario
 ## 1             1         Renato    30 MG        4   Analista   11000
 ## 2             2         Miguel    31 DF        4   Analista   11000
@@ -301,12 +295,6 @@ Portanto, usaremos o left outer join (ou simplesmente left join):
 
 
 {% highlight text %}
-## Joining by: "id.paciente"
-{% endhighlight %}
-
-
-
-{% highlight text %}
 ##   id.paciente nome.abreviado exame.a exame.b exame.c tipo.remedio
 ## 1           1          A.A.M     3.8  109.98       0            A
 ## 2           2        S.S.G.F     3.8  109.90       1         <NA>
@@ -351,12 +339,6 @@ O princípio é EXATAMENTE o mesmo do left join. A única diferença é a perman
 
 {% highlight r %}
 (right.join.dplyr <- right_join(controle, pacientes)) # left join com dplyr
-{% endhighlight %}
-
-
-
-{% highlight text %}
-## Joining by: "id.paciente"
 {% endhighlight %}
 
 
@@ -506,5 +488,10 @@ Até o momento apresentamos junções baseadas na igualdade de joins (equi joins
 
 ## Referências
 
-* []()
+* [Cheatsheet for dplyr join functions](http://stat545.com/bit001_dplyr-cheatsheet.html)
+* [R for Excel users: Merging Data Frames](http://www.rforexcelusers.com/book/shape-your-data/merging-data-frames/)
+* [How to Use the merge() Function with Data Sets in R](http://www.dummies.com/how-to/content/how-to-use-the-merge-function-with-data-sets-in-r.html)
+* [R for Stat users: Join datasets](http://www.princeton.edu/~mattg/statar/join-and-reshape.html)
+
+
 

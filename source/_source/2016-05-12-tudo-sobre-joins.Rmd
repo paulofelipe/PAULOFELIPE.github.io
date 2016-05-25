@@ -69,7 +69,7 @@ Para calcular a média por UF, precisaremos juntar esses dois conjuntos. Nesse c
 
 Esse tipo de join cria um data frame com todos os campos de ambos conjuntos, mas  retornando somente as ocorrências (linhas) que poussuem chaves iguais. Nossa chave é o campo `id.cargo`. Veja:
 
-```{r}
+```{r, message=FALSE}
 (merge.r.base <- merge(empregados, cargos)) # inner join com R Base
 (join.dplyr <- inner_join(empregados, cargos)) # inner join com Dplyr
 ```
@@ -80,7 +80,7 @@ Repare que nenhuma pessoa tem o cargo de `id.cargo` 7, então o cargo `Gestor` n
 
 Tanto o `merge()` do R base quanto o `inner_join()` do dplyr tentam descobrir as chaves em comum buscando campos com o mesmo nome. Mas vamos supor que os campos chave tivessem nomes diferentes (o que é bem comum!). Para simular, trocaremos o nome `id.cargo` em `cargos`:
 
-```{r}
+```{r, message=FALSE}
 names(cargos) <- c("cargo", "nome.cargo", "salario") 
 (merge.r.base <- merge(empregados, cargos, by.x = "id.cargo", by.y = "cargo")) # inner join com R Base, com nomes de chaves diferentes
 (join.dplyr <- inner_join(empregados, cargos, by = c("id.cargo" = "cargo"))) # inner join com Dplyr com nomes de chaves diferentes
@@ -127,7 +127,7 @@ Você precisa montar um conjunto consolidado para avaliar o se houve impacto dos
 
 Portanto, usaremos o left outer join (ou simplesmente left join):
 
-```{r}
+```{r, message=FALSE}
 (left.join.r.base <- merge(pacientes, controle, all.x = TRUE)) # left join com R base
 (left.join.dplyr <- left_join(pacientes, controle)) # left join com dplyr
 ```
@@ -140,7 +140,7 @@ Chama-se LEFT outer join pois o "conjunto da esquerda", `pacientes`, deve preval
 
 O princípio é EXATAMENTE o mesmo do left join. A única diferença é a permanência dos registros do conjunto da direita. Vamos simular o mesmo resultado, usando right join, apenas mudando os conjuntos de lugar na chamada da função:
 
-```{r, warning=FALSE}
+```{r, warning=FALSE, message=FALSE}
 (right.join.r.base <- merge(controle, pacientes, all.y = TRUE)) # left join com R base
 (right.join.dplyr <- right_join(controle, pacientes)) # left join com dplyr
 ```
@@ -155,7 +155,7 @@ Há situações em que é necessário preservar todos os registros de ambos os c
 
 * `exportacoes`, com produto e valor exportado 
 
-```{r, warning=FALSE}
+```{r, warning=FALSE, message=FALSE}
 produto <- c("A", "C", "D", "H", "I", "J", "K", "O", "Y")
 valor <- c(993801, 1829300, 833952, 775831, 59143, 1192920, 6938018, 2927318, 393178)
 (exportacoes <- data.frame(produto, valor))
@@ -163,7 +163,7 @@ valor <- c(993801, 1829300, 833952, 775831, 59143, 1192920, 6938018, 2927318, 39
 
 * `importacoes`, com produto e valor importado
 
-```{r, warning=FALSE}
+```{r, warning=FALSE, message=FALSE}
 produto <- c("B", "C", "D", "E", "F", "H", "I", "J", "M", "N", "O", "Z")
 valor <- c(983125, 71983, 61328, 51939, 10928810, 979192, 6019278, 352918, 178263, 64129229, 447009, 1620129)
 (importacoes <- data.frame(produto, valor))
@@ -175,7 +175,7 @@ Sendo assim, não é interessante perder nenhum registro de nenhum dos dois data
 
 O join da vez é o full join (nome do blog!). Vejamos:
 
-```{r, warning=FALSE}
+```{r, warning=FALSE, message=FALSE}
 (full.join.r.base <- merge(exportacoes, importacoes, by.x = "produto", by.y = "produto", all.x = TRUE, all.y = TRUE)) # left join com R base
 (full.join.dplyr <- full_join(exportacoes, importacoes, by = c("produto" = "produto"))) # left join com dplyr
 ```
@@ -194,5 +194,10 @@ Até o momento apresentamos junções baseadas na igualdade de joins (equi joins
 
 ## Referências
 
-* []()
+* [Cheatsheet for dplyr join functions](http://stat545.com/bit001_dplyr-cheatsheet.html)
+* [R for Excel users: Merging Data Frames](http://www.rforexcelusers.com/book/shape-your-data/merging-data-frames/)
+* [How to Use the merge() Function with Data Sets in R](http://www.dummies.com/how-to/content/how-to-use-the-merge-function-with-data-sets-in-r.html)
+* [R for Stat users: Join datasets](http://www.princeton.edu/~mattg/statar/join-and-reshape.html)
+
+
 
