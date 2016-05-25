@@ -4,7 +4,7 @@
   <title><![CDATA[r | Full Join]]></title>
   <link href="http://fulljoin.com.br/blog/categories/r/atom.xml" rel="self"/>
   <link href="http://fulljoin.com.br/"/>
-  <updated>2016-05-11T00:17:57-03:00</updated>
+  <updated>2016-05-24T23:10:40-03:00</updated>
   <id>http://fulljoin.com.br/</id>
   <author>
     <name><![CDATA[Full Join]]></name>
@@ -884,9 +884,9 @@ Repare, você escreveu bem menos e o resultado foi idêntico: “para cada <code
 
 <p>Partindo de um valor inicial, o processo de iteração é o seguinte:</p>
 
-<script type="math/tex; mode=display">x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)} = x_n + \frac{x_n^3 - 2x_n - 6}{3x_n^2 - 2}</script>
+<script type="math/tex; mode=display">x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)} = x_n - \frac{x_n^3 - 2x_n - 6}{3x_n^2 - 2}</script>
 
-<p>Use como critério de parada se $f(x_n) &lt; 0.000001$ e como valor inicial $x_0 = -10$.</p>
+<p>Use como critério de parada se $|f(x_n)| &lt; 0.000001$ e como valor inicial $x_0 = -10$.</p>
 
 <h2 id="referncias">Referências</h2>
 
