@@ -258,9 +258,9 @@ $$ f(x) = x^3 - 2x - 6 $$
 
 Partindo de um valor inicial, o processo de iteração é o seguinte:
 
-$$x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)} = x_n + \frac{x_n^3 - 2x_n - 6}{3x_n^2 - 2}$$
+$$x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)} = x_n - \frac{x_n^3 - 2x_n - 6}{3x_n^2 - 2}$$
 
-Use como critério de parada se $f(x_n) < 0.000001$ e como valor inicial $x_0 = -10$.
+Use como critério de parada se $\|f(x_n)\| < 0.000001$ e como valor inicial $x_0 = -10$.
 
 ```{r, echo = FALSE, eval = FALSE}
 stop <- 0.000001
