@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>http://fulljoin.com.br/blog/2016/05/12/tudo-sobre-joins/</loc>
+<lastmod>2016-05-12T21:00:00-03:00</lastmod>
+</url>
+<url>
 <loc>http://fulljoin.com.br/blog/2016/05/09/kit-de-sobrevivencia-em-r-parte-7/</loc>
 <lastmod>2016-05-09T20:04:00-03:00</lastmod>
 </url>
@@ -74,5 +78,8 @@
 </url>
 <url>
 <loc>http://fulljoin.com.br/blog/categories/introducao-ao-r/</loc>
+</url>
+<url>
+<loc>http://fulljoin.com.br/blog/categories/intermediario/</loc>
 </url>
 </urlset>

@@ -4,7 +4,7 @@
   <title><![CDATA[r | Full Join]]></title>
   <link href="http://fulljoin.com.br/blog/categories/r/atom.xml" rel="self"/>
   <link href="http://fulljoin.com.br/"/>
-  <updated>2016-05-24T23:10:40-03:00</updated>
+  <updated>2016-05-26T13:28:49-03:00</updated>
   <id>http://fulljoin.com.br/</id>
   <author>
     <name><![CDATA[Full Join]]></name>
@@ -12,6 +12,350 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Tudo sobre Joins (merge) em R]]></title>
+    <link href="http://fulljoin.com.br/blog/2016/05/12/tudo-sobre-joins/"/>
+    <updated>2016-05-12T21:00:00-03:00</updated>
+    <id>http://fulljoin.com.br/blog/2016/05/12/tudo-sobre-joins</id>
+    <content type="html"><![CDATA[<p>Nessa sequência de posts aprenderemos tudo sobre Joins (merges) em R, abordando questões teóricas e práticas, com exemplos usando R base e o pacote dplyr. Após ler esse post, você vai saber o que é, para que serve, quando e como usar diversos tipo de joins.</p>
+
+<!-- More -->
+
+<p>Join é um conceito bastante comum para quem já trabalha com bancos de dados (principalmente com SQL). Porém, para quem está se desenvolvendo em Análise de Dados sem um background em programação de sistemas, talvez esse conceito não seja básico.</p>
+
+<h2 id="afinal-o-que--join-ou-merge">Afinal, o que é Join (ou merge)?</h2>
+
+<p>Nada mais é do que juntar dois conjuntos de dados por meio de um ou mais campos em comum. Esses campos em comum são geralmente chamados de chaves.</p>
+
+<p>Existem vários tipos de joins, dos mais simples aos mais complexos, cada um com sua utilidade e momento certo de uso. Além disso existem várias questões que devem ser observadas no uso de joins, como a granularidade dos dados e ocorrência das amostras nos dois conjuntos de dados.</p>
+
+<h2 id="por-que-usar-joins">Por que usar joins?</h2>
+
+<p>Se você é novo no mundo da manipulação de dados, talvez já tenha se perguntado: “De onde vem essa necessidade de usar joins? Por que insistem em usar tantos códigos e separar os dados uns dos outros em tabelas e arquivos diferentes? Por que não simplificar as coisas?”.</p>
+
+<p>Pois saiba que o uso dos joins é uma consequência direta de uma boa prática imposta pelos bancos de dados relacionais: a normalização. Normalização são “regras” para estruturar seus dados de forma que eles ocupem o menor espaço possível e fiquem bastante consistentes na hora de inserir, alterar ou excluir dados.</p>
+
+<p>No entanto, essas regras adicionam complexidade à estrutura dos dados, e graças a essa complexidade estrutural que surge a necessidade dos joins: juntar dados separados num lugar só.</p>
+
+<p>Em um conjunto de dados normalizado (praticamente TODOS originados de sistemas), existe o conceito de chave: um código que representa uma ocorrência de forma única e inconfundível. Exemplos intuitivos de chave seriam o CPF, o CNPJ, código de um produto, o título de eleitor, etc…</p>
+
+<p>Existem vários tipos de chaves (chave natural, surrogate, chave estrangeira, etc…), mas não vamos entrar nesse nível de detalhe. Para aprofundar mais sobre isso, sugiro <a href="http://www.programmerinterview.com/index.php/database-sql/differences-between-primary-and-foreign-keys/">essa leitura</a>.</p>
+
+<p>Apenas mais uma observação: Os termos e conceitos usados a seguir são originários do mundo dos bancos de dados e SQL, mas, acredite, vale muito a pena conhecer os termos. Portanto, não se assuste! Os conceitos e a utilidade dos tipos de junções são mais importantes do que as nomenclaturas.</p>
+
+<blockquote>
+  <p>Dica: se você tem familiaridade com Excel, join nada mais é do que o famoso PROCV().</p>
+</blockquote>
+
+<h2 id="inner-join-ou-apenas-join">Inner join (ou apenas join)</h2>
+
+<p>Trata-se do join mais simples, mais básico e mais usado dentre todos os outros tipos. Vamos explicar com um exemplo bem simples. Primeiro, vamos montar o conjunto de dados e carregar o pacote <code>dplyr</code>:</p>
+
+<ul>
+  <li><code>empregados</code>, com id, nome, idade, uf e id de um cargo</li>
+</ul>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## Error in library(dplyr): there is no package called ‘dplyr’</code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">id.empregado</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="m">1</span><span class="o">:</span><span class="m">11</span>
+<span class="n">nome.empregado</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">c</span><span class="p">(</span><span class="err">‘</span><span class="n">Renato</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">Miguel</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">Paulo</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">Patr</span><span class="err">í</span><span class="n">cia</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">In</span><span class="err">ê</span><span class="n">s</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">Saulo</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">Diego</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">Maria</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">Jose</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">Julia</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">Tiago</span><span class="err">’</span><span class="p">)</span>
+<span class="n">idade</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">c</span><span class="p">(</span><span class="m">30</span><span class="p">,</span> <span class="m">31</span><span class="p">,</span> <span class="m">29</span><span class="p">,</span> <span class="m">30</span><span class="p">,</span> <span class="m">25</span><span class="p">,</span> <span class="m">30</span><span class="p">,</span> <span class="m">30</span><span class="p">,</span> <span class="m">35</span><span class="p">,</span> <span class="m">24</span><span class="p">,</span> <span class="m">31</span><span class="p">,</span> <span class="m">29</span><span class="p">)</span>
+<span class="n">uf</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">c</span><span class="p">(</span><span class="err">‘</span><span class="n">MG</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">DF</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">CE</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">DF</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">DF</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">DF</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">RJ</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">SP</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">RS</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">SC</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">BA</span><span class="err">’</span><span class="p">)</span>
+<span class="n">id.cargo</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">c</span><span class="p">(</span><span class="m">4</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">6</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">8</span><span class="p">)</span>
+<span class="p">(</span><span class="n">empregados</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">data.frame</span><span class="p">(</span><span class="n">id.empregado</span><span class="p">,</span> <span class="n">nome.empregado</span><span class="p">,</span> <span class="n">idade</span><span class="p">,</span> <span class="n">uf</span><span class="p">,</span> <span class="n">id.cargo</span><span class="p">))</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">##    id.empregado nome.empregado idade uf id.cargo
+## 1             1         Renato    30 MG        4
+## 2             2         Miguel    31 DF        4
+## 3             3          Paulo    29 CE        4
+## 4             4       Patrícia    30 DF        4
+## 5             5           Inês    25 DF        5
+## 6             6          Saulo    30 DF        4
+## 7             7          Diego    30 RJ        6
+## 8             8          Maria    35 SP        3
+## 9             9           Jose    24 RS        1
+## 10           10          Julia    31 SC        2
+## 11           11          Tiago    29 BA        8</code></pre></div></p>
+
+<ul>
+  <li><code>cargos</code>, com id, nome, e salário do cargo</li>
+</ul>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">id.cargo</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="m">1</span><span class="o">:</span><span class="m">7</span>
+<span class="n">nome.cargo</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">c</span><span class="p">(</span><span class="err">‘</span><span class="n">T</span><span class="err">é</span><span class="n">cnico</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">Assistente</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">Consultor</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">Analista</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">Auditor</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">Gerente</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">Gestor</span><span class="err">’</span><span class="p">)</span>
+<span class="n">salario</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">c</span><span class="p">(</span><span class="m">7000</span><span class="p">,</span> <span class="m">4000</span><span class="p">,</span> <span class="m">15000</span><span class="p">,</span> <span class="m">11000</span><span class="p">,</span> <span class="m">10000</span><span class="p">,</span> <span class="m">13000</span><span class="p">,</span> <span class="m">20000</span><span class="p">)</span>
+<span class="p">(</span><span class="n">cargos</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">data.frame</span><span class="p">(</span><span class="n">id.cargo</span><span class="p">,</span> <span class="n">nome.cargo</span><span class="p">,</span> <span class="n">salario</span><span class="p">))</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">##   id.cargo nome.cargo salario
+## 1        1    Técnico    7000
+## 2        2 Assistente    4000
+## 3        3  Consultor   15000
+## 4        4   Analista   11000
+## 5        5    Auditor   10000
+## 6        6    Gerente   13000
+## 7        7     Gestor   20000</code></pre></div></p>
+
+<p>Imagine que você recebeu essas dois conjuntos de dados será necessário calcular uma média salarial dos empregados por UF.</p>
+
+<p>Se olharmos apenas <code>empregados</code>, cada ocorrência possui um código de cargo que ocupa, mas não temos nem o nome nem o salário do cargo. Se olharmos apenas <code>cargos</code>, cada ocorrência possui código de cargo mas não informações de quem o ocupa.</p>
+
+<p>Para calcular a média por UF, precisaremos juntar esses dois conjuntos. Nesse caso, faremos isso usando o <em>INNER JOIN</em>.</p>
+
+<p>Esse tipo de join cria um data frame com todos os campos de ambos conjuntos, mas  retornando somente as ocorrências (linhas) que possuem chaves iguais. Nossa chave é o campo <code>id.cargo</code>. Veja:</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="p">(</span><span class="n">merge.r.base</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">merge</span><span class="p">(</span><span class="n">empregados</span><span class="p">,</span> <span class="n">cargos</span><span class="p">))</span> <span class="c1"># inner join com R Base</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">##    id.cargo id.empregado nome.empregado idade uf nome.cargo salario
+## 1         1            9           Jose    24 RS    Técnico    7000
+## 2         2           10          Julia    31 SC Assistente    4000
+## 3         3            8          Maria    35 SP  Consultor   15000
+## 4         4            1         Renato    30 MG   Analista   11000
+## 5         4            2         Miguel    31 DF   Analista   11000
+## 6         4            4       Patrícia    30 DF   Analista   11000
+## 7         4            6          Saulo    30 DF   Analista   11000
+## 8         4            3          Paulo    29 CE   Analista   11000
+## 9         5            5           Inês    25 DF    Auditor   10000
+## 10        6            7          Diego    30 RJ    Gerente   13000</code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="p">(</span><span class="n">join.dplyr</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">inner_join</span><span class="p">(</span><span class="n">empregados</span><span class="p">,</span> <span class="n">cargos</span><span class="p">))</span> <span class="c1"># inner join com Dplyr</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## Error in eval(expr, envir, enclos): não foi possível encontrar a função “inner_join”</code></pre></div></p>
+
+<blockquote>
+  <p>Dica: coloque parênteses entre as atribuições e o R mostrará o resultado dela imediatamente</p>
+</blockquote>
+
+<p>Repare que nenhuma pessoa tem o cargo de <code>id.cargo</code> 7, então o cargo <code>Gestor</code> não aparece no conjunto final já que não há chave igual. Repare também que a pessoa <code>Tiago</code> possui <code>id.cargo</code> 8, que não é igual a nenhum cargo, então ele também não aparece.</p>
+
+<p>Tanto o <code>merge()</code> do R base quanto o <code>inner_join()</code> do dplyr tentam descobrir as chaves em comum buscando campos com o mesmo nome. Mas vamos supor que os campos chave tivessem nomes diferentes (o que é bem comum!). Para simular, trocaremos o nome <code>id.cargo</code> em <code>cargos</code>:</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">names</span><span class="p">(</span><span class="n">cargos</span><span class="p">)</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">c</span><span class="p">(</span><span class="err">“</span><span class="n">cargo</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">nome.cargo</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">salario</span><span class="err">”</span><span class="p">)</span> 
+<span class="p">(</span><span class="n">merge.r.base</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">merge</span><span class="p">(</span><span class="n">empregados</span><span class="p">,</span> <span class="n">cargos</span><span class="p">,</span> <span class="n">by.x</span> <span class="o">=</span> <span class="err">“</span><span class="n">id.cargo</span><span class="err">”</span><span class="p">,</span> <span class="n">by.y</span> <span class="o">=</span> <span class="err">“</span><span class="n">cargo</span><span class="err">”</span><span class="p">))</span> <span class="c1"># inner join com R Base, com nomes de chaves diferentes</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">##    id.cargo id.empregado nome.empregado idade uf nome.cargo salario
+## 1         1            9           Jose    24 RS    Técnico    7000
+## 2         2           10          Julia    31 SC Assistente    4000
+## 3         3            8          Maria    35 SP  Consultor   15000
+## 4         4            1         Renato    30 MG   Analista   11000
+## 5         4            2         Miguel    31 DF   Analista   11000
+## 6         4            4       Patrícia    30 DF   Analista   11000
+## 7         4            6          Saulo    30 DF   Analista   11000
+## 8         4            3          Paulo    29 CE   Analista   11000
+## 9         5            5           Inês    25 DF    Auditor   10000
+## 10        6            7          Diego    30 RJ    Gerente   13000</code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="p">(</span><span class="n">join.dplyr</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">inner_join</span><span class="p">(</span><span class="n">empregados</span><span class="p">,</span> <span class="n">cargos</span><span class="p">,</span> <span class="n">by</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="err">“</span><span class="n">id.cargo</span><span class="err">”</span> <span class="o">=</span> <span class="err">“</span><span class="n">cargo</span><span class="err">”</span><span class="p">)))</span> <span class="c1"># inner join com Dplyr com nomes de chaves diferentes</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## Error in eval(expr, envir, enclos): não foi possível encontrar a função “inner_join”</code></pre></div></p>
+
+<p>No R base usamos <code>by.x</code> e <code>by.y</code> para especificar o nome do campo chave do primeiro e segundo data.frame. No <code>inner_join()</code> do dplyr usamos um vetor no formato <code>c("chave.x" = "chave.y")</code>.</p>
+
+<p>Resumindo, o inner join retorna todos os campos de ambos os data.frames, mas somente as linhas em que as chaves são iguais.</p>
+
+<h2 id="outer-join">Outer join</h2>
+
+<p>O inner join despreza os registros de ambos os data.frames onde as chaves não coincidem. Mas existem situações em que esse descarte de registro não é interessante. Nesses casos usamos Outer join.</p>
+
+<p>Existem 3 tipos básicos de outer join: full outer join (ou apenas full join), left outer join (ou só left join) e o right outer join (ou só right join).</p>
+
+<p>Vejamos o seguinte exemplo:</p>
+
+<ul>
+  <li><code>pacientes</code>, com id do paciente, nome abreviado, e resultados de exame A, B e C</li>
+</ul>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">id.paciente</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="m">1</span><span class="o">:</span><span class="m">9</span>
+<span class="n">nome.abreviado</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">c</span><span class="p">(</span><span class="err">“</span><span class="n">A.A.M</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">S.S.G.F</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">T.I.A</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">L.O.S.M</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">Y.Q.W</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">F.A</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">T.B.N</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">J.J.L</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">M.S.S</span><span class="err">”</span><span class="p">)</span>
+<span class="n">exame.a</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">c</span><span class="p">(</span><span class="m">3.8</span><span class="p">,</span> <span class="m">3.8</span><span class="p">,</span> <span class="m">3.9</span><span class="p">,</span> <span class="m">4.0</span><span class="p">,</span> <span class="m">4.4</span><span class="p">,</span> <span class="m">3.8</span><span class="p">,</span> <span class="m">3.7</span><span class="p">,</span> <span class="m">3.6</span><span class="p">,</span> <span class="m">4.0</span><span class="p">)</span>
+<span class="n">exame.b</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">c</span><span class="p">(</span><span class="m">109.98</span><span class="p">,</span> <span class="m">109.90</span><span class="p">,</span> <span class="m">109.89</span><span class="p">,</span> <span class="m">109.99</span><span class="p">,</span> <span class="m">110.01</span><span class="p">,</span> <span class="m">109.95</span><span class="p">,</span> <span class="m">109.98</span><span class="p">,</span> <span class="m">109.93</span><span class="p">,</span> <span class="m">110.00</span><span class="p">)</span>
+<span class="n">exame.c</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">)</span>
+<span class="n">pacientes</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">data.frame</span><span class="p">(</span><span class="n">id.paciente</span><span class="p">,</span> <span class="n">nome.abreviado</span><span class="p">,</span> <span class="n">exame.a</span><span class="p">,</span> <span class="n">exame.b</span><span class="p">,</span> <span class="n">exame.c</span><span class="p">)</span>
+<span class="n">pacientes</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">##   id.paciente nome.abreviado exame.a exame.b exame.c
+## 1           1          A.A.M     3.8  109.98       0
+## 2           2        S.S.G.F     3.8  109.90       1
+## 3           3          T.I.A     3.9  109.89       1
+## 4           4        L.O.S.M     4.0  109.99       0
+## 5           5          Y.Q.W     4.4  110.01       1
+## 6           6            F.A     3.8  109.95       1
+## 7           7          T.B.N     3.7  109.98       0
+## 8           8          J.J.L     3.6  109.93       0
+## 9           9          M.S.S     4.0  110.00       1</code></pre></div></p>
+
+<ul>
+  <li><code>controle</code>, com id do paciente, e o tipo de remédio que tomou</li>
+</ul>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">id.paciente</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">7</span><span class="p">,</span> <span class="m">8</span><span class="p">,</span> <span class="m">11</span><span class="p">,</span> <span class="m">15</span><span class="p">,</span> <span class="m">25</span><span class="p">)</span>
+<span class="n">tipo.remedio</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">c</span><span class="p">(</span><span class="err">“</span><span class="n">A</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">B</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">A</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">B</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">A</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">A</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">B</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">B</span><span class="err">”</span><span class="p">)</span>
+<span class="n">controle</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">data.frame</span><span class="p">(</span><span class="n">id.paciente</span><span class="p">,</span> <span class="n">tipo.remedio</span><span class="p">)</span>
+<span class="n">controle</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">##   id.paciente tipo.remedio
+## 1           1            A
+## 2           4            B
+## 3           5            A
+## 4           7            B
+## 5           8            A
+## 6          11            A
+## 7          15            B
+## 8          25            B</code></pre></div></p>
+
+<p>Em <code>pacientes</code> temos uma lista de pessoas hospitalizadas com uma mesma doença e o resultado de seus exames. Em <code>controle</code> temos uma lista controlada de pessoas que participaram de um experimento tomando tipo A e tipo B de um remédio.</p>
+
+<p>Você precisa montar um conjunto consolidado para avaliar o se houve impacto dos remédios nos exames dos pacientes hospitalizados, para isso, precisa comparar o exame dos que tomaram remédio e dos que não tomaram. Mas nesse caso queremos um join que preserve todos os registros dos <code>pacientes</code>, e queremos desprezar os registros de <code>controle</code> que não correspondem a pacientes hospitalizados.</p>
+
+<h3 id="left-outer-join-left-join">Left outer join (Left join)</h3>
+
+<p>Portanto, usaremos o left outer join (ou simplesmente left join):</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="p">(</span><span class="n">left.join.r.base</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">merge</span><span class="p">(</span><span class="n">pacientes</span><span class="p">,</span> <span class="n">controle</span><span class="p">,</span> <span class="n">all.x</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">))</span> <span class="c1"># left join com R base</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">##   id.paciente nome.abreviado exame.a exame.b exame.c tipo.remedio
+## 1           1          A.A.M     3.8  109.98       0            A
+## 2           2        S.S.G.F     3.8  109.90       1         &lt;na&gt;
+## 3           3          T.I.A     3.9  109.89       1         &lt;na&gt;
+## 4           4        L.O.S.M     4.0  109.99       0            B
+## 5           5          Y.Q.W     4.4  110.01       1            A
+## 6           6            F.A     3.8  109.95       1         &lt;na&gt;
+## 7           7          T.B.N     3.7  109.98       0            B
+## 8           8          J.J.L     3.6  109.93       0            A
+## 9           9          M.S.S     4.0  110.00       1         &lt;na&gt;</code></pre></div></na></na></na></na></p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="p">(</span><span class="n">left.join.dplyr</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">left_join</span><span class="p">(</span><span class="n">pacientes</span><span class="p">,</span> <span class="n">controle</span><span class="p">))</span> <span class="c1"># left join com dplyr</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## Error in eval(expr, envir, enclos): não foi possível encontrar a função “left_join”</code></pre></div></p>
+
+<p>Repare que nos resultados temos todos os campos de <code>pacientes</code> e <code>controle</code> e temos também todos registros de <code>pacientes</code>. Quando não há ocorrência da chave <code>id.paciente</code> em <code>controle</code>, é colocado um <code>NA</code> no campo.</p>
+
+<p>Chama-se LEFT outer join pois o “conjunto da esquerda”, <code>pacientes</code>, deve prevalecer além da interseção. Ou seja, retorna todos os registros onde as chaves são iguais com todos os campos preenchidos dos dois conjuntos, mas também retorna os registros onde as chaves não são iguais sem valor para os campos do conjunto à direita.</p>
+
+<h3 id="right-outer-join-right-join">Right outer join (Right join)</h3>
+
+<p>O princípio é EXATAMENTE o mesmo do left join. A única diferença é a permanência dos registros do conjunto da direita. Vamos simular o mesmo resultado, usando right join, apenas mudando os conjuntos de lugar na chamada da função:</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="p">(</span><span class="n">right.join.r.base</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">merge</span><span class="p">(</span><span class="n">controle</span><span class="p">,</span> <span class="n">pacientes</span><span class="p">,</span> <span class="n">all.y</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">))</span> <span class="c1"># left join com R base</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">##   id.paciente tipo.remedio nome.abreviado exame.a exame.b exame.c
+## 1           1            A          A.A.M     3.8  109.98       0
+## 2           2         &lt;na&gt;        S.S.G.F     3.8  109.90       1
+## 3           3         &lt;na&gt;          T.I.A     3.9  109.89       1
+## 4           4            B        L.O.S.M     4.0  109.99       0
+## 5           5            A          Y.Q.W     4.4  110.01       1
+## 6           6         &lt;na&gt;            F.A     3.8  109.95       1
+## 7           7            B          T.B.N     3.7  109.98       0
+## 8           8            A          J.J.L     3.6  109.93       0
+## 9           9         &lt;na&gt;          M.S.S     4.0  110.00       1</code></pre></div></na></na></na></na></p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="p">(</span><span class="n">right.join.dplyr</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">right_join</span><span class="p">(</span><span class="n">controle</span><span class="p">,</span> <span class="n">pacientes</span><span class="p">))</span> <span class="c1"># left join com dplyr</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## Error in eval(expr, envir, enclos): não foi possível encontrar a função “right_join”</code></pre></div></p>
+
+<p>Temos o mesmo conteúdo, apenas mudando a ordem dos data.frames e ajustando alguns parâmetros na função.</p>
+
+<p>Tanto o left quanto o right join são usados pra preservar todos os registros de apenas “um lado” do join, trazendo os demais campos do outro conjunto como vazio, e preenchido apenas os registros em que as chaves forem iguais.</p>
+
+<h3 id="full-outer-join-full-join">Full outer join (Full join)</h3>
+
+<p>Há situações em que é necessário preservar todos os registros de ambos os conjuntos de dados. Vamos testar o seguinte exemplo:</p>
+
+<ul>
+  <li><code>exportacoes</code>, com produto e valor exportado</li>
+</ul>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">produto</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">c</span><span class="p">(</span><span class="err">“</span><span class="n">A</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">C</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">D</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">H</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">I</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">J</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">K</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">O</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">Y</span><span class="err">”</span><span class="p">)</span>
+<span class="n">valor</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">c</span><span class="p">(</span><span class="m">993801</span><span class="p">,</span> <span class="m">1829300</span><span class="p">,</span> <span class="m">833952</span><span class="p">,</span> <span class="m">775831</span><span class="p">,</span> <span class="m">59143</span><span class="p">,</span> <span class="m">1192920</span><span class="p">,</span> <span class="m">6938018</span><span class="p">,</span> <span class="m">2927318</span><span class="p">,</span> <span class="m">393178</span><span class="p">)</span>
+<span class="p">(</span><span class="n">exportacoes</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">data.frame</span><span class="p">(</span><span class="n">produto</span><span class="p">,</span> <span class="n">valor</span><span class="p">))</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">##   produto   valor
+## 1       A  993801
+## 2       C 1829300
+## 3       D  833952
+## 4       H  775831
+## 5       I   59143
+## 6       J 1192920
+## 7       K 6938018
+## 8       O 2927318
+## 9       Y  393178</code></pre></div></p>
+
+<ul>
+  <li><code>importacoes</code>, com produto e valor importado</li>
+</ul>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">produto</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">c</span><span class="p">(</span><span class="err">“</span><span class="n">B</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">C</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">D</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">E</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">F</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">H</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">I</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">J</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">M</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">N</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">O</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">Z</span><span class="err">”</span><span class="p">)</span>
+<span class="n">valor</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">c</span><span class="p">(</span><span class="m">983125</span><span class="p">,</span> <span class="m">71983</span><span class="p">,</span> <span class="m">61328</span><span class="p">,</span> <span class="m">51939</span><span class="p">,</span> <span class="m">10928810</span><span class="p">,</span> <span class="m">979192</span><span class="p">,</span> <span class="m">6019278</span><span class="p">,</span> <span class="m">352918</span><span class="p">,</span> <span class="m">178263</span><span class="p">,</span> <span class="m">64129229</span><span class="p">,</span> <span class="m">447009</span><span class="p">,</span> <span class="m">1620129</span><span class="p">)</span>
+<span class="p">(</span><span class="n">importacoes</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">data.frame</span><span class="p">(</span><span class="n">produto</span><span class="p">,</span> <span class="n">valor</span><span class="p">))</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">##    produto    valor
+## 1        B   983125
+## 2        C    71983
+## 3        D    61328
+## 4        E    51939
+## 5        F 10928810
+## 6        H   979192
+## 7        I  6019278
+## 8        J   352918
+## 9        M   178263
+## 10       N 64129229
+## 11       O   447009
+## 12       Z  1620129</code></pre></div></p>
+
+<p>Você recebeu dois conjuntos de dados que representam as importações e as exportações de produtos de um pequeno país. Sua missão é fazer uma simples análise de saldo, balança e fluxo de comércio exterior desse país, e produzir alguns relatórios e gráficos comparando produto a produto.</p>
+
+<p>Sendo assim, não é interessante perder nenhum registro de nenhum dos dois data.frames, ambos devem ser preservados para a comparação.</p>
+
+<p>O join da vez é o full join (nome do blog!). Vejamos:</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="p">(</span><span class="n">full.join.r.base</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">merge</span><span class="p">(</span><span class="n">exportacoes</span><span class="p">,</span> <span class="n">importacoes</span><span class="p">,</span> <span class="n">by.x</span> <span class="o">=</span> <span class="err">“</span><span class="n">produto</span><span class="err">”</span><span class="p">,</span> <span class="n">by.y</span> <span class="o">=</span> <span class="err">“</span><span class="n">produto</span><span class="err">”</span><span class="p">,</span> <span class="n">all.x</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">,</span> <span class="n">all.y</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">))</span> <span class="c1"># left join com R base</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">##    produto valor.x  valor.y
+## 1        A  993801       NA
+## 2        C 1829300    71983
+## 3        D  833952    61328
+## 4        H  775831   979192
+## 5        I   59143  6019278
+## 6        J 1192920   352918
+## 7        K 6938018       NA
+## 8        O 2927318   447009
+## 9        Y  393178       NA
+## 10       B      NA   983125
+## 11       E      NA    51939
+## 12       F      NA 10928810
+## 13       M      NA   178263
+## 14       N      NA 64129229
+## 15       Z      NA  1620129</code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="p">(</span><span class="n">full.join.dplyr</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">full_join</span><span class="p">(</span><span class="n">exportacoes</span><span class="p">,</span> <span class="n">importacoes</span><span class="p">,</span> <span class="n">by</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="err">“</span><span class="n">produto</span><span class="err">”</span> <span class="o">=</span> <span class="err">“</span><span class="n">produto</span><span class="err">”</span><span class="p">)))</span> <span class="c1"># left join com dplyr</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## Error in eval(expr, envir, enclos): não foi possível encontrar a função “full_join”</code></pre></div></p>
+
+<p>Repare que em nosso exemplo há uma particularidade com as chaves. Quando não explicitamos na função os nomes das chaves em <code>by</code>, o join é feito pelos campos com nomes iguais. Mas nesse caso, ambos os campos <code>produto</code> e <code>valor</code> têm nomes iguais nos dois data.frames. Precisamos então explicitar o que queremos que seja chave: apenas <code>produto</code>.</p>
+
+<p>O full join preserva todos os registros de ambos os conjuntos. Quando as chaves são iguais, retorna preenchido em todos os campos, quando não são iguais, retorna <code>NA</code> em qualquer um dos “lados”.</p>
+
+<p>Em nosso exemplo, alguns produtos foram somente exportados e alguns foram somente importados, bem como alguns foram exportados e importados. Como precisamos da totalidade das exportações e importações, o full join atende bem nossa necessidade. Com esse resultado já poderíamos partir para análise do comércio desse país.</p>
+
+<h2 id="prximos-posts">Próximos posts</h2>
+
+<p>Em breve faremos mais posts sobre joins, explicando alguns outros tipos menos comuns, como CROSS JOIN, SEMI JOIN, ANTI JOIN, SELF JOIN.</p>
+
+<p>Até o momento apresentamos junções baseadas na igualdade de joins (equi joins), mas nos próximos posts sobre o assunto mostraremos exemplos onde a comparação das chaves não se da por relação de igualdade (theta join).</p>
+
+<h2 id="referncias">Referências</h2>
+
+<ul>
+  <li><a href="http://stat545.com/bit001_dplyr-cheatsheet.html">Cheatsheet for dplyr join functions</a></li>
+  <li><a href="http://www.rforexcelusers.com/book/shape-your-data/merging-data-frames/">R for Excel users: Merging Data Frames</a></li>
+  <li><a href="http://www.dummies.com/how-to/content/how-to-use-the-merge-function-with-data-sets-in-r.html">How to Use the merge() Function with Data Sets in R</a></li>
+  <li><a href="http://www.princeton.edu/~mattg/statar/join-and-reshape.html">R for Stat users: Join datasets</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Kit de sobrevivência em R - Parte 7: Avançando e Aprofundando]]></title>
@@ -1486,116 +1830,6 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
   <li><a href="https://cran.r-project.org/doc/manuals/r-release/R-data.pdf">R Data Import/Export</a></li>
   <li><a href="http://blog.revolutionanalytics.com/2015/04/new-packages-for-reading-data-into-r-fast.html">New packages for reading data into R — fast</a></li>
   <li><a href="https://www.datacamp.com/community/tutorials/r-tutorial-read-excel-into-r">Reading and Importing Files - DataCamp</a></li>
-</ul>
-
-<h2 id="demais-posts-da-sequncia">Demais posts da sequência:</h2>
-
-<ul>
-  <li><a href="/blog/2016/03/23/kit-de-sobrevivencia-em-r-parte-1">Kit de sobrevivência em R - Parte 1: Visão Geral e Instalação</a></li>
-  <li><a href="/blog/2016/04/03/kit-de-sobrevivencia-em-r-parte-2">Kit de sobrevivência em R - Parte 2: Operações, Variáveis e Funções</a></li>
-  <li><a href="/blog/2016/04/03/kit-de-sobrevivencia-em-r-parte-3">Kit de sobrevivência em R - Parte 3: Pacotes</a></li>
-  <li><a href="/blog/2016/04/12/kit-de-sobrevivencia-em-r-parte-4">Kit de sobrevivência em R - Parte 4: Carregando Dados</a></li>
-  <li><a href="/blog/2016/04/21/kit-de-sobrevivencia-em-r-parte-5">Kit de sobrevivência em R - Parte 5: Tipos de Dados e Transformações</a></li>
-  <li><a href="/blog/2016/05/01/kit-de-sobrevivencia-em-r-parte-6">Kit de sobrevivência em R - Parte 6: Estruturas de Controle</a></li>
-  <li><a href="/blog/2016/05/09/kit-de-sobrevivencia-em-r-parte-7">Kit de sobrevivência em R - Parte 7: Avançando e Aprofundando</a></li>
-</ul>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Kit de Sobrevivência em R - Parte 3: Pacotes]]></title>
-    <link href="http://fulljoin.com.br/blog/2016/04/03/kit-de-sobrevivencia-em-r-parte-3/"/>
-    <updated>2016-04-03T22:10:52-03:00</updated>
-    <id>http://fulljoin.com.br/blog/2016/04/03/kit-de-sobrevivencia-em-r-parte-3</id>
-    <content type="html"><![CDATA[<p>Neste post, você aprenderá um pouco sobre os pacotes, trabalhará com o console para fazer algumas operações e ir se familiarizando mais com o R. Aprenderá como usar as funções disponíveis no R e as funções adicionais em pacotes.</p>
-
-<!-- More -->
-
-<h2 id="pacotes">Pacotes</h2>
-
-<p>Um pacote do R é um conjunto de funções que têm uma temática em comum. As funções de um mesmo pacote são carregadas juntas em memória, ou seja, ficam disponíveis para uso no R. Por ter uma temática específica, cada pacote possui uma documentação explicando suas funcionalidades disponíveis e como usá-las. Além das funções, alguns pacotes também fornecem um conjunto de dados que são usados para replicar os exemplos fornecidos nas documentações.</p>
-
-<p>Por exemplo, o <code>dplyr</code> é um pacote que possui um série de funções que facilitam consideravelmente a manipulação de dados. Já o <code>readxl</code> é um pacote com funções para leitura de arquivos excel. E o <code>ggplot2</code>, um pacote para criação de gráficos.</p>
-
-<p>No geral, você fará muito uso de pacotes para facilitar tarefas que as funções básicas do R deixam a desejar.</p>
-
-<h3 id="instalao">Instalação</h3>
-
-<p>Existem duas opções para instalar um pacote: via comando ou usando a funcionalidade nos menus do RStudio.</p>
-
-<p>Para instalar via comando, você pode digitar o seguinte código no console:</p>
-
-<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">install.packages</span><span class="p">(</span><span class="err">‘</span><span class="n">readxl</span><span class="err">’</span><span class="p">)</span></code></pre></div></p>
-
-<p>Este comando irá instalar o pacote <code>readxl</code> que fornece funções para facilitar a importação de dados em arquivos <code>xls</code> e <code>xlsx</code>. Nesse caso específico, o pacote fornece duas funções: uma para listar todas as planilhas que estão em um arquivo do excel e outra para ler os dados de uma planilha pro excel. Em um post futuro sobre a importação de dados, trataremos mais sobre esse pacote. Por enquanto, estamos usando somente como exemplo.</p>
-
-<p>Para realizar a instalação com ajuda do RStudio, primeiro clique na aba <em>Packages</em> e depois no botão <em>Install</em>. Será aberta uma janela auxiliar em que você poderá escolher a fonte que será utilizada para instalar o pacote. Normalmente, você optará pelo CRAN (este termo será explicado mais adiante, porém trata-se do repositório oficial). Em <em>Packages</em>, digite o nome do pacote e depois no botão <em>Install</em>. Abaixo está uma imagem de como é o processo de instalação via RStudio.</p>
-
-<p><img src="/images/install_package.gif" alt="alt Instalação de Pacote" title="Instalação de Pacote" /></p>
-
-<h3 id="buscando-pacotes">Buscando pacotes</h3>
-
-<p>Mas como saber quais pacotes estão disponíveis para uma determinada tarefa? Na maioria das vezes será inevitável realizar uma busca por uma função específica e no meio do caminho se deparar com o pacote.</p>
-
-<p>Todavia, existem algumas páginas que apresentam uma lista de pacotes relacionadas a uma determinada tarefa, que são denominadas de <em>Task View</em>. Para exemplificar, veja <a href="https://cran.r-project.org/web/views/Graphics.html">aqui</a> uma lista de pacotes para realização de gráficos e visualizações.</p>
-
-<h3 id="carregando-um-pacote">Carregando um pacote</h3>
-
-<p>Para utilizar as funções de um pacote, você deve carregá-lo antes. Para isso, você deve usar o seguinte comando:</p>
-
-<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">library</span><span class="p">(</span><span class="n">readxl</span><span class="p">)</span></code></pre></div></p>
-
-<p>Esse comando irá carregar o pacote em memória e tornará possível a utilização de todas funções disponíveis nele. Também existe a possibilidade de carregamento de pacotes usando a função <code>require()</code>, que é mais indicado no caso de carregamento de um pacote dentro de uma rotina. Por enquanto, não nos preocupemos com ele.</p>
-
-<blockquote>
-  <p>Dica: repare que para instalar o pacote você usou o nome dele entre aspas `install.packages(“readxl”) e não vai funcionar sem aspas. Mas, para carregar o pacote em memória, você pode usar com ou sem aspas library(readxl) ou library(“readxl”)</p>
-</blockquote>
-
-<p>Ao trabalhar com pacotes, muitas vezes irá aparecer o termo <strong>CRAN</strong>. Ele significa <em>Comprehensive R Archive Network</em>. Este é o principal repositório de pacotes do R. Trata-se de um portal que guarda uma série de pacotes que necessariamente passaram por uma série de requisitos antes de serem publicado. Atualmente, estão disponíveis mais de 8.000 pacotes no CRAN.</p>
-
-<p>Este é o único local onde os pacotes estão disponíveis? Não!</p>
-
-<p>Vários pacotes já são disponibilizados pelos próprios autores antes mesmo das verificações necessárias para entrar no CRAN. Não são apenas novos pacotes. Novas versões de um pacote podem se encaixar aqui também. Geralmente, eles estão disponíveis no <a href="https://pt.wikipedia.org/wiki/GitHub">github</a>.</p>
-
-<p>Para realizar a instalação desses pacotes “fora do CRAN”, será necessária a instalação do <code>devtools</code> (que é um pacote!). Por exemplo, o <code>ggplot2</code>, ótimo pacote para gráficos, já possui uma versão estável no CRAN. No entanto, se você desejar instalar a versão que está em desenvolvimento, que pode possuir uma nova funcionalidade, faça o seguinte:</p>
-
-<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">install.packages</span><span class="p">(</span><span class="err">‘</span><span class="n">devtools</span><span class="err">’</span><span class="p">)</span> <span class="c1"># Caso não esteja instalado ainda</span>
-<span class="n">devtools</span><span class="o">::</span><span class="n">install_github</span><span class="p">(</span><span class="err">“</span><span class="n">hadley</span><span class="o">/</span><span class="n">ggplot2</span><span class="err">”</span><span class="p">)</span></code></pre></div></p>
-
-<p>Aqui temos um ponto interessante. Para usar funções de um pacote, usualmente carrega-se usando o <code>library()</code>. Contudo, se você quiser pontualmente uma função de um pacote, pode-se optar pela forma acima: <code>nome_do_pacote::nome_da_função</code>. Dessa forma você evitaria carregar todas as funções do pacote em memória. Isso pode ser muito útil!</p>
-
-<h2 id="ajuda-no-r">Ajuda no R</h2>
-
-<p>Você baixou um pacote e não sabe muito bem como usar as funções que estão disponíveis. O que fazer? Você precisará de ajuda. O primeiro passo é verificar a ajuda do pacote. Serão listadas as funções disponíveis e links para a página de <em>help</em> de cada função. Isto pode ser feito a partir do seguinte comando:</p>
-
-<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">help</span><span class="p">(</span><span class="n">package</span> <span class="o">=</span> <span class="err">‘</span><span class="n">readxl</span><span class="err">’</span><span class="p">)</span></code></pre></div></p>
-
-<p>Para buscar ajuda sobre uma função específica, existem algumas possibilidades a depender se o pacote já está carregado ou não. Por exemplo:</p>
-
-<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="o">?</span><span class="n">read_excel</span> <span class="c1"># se o pacote já estiver sido carregado com library(readxl)</span>
-<span class="o">?</span><span class="n">readxl</span><span class="o">::</span><span class="n">read_excel</span> <span class="c1"># Se o pacote não estiver carregado</span>
-<span class="o">??</span><span class="n">read_excel</span>  <span class="c1"># Pacote não carregado. Demora mais para apresentar um resultado</span></code></pre></div></p>
-
-<p>É importante destacar o <code>??</code>, que faz uma busca mais ampla por funções, demonstrações e arquivos que trazem uma visão geral (vignette) de algum pacote/função.</p>
-
-<p>Sendo mais específico, ao buscar a ajuda por uma função específica, será apresentado um texto com uma estrutura padrão: <em>Description</em>, <em>Usage</em>, <em>Arguments</em> e <em>Examples</em>. Além dessas, podem constar outras seções como <em>Details</em> e <em>Value</em>, por exemplo.</p>
-
-<p>É importante destacar o uso (<em>Usage</em>) que trará uma forma genérica de utilização dos parâmetros. Em regra, uma função tem uma série de parâmetros que serão passados para “dentro” dela. Os parâmetros são separados por vírgula e os que apresentam <code>=</code> possuem um valor padrão e geralmente são opcionais (nem todos os parâmetros são obrigatórios).</p>
-
-<p>Após executar uma função, ela retornará o que está descrito na seção <em>Value</em>. Pode ser um único número ou uma lista (nos próximos posts ficará mais claro o que é uma lista) de elementos que pode variar de uma vetor a um texto.</p>
-
-<p>Não se preocupe muito se o conceito de função ainda não está totalmente claro. O próprio uso e os próximos posts deixarão todos esses conceitos claros de forma natural por meio de exemplos e práticas.</p>
-
-<h1 id="desafio">Desafio</h1>
-
-<p>Instale e carregue os pacotes <code>tidyr</code> e <code>stringr</code>. Consegue descobrir para que servem esses pacotes? Consegue visualizar as funções existentes em cada pacote? Para que serve a função <code>gather()</code> do pacote <code>tidyr</code>?  Para que serve a função <code>str_count()</code> do pacote <code>stringr</code>? Compartilhe conosco nos comentários o que descobriu!</p>
-
-<h1 id="referncias">Referências:</h1>
-<ul>
-  <li><a href="https://www.datacamp.com/community/tutorials/functions-in-r-a-tutorial">DataCamp - Functions</a></li>
-  <li><a href="https://www.rstudio.com/products/rpackages/">Principais pacotes para R</a></li>
-  <li><a href="http://r-pkgs.had.co.nz/">R Packages</a></li>
-  <li><a href="http://www.analyticsvidhya.com/blog/2015/08/list-r-packages-data-analysis/">Lista de pactes mais úteis para Análise de Dados</a></li>
 </ul>
 
 <h2 id="demais-posts-da-sequncia">Demais posts da sequência:</h2>
