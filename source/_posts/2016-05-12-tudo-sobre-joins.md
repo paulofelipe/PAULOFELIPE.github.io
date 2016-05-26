@@ -3,11 +3,11 @@ layout: post
 title: "Tudo sobre Joins (merge) em R"
 date: 2016-05-12 21:00:00 -0300
 comments: true
-categories: [r, intermediario]
+categories: [r, intermediário]
 published: true
 ---
 
-Nessa sequência de posts aprenderemos tudo sobre Joins (merges) em R, abordando questões teóricas e práticas, com exemplos usando R base e  pacote dplyr. Após ler esse post, você vai saber o que é, para que serve, quando e como usar diversos tipo de joins.
+Nessa sequência de posts aprenderemos tudo sobre Joins (merges) em R, abordando questões teóricas e práticas, com exemplos usando R base e o pacote dplyr. Após ler esse post, você vai saber o que é, para que serve, quando e como usar diversos tipo de joins.
 
 <!-- More -->
 
@@ -23,13 +23,13 @@ Existem vários tipos de joins, dos mais simples aos mais complexos, cada um com
 
 Se você é novo no mundo da manipulação de dados, talvez já tenha se perguntado: "De onde vem essa necessidade de usar joins? Por que insistem em usar tantos códigos e separar os dados uns dos outros em tabelas e arquivos diferentes? Por que não simplificar as coisas?". 
 
-Pois saiba que o uso dos joins é uma consequência direta de uma boa prática imposta pelos bancos de dados relacionais: a normalização. Normalização são "regras" para estruturar seus dados de forma que eles ocupem o menor espaço possível e fiquem bastante consistentes na hora de inserir, alterar ou excluir dados do seu conjunto de dados. 
+Pois saiba que o uso dos joins é uma consequência direta de uma boa prática imposta pelos bancos de dados relacionais: a normalização. Normalização são "regras" para estruturar seus dados de forma que eles ocupem o menor espaço possível e fiquem bastante consistentes na hora de inserir, alterar ou excluir dados. 
 
-No entanto, essas regras adicionam complexidade à estrutura dos dados, e graças à essa complexidade estrutural que surge a necessidade dos joins: juntar dados separados num lugar só.
+No entanto, essas regras adicionam complexidade à estrutura dos dados, e graças a essa complexidade estrutural que surge a necessidade dos joins: juntar dados separados num lugar só.
 
 Em um conjunto de dados normalizado (praticamente TODOS originados de sistemas), existe o conceito de chave: um código que representa uma ocorrência de forma única e inconfundível. Exemplos intuitivos de chave seriam o CPF, o CNPJ, código de um produto, o título de eleitor, etc...
 
-Existem vários tipos de chaves (chave natural, surrogate, chave estrangeira, etc...), mas não vamos entrar nesse nível de detalhe. Para aprofundar mais sobre isso, sugiro [essa leitura](LINK).
+Existem vários tipos de chaves (chave natural, surrogate, chave estrangeira, etc...), mas não vamos entrar nesse nível de detalhe. Para aprofundar mais sobre isso, sugiro [essa leitura](http://www.programmerinterview.com/index.php/database-sql/differences-between-primary-and-foreign-keys/).
 
 Apenas mais uma observação: Os termos e conceitos usados a seguir são originários do mundo dos bancos de dados e SQL, mas, acredite, vale muito a pena conhecer os termos. Portanto, não se assuste! Os conceitos e a utilidade dos tipos de junções são mais importantes do que as nomenclaturas.
 
@@ -44,7 +44,17 @@ Trata-se do join mais simples, mais básico e mais usado dentre todos os outros 
 
 {% highlight r %}
 library(dplyr)
+{% endhighlight %}
 
+
+
+{% highlight text %}
+## Error in library(dplyr): there is no package called 'dplyr'
+{% endhighlight %}
+
+
+
+{% highlight r %}
 id.empregado <- 1:11
 nome.empregado <- c('Renato', 'Miguel', 'Paulo', 'Patrícia', 'Inês', 'Saulo', 'Diego', 'Maria', 'Jose', 'Julia', 'Tiago')
 idade <- c(30, 31, 29, 30, 25, 30, 30, 35, 24, 31, 29)
@@ -131,17 +141,7 @@ Esse tipo de join cria um data frame com todos os campos de ambos conjuntos, mas
 
 
 {% highlight text %}
-##    id.empregado nome.empregado idade uf id.cargo nome.cargo salario
-## 1             1         Renato    30 MG        4   Analista   11000
-## 2             2         Miguel    31 DF        4   Analista   11000
-## 3             3          Paulo    29 CE        4   Analista   11000
-## 4             4       Patrícia    30 DF        4   Analista   11000
-## 5             5           Inês    25 DF        5    Auditor   10000
-## 6             6          Saulo    30 DF        4   Analista   11000
-## 7             7          Diego    30 RJ        6    Gerente   13000
-## 8             8          Maria    35 SP        3  Consultor   15000
-## 9             9           Jose    24 RS        1    Técnico    7000
-## 10           10          Julia    31 SC        2 Assistente    4000
+## Error in eval(expr, envir, enclos): não foi possível encontrar a função "inner_join"
 {% endhighlight %}
 
 > Dica: coloque parênteses entre as atribuições e o R mostrará o resultado dela imediatamente 
@@ -181,17 +181,7 @@ names(cargos) <- c("cargo", "nome.cargo", "salario")
 
 
 {% highlight text %}
-##    id.empregado nome.empregado idade uf id.cargo nome.cargo salario
-## 1             1         Renato    30 MG        4   Analista   11000
-## 2             2         Miguel    31 DF        4   Analista   11000
-## 3             3          Paulo    29 CE        4   Analista   11000
-## 4             4       Patrícia    30 DF        4   Analista   11000
-## 5             5           Inês    25 DF        5    Auditor   10000
-## 6             6          Saulo    30 DF        4   Analista   11000
-## 7             7          Diego    30 RJ        6    Gerente   13000
-## 8             8          Maria    35 SP        3  Consultor   15000
-## 9             9           Jose    24 RS        1    Técnico    7000
-## 10           10          Julia    31 SC        2 Assistente    4000
+## Error in eval(expr, envir, enclos): não foi possível encontrar a função "inner_join"
 {% endhighlight %}
 
 No R base usamos `by.x` e `by.y` para especificar o nome do campo chave do primeiro e segundo data.frame. No `inner_join()` do dplyr usamos um vetor no formato `c("chave.x" = "chave.y")`.
@@ -295,16 +285,7 @@ Portanto, usaremos o left outer join (ou simplesmente left join):
 
 
 {% highlight text %}
-##   id.paciente nome.abreviado exame.a exame.b exame.c tipo.remedio
-## 1           1          A.A.M     3.8  109.98       0            A
-## 2           2        S.S.G.F     3.8  109.90       1         <NA>
-## 3           3          T.I.A     3.9  109.89       1         <NA>
-## 4           4        L.O.S.M     4.0  109.99       0            B
-## 5           5          Y.Q.W     4.4  110.01       1            A
-## 6           6            F.A     3.8  109.95       1         <NA>
-## 7           7          T.B.N     3.7  109.98       0            B
-## 8           8          J.J.L     3.6  109.93       0            A
-## 9           9          M.S.S     4.0  110.00       1         <NA>
+## Error in eval(expr, envir, enclos): não foi possível encontrar a função "left_join"
 {% endhighlight %}
 
 Repare que nos resultados temos todos os campos de `pacientes` e `controle` e temos também todos registros de `pacientes`. Quando não há ocorrência da chave `id.paciente` em `controle`, é colocado um `NA` no campo.
@@ -344,16 +325,7 @@ O princípio é EXATAMENTE o mesmo do left join. A única diferença é a perman
 
 
 {% highlight text %}
-##   id.paciente tipo.remedio nome.abreviado exame.a exame.b exame.c
-## 1           1            A          A.A.M     3.8  109.98       0
-## 2           2         <NA>        S.S.G.F     3.8  109.90       1
-## 3           3         <NA>          T.I.A     3.9  109.89       1
-## 4           4            B        L.O.S.M     4.0  109.99       0
-## 5           5            A          Y.Q.W     4.4  110.01       1
-## 6           6         <NA>            F.A     3.8  109.95       1
-## 7           7            B          T.B.N     3.7  109.98       0
-## 8           8            A          J.J.L     3.6  109.93       0
-## 9           9         <NA>          M.S.S     4.0  110.00       1
+## Error in eval(expr, envir, enclos): não foi possível encontrar a função "right_join"
 {% endhighlight %}
 
 Temos o mesmo conteúdo, apenas mudando a ordem dos data.frames e ajustando alguns parâmetros na função.
@@ -456,29 +428,14 @@ O join da vez é o full join (nome do blog!). Vejamos:
 
 
 {% highlight text %}
-##    produto valor.x  valor.y
-## 1        A  993801       NA
-## 2        C 1829300    71983
-## 3        D  833952    61328
-## 4        H  775831   979192
-## 5        I   59143  6019278
-## 6        J 1192920   352918
-## 7        K 6938018       NA
-## 8        O 2927318   447009
-## 9        Y  393178       NA
-## 10       B      NA   983125
-## 11       E      NA    51939
-## 12       F      NA 10928810
-## 13       M      NA   178263
-## 14       N      NA 64129229
-## 15       Z      NA  1620129
+## Error in eval(expr, envir, enclos): não foi possível encontrar a função "full_join"
 {% endhighlight %}
 
-Repare que em nosso exemplo há uma particularidade com as chaves. Quando não explicitamos na função os nomes das chaves em `by`, o join é feito pelos campos com nomes iguais. Mas nesse caso, ambos os campos `produto` e `valor` tem nomes iguais nos dois data.frames. Precisamos então explicitar o que queremos que seja chave: apenas `produto`.
+Repare que em nosso exemplo há uma particularidade com as chaves. Quando não explicitamos na função os nomes das chaves em `by`, o join é feito pelos campos com nomes iguais. Mas nesse caso, ambos os campos `produto` e `valor` têm nomes iguais nos dois data.frames. Precisamos então explicitar o que queremos que seja chave: apenas `produto`.
 
 O full join preserva todos os registros de ambos os conjuntos. Quando as chaves são iguais, retorna preenchido em todos os campos, quando não são iguais, retorna `NA` em qualquer um dos "lados".
 
-Em nosso exemplo, alguns produtos foram somente exportados e alguns foram somente importados, bem como alguns foram exportados e importados. Como precisamos da totalidade das exportações e importações, o full join atende bem nossa necessidade. Com esse resultado já poderíamos partir para analise do comércio desse país.
+Em nosso exemplo, alguns produtos foram somente exportados e alguns foram somente importados, bem como alguns foram exportados e importados. Como precisamos da totalidade das exportações e importações, o full join atende bem nossa necessidade. Com esse resultado já poderíamos partir para análise do comércio desse país.
 
 ## Próximos posts
 
