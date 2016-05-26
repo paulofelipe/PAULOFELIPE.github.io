@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Tudo sobre Joins (merge) em R"
-date: 2016-05-12 21:00:00 -0300
+date: 2016-05-25 21:00:00 -0300
 comments: true
 categories: [r, intermediário]
 published: true
