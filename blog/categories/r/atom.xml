@@ -4,7 +4,7 @@
   <title><![CDATA[r | Full Join]]></title>
   <link href="http://fulljoin.com.br/blog/categories/r/atom.xml" rel="self"/>
   <link href="http://fulljoin.com.br/"/>
-  <updated>2016-05-26T13:28:49-03:00</updated>
+  <updated>2016-05-26T13:31:34-03:00</updated>
   <id>http://fulljoin.com.br/</id>
   <author>
     <name><![CDATA[Full Join]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Tudo sobre Joins (merge) em R]]></title>
-    <link href="http://fulljoin.com.br/blog/2016/05/12/tudo-sobre-joins/"/>
-    <updated>2016-05-12T21:00:00-03:00</updated>
-    <id>http://fulljoin.com.br/blog/2016/05/12/tudo-sobre-joins</id>
+    <link href="http://fulljoin.com.br/blog/2016/05/25/tudo-sobre-joins/"/>
+    <updated>2016-05-25T21:00:00-03:00</updated>
+    <id>http://fulljoin.com.br/blog/2016/05/25/tudo-sobre-joins</id>
     <content type="html"><![CDATA[<p>Nessa sequência de posts aprenderemos tudo sobre Joins (merges) em R, abordando questões teóricas e práticas, com exemplos usando R base e o pacote dplyr. Após ler esse post, você vai saber o que é, para que serve, quando e como usar diversos tipo de joins.</p>
 
 <!-- More -->
