@@ -4,7 +4,7 @@
   <title><![CDATA[Full Join]]></title>
   <link href="http://fulljoin.com.br/atom.xml" rel="self"/>
   <link href="http://fulljoin.com.br/"/>
-  <updated>2016-05-26T13:31:34-03:00</updated>
+  <updated>2016-05-30T19:27:08-03:00</updated>
   <id>http://fulljoin.com.br/</id>
   <author>
     <name><![CDATA[Full Join]]></name>
@@ -56,11 +56,9 @@
   <li><code>empregados</code>, com id, nome, idade, uf e id de um cargo</li>
 </ul>
 
-<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span></code></pre></div>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
 
-<div class="highlight"><pre><code class="language-text" data-lang="text">## Error in library(dplyr): there is no package called 'dplyr'</code></pre></div>
-
-<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">id.empregado</span> <span class="o">&lt;-</span> <span class="m">1</span><span class="o">:</span><span class="m">11</span>
+<span class="n">id.empregado</span> <span class="o">&lt;-</span> <span class="m">1</span><span class="o">:</span><span class="m">11</span>
 <span class="n">nome.empregado</span> <span class="o">&lt;-</span> <span class="n">c</span><span class="p">(</span><span class="s1">'Renato'</span><span class="p">,</span> <span class="s1">'Miguel'</span><span class="p">,</span> <span class="s1">'Paulo'</span><span class="p">,</span> <span class="s1">'Patrícia'</span><span class="p">,</span> <span class="s1">'Inês'</span><span class="p">,</span> <span class="s1">'Saulo'</span><span class="p">,</span> <span class="s1">'Diego'</span><span class="p">,</span> <span class="s1">'Maria'</span><span class="p">,</span> <span class="s1">'Jose'</span><span class="p">,</span> <span class="s1">'Julia'</span><span class="p">,</span> <span class="s1">'Tiago'</span><span class="p">)</span>
 <span class="n">idade</span> <span class="o">&lt;-</span> <span class="n">c</span><span class="p">(</span><span class="m">30</span><span class="p">,</span> <span class="m">31</span><span class="p">,</span> <span class="m">29</span><span class="p">,</span> <span class="m">30</span><span class="p">,</span> <span class="m">25</span><span class="p">,</span> <span class="m">30</span><span class="p">,</span> <span class="m">30</span><span class="p">,</span> <span class="m">35</span><span class="p">,</span> <span class="m">24</span><span class="p">,</span> <span class="m">31</span><span class="p">,</span> <span class="m">29</span><span class="p">)</span>
 <span class="n">uf</span> <span class="o">&lt;-</span> <span class="n">c</span><span class="p">(</span><span class="s1">'MG'</span><span class="p">,</span> <span class="s1">'DF'</span><span class="p">,</span> <span class="s1">'CE'</span><span class="p">,</span> <span class="s1">'DF'</span><span class="p">,</span> <span class="s1">'DF'</span><span class="p">,</span> <span class="s1">'DF'</span><span class="p">,</span> <span class="s1">'RJ'</span><span class="p">,</span> <span class="s1">'SP'</span><span class="p">,</span> <span class="s1">'RS'</span><span class="p">,</span> <span class="s1">'SC'</span><span class="p">,</span> <span class="s1">'BA'</span><span class="p">)</span>
@@ -122,7 +120,17 @@
 
 <div class="highlight"><pre><code class="language-r" data-lang="r"><span class="p">(</span><span class="n">join.dplyr</span> <span class="o">&lt;-</span> <span class="n">inner_join</span><span class="p">(</span><span class="n">empregados</span><span class="p">,</span> <span class="n">cargos</span><span class="p">))</span> <span class="c1"># inner join com Dplyr</span></code></pre></div>
 
-<div class="highlight"><pre><code class="language-text" data-lang="text">## Error in eval(expr, envir, enclos): não foi possível encontrar a função "inner_join"</code></pre></div>
+<div class="highlight"><pre><code class="language-text" data-lang="text">##    id.empregado nome.empregado idade uf id.cargo nome.cargo salario
+## 1             1         Renato    30 MG        4   Analista   11000
+## 2             2         Miguel    31 DF        4   Analista   11000
+## 3             3          Paulo    29 CE        4   Analista   11000
+## 4             4       Patrícia    30 DF        4   Analista   11000
+## 5             5           Inês    25 DF        5    Auditor   10000
+## 6             6          Saulo    30 DF        4   Analista   11000
+## 7             7          Diego    30 RJ        6    Gerente   13000
+## 8             8          Maria    35 SP        3  Consultor   15000
+## 9             9           Jose    24 RS        1    Técnico    7000
+## 10           10          Julia    31 SC        2 Assistente    4000</code></pre></div>
 
 <blockquote>
   <p>Dica: coloque parênteses entre as atribuições e o R mostrará o resultado dela imediatamente</p>
@@ -149,7 +157,17 @@
 
 <div class="highlight"><pre><code class="language-r" data-lang="r"><span class="p">(</span><span class="n">join.dplyr</span> <span class="o">&lt;-</span> <span class="n">inner_join</span><span class="p">(</span><span class="n">empregados</span><span class="p">,</span> <span class="n">cargos</span><span class="p">,</span> <span class="n">by</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="s2">"id.cargo"</span> <span class="o">=</span> <span class="s2">"cargo"</span><span class="p">)))</span> <span class="c1"># inner join com Dplyr com nomes de chaves diferentes</span></code></pre></div>
 
-<div class="highlight"><pre><code class="language-text" data-lang="text">## Error in eval(expr, envir, enclos): não foi possível encontrar a função "inner_join"</code></pre></div>
+<div class="highlight"><pre><code class="language-text" data-lang="text">##    id.empregado nome.empregado idade uf id.cargo nome.cargo salario
+## 1             1         Renato    30 MG        4   Analista   11000
+## 2             2         Miguel    31 DF        4   Analista   11000
+## 3             3          Paulo    29 CE        4   Analista   11000
+## 4             4       Patrícia    30 DF        4   Analista   11000
+## 5             5           Inês    25 DF        5    Auditor   10000
+## 6             6          Saulo    30 DF        4   Analista   11000
+## 7             7          Diego    30 RJ        6    Gerente   13000
+## 8             8          Maria    35 SP        3  Consultor   15000
+## 9             9           Jose    24 RS        1    Técnico    7000
+## 10           10          Julia    31 SC        2 Assistente    4000</code></pre></div>
 
 <p>No R base usamos <code>by.x</code> e <code>by.y</code> para especificar o nome do campo chave do primeiro e segundo data.frame. No <code>inner_join()</code> do dplyr usamos um vetor no formato <code>c("chave.x" = "chave.y")</code>.</p>
 
@@ -228,7 +246,16 @@
 
 <div class="highlight"><pre><code class="language-r" data-lang="r"><span class="p">(</span><span class="n">left.join.dplyr</span> <span class="o">&lt;-</span> <span class="n">left_join</span><span class="p">(</span><span class="n">pacientes</span><span class="p">,</span> <span class="n">controle</span><span class="p">))</span> <span class="c1"># left join com dplyr</span></code></pre></div>
 
-<div class="highlight"><pre><code class="language-text" data-lang="text">## Error in eval(expr, envir, enclos): não foi possível encontrar a função "left_join"</code></pre></div>
+<div class="highlight"><pre><code class="language-text" data-lang="text">##   id.paciente nome.abreviado exame.a exame.b exame.c tipo.remedio
+## 1           1          A.A.M     3.8  109.98       0            A
+## 2           2        S.S.G.F     3.8  109.90       1         &lt;NA&gt;
+## 3           3          T.I.A     3.9  109.89       1         &lt;NA&gt;
+## 4           4        L.O.S.M     4.0  109.99       0            B
+## 5           5          Y.Q.W     4.4  110.01       1            A
+## 6           6            F.A     3.8  109.95       1         &lt;NA&gt;
+## 7           7          T.B.N     3.7  109.98       0            B
+## 8           8          J.J.L     3.6  109.93       0            A
+## 9           9          M.S.S     4.0  110.00       1         &lt;NA&gt;</code></pre></div>
 
 <p>Repare que nos resultados temos todos os campos de <code>pacientes</code> e <code>controle</code> e temos também todos registros de <code>pacientes</code>. Quando não há ocorrência da chave <code>id.paciente</code> em <code>controle</code>, é colocado um <code>NA</code> no campo.</p>
 
@@ -253,7 +280,16 @@
 
 <div class="highlight"><pre><code class="language-r" data-lang="r"><span class="p">(</span><span class="n">right.join.dplyr</span> <span class="o">&lt;-</span> <span class="n">right_join</span><span class="p">(</span><span class="n">controle</span><span class="p">,</span> <span class="n">pacientes</span><span class="p">))</span> <span class="c1"># left join com dplyr</span></code></pre></div>
 
-<div class="highlight"><pre><code class="language-text" data-lang="text">## Error in eval(expr, envir, enclos): não foi possível encontrar a função "right_join"</code></pre></div>
+<div class="highlight"><pre><code class="language-text" data-lang="text">##   id.paciente tipo.remedio nome.abreviado exame.a exame.b exame.c
+## 1           1            A          A.A.M     3.8  109.98       0
+## 2           2         &lt;NA&gt;        S.S.G.F     3.8  109.90       1
+## 3           3         &lt;NA&gt;          T.I.A     3.9  109.89       1
+## 4           4            B        L.O.S.M     4.0  109.99       0
+## 5           5            A          Y.Q.W     4.4  110.01       1
+## 6           6         &lt;NA&gt;            F.A     3.8  109.95       1
+## 7           7            B          T.B.N     3.7  109.98       0
+## 8           8            A          J.J.L     3.6  109.93       0
+## 9           9         &lt;NA&gt;          M.S.S     4.0  110.00       1</code></pre></div>
 
 <p>Temos o mesmo conteúdo, apenas mudando a ordem dos data.frames e ajustando alguns parâmetros na função.</p>
 
@@ -331,7 +367,22 @@
 
 <div class="highlight"><pre><code class="language-r" data-lang="r"><span class="p">(</span><span class="n">full.join.dplyr</span> <span class="o">&lt;-</span> <span class="n">full_join</span><span class="p">(</span><span class="n">exportacoes</span><span class="p">,</span> <span class="n">importacoes</span><span class="p">,</span> <span class="n">by</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="s2">"produto"</span> <span class="o">=</span> <span class="s2">"produto"</span><span class="p">)))</span> <span class="c1"># left join com dplyr</span></code></pre></div>
 
-<div class="highlight"><pre><code class="language-text" data-lang="text">## Error in eval(expr, envir, enclos): não foi possível encontrar a função "full_join"</code></pre></div>
+<div class="highlight"><pre><code class="language-text" data-lang="text">##    produto valor.x  valor.y
+## 1        A  993801       NA
+## 2        C 1829300    71983
+## 3        D  833952    61328
+## 4        H  775831   979192
+## 5        I   59143  6019278
+## 6        J 1192920   352918
+## 7        K 6938018       NA
+## 8        O 2927318   447009
+## 9        Y  393178       NA
+## 10       B      NA   983125
+## 11       E      NA    51939
+## 12       F      NA 10928810
+## 13       M      NA   178263
+## 14       N      NA 64129229
+## 15       Z      NA  1620129</code></pre></div>
 
 <p>Repare que em nosso exemplo há uma particularidade com as chaves. Quando não explicitamos na função os nomes das chaves em <code>by</code>, o join é feito pelos campos com nomes iguais. Mas nesse caso, ambos os campos <code>produto</code> e <code>valor</code> têm nomes iguais nos dois data.frames. Precisamos então explicitar o que queremos que seja chave: apenas <code>produto</code>.</p>
 
