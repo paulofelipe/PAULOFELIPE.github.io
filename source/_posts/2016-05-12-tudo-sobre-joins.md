@@ -44,17 +44,7 @@ Trata-se do join mais simples, mais básico e mais usado dentre todos os outros 
 
 {% highlight r %}
 library(dplyr)
-{% endhighlight %}
 
-
-
-{% highlight text %}
-## Error in library(dplyr): there is no package called 'dplyr'
-{% endhighlight %}
-
-
-
-{% highlight r %}
 id.empregado <- 1:11
 nome.empregado <- c('Renato', 'Miguel', 'Paulo', 'Patrícia', 'Inês', 'Saulo', 'Diego', 'Maria', 'Jose', 'Julia', 'Tiago')
 idade <- c(30, 31, 29, 30, 25, 30, 30, 35, 24, 31, 29)
@@ -141,7 +131,17 @@ Esse tipo de join cria um data frame com todos os campos de ambos conjuntos, mas
 
 
 {% highlight text %}
-## Error in eval(expr, envir, enclos): não foi possível encontrar a função "inner_join"
+##    id.empregado nome.empregado idade uf id.cargo nome.cargo salario
+## 1             1         Renato    30 MG        4   Analista   11000
+## 2             2         Miguel    31 DF        4   Analista   11000
+## 3             3          Paulo    29 CE        4   Analista   11000
+## 4             4       Patrícia    30 DF        4   Analista   11000
+## 5             5           Inês    25 DF        5    Auditor   10000
+## 6             6          Saulo    30 DF        4   Analista   11000
+## 7             7          Diego    30 RJ        6    Gerente   13000
+## 8             8          Maria    35 SP        3  Consultor   15000
+## 9             9           Jose    24 RS        1    Técnico    7000
+## 10           10          Julia    31 SC        2 Assistente    4000
 {% endhighlight %}
 
 > Dica: coloque parênteses entre as atribuições e o R mostrará o resultado dela imediatamente 
@@ -181,7 +181,17 @@ names(cargos) <- c("cargo", "nome.cargo", "salario")
 
 
 {% highlight text %}
-## Error in eval(expr, envir, enclos): não foi possível encontrar a função "inner_join"
+##    id.empregado nome.empregado idade uf id.cargo nome.cargo salario
+## 1             1         Renato    30 MG        4   Analista   11000
+## 2             2         Miguel    31 DF        4   Analista   11000
+## 3             3          Paulo    29 CE        4   Analista   11000
+## 4             4       Patrícia    30 DF        4   Analista   11000
+## 5             5           Inês    25 DF        5    Auditor   10000
+## 6             6          Saulo    30 DF        4   Analista   11000
+## 7             7          Diego    30 RJ        6    Gerente   13000
+## 8             8          Maria    35 SP        3  Consultor   15000
+## 9             9           Jose    24 RS        1    Técnico    7000
+## 10           10          Julia    31 SC        2 Assistente    4000
 {% endhighlight %}
 
 No R base usamos `by.x` e `by.y` para especificar o nome do campo chave do primeiro e segundo data.frame. No `inner_join()` do dplyr usamos um vetor no formato `c("chave.x" = "chave.y")`.
@@ -285,7 +295,16 @@ Portanto, usaremos o left outer join (ou simplesmente left join):
 
 
 {% highlight text %}
-## Error in eval(expr, envir, enclos): não foi possível encontrar a função "left_join"
+##   id.paciente nome.abreviado exame.a exame.b exame.c tipo.remedio
+## 1           1          A.A.M     3.8  109.98       0            A
+## 2           2        S.S.G.F     3.8  109.90       1         <NA>
+## 3           3          T.I.A     3.9  109.89       1         <NA>
+## 4           4        L.O.S.M     4.0  109.99       0            B
+## 5           5          Y.Q.W     4.4  110.01       1            A
+## 6           6            F.A     3.8  109.95       1         <NA>
+## 7           7          T.B.N     3.7  109.98       0            B
+## 8           8          J.J.L     3.6  109.93       0            A
+## 9           9          M.S.S     4.0  110.00       1         <NA>
 {% endhighlight %}
 
 Repare que nos resultados temos todos os campos de `pacientes` e `controle` e temos também todos registros de `pacientes`. Quando não há ocorrência da chave `id.paciente` em `controle`, é colocado um `NA` no campo.
@@ -325,7 +344,16 @@ O princípio é EXATAMENTE o mesmo do left join. A única diferença é a perman
 
 
 {% highlight text %}
-## Error in eval(expr, envir, enclos): não foi possível encontrar a função "right_join"
+##   id.paciente tipo.remedio nome.abreviado exame.a exame.b exame.c
+## 1           1            A          A.A.M     3.8  109.98       0
+## 2           2         <NA>        S.S.G.F     3.8  109.90       1
+## 3           3         <NA>          T.I.A     3.9  109.89       1
+## 4           4            B        L.O.S.M     4.0  109.99       0
+## 5           5            A          Y.Q.W     4.4  110.01       1
+## 6           6         <NA>            F.A     3.8  109.95       1
+## 7           7            B          T.B.N     3.7  109.98       0
+## 8           8            A          J.J.L     3.6  109.93       0
+## 9           9         <NA>          M.S.S     4.0  110.00       1
 {% endhighlight %}
 
 Temos o mesmo conteúdo, apenas mudando a ordem dos data.frames e ajustando alguns parâmetros na função.
@@ -428,7 +456,22 @@ O join da vez é o full join (nome do blog!). Vejamos:
 
 
 {% highlight text %}
-## Error in eval(expr, envir, enclos): não foi possível encontrar a função "full_join"
+##    produto valor.x  valor.y
+## 1        A  993801       NA
+## 2        C 1829300    71983
+## 3        D  833952    61328
+## 4        H  775831   979192
+## 5        I   59143  6019278
+## 6        J 1192920   352918
+## 7        K 6938018       NA
+## 8        O 2927318   447009
+## 9        Y  393178       NA
+## 10       B      NA   983125
+## 11       E      NA    51939
+## 12       F      NA 10928810
+## 13       M      NA   178263
+## 14       N      NA 64129229
+## 15       Z      NA  1620129
 {% endhighlight %}
 
 Repare que em nosso exemplo há uma particularidade com as chaves. Quando não explicitamos na função os nomes das chaves em `by`, o join é feito pelos campos com nomes iguais. Mas nesse caso, ambos os campos `produto` e `valor` têm nomes iguais nos dois data.frames. Precisamos então explicitar o que queremos que seja chave: apenas `produto`.
