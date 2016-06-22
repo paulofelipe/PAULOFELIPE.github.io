@@ -1,0 +1,214 @@
+---
+layout: post
+title: "Introdução a Modelos no R"
+date: 2016-06-06 21:00:00 -0300
+comments: true
+categories: [r, intermediário]
+published: true
+---
+
+Neste post, vamos iniciar a trabalhar com modelos no R. Para começar, vamos tratar do modelo linear de regressão utilizando a função `lm()` do R. Entendendo a estrutura básica a partir do modelo linear será bastante útil, mesmo que você queira utilizar outros modelos.
+
+<!-- More -->
+
+## Dados
+
+Primeiramente, precisaremos de uma base de dados para exemplificar como podemos estimar um modelo no R. Vamos utilizar a base de dados `Carseats` que está disponível no pacote `ISLR` que é um pacote complementar ao livro [Introduction to Statistical Learning with Applications in R](http://www-bcf.usc.edu/~gareth/ISL/getbook.html). Trata-se de um conjunto de dados simulados de vendas assentos de carros para crianças. A tabela abaixo lista as variáveis presente nessa base de dados:
+
+```{r, message=FALSE}
+library(ISLR) # Instale o pacote se necessário install.packages("ISLR")
+data("Carseats")
+```
+
+|Nome        |Descrição    |
+|:-----------|:---------|
+|Sales       |Milhares de unidades vendidas em cada local |
+|CompPrice   |Preço cobrado pelo competidor em cada local |
+|Income      |Nível de renda local (milhares de dólares) |
+|Advertising |Orçamento disponível para publicidade em cada local (milhares de dólares) |
+|Population  |Tamanho da população regional (mil) |
+|Price       |Preço da empresa em cada local |
+|ShelveLoc   |Fator com três níveis: ruim, bom e médio. Indica a qualidade do local da prateleira para as cadeiras de carro em cada loja |
+|Age         |Idade média da população local |
+|Education   |Nível educacional de cada local |
+|Urban       |Fator com dois níveis: sim e não. Indica se a loja está localizada em um área urbana ou rural |
+|US          |Fator com dois níveis: sim e não. Indica se a loja está localizada nos Estados Unidos ou não|
+
+Para termos uma ideia da "cara" dos dados, vamos olhar as primeiras linhas usando o `head()`.
+
+```{r}
+head(Carseats)
+```
+
+Essa base dados é interessante, pois possui variáveis quantitativas e qualitativas/categóricas. Se você quiser ver algumas estatísticas sobre cada coluna dos seus dados, pode-se usar o `summary()`.
+
+```{r}
+summary(Carseats)
+```
+
+## Modelo Linear
+
+Para começar, vamos estimar um modelo linear (função `lm()`) em que a variável dependente é a variável de vendas, _Sales_, e utilizaremos duas variáveis independentes (_features_), _Price_ e _CompPrice_. A função `lm()` utiliza a estrutura de fórmula para definição do modelo. A variável dependente é separada das demais variáveis explicativas pelo símbolo `~`. No parâmetro `data`, é informado o conjunto de dados que contém as variáveis que estão listadas na fórmula. Essa função possui outros parâmetros opcionais que estão listados no _help_ (`?lm`). 
+
+É importante ressaltar que a estrutura de fórmula não é utilizada em todos os modelos no R. Em alguns casos, o modelo pode ser definido por dois parâmetros, `x` e `y`, que recebem os valores das variáveis independentes e dependente, respectivamente. Eventualmente, iremos trabalhar com algum modelo que está estruturado dessa forma. Podem existir outras formas de estruturação de um modelo no R, mas são mais raras. 
+
+```{r}
+fit <- lm(Sales ~ Price + CompPrice, data = Carseats)
+fit
+```
+
+Bem, como quase tudo no R, não existe uma única forma de executar essa função. Você poderia estimar o modelo direto sem informar o parâmetro `data`. 
+
+```{r}
+fit <- lm(Carseats$Sales ~ Carseats$Price + Carseats$CompPrice)
+fit
+```
+
+Percebeu que o resultado foi igual? Além disso, considerando que as vendas estão controladas só por esses dois fatores, você vê que as vendas são negativamente afetadas pelo próprio preço e positivamente afetas pelo preço do competidor. Porém, não estamos vendo os desvios-padrão para fazer a análise mais correta. Como fazer pra ver mais detalhes. Novamente, usaremos o `summary()`.
+
+```{r}
+fit <- lm(Sales ~ Price + CompPrice, data = Carseats)
+summary(fit)
+```
+
+Se você tiver que usar todas as variáveis e sua base dados possuir um grande número de colunas (variáveis), não é necessário explicitá-las uma a uma. Basta utilizar `.`.
+
+```{r}
+fit <- lm(Sales ~ ., data = Carseats)
+summary(fit)
+```
+
+E se você quiser excluir alguma variável da análise? Da mesma forma que você utiliza o `+` pra adicionar variáveis, o `-` pode ser utilizado pra excluí-las.
+
+```{r}
+fit <- lm(Sales ~ . - Urban, data = Carseats)
+summary(fit)
+```
+
+## Acessando os resultados
+
+O objeto `fit` que foi criado a partir da função `lm()` carrega consigo uma série de resultados que podem ser recuperados a qualquer momento. Se você quiser acessar os resíduos, existem duas formas:
+
+```{r}
+# vamos mostrar apenas os 10 primeiros
+fit$residuals[1:10]
+residuals(fit)[1:10]
+```
+
+Para acessar os valores previstos (com dados utilizados na estimação), também existem duas formas:
+
+```{r}
+# vamos mostrar apenas os 10 primeiros
+fit$fitted.values[1:10]
+fitted(fit)[1:10]
+```
+
+O mesmo vale para acessar os coeficientes estimados.
+
+```{r}
+coef(fit)
+fit$coefficients
+```
+
+Para verificar tudo que está disponível no objeto `fit`, podemos listar seus nomes usando a função `names()`. O objeto `fit` é uma lista na verdade em que são alocados vários objetos de diversos tipos diferentes.
+
+```{r}
+names(fit)
+```
+
+Outro ponto importante é sobre o `summary()` aplicado ao `fit`. Como você notou, ele apresenta os resultados de uma maneira diferente. Para acessar os resultados do `summary(fit)`, podemos fazer o seguinte:
+
+```{r}
+summary.fit <- summary(fit)
+names(summary.fit)
+summary.fit$coefficients
+summary.fit$adj.r.squared
+``` 
+
+
+## Variáveis Categóricas
+
+Se você prestou atenção, você percebeu que o R tratou automaticamente as variáveis categóricas, escolhendo um nível como base e estimando um parâmetro para os demais níveis. O efeito seria o mesmo de você modificar sua base para transformar cada nível em uma variável _dummy_ (0 ou 1) e excluir um determinado nível no momento de estimação do modelo.
+
+O R automaticamente considera o primeiro nível como base. Veja que para a variável _ShelveLoc_ o nível _Bad_ foi escolhido como base. Para verificarmos se ele é realmente o primeiro nível, façamos o seguinte:
+
+```{r}
+levels(Carseats$ShelveLoc)
+```
+
+Para mudar o nível de referência, vamos utilizar a função `contrast()`. Basicamente, essa função irá criar os atributos que serão utilizados pela função `lm()` no momento de estimação do modelo. Por exemplo:
+
+```{r}
+contrasts(Carseats$ShelveLoc)
+```
+
+Para alterar o nível de referência podemos a função `contr.treatment()`:
+
+```{r}
+contrasts(Carseats$ShelveLoc) <- contr.treatment(n = levels(Carseats$ShelveLoc),
+                                                 base = 2)
+contrasts(Carseats$ShelveLoc)
+```
+Informamos quais eram os níveis e dissemos que queremos que o segundo (_Good_) seja usado como referência.
+
+```{r}
+fit <- lm(Sales ~ ., data = Carseats)
+summary(fit)
+```
+
+Para retornar para estrutura de _contrast_ padrão é preciso definir como `NULL` o atributo `contrasts` da variável `ShelveLoc`.
+
+```{r}
+attr(Carseats$ShelveLoc, "contrasts") <- NULL
+``` 
+
+## Interações entre variáveis
+
+Para realizar interações entre variáveis, utiliza-se o símbolo `*`. Ou seja, se você quiser a interação entre as variáveis `V1` e `V2` no seu modelo basta incluir `V1 * V2` na fórmula do seu modelo.
+
+Voltando ao nosso exemplo, podemos fazer a interação entre as variáveis `Price` e `Urban` da seguinte forma:
+
+```{r}
+fit <- lm(Sales ~ . + Price*Urban, data = Carseats)
+summary(fit)
+```
+
+Um detalhe importante é que esse tipo de interação não funciona quando o objetivo é elevar uma variável contínuo ao quadrado. Por exemplo: `Price * Price` ou `Price^2`. Para conseguir obter o resultado pretendido usamos o `I(.)`.
+
+```{r}
+fit <- lm(Sales ~ . + I(Price^2), data = Carseats, x = TRUE)
+summary(fit)
+```
+
+## Realizando predições
+
+Concluindo essa primeira explanação sobre modelos no R, vamos falar sobre predições. No caso, da função `predict()`. Como o `summary()`, a função `predict()` é uma função genérica. Isto significa que ela se adapta ao objeto que está sendo passado para função. Isto é, ela não é exclusiva da função `lm()`, podendo ser utilizada com outros modelos. 
+
+Vamos separar os dados em dois grupos, um para estimar o modelo e outro para realizar as predições. No desenvolvimento de modelos de aprendizado de máquina (_machine learning_) esses grupos são chamados, respectivamente, de grupo de treinamento e grupo de teste.
+
+```{r}
+# Número de observações
+N <- nrow(Carseats) 
+# Fixar a seed para reproduzir os resultados
+set.seed(3943)
+# índices para separar dados de treinamento/teste
+idx <- sample(1:N, round(0.8*N), replace = FALSE)
+# Base de dados de treinamento 
+Carseats.train <- Carseats[idx,]
+# Base de dados de teste
+# As linhas que estão listadas no objeto idx são excluídas
+Carseats.test <- Carseats[-idx,]
+# Estima o modelo
+fit <- lm(Sales ~ ., data = Carseats.train)
+# Predição a partir do modelo estimado
+pred <- predict(object = fit, newdata = Carseats.test)
+head(pred)
+```
+
+Um fato importante sobre o argumento `newdata` é que é necessário que ele possua todas as variáveis que estão no modelo original. Se mais variáveis forem providas, elas serão desconsideradas pela função.
+
+## Referências
+
+- [Linear Models](http://data.princeton.edu/R/linearModels.html)
+- [Multiple (Linear) Regression](http://www.statmethods.net/stats/regression.html)
+- [Using R for Linear Regression](http://www.montefiore.ulg.ac.be/~kvansteen/GBIO0009-1/ac20092010/Class8/Using%20R%20for%20linear%20regression.pdf)
