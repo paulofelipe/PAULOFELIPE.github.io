@@ -7,13 +7,27 @@ categories: [r, intermediário]
 published: true
 ---
 
-Neste post, vamos iniciar a trabalhar com modelos no R. Para começar, vamos tratar do modelo linear de regressão utilizando a função `lm()` do R. Entendendo a estrutura básica a partir do modelo linear será bastante útil, mesmo que você queira utilizar outros modelos.
+Neste post, vamos introduzir alguns conceitos para começar a trabalhar com modelos no R. Abordaremos o modelo linear de regressão utilizando a função `lm()`. Aprender a estrutura básica de modelos a partir do modelo linear será bastante útil para entender e utilizar outros modelos mais complexos.
 
 <!-- More -->
 
+## O que são modelos?
+
+Se você já tem uma noção do que é modelagem matemática, pule para o próximo tópico **Dados**.
+
+Modelos são representações da realidade. São usados nas ciências sociais e exatas na tentativa de estudar e entender como o mundo funciona. 
+
+Um modelo matemático é uma representação, em linguagem matemática, do comportamento de algo. Por se tratar de representações, obviamente modelos matemáticos são bem mais simples do que a realidade, mas isso não significa dizer que um bom modelo não sirva para descrever e entender determinados aspectos e comportamentos reais.
+
+Modelo de regressão linear talvez seja uma das formas mais simples de modelagem matemática. É uma abordagem que tenta representar a relação entre duas variáveis, uma chamada variável dependente (y), e uma variável explicativa (x).
+
+Usa-se o termo "regressão" pois o modelo tenta descrever o comportamento de y em relação a x em situações desconhecidas tomando como base situações conhecidas, ou seja, o modelo calcula um fator de forma que se você conhece o valor de x, consegue descobrir (estimar) o valor de y. E usa-se o termo "linear" pois o modelo considera que a relação de y com x segue uma [função linear](https://pt.wikipedia.org/wiki/Fun%C3%A7%C3%A3o_linear), onde, dentre outras caracterísitcas, basicamente a relação pode ser representada graficamente como uma linha reta.
+
+Para entender e experimentar o modelo de regressão linear, usaremos o R e suas funções em uma base de dados e exemplificaremos como o modelo funciona.
+
 ## Dados
 
-Primeiramente, precisaremos de uma base de dados para exemplificar como podemos estimar um modelo no R. Vamos utilizar a base de dados `Carseats` que está disponível no pacote `ISLR` que é um pacote complementar ao livro [Introduction to Statistical Learning with Applications in R](http://www-bcf.usc.edu/~gareth/ISL/getbook.html). Trata-se de um conjunto de dados simulados de vendas assentos de carros para crianças. A tabela abaixo lista as variáveis presente nessa base de dados:
+Primeiramente, precisaremos de uma base de dados para exemplificar como podemos usar um modelo no R. Vamos utilizar a base de dados `Carseats` que está disponível no pacote `ISLR`, que é um pacote complementar ao livro [Introduction to Statistical Learning with Applications in R](http://www-bcf.usc.edu/~gareth/ISL/getbook.html). Trata-se de um conjunto de dados simulados de vendas de cadeirinhas de carros para crianças. A tabela abaixo lista as variáveis presente nessa base de dados:
 
 
 {% highlight r %}
@@ -96,9 +110,15 @@ summary(Carseats)
 
 ## Modelo Linear
 
-Para começar, vamos estimar um modelo linear (função `lm()`) em que a variável dependente é a variável de vendas, _Sales_, e utilizaremos duas variáveis independentes (_features_), _Price_ e _CompPrice_. A função `lm()` utiliza a estrutura de fórmula para definição do modelo. A variável dependente é separada das demais variáveis explicativas pelo símbolo `~`. No parâmetro `data`, é informado o conjunto de dados que contém as variáveis que estão listadas na fórmula. Essa função possui outros parâmetros opcionais que estão listados no _help_ (`?lm`). 
+Usar o modelo de regressão linear no R é bastante simples. Vamos estimar um modelo linear (função `lm()`) em que a variável dependente (y) é a variável de vendas, _Sales_, e utilizaremos duas variáveis independentes (_features_), _Price_ e _CompPrice_.
 
-É importante ressaltar que a estrutura de fórmula não é utilizada em todos os modelos no R. Em alguns casos, o modelo pode ser definido por dois parâmetros, `x` e `y`, que recebem os valores das variáveis independentes e dependente, respectivamente. Eventualmente, iremos trabalhar com algum modelo que está estruturado dessa forma. Podem existir outras formas de estruturação de um modelo no R, mas são mais raras. 
+A função `lm()` utiliza a estrutura de fórmula para definição do modelo. Essa estrutura é uma organização muito comum em diversas funções de modelo no R. A estrutura de fórmula separa a variável dependente das demais variáveis explicativas pelo símbolo `~`. À esquerda de `~` fica a variável dependente que você deseja estimar, e à direita as demais variáveis explicativas.
+
+No parâmetro `data`, é informado o conjunto de dados que contém as variáveis que estão listadas na fórmula. Essa função possui outros parâmetros opcionais que estão listados no _help_ (`?lm`). 
+
+Apesar de comum, é importante ressaltar que a estrutura de fórmula não é utilizada em todos os modelos no R. Em alguns casos, o modelo pode ser definido por dois parâmetros, `x` e `y`, que recebem os valores das variáveis independentes e dependente, respectivamente. Eventualmente, iremos trabalhar com algum modelo que está estruturado dessa forma. Podem existir outras formas de estruturação de um modelo no R, mas são mais raras. 
+
+Como dito, usar o modelo linear em R é muito simples:
 
 
 {% highlight r %}
@@ -118,7 +138,7 @@ fit
 ##     6.27869     -0.08746      0.09078
 {% endhighlight %}
 
-Bem, como quase tudo no R, não existe uma única forma de executar essa função. Você poderia estimar o modelo direto sem informar o parâmetro `data`. 
+Bem, como quase tudo no R, não existe uma única forma de executar essa função. Você poderia estimar o modelo direto sem informar o parâmetro `data`: 
 
 
 {% highlight r %}
@@ -640,6 +660,19 @@ head(pred)
 {% endhighlight %}
 
 Um fato importante sobre o argumento `newdata` é que é necessário que ele possua todas as variáveis que estão no modelo original. Se mais variáveis forem providas, elas serão desconsideradas pela função.
+
+## Interpretando os resultados
+
+Nosso objetivo com esse post foi explicar o uso básico de modelos no R com a função `lm()`. Interpretar os resultados de um modelo envolvem alguns conceitos estatísticos que talvez mereçam posts específicos. 
+
+Porém, para ajudar no entendimento e dar mais sentido à alguns detalhes do `summary()` usado para ver resultados de um modelo, segue alguns links com ótimas explicações de como entender e interpretar modelos.
+
+- [Interpreting Regression Coefficients](http://www.theanalysisfactor.com/interpreting-regression-coefficients/)
+- [Interpreting Linear Models in R](http://blog.yhat.com/posts/r-lm-summary.html)
+- [Interpreting Simple Linear Model Output in R](https://rstudio-pubs-static.s3.amazonaws.com/119859_a290e183ff2f46b2858db66c3bc9ed3a.html)
+- [Desvio Padrão](https://pt.wikipedia.org/wiki/Desvio_padr%C3%A3o)
+- [P-Valor](https://pt.wikipedia.org/wiki/Valor-p)
+
 
 ## Referências
 
