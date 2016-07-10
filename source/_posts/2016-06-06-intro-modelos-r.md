@@ -1,19 +1,34 @@
 ---
 layout: post
 title: "Introdução a Modelos no R"
-date: 2016-06-06 21:00:00 -0300
+date: 2016-07-10 11:44:00 -0300
 comments: true
 categories: [r, intermediário]
 published: true
 ---
 
-Neste post, vamos iniciar a trabalhar com modelos no R. Para começar, vamos tratar do modelo linear de regressão utilizando a função `lm()` do R. Entendendo a estrutura básica a partir do modelo linear será bastante útil, mesmo que você queira utilizar outros modelos.
+Neste post, vamos introduzir alguns conceitos para começar a trabalhar com modelos no R. Abordaremos o modelo linear de regressão utilizando a função `lm()`. Aprender a estrutura básica de modelos a partir do modelo linear será bastante útil para entender e utilizar outros modelos mais complexos.
 
 <!-- More -->
 
+## O que são modelos?
+
+Se você já tem uma noção do que é modelagem matemática/estatística, pule para o próximo tópico **Dados**
+Modelos são representações da realidade. São usados nas ciências sociais, naturais e exatas na tentativa de estudar e entender como o mundo funciona. 
+
+Um modelo matemático é uma representação, em linguagem matemática, do comportamento de algo. Por se tratar de representações, obviamente modelos matemáticos são bem mais simples do que a realidade, mas isso não significa dizer que um bom modelo não sirva para descrever e entender determinados aspectos e comportamentos reais.
+
+Modelo de regressão linear talvez seja uma das formas mais simples de modelagem estatística. É uma abordagem que tenta representar a relação entre variáveis, uma chamada variável dependente (y), e uma ou mais denominadas de variáveis explicativas (**x**). Adicionalmente, o modelo também inclui um termo aleatório, o que o torna um modelo estatístico.
+
+Usa-se o termo "regressão" pois o modelo tenta descrever o comportamento de y em relação a x em situações desconhecidas tomando como base situações conhecidas, ou seja, o modelo calcula um fator de forma que se você conhece o(s) valor(es) de x, consegue estimar o valor de y. O termo linear deve-se ao fato de como os parâmetros e o termo aleatório entram na equação estimada. A relação linear deve existir entre $y$ e $x$ ou entre $y$ e alguma função de $x$. Ou seja, se o modelo a ser estimado é $$ y_i = \alpha + \beta\ln(x_i) + e_i$$, fica evidente que o efeito de $x$ em $y$ não é linear, mas o efeito de $\ln(x)$, sim.
+
+Também é importante notar que, como todo modelo, o modelo de regressão linear tem uma série de hipóteses, e as inferências em relação aos parâmetros são realizadas sob essas hipóteses. Se elas são violadas de alguma maneira, a inferência que está sendo realizada pode estar errada.  
+
+Feita essa pequena introdução sobre modelos, iremos para a parte prática de como estimar o modelo linear usando o R.
+
 ## Dados
 
-Primeiramente, precisaremos de uma base de dados para exemplificar como podemos estimar um modelo no R. Vamos utilizar a base de dados `Carseats` que está disponível no pacote `ISLR` que é um pacote complementar ao livro [Introduction to Statistical Learning with Applications in R](http://www-bcf.usc.edu/~gareth/ISL/getbook.html). Trata-se de um conjunto de dados simulados de vendas assentos de carros para crianças. A tabela abaixo lista as variáveis presente nessa base de dados:
+Primeiramente, precisaremos de uma base de dados para exemplificar como podemos usar um modelo no R. Vamos utilizar a base de dados `Carseats` que está disponível no pacote `ISLR`, que é um pacote complementar ao livro [Introduction to Statistical Learning with Applications in R](http://www-bcf.usc.edu/~gareth/ISL/getbook.html). Trata-se de um conjunto de dados simulados de vendas de cadeirinhas de carros para crianças. A tabela abaixo lista as variáveis presente nessa base de dados:
 
 
 {% highlight r %}
@@ -96,9 +111,15 @@ summary(Carseats)
 
 ## Modelo Linear
 
-Para começar, vamos estimar um modelo linear (função `lm()`) em que a variável dependente é a variável de vendas, _Sales_, e utilizaremos duas variáveis independentes (_features_), _Price_ e _CompPrice_. A função `lm()` utiliza a estrutura de fórmula para definição do modelo. A variável dependente é separada das demais variáveis explicativas pelo símbolo `~`. No parâmetro `data`, é informado o conjunto de dados que contém as variáveis que estão listadas na fórmula. Essa função possui outros parâmetros opcionais que estão listados no _help_ (`?lm`). 
+Usar o modelo de regressão linear no R é bastante simples. Vamos estimar um modelo linear (função `lm()`) em que a variável dependente (y) é a variável de vendas, _Sales_, e utilizaremos duas variáveis independentes (_features_), _Price_ e _CompPrice_.
 
-É importante ressaltar que a estrutura de fórmula não é utilizada em todos os modelos no R. Em alguns casos, o modelo pode ser definido por dois parâmetros, `x` e `y`, que recebem os valores das variáveis independentes e dependente, respectivamente. Eventualmente, iremos trabalhar com algum modelo que está estruturado dessa forma. Podem existir outras formas de estruturação de um modelo no R, mas são mais raras. 
+A função `lm()` utiliza a estrutura de fórmula para definição do modelo. Essa estrutura é uma organização muito comum em diversas funções de modelo no R. A estrutura de fórmula separa a variável dependente das demais variáveis explicativas pelo símbolo `~`. À esquerda de `~` fica a variável dependente que você deseja estimar, e à direita as demais variáveis explicativas.
+
+No parâmetro `data`, é informado o conjunto de dados que contém as variáveis que estão listadas na fórmula. Essa função possui outros parâmetros opcionais que estão listados no _help_ (`?lm`). 
+
+Apesar de comum, é importante ressaltar que a estrutura de fórmula não é utilizada em todos os modelos no R. Em alguns casos, o modelo pode ser definido por dois parâmetros, `x` e `y`, que recebem os valores das variáveis independentes e dependente, respectivamente. Eventualmente, iremos trabalhar com algum modelo que está estruturado dessa forma. Podem existir outras formas de estruturação de um modelo no R, mas são mais raras. 
+
+Como dito, usar o modelo linear em R é muito simples:
 
 
 {% highlight r %}
@@ -118,7 +139,7 @@ fit
 ##     6.27869     -0.08746      0.09078
 {% endhighlight %}
 
-Bem, como quase tudo no R, não existe uma única forma de executar essa função. Você poderia estimar o modelo direto sem informar o parâmetro `data`. 
+Bem, como quase tudo no R, não existe uma única forma de executar essa função. Você poderia estimar o modelo direto sem informar o parâmetro `data`: 
 
 
 {% highlight r %}
@@ -639,10 +660,39 @@ head(pred)
 ##  9.229138  6.157952 11.786486  9.517201 11.078857 10.037942
 {% endhighlight %}
 
+
 Um fato importante sobre o argumento `newdata` é que é necessário que ele possua todas as variáveis que estão no modelo original. Se mais variáveis forem providas, elas serão desconsideradas pela função.
+
+## Diagnósticos
+
+Após a estimação do modelo, é comum verificar se algumas hipóteses realmente são válidas. Uma maneira informal de se fazer isso é checar alguns gráficos. O R fornece uma série de diagnósticos ao passar o objeto que contém o modelo estimado (`fit` no nosso caso) na função `plot()`. 
+
+
+{% highlight r %}
+plot(fit)
+{% endhighlight %}
+
+![plot of chunk unnamed-chunk-22](/figures/source/2016-06-06-intro-modelos-r/unnamed-chunk-22-1.png)![plot of chunk unnamed-chunk-22](/figures/source/2016-06-06-intro-modelos-r/unnamed-chunk-22-2.png)![plot of chunk unnamed-chunk-22](/figures/source/2016-06-06-intro-modelos-r/unnamed-chunk-22-3.png)![plot of chunk unnamed-chunk-22](/figures/source/2016-06-06-intro-modelos-r/unnamed-chunk-22-4.png)
+
+A função retornará 4 gráficos que auxiliarão a análise sobre a violação de alguma hipótese. Testes formais também podem ser realizados, mas vamos nos restringir aqui a essa análise gráfica.
+
+O primeiro plot (canto superior esquerdo) tem o objetivo de identificar a possível existência de não-linearidade nos dados.
+
+O segundo gráfico tenta evidenciar se o resíduos são normalmente distribuídos. Se os valores se afastam da linha traçada, é sinal de não-normalidade dos resíduos.
+
+O terceiro plot (canto inferior esquerdo) dá um indicativo sobre a violação ou não da hipótese de homocedasticidade (variância constante do termo aleatório). Quanto mais horizontal for a linha vermelha, mais forte é a evidência de homocedasticidade.
+
+Por último, o quarto gráfico auxilia a identificação de pontos (valores extremos ou _outliers_) que influenciam consideravelmente a reta de regressão. Nem todo _outlier_ afetará a reta, mas aqueles que alteram podem afetar consideravelmente o poder de generalização do modelo. Assim, pode ser necessário excluí-los do processo de estimação do modelo. No nosso caso, os limites calculados para identificação de outliers não aparecem no gráfico, indicando que não há valores extremos que estão influenciando a reta estimada. No entanto, caso esse limite apareça e algum ponto esteja além desse limite, há indicação de que aquele ponto pode estar exercendo influência sobre a reta.
+
+Para testes formais, dê uma olhada no pacote `lmtest`.
+
+## Considerações Finais
+
+Chegamos ao fim dessa primeira exposição sobre modelos. A ideia aqui é que tenha sido quebrada a primeira barreira e que você já consiga estimar esse modelo no R. Provavelmente, você necessitará usar outros modelos nas suas análises, mas entendendo como funciona o modelo linear será de grande ajuda para estimação de diversos modelos. Nos avise se há alguma parte que você gostaria de mais detalhes. Se possível, poderemos tratar em outros posts.
 
 ## Referências
 
 - [Linear Models](http://data.princeton.edu/R/linearModels.html)
 - [Multiple (Linear) Regression](http://www.statmethods.net/stats/regression.html)
 - [Using R for Linear Regression](http://www.montefiore.ulg.ac.be/~kvansteen/GBIO0009-1/ac20092010/Class8/Using%20R%20for%20linear%20regression.pdf)
+- [Regression Diagnostics](http://www.statmethods.net/stats/rdiagnostics.html)
