@@ -4,7 +4,7 @@
   <title><![CDATA[r | Full Join]]></title>
   <link href="http://fulljoin.com.br/blog/categories/r/atom.xml" rel="self"/>
   <link href="http://fulljoin.com.br/"/>
-  <updated>2016-05-30T19:27:08-03:00</updated>
+  <updated>2016-07-11T19:36:42-03:00</updated>
   <id>http://fulljoin.com.br/</id>
   <author>
     <name><![CDATA[Full Join]]></name>
@@ -12,6 +12,581 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Introdução a Modelos no R]]></title>
+    <link href="http://fulljoin.com.br/blog/2016/07/10/intro-modelos-r/"/>
+    <updated>2016-07-10T11:44:00-03:00</updated>
+    <id>http://fulljoin.com.br/blog/2016/07/10/intro-modelos-r</id>
+    <content type="html"><![CDATA[<p>Neste post, vamos introduzir alguns conceitos para começar a trabalhar com modelos no R. Abordaremos o modelo linear de regressão utilizando a função <code>lm()</code>. Aprender a estrutura básica de modelos a partir do modelo linear será bastante útil para entender e utilizar outros modelos mais complexos.</p>
+
+<!-- More -->
+
+<h2 id="o-que-so-modelos">O que são modelos?</h2>
+
+<p>Se você já tem uma noção do que é modelagem matemática, pule para o próximo tópico <strong>Dados</strong>.</p>
+
+<p>Modelos são representações da realidade. São usados nas ciências sociais e exatas na tentativa de estudar e entender como o mundo funciona.</p>
+
+<p>Um modelo matemático é uma representação, em linguagem matemática, do comportamento de algo. Por se tratar de representações, obviamente modelos matemáticos são bem mais simples do que a realidade, mas isso não significa dizer que um bom modelo não sirva para descrever e entender determinados aspectos e comportamentos reais.</p>
+
+<p>Modelo de regressão linear talvez seja uma das formas mais simples de modelagem estatística. É uma abordagem que tenta representar a relação entre variáveis, uma chamada variável dependente (y), e uma ou mais denominadas de variáveis explicativas (<strong>x</strong>). Adicionalmente, o modelo também inclui um termo aleatório, o que o torna um modelo estatístico.</p>
+
+<p>Usa-se o termo “regressão” pois o modelo tenta descrever o comportamento de y em relação a x em situações desconhecidas tomando como base situações conhecidas, ou seja, o modelo calcula um fator de forma que se você conhece o(s) valor(es) de x, consegue estimar o valor de y. O termo linear deve-se ao fato de como os parâmetros e o termo aleatório entram na equação estimada. A relação linear deve existir entre $y$ e $x$ ou entre $y$ e alguma função de $x$. Ou seja, se o modelo a ser estimado é <script type="math/tex">y_i = \alpha + \beta\ln(x_i) + e_i</script>, fica evidente que o efeito de $x$ em $y$ não é linear, mas o efeito de $\ln(x)$, sim.</p>
+
+<p>Também é importante notar que, como todo modelo, o modelo de regressão linear tem uma série de hipóteses, e as inferências em relação aos parâmetros são realizadas sob essas hipóteses. Se elas são violadas de alguma maneira, a inferência que está sendo realizada pode estar errada.</p>
+
+<p>Feita essa pequena introdução sobre modelos, iremos para a parte prática de como estimar o modelo linear usando o R.</p>
+
+<h2 id="dados">Dados</h2>
+
+<p>Primeiramente, precisaremos de uma base de dados para exemplificar como podemos usar um modelo no R. Vamos utilizar a base de dados <code>Carseats</code> que está disponível no pacote <code>ISLR</code>, que é um pacote complementar ao livro <a href="http://www-bcf.usc.edu/~gareth/ISL/getbook.html">Introduction to Statistical Learning with Applications in R</a>. Trata-se de um conjunto de dados simulados de vendas de cadeirinhas de carros para crianças. A tabela abaixo lista as variáveis presente nessa base de dados:</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">library</span><span class="p">(</span><span class="n">ISLR</span><span class="p">)</span> <span class="c1"># Instale o pacote se necessário install.packages(“ISLR”)</span>
+<span class="n">data</span><span class="p">(</span><span class="err">“</span><span class="n">Carseats</span><span class="err">”</span><span class="p">)</span></code></pre></div></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Nome</th>
+      <th style="text-align: left">Descrição</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Sales</td>
+      <td style="text-align: left">Milhares de unidades vendidas em cada local</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">CompPrice</td>
+      <td style="text-align: left">Preço cobrado pelo competidor em cada local</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Income</td>
+      <td style="text-align: left">Nível de renda local (milhares de dólares)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Advertising</td>
+      <td style="text-align: left">Orçamento disponível para publicidade em cada local (milhares de dólares)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Population</td>
+      <td style="text-align: left">Tamanho da população regional (mil)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Price</td>
+      <td style="text-align: left">Preço da empresa em cada local</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ShelveLoc</td>
+      <td style="text-align: left">Fator com três níveis: ruim, bom e médio. Indica a qualidade do local da prateleira para as cadeiras de carro em cada loja</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Age</td>
+      <td style="text-align: left">Idade média da população local</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Education</td>
+      <td style="text-align: left">Nível educacional de cada local</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Urban</td>
+      <td style="text-align: left">Fator com dois níveis: sim e não. Indica se a loja está localizada em um área urbana ou rural</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">US</td>
+      <td style="text-align: left">Fator com dois níveis: sim e não. Indica se a loja está localizada nos Estados Unidos ou não</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Para termos uma ideia da “cara” dos dados, vamos olhar as primeiras linhas usando o <code>head()</code>.</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">head</span><span class="p">(</span><span class="n">Carseats</span><span class="p">)</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">##   Sales CompPrice Income Advertising Population Price ShelveLoc Age
+## 1  9.50       138     73          11        276   120       Bad  42
+## 2 11.22       111     48          16        260    83      Good  65
+## 3 10.06       113     35          10        269    80    Medium  59
+## 4  7.40       117    100           4        466    97    Medium  55
+## 5  4.15       141     64           3        340   128       Bad  38
+## 6 10.81       124    113          13        501    72       Bad  78
+##   Education Urban  US
+## 1        17   Yes Yes
+## 2        10   Yes Yes
+## 3        12   Yes Yes
+## 4        14   Yes Yes
+## 5        13   Yes  No
+## 6        16    No Yes</code></pre></div></p>
+
+<p>Essa base dados é interessante, pois possui variáveis quantitativas e qualitativas/categóricas. Se você quiser ver algumas estatísticas sobre cada coluna dos seus dados, pode-se usar o <code>summary()</code>.</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">summary</span><span class="p">(</span><span class="n">Carseats</span><span class="p">)</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">##      Sales          CompPrice       Income        Advertising  &lt;br /&gt;
+##  Min.   : 0.000   Min.   : 77   Min.   : 21.00   Min.   : 0.000&lt;br /&gt;
+##  1st Qu.: 5.390   1st Qu.:115   1st Qu.: 42.75   1st Qu.: 0.000&lt;br /&gt;
+##  Median : 7.490   Median :125   Median : 69.00   Median : 5.000&lt;br /&gt;
+##  Mean   : 7.496   Mean   :125   Mean   : 68.66   Mean   : 6.635&lt;br /&gt;
+##  3rd Qu.: 9.320   3rd Qu.:135   3rd Qu.: 91.00   3rd Qu.:12.000&lt;br /&gt;
+##  Max.   :16.270   Max.   :175   Max.   :120.00   Max.   :29.000&lt;br /&gt;
+##    Population        Price        ShelveLoc        Age     &lt;br /&gt;
+##  Min.   : 10.0   Min.   : 24.0   Bad   : 96   Min.   :25.00&lt;br /&gt;
+##  1st Qu.:139.0   1st Qu.:100.0   Good  : 85   1st Qu.:39.75&lt;br /&gt;
+##  Median :272.0   Median :117.0   Medium:219   Median :54.50&lt;br /&gt;
+##  Mean   :264.8   Mean   :115.8                Mean   :53.32&lt;br /&gt;
+##  3rd Qu.:398.5   3rd Qu.:131.0                3rd Qu.:66.00&lt;br /&gt;
+##  Max.   :509.0   Max.   :191.0                Max.   :80.00&lt;br /&gt;
+##    Education    Urban       US   &lt;br /&gt;
+##  Min.   :10.0   No :118   No :142&lt;br /&gt;
+##  1st Qu.:12.0   Yes:282   Yes:258&lt;br /&gt;
+##  Median :14.0                    &lt;br /&gt;
+##  Mean   :13.9                    &lt;br /&gt;
+##  3rd Qu.:16.0                    &lt;br /&gt;
+##  Max.   :18.0</code></pre></div></p>
+
+<h2 id="modelo-linear">Modelo Linear</h2>
+
+<p>Usar o modelo de regressão linear no R é bastante simples. Vamos estimar um modelo linear (função <code>lm()</code>) em que a variável dependente (y) é a variável de vendas, <em>Sales</em>, e utilizaremos duas variáveis independentes (<em>features</em>), <em>Price</em> e <em>CompPrice</em>.</p>
+
+<p>A função <code>lm()</code> utiliza a estrutura de fórmula para definição do modelo. Essa estrutura é uma organização muito comum em diversas funções de modelo no R. A estrutura de fórmula separa a variável dependente das demais variáveis explicativas pelo símbolo <code>~</code>. À esquerda de <code>~</code> fica a variável dependente que você deseja estimar, e à direita as demais variáveis explicativas.</p>
+
+<p>No parâmetro <code>data</code>, é informado o conjunto de dados que contém as variáveis que estão listadas na fórmula. Essa função possui outros parâmetros opcionais que estão listados no <em>help</em> (<code>?lm</code>).</p>
+
+<p>Apesar de comum, é importante ressaltar que a estrutura de fórmula não é utilizada em todos os modelos no R. Em alguns casos, o modelo pode ser definido por dois parâmetros, <code>x</code> e <code>y</code>, que recebem os valores das variáveis independentes e dependente, respectivamente. Eventualmente, iremos trabalhar com algum modelo que está estruturado dessa forma. Podem existir outras formas de estruturação de um modelo no R, mas são mais raras.</p>
+
+<p>Como dito, usar o modelo linear em R é muito simples:</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">fit</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">lm</span><span class="p">(</span><span class="n">Sales</span> <span class="o">~</span> <span class="n">Price</span> <span class="o">+</span> <span class="n">CompPrice</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">Carseats</span><span class="p">)</span>
+<span class="n">fit</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## 
+## Call:
+## lm(formula = Sales ~ Price + CompPrice, data = Carseats)
+## 
+## Coefficients:
+## (Intercept)        Price    CompPrice&lt;br /&gt;
+##     6.27869     -0.08746      0.09078</code></pre></div></p>
+
+<p>Bem, como quase tudo no R, não existe uma única forma de executar essa função. Você poderia estimar o modelo direto sem informar o parâmetro <code>data</code>:</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">fit</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">lm</span><span class="p">(</span><span class="n">Carseats</span><span class="o">$</span><span class="n">Sales</span> <span class="o">~</span> <span class="n">Carseats</span><span class="o">$</span><span class="n">Price</span> <span class="o">+</span> <span class="n">Carseats</span><span class="o">$</span><span class="n">CompPrice</span><span class="p">)</span>
+<span class="n">fit</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## 
+## Call:
+## lm(formula = Carseats$Sales ~ Carseats$Price + Carseats$CompPrice)
+## 
+## Coefficients:
+##        (Intercept)      Carseats$Price  Carseats$CompPrice&lt;br /&gt;
+##            6.27869            -0.08746             0.09078</code></pre></div></p>
+
+<p>Percebeu que o resultado foi igual? Além disso, considerando que as vendas estão controladas só por esses dois fatores, você vê que as vendas são negativamente afetadas pelo próprio preço e positivamente afetas pelo preço do competidor. Porém, não estamos vendo os desvios-padrão para fazer a análise mais correta. Como fazer pra ver mais detalhes. Novamente, usaremos o <code>summary()</code>.</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">fit</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">lm</span><span class="p">(</span><span class="n">Sales</span> <span class="o">~</span> <span class="n">Price</span> <span class="o">+</span> <span class="n">CompPrice</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">Carseats</span><span class="p">)</span>
+<span class="n">summary</span><span class="p">(</span><span class="n">fit</span><span class="p">)</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## 
+## Call:
+## lm(formula = Sales ~ Price + CompPrice, data = Carseats)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -5.5285 -1.6207 -0.2404  1.5269  6.2437 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&amp;gt;|t|)  &lt;br /&gt;
+## (Intercept)  6.278692   0.932774   6.731 5.91e-11 &lt;strong&gt;*
+## Price       -0.087458   0.005914 -14.788  &amp;lt; 2e-16 ***
+## CompPrice    0.090777   0.009132   9.941  &amp;lt; 2e-16 ***
+## —
+## Signif. codes:  0 ‘&lt;/strong&gt;&lt;em&gt;’ 0.001 ‘**’ 0.01 ‘&lt;/em&gt;’ 0.05 ‘.’ 0.1 ‘ ‘ 1
+## 
+## Residual standard error: 2.269 on 397 degrees of freedom
+## Multiple R-squared:  0.3578,	Adjusted R-squared:  0.3546 
+## F-statistic: 110.6 on 2 and 397 DF,  p-value: &amp;lt; 2.2e-16</code></pre></div></p>
+
+<p>Se você tiver que usar todas as variáveis e sua base dados possuir um grande número de colunas (variáveis), não é necessário explicitá-las uma a uma. Basta utilizar <code>.</code>.</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">fit</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">lm</span><span class="p">(</span><span class="n">Sales</span> <span class="o">~</span> <span class="err">.</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">Carseats</span><span class="p">)</span>
+<span class="n">summary</span><span class="p">(</span><span class="n">fit</span><span class="p">)</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## 
+## Call:
+## lm(formula = Sales ~ ., data = Carseats)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -2.8692 -0.6908  0.0211  0.6636  3.4115 
+## 
+## Coefficients:
+##                   Estimate Std. Error t value Pr(&amp;gt;|t|)  &lt;br /&gt;
+## (Intercept)      5.6606231  0.6034487   9.380  &amp;lt; 2e-16 &lt;strong&gt;*
+## CompPrice        0.0928153  0.0041477  22.378  &amp;lt; 2e-16 ***
+## Income           0.0158028  0.0018451   8.565 2.58e-16 ***
+## Advertising      0.1230951  0.0111237  11.066  &amp;lt; 2e-16 ***
+## Population       0.0002079  0.0003705   0.561    0.575  &lt;br /&gt;
+## Price           -0.0953579  0.0026711 -35.700  &amp;lt; 2e-16 ***
+## ShelveLocGood    4.8501827  0.1531100  31.678  &amp;lt; 2e-16 ***
+## ShelveLocMedium  1.9567148  0.1261056  15.516  &amp;lt; 2e-16 ***
+## Age             -0.0460452  0.0031817 -14.472  &amp;lt; 2e-16 ***
+## Education       -0.0211018  0.0197205  -1.070    0.285  &lt;br /&gt;
+## UrbanYes         0.1228864  0.1129761   1.088    0.277  &lt;br /&gt;
+## USYes           -0.1840928  0.1498423  -1.229    0.220  &lt;br /&gt;
+## —
+## Signif. codes:  0 ‘&lt;/strong&gt;&lt;em&gt;’ 0.001 ‘**’ 0.01 ‘&lt;/em&gt;’ 0.05 ‘.’ 0.1 ‘ ‘ 1
+## 
+## Residual standard error: 1.019 on 388 degrees of freedom
+## Multiple R-squared:  0.8734,	Adjusted R-squared:  0.8698 
+## F-statistic: 243.4 on 11 and 388 DF,  p-value: &amp;lt; 2.2e-16</code></pre></div></p>
+
+<p>E se você quiser excluir alguma variável da análise? Da mesma forma que você utiliza o <code>+</code> pra adicionar variáveis, o <code>-</code> pode ser utilizado pra excluí-las.</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">fit</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">lm</span><span class="p">(</span><span class="n">Sales</span> <span class="o">~</span> <span class="err">.</span> <span class="o">-</span> <span class="n">Urban</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">Carseats</span><span class="p">)</span>
+<span class="n">summary</span><span class="p">(</span><span class="n">fit</span><span class="p">)</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## 
+## Call:
+## lm(formula = Sales ~ . - Urban, data = Carseats)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -2.8498 -0.6992  0.0300  0.6436  3.4616 
+## 
+## Coefficients:
+##                   Estimate Std. Error t value Pr(&amp;gt;|t|)  &lt;br /&gt;
+## (Intercept)      5.7267269  0.6005220   9.536   &amp;lt;2e-16 &lt;strong&gt;*
+## CompPrice        0.0930440  0.0041433  22.457   &amp;lt;2e-16 ***
+## Income           0.0158656  0.0018447   8.601   &amp;lt;2e-16 ***
+## Advertising      0.1235923  0.0111169  11.118   &amp;lt;2e-16 ***
+## Population       0.0001822  0.0003698   0.493    0.622  &lt;br /&gt;
+## Price           -0.0953182  0.0026715 -35.680   &amp;lt;2e-16 ***
+## ShelveLocGood    4.8365318  0.1526307  31.688   &amp;lt;2e-16 ***
+## ShelveLocMedium  1.9458754  0.1257409  15.475   &amp;lt;2e-16 ***
+## Age             -0.0459156  0.0031802 -14.438   &amp;lt;2e-16 ***
+## Education       -0.0219546  0.0197095  -1.114    0.266  &lt;br /&gt;
+## USYes           -0.1836133  0.1498769  -1.225    0.221  &lt;br /&gt;
+## —
+## Signif. codes:  0 ‘&lt;/strong&gt;&lt;em&gt;’ 0.001 ‘**’ 0.01 ‘&lt;/em&gt;’ 0.05 ‘.’ 0.1 ‘ ‘ 1
+## 
+## Residual standard error: 1.019 on 389 degrees of freedom
+## Multiple R-squared:  0.873,	Adjusted R-squared:  0.8698 
+## F-statistic: 267.5 on 10 and 389 DF,  p-value: &amp;lt; 2.2e-16</code></pre></div></p>
+
+<h2 id="acessando-os-resultados">Acessando os resultados</h2>
+
+<p>O objeto <code>fit</code> que foi criado a partir da função <code>lm()</code> carrega consigo uma série de resultados que podem ser recuperados a qualquer momento. Se você quiser acessar os resíduos, existem duas formas:</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># vamos mostrar apenas os 10 primeiros</span>
+<span class="n">fit</span><span class="o">$</span><span class="n">residuals</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">10</span><span class="p">]</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">##          1          2          3          4          5          6 
+##  2.2886707 -1.1584731  0.8147224 -1.0624075 -1.9131450  1.0342126 
+##          7          8          9         10 
+##  0.4669361  0.3339878  0.3492739 -1.2152188</code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">residuals</span><span class="p">(</span><span class="n">fit</span><span class="p">)[</span><span class="m">1</span><span class="o">:</span><span class="m">10</span><span class="p">]</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">##          1          2          3          4          5          6 
+##  2.2886707 -1.1584731  0.8147224 -1.0624075 -1.9131450  1.0342126 
+##          7          8          9         10 
+##  0.4669361  0.3339878  0.3492739 -1.2152188</code></pre></div></p>
+
+<p>Para acessar os valores previstos (com dados utilizados na estimação), também existem duas formas:</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># vamos mostrar apenas os 10 primeiros</span>
+<span class="n">fit</span><span class="o">$</span><span class="n">fitted.values</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">10</span><span class="p">]</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">##         1         2         3         4         5         6         7 
+##  7.211329 12.378473  9.245278  8.462407  6.063145  9.775787  6.163064 
+##         8         9        10 
+## 11.516012  6.190726  5.905219</code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">fitted</span><span class="p">(</span><span class="n">fit</span><span class="p">)[</span><span class="m">1</span><span class="o">:</span><span class="m">10</span><span class="p">]</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">##         1         2         3         4         5         6         7 
+##  7.211329 12.378473  9.245278  8.462407  6.063145  9.775787  6.163064 
+##         8         9        10 
+## 11.516012  6.190726  5.905219</code></pre></div></p>
+
+<p>O mesmo vale para acessar os coeficientes estimados.</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">coef</span><span class="p">(</span><span class="n">fit</span><span class="p">)</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">##     (Intercept)       CompPrice          Income     Advertising 
+##    5.7267268794    0.0930440486    0.0158655664    0.1235923300 
+##      Population           Price   ShelveLocGood ShelveLocMedium 
+##    0.0001822397   -0.0953181549    4.8365318149    1.9458754343 
+##             Age       Education           USYes 
+##   -0.0459156254   -0.0219546072   -0.1836132570</code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">fit</span><span class="o">$</span><span class="n">coefficients</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">##     (Intercept)       CompPrice          Income     Advertising 
+##    5.7267268794    0.0930440486    0.0158655664    0.1235923300 
+##      Population           Price   ShelveLocGood ShelveLocMedium 
+##    0.0001822397   -0.0953181549    4.8365318149    1.9458754343 
+##             Age       Education           USYes 
+##   -0.0459156254   -0.0219546072   -0.1836132570</code></pre></div></p>
+
+<p>Para verificar tudo que está disponível no objeto <code>fit</code>, podemos listar seus nomes usando a função <code>names()</code>. O objeto <code>fit</code> é uma lista na verdade em que são alocados vários objetos de diversos tipos diferentes.</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">names</span><span class="p">(</span><span class="n">fit</span><span class="p">)</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">##  [1] “coefficients”  “residuals”     “effects”       “rank”       &lt;br /&gt;
+##  [5] “fitted.values” “assign”        “qr”            “df.residual”&lt;br /&gt;
+##  [9] “contrasts”     “xlevels”       “call”          “terms”      &lt;br /&gt;
+## [13] “model”</code></pre></div></p>
+
+<p>Outro ponto importante é sobre o <code>summary()</code> aplicado ao <code>fit</code>. Como você notou, ele apresenta os resultados de uma maneira diferente. Para acessar os resultados do <code>summary(fit)</code>, podemos fazer o seguinte:</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">summary.fit</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">summary</span><span class="p">(</span><span class="n">fit</span><span class="p">)</span>
+<span class="n">names</span><span class="p">(</span><span class="n">summary.fit</span><span class="p">)</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">##  [1] “call”          “terms”         “residuals”     “coefficients” 
+##  [5] “aliased”       “sigma”         “df”            “r.squared”  &lt;br /&gt;
+##  [9] “adj.r.squared” “fstatistic”    “cov.unscaled”</code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">summary.fit</span><span class="o">$</span><span class="n">coefficients</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">##                      Estimate   Std. Error     t value      Pr(&amp;gt;|t|)
+## (Intercept)      5.7267268794 0.6005219791   9.5362486  1.650454e-19
+## CompPrice        0.0930440486 0.0041432948  22.4565357  3.210578e-72
+## Income           0.0158655664 0.0018446501   8.6008540  1.965977e-16
+## Advertising      0.1235923300 0.0111169041  11.1175134  4.032236e-25
+## Population       0.0001822397 0.0003697923   0.4928164  6.224204e-01
+## Price           -0.0953181549 0.0026714558 -35.6802286 9.833525e-125
+## ShelveLocGood    4.8365318149 0.1526306709  31.6878107 8.259393e-110
+## ShelveLocMedium  1.9458754343 0.1257408746  15.4752815  1.955843e-42
+## Age             -0.0459156254 0.0031802330 -14.4378181  3.870315e-38
+## Education       -0.0219546072 0.0197095406  -1.1139076  2.660066e-01
+## USYes           -0.1836132570 0.1498769114  -1.2250937  2.212812e-01</code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">summary.fit</span><span class="o">$</span><span class="n">adj.r.squared</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 0.8697633</code></pre></div></p>
+
+<h2 id="variveis-categricas">Variáveis Categóricas</h2>
+
+<p>Se você prestou atenção, você percebeu que o R tratou automaticamente as variáveis categóricas, escolhendo um nível como base e estimando um parâmetro para os demais níveis. O efeito seria o mesmo de você modificar sua base para transformar cada nível em uma variável <em>dummy</em> (0 ou 1) e excluir um determinado nível no momento de estimação do modelo.</p>
+
+<p>O R automaticamente considera o primeiro nível como base. Veja que para a variável <em>ShelveLoc</em> o nível <em>Bad</em> foi escolhido como base. Para verificarmos se ele é realmente o primeiro nível, façamos o seguinte:</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">levels</span><span class="p">(</span><span class="n">Carseats</span><span class="o">$</span><span class="n">ShelveLoc</span><span class="p">)</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## [1] “Bad”    “Good”   “Medium”</code></pre></div></p>
+
+<p>Para mudar o nível de referência, vamos utilizar a função <code>contrast()</code>. Basicamente, essa função irá criar os atributos que serão utilizados pela função <code>lm()</code> no momento de estimação do modelo. Por exemplo:</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">contrasts</span><span class="p">(</span><span class="n">Carseats</span><span class="o">$</span><span class="n">ShelveLoc</span><span class="p">)</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">##        Good Medium
+## Bad       0      0
+## Good      1      0
+## Medium    0      1</code></pre></div></p>
+
+<p>Para alterar o nível de referência podemos a função <code>contr.treatment()</code>:</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">contrasts</span><span class="p">(</span><span class="n">Carseats</span><span class="o">$</span><span class="n">ShelveLoc</span><span class="p">)</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">contr.treatment</span><span class="p">(</span><span class="n">n</span> <span class="o">=</span> <span class="n">levels</span><span class="p">(</span><span class="n">Carseats</span><span class="o">$</span><span class="n">ShelveLoc</span><span class="p">),</span>
+                                                 <span class="n">base</span> <span class="o">=</span> <span class="m">2</span><span class="p">)</span>
+<span class="n">contrasts</span><span class="p">(</span><span class="n">Carseats</span><span class="o">$</span><span class="n">ShelveLoc</span><span class="p">)</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">##        Bad Medium
+## Bad      1      0
+## Good     0      0
+## Medium   0      1</code></pre></div>
+Informamos quais eram os níveis e dissemos que queremos que o segundo (<em>Good</em>) seja usado como referência.</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">fit</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">lm</span><span class="p">(</span><span class="n">Sales</span> <span class="o">~</span> <span class="err">.</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">Carseats</span><span class="p">)</span>
+<span class="n">summary</span><span class="p">(</span><span class="n">fit</span><span class="p">)</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## 
+## Call:
+## lm(formula = Sales ~ ., data = Carseats)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -2.8692 -0.6908  0.0211  0.6636  3.4115 
+## 
+## Coefficients:
+##                   Estimate Std. Error t value Pr(&amp;gt;|t|)  &lt;br /&gt;
+## (Intercept)     10.5108058  0.6039582  17.403  &amp;lt; 2e-16 &lt;strong&gt;*
+## CompPrice        0.0928153  0.0041477  22.378  &amp;lt; 2e-16 ***
+## Income           0.0158028  0.0018451   8.565 2.58e-16 ***
+## Advertising      0.1230951  0.0111237  11.066  &amp;lt; 2e-16 ***
+## Population       0.0002079  0.0003705   0.561    0.575  &lt;br /&gt;
+## Price           -0.0953579  0.0026711 -35.700  &amp;lt; 2e-16 ***
+## ShelveLocBad    -4.8501827  0.1531100 -31.678  &amp;lt; 2e-16 ***
+## ShelveLocMedium -2.8934679  0.1308928 -22.106  &amp;lt; 2e-16 ***
+## Age             -0.0460452  0.0031817 -14.472  &amp;lt; 2e-16 ***
+## Education       -0.0211018  0.0197205  -1.070    0.285  &lt;br /&gt;
+## UrbanYes         0.1228864  0.1129761   1.088    0.277  &lt;br /&gt;
+## USYes           -0.1840928  0.1498423  -1.229    0.220  &lt;br /&gt;
+## —
+## Signif. codes:  0 ‘&lt;/strong&gt;&lt;em&gt;’ 0.001 ‘**’ 0.01 ‘&lt;/em&gt;’ 0.05 ‘.’ 0.1 ‘ ‘ 1
+## 
+## Residual standard error: 1.019 on 388 degrees of freedom
+## Multiple R-squared:  0.8734,	Adjusted R-squared:  0.8698 
+## F-statistic: 243.4 on 11 and 388 DF,  p-value: &amp;lt; 2.2e-16</code></pre></div></p>
+
+<p>Para retornar para estrutura de <em>contrast</em> padrão é preciso definir como <code>NULL</code> o atributo <code>contrasts</code> da variável <code>ShelveLoc</code>.</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">attr</span><span class="p">(</span><span class="n">Carseats</span><span class="o">$</span><span class="n">ShelveLoc</span><span class="p">,</span> <span class="err">“</span><span class="n">contrasts</span><span class="err">”</span><span class="p">)</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">NULL</span></code></pre></div></p>
+
+<h2 id="interaes-entre-variveis">Interações entre variáveis</h2>
+
+<p>Para realizar interações entre variáveis, utiliza-se o símbolo <code>*</code>. Ou seja, se você quiser a interação entre as variáveis <code>V1</code> e <code>V2</code> no seu modelo basta incluir <code>V1 * V2</code> na fórmula do seu modelo.</p>
+
+<p>Voltando ao nosso exemplo, podemos fazer a interação entre as variáveis <code>Price</code> e <code>Urban</code> da seguinte forma:</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">fit</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">lm</span><span class="p">(</span><span class="n">Sales</span> <span class="o">~</span> <span class="err">.</span> <span class="o">+</span> <span class="n">Price</span><span class="o">*</span><span class="n">Urban</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">Carseats</span><span class="p">)</span>
+<span class="n">summary</span><span class="p">(</span><span class="n">fit</span><span class="p">)</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## 
+## Call:
+## lm(formula = Sales ~ . + Price * Urban, data = Carseats)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -2.8723 -0.7011  0.0298  0.6723  3.3937 
+## 
+## Coefficients:
+##                   Estimate Std. Error t value Pr(&amp;gt;|t|)  &lt;br /&gt;
+## (Intercept)      5.5386942  0.7371346   7.514 4.02e-13 &lt;strong&gt;*
+## CompPrice        0.0928744  0.0041576  22.338  &amp;lt; 2e-16 ***
+## Income           0.0157950  0.0018475   8.549 2.91e-16 ***
+## Advertising      0.1233524  0.0111724  11.041  &amp;lt; 2e-16 ***
+## Population       0.0002072  0.0003709   0.559    0.577  &lt;br /&gt;
+## Price           -0.0943707  0.0043411 -21.739  &amp;lt; 2e-16 ***
+## ShelveLocGood    4.8492903  0.1533223  31.628  &amp;lt; 2e-16 ***
+## ShelveLocMedium  1.9557229  0.1263016  15.485  &amp;lt; 2e-16 ***
+## Age             -0.0461214  0.0031964 -14.429  &amp;lt; 2e-16 ***
+## Education       -0.0206165  0.0198153  -1.040    0.299  &lt;br /&gt;
+## UrbanYes         0.2845509  0.5712614   0.498    0.619  &lt;br /&gt;
+## USYes           -0.1855349  0.1501027  -1.236    0.217  &lt;br /&gt;
+## Price:UrbanYes  -0.0014091  0.0048808  -0.289    0.773  &lt;br /&gt;
+## —
+## Signif. codes:  0 ‘&lt;/strong&gt;&lt;em&gt;’ 0.001 ‘**’ 0.01 ‘&lt;/em&gt;’ 0.05 ‘.’ 0.1 ‘ ‘ 1
+## 
+## Residual standard error: 1.02 on 387 degrees of freedom
+## Multiple R-squared:  0.8734,	Adjusted R-squared:  0.8695 
+## F-statistic: 222.6 on 12 and 387 DF,  p-value: &amp;lt; 2.2e-16</code></pre></div></p>
+
+<p>Um detalhe importante é que esse tipo de interação não funciona quando o objetivo é elevar uma variável contínuo ao quadrado. Por exemplo: <code>Price * Price</code> ou <code>Price^2</code>. Para conseguir obter o resultado pretendido usamos o <code>I(.)</code>.</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">fit</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">lm</span><span class="p">(</span><span class="n">Sales</span> <span class="o">~</span> <span class="err">.</span> <span class="o">+</span> <span class="n">I</span><span class="p">(</span><span class="n">Price</span><span class="o">^</span><span class="m">2</span><span class="p">),</span> <span class="n">data</span> <span class="o">=</span> <span class="n">Carseats</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span>
+<span class="n">summary</span><span class="p">(</span><span class="n">fit</span><span class="p">)</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## 
+## Call:
+## lm(formula = Sales ~ . + I(Price^2), data = Carseats, x = TRUE)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -2.8593 -0.7138  0.0228  0.6729  3.3583 
+## 
+## Coefficients:
+##                   Estimate Std. Error t value Pr(&amp;gt;|t|)  &lt;br /&gt;
+## (Intercept)      6.247e+00  9.648e-01   6.475 2.87e-10 &lt;strong&gt;*
+## CompPrice        9.296e-02  4.154e-03  22.379  &amp;lt; 2e-16 ***
+## Income           1.578e-02  1.846e-03   8.545 3.01e-16 ***
+## Advertising      1.232e-01  1.113e-02  11.070  &amp;lt; 2e-16 ***
+## Population       2.133e-04  3.707e-04   0.575    0.565  &lt;br /&gt;
+## Price           -1.060e-01  1.392e-02  -7.618 2.00e-13 ***
+## ShelveLocGood    4.845e+00  1.533e-01  31.602  &amp;lt; 2e-16 ***
+## ShelveLocMedium  1.957e+00  1.262e-01  15.513  &amp;lt; 2e-16 ***
+## Age             -4.593e-02  3.187e-03 -14.412  &amp;lt; 2e-16 ***
+## Education       -2.296e-02  1.987e-02  -1.155    0.249  &lt;br /&gt;
+## UrbanYes         1.196e-01  1.131e-01   1.057    0.291  &lt;br /&gt;
+## USYes           -1.793e-01  1.500e-01  -1.195    0.233  &lt;br /&gt;
+## I(Price^2)       4.638e-05  5.948e-05   0.780    0.436  &lt;br /&gt;
+## —
+## Signif. codes:  0 ‘&lt;/strong&gt;&lt;em&gt;’ 0.001 ‘**’ 0.01 ‘&lt;/em&gt;’ 0.05 ‘.’ 0.1 ‘ ‘ 1
+## 
+## Residual standard error: 1.019 on 387 degrees of freedom
+## Multiple R-squared:  0.8736,	Adjusted R-squared:  0.8697 
+## F-statistic: 222.9 on 12 and 387 DF,  p-value: &amp;lt; 2.2e-16</code></pre></div></p>
+
+<h2 id="realizando-predies">Realizando predições</h2>
+
+<p>Concluindo essa primeira explanação sobre modelos no R, vamos falar sobre predições. No caso, da função <code>predict()</code>. Como o <code>summary()</code>, a função <code>predict()</code> é uma função genérica. Isto significa que ela se adapta ao objeto que está sendo passado para função. Isto é, ela não é exclusiva da função <code>lm()</code>, podendo ser utilizada com outros modelos.</p>
+
+<p>Vamos separar os dados em dois grupos, um para estimar o modelo e outro para realizar as predições. No desenvolvimento de modelos de aprendizado de máquina (<em>machine learning</em>) esses grupos são chamados, respectivamente, de grupo de treinamento e grupo de teste.</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Número de observações</span>
+<span class="n">N</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">nrow</span><span class="p">(</span><span class="n">Carseats</span><span class="p">)</span> 
+<span class="c1"># Fixar a seed para reproduzir os resultados</span>
+<span class="n">set.seed</span><span class="p">(</span><span class="m">3943</span><span class="p">)</span>
+<span class="c1"># índices para separar dados de treinamento/teste</span>
+<span class="n">idx</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">sample</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="n">N</span><span class="p">,</span> <span class="n">round</span><span class="p">(</span><span class="m">0.8</span><span class="o">*</span><span class="n">N</span><span class="p">),</span> <span class="n">replace</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">)</span>
+<span class="c1"># Base de dados de treinamento </span>
+<span class="n">Carseats.train</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">Carseats</span><span class="p">[</span><span class="n">idx</span><span class="p">,]</span>
+<span class="c1"># Base de dados de teste</span>
+<span class="c1"># As linhas que estão listadas no objeto idx são excluídas</span>
+<span class="n">Carseats.test</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">Carseats</span><span class="p">[</span><span class="o">-</span><span class="n">idx</span><span class="p">,]</span>
+<span class="c1"># Estima o modelo</span>
+<span class="n">fit</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">lm</span><span class="p">(</span><span class="n">Sales</span> <span class="o">~</span> <span class="err">.</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">Carseats.train</span><span class="p">)</span>
+<span class="c1"># Predição a partir do modelo estimado</span>
+<span class="n">pred</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">predict</span><span class="p">(</span><span class="n">object</span> <span class="o">=</span> <span class="n">fit</span><span class="p">,</span> <span class="n">newdata</span> <span class="o">=</span> <span class="n">Carseats.test</span><span class="p">)</span>
+<span class="n">head</span><span class="p">(</span><span class="n">pred</span><span class="p">)</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">##         3         7        14        15        22        25 
+##  9.229138  6.157952 11.786486  9.517201 11.078857 10.037942</code></pre></div></p>
+
+<p>Um fato importante sobre o argumento <code>newdata</code> é que é necessário que ele possua todas as variáveis que estão no modelo original. Se mais variáveis forem providas, elas serão desconsideradas pela função.</p>
+
+<h2 id="diagnsticos">Diagnósticos</h2>
+
+<p>Após a estimação do modelo, é comum verificar se algumas hipóteses realmente são válidas. Uma maneira informal de se fazer isso é checar alguns gráficos. O R fornece uma série de diagnósticos ao passar o objeto que contém o modelo estimado (<code>fit</code> no nosso caso) na função <code>plot()</code>.</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">plot</span><span class="p">(</span><span class="n">fit</span><span class="p">)</span></code></pre></div></p>
+
+<p><img src="/figures/source/2016-06-06-intro-modelos-r/unnamed-chunk-22-1.png" alt="plot of chunk unnamed-chunk-22" /><img src="/figures/source/2016-06-06-intro-modelos-r/unnamed-chunk-22-2.png" alt="plot of chunk unnamed-chunk-22" /><img src="/figures/source/2016-06-06-intro-modelos-r/unnamed-chunk-22-3.png" alt="plot of chunk unnamed-chunk-22" /><img src="/figures/source/2016-06-06-intro-modelos-r/unnamed-chunk-22-4.png" alt="plot of chunk unnamed-chunk-22" /></p>
+
+<p>A função retornará 4 gráficos que auxiliarão a análise sobre a violação de alguma hipótese. Testes formais também podem ser realizados, mas vamos nos restringir aqui a essa análise gráfica.</p>
+
+<p>O primeiro plot (canto superior esquerdo) tem o objetivo de identificar a possível existência de não-linearidade nos dados.</p>
+
+<p>O segundo gráfico tenta evidenciar se o resíduos são normalmente distribuídos. Se os valores se afastam da linha traçada, é sinal de não-normalidade dos resíduos.</p>
+
+<p>O terceiro plot (canto inferior esquerdo) dá um indicativo sobre a violação ou não da hipótese de homocedasticidade (variância constante do termo aleatório). Quanto mais horizontal for a linha vermelha, mais forte é a evidência de homocedasticidade.</p>
+
+<p>Por último, o quarto gráfico auxilia a identificação de pontos (valores extremos ou <em>outliers</em>) que influenciam consideravelmente a reta de regressão. Nem todo <em>outlier</em> afetará a reta, mas aqueles que alteram podem afetar consideravelmente o poder de generalização do modelo. Assim, pode ser necessário excluí-los do processo de estimação do modelo.</p>
+
+<p>No nosso caso, os limites calculados para identificação de outliers não aparecem no gráfico, indicando que não há valores extremos que estão influenciando a reta estimada. No entanto, caso esse limite apareça e algum ponto esteja além desse limite, há indicação de que aquele ponto pode estar exercendo influência sobre a reta.</p>
+
+<p>Para testes formais, dê uma olhada no pacote <code>lmtest</code>.</p>
+
+<h2 id="interpretando-os-resultados-e-consideraes-finais">Interpretando os resultados e considerações finais</h2>
+
+<p>Nosso objetivo com esse post foi explicar o uso básico de modelos no R com a função <code>lm()</code>. Interpretar os resultados de um modelo envolvem alguns conceitos estatísticos que talvez mereçam posts específicos.</p>
+
+<p>Porém, para ajudar no entendimento e dar mais sentido à alguns detalhes do <code>summary()</code> usado para ver resultados de um modelo, segue alguns links com ótimas explicações de como entender e interpretar modelos.</p>
+
+<ul>
+  <li><a href="http://www.theanalysisfactor.com/interpreting-regression-coefficients/">Interpreting Regression Coefficients</a></li>
+  <li><a href="http://blog.yhat.com/posts/r-lm-summary.html">Interpreting Linear Models in R</a></li>
+  <li><a href="https://rstudio-pubs-static.s3.amazonaws.com/119859_a290e183ff2f46b2858db66c3bc9ed3a.html">Interpreting Simple Linear Model Output in R</a></li>
+  <li><a href="https://pt.wikipedia.org/wiki/Desvio_padr%C3%A3o">Desvio Padrão</a></li>
+  <li><a href="https://pt.wikipedia.org/wiki/Valor-p">P-Valor</a></li>
+</ul>
+
+<p>A ideia até aqui é que tenha sido quebrada a primeira barreira e que você já consiga estimar o modelo de regressão linear no R.</p>
+
+<p>Provavelmente, você necessitará usar outros modelos nas suas análises, mas entender como funciona o modelo linear já é uma grande ajuda para estimação de diversos outros modelos.</p>
+
+<p>Como dito, esse é um assunto que merece diversos outros posts mais detalhados e específicos, e eles virão com o tempo. Até lá, deixe seu comentário com sugestões ou dúvidas para que possamos ajudar!</p>
+
+<h2 id="referncias">Referências</h2>
+
+<ul>
+  <li><a href="http://data.princeton.edu/R/linearModels.html">Linear Models</a></li>
+  <li><a href="http://www.statmethods.net/stats/regression.html">Multiple (Linear) Regression</a></li>
+  <li><a href="http://www.montefiore.ulg.ac.be/~kvansteen/GBIO0009-1/ac20092010/Class8/Using%20R%20for%20linear%20regression.pdf">Using R for Linear Regression</a></li>
+  <li><a href="http://www.statmethods.net/stats/rdiagnostics.html">Regression Diagnostics</a></li>
+</ul>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Tudo sobre Joins (merge) em R]]></title>
@@ -1656,231 +2231,6 @@ Reparem que é um conjunto de dados que possui 4 variáveis (colunas) e 432 obse
   <li><a href="http://www.cyclismo.org/tutorial/R/types.html">Basic Data Types</a></li>
   <li><a href="http://www.r-tutor.com/r-introduction/basic-data-types">Basic Data Types II</a></li>
   <li><a href="http://www.computerworld.com/article/2486425/business-intelligence/business-intelligence-4-data-wrangling-tasks-in-r-for-advanced-beginners.html">4 data wrangling tasks in R for advanced beginners</a></li>
-</ul>
-
-<h2 id="demais-posts-da-sequncia">Demais posts da sequência:</h2>
-
-<ul>
-  <li><a href="/blog/2016/03/23/kit-de-sobrevivencia-em-r-parte-1">Kit de sobrevivência em R - Parte 1: Visão Geral e Instalação</a></li>
-  <li><a href="/blog/2016/04/03/kit-de-sobrevivencia-em-r-parte-2">Kit de sobrevivência em R - Parte 2: Operações, Variáveis e Funções</a></li>
-  <li><a href="/blog/2016/04/03/kit-de-sobrevivencia-em-r-parte-3">Kit de sobrevivência em R - Parte 3: Pacotes</a></li>
-  <li><a href="/blog/2016/04/12/kit-de-sobrevivencia-em-r-parte-4">Kit de sobrevivência em R - Parte 4: Carregando Dados</a></li>
-  <li><a href="/blog/2016/04/21/kit-de-sobrevivencia-em-r-parte-5">Kit de sobrevivência em R - Parte 5: Tipos de Dados e Transformações</a></li>
-  <li><a href="/blog/2016/05/01/kit-de-sobrevivencia-em-r-parte-6">Kit de sobrevivência em R - Parte 6: Estruturas de Controle</a></li>
-  <li><a href="/blog/2016/05/09/kit-de-sobrevivencia-em-r-parte-7">Kit de sobrevivência em R - Parte 7: Avançando e Aprofundando</a></li>
-</ul>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Kit de sobrevivência em R - Parte 4: Carregando Dados]]></title>
-    <link href="http://fulljoin.com.br/blog/2016/04/12/kit-de-sobrevivencia-em-r-parte-4/"/>
-    <updated>2016-04-12T21:00:00-03:00</updated>
-    <id>http://fulljoin.com.br/blog/2016/04/12/kit-de-sobrevivencia-em-r-parte-4</id>
-    <content type="html"><![CDATA[<p>Seguindo a sequência do <em>Kit de sobrevivência em R</em>, vamos abordar um pouco sobre uma das partes iniciais de qualquer análise ou trabalho que vá ser feito no R: carregamento e leitura de dados. Nesse post você irá aprender formas básicas de carregar dados e começar os trabalhos.</p>
-
-<!-- More -->
-
-<h1 id="estrutura-dos-dados">Estrutura dos dados</h1>
-
-<p>Eis aqui uma notícia ruim: não existe um padrão dominante para armazenamento de dados. O que isso significa? Significa que, na vida real, você vai se deparar com os mais diferentes tipos de fontes de dados e mesmo assim vai ter que dar um jeito de analisá-las e estudá-las para concluir seus trabalhos.</p>
-
-<p>Ou seja, existem diversas formas de carregar dados para trabalhar com eles no R. Em prol da objetividade, vamos tratar dos casos mais comuns e mais básicos primeiro. Esse assunto pode ser extremamente vasto, então, criaremos primeiro uma base para, em posts futuros, aprofundarmos em fontes de dados mais complexas.</p>
-
-<p>De maneira geral, você irá encontrar dados disponibilizados basicamente em três formas básicas: estruturados, não estruturados e semi-estruturados.</p>
-
-<h2 id="dados-estruturados">Dados Estruturados</h2>
-
-<p>Basicamente são conjuntos de informações organizadas em colunas (atributos, variáveis, <em>features</em>, etc.) e linhas (registros, itens, observações, etc.). São dados encontrados em bancos de dados, arquivos com algum tipo de separação entre as colunas, excel, arquivos com campos de tamanho fixo, etc.</p>
-
-<h2 id="dados-no-estruturados">Dados não estruturados</h2>
-
-<p>Como o nome diz, não tem um estrutura previsível, ou seja, cada arquivo possui uma forma única de ser carregado e manejado. Geralmente são arquivos com forte teor textual. Podemos citar, por exemplo, emails, twitters, PDFs, imagens, etc. Muito usados em mineração de dados.</p>
-
-<h2 id="dados-semi-estruturados">Dados semi-estruturados</h2>
-
-<p>Também possuem estrutura fixa, porém, não seguem o padrão de estrutura linha/coluna, ou seja, é uma estrutura mais complexa e flexível, geralmente hierárquica, estruturada em tags ou marcadores de campos. São exemplos de arquivos semi-estruturados: JSON, XML, HTML, YAML, etc. É o formato mais usado em troca de dados pela internet e consumo de APIs.</p>
-
-<p>Trataremos primeiro dos arquivos estruturados. Em futuros posts vamos abordar os outros tipos, pois são abordagens um pouco mais complexas e é sempre bom começar pelo básico!</p>
-
-<h1 id="preparando-o-ambiente-para-comear">Preparando o ambiente para começar</h1>
-
-<h3 id="limpando-tudo">Limpando tudo</h3>
-
-<p>Antes de começar os trabalhos, é uma boa prática ter certeza de que seu ambiente de trabalho está limpo. Um simples comando garante que está tudo limpo pronto para começar:</p>
-
-<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">rm</span><span class="p">(</span><span class="n">list</span><span class="o">=</span><span class="n">ls</span><span class="p">())</span></code></pre></div></p>
-
-<p>Esse comando na verdade está usando duas funções:</p>
-
-<ul>
-  <li>
-    <p><code>rm()</code> função para remover um objeto da sessão do R</p>
-  </li>
-  <li>
-    <p><code>ls()</code> função para listar os nomes de todos objetos da sessão do R</p>
-  </li>
-</ul>
-
-<p>As duas funções conjugadas dão a ordem de <em>remover tudo que estiver na lista de objetos da sessão do R.</em></p>
-
-<p>Pronto. Seus ambiente está limpo.</p>
-
-<h3 id="definindo-diretrio-de-trabalho">Definindo diretório de trabalho</h3>
-
-<p>O R vai “ler” os dados de algum lugar do seu computador. Normalmente o R inicia lendo em um diretório padrão, mas nem sempre os arquivos estarão nesse mesmo diretório. Para dizer ao R onde ele deve ler os arquivos, usaremos o comando <em>set working directory</em>:</p>
-
-<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">setwd</span><span class="p">(</span><span class="err">“</span><span class="n">Local</span><span class="o">/</span><span class="n">Do</span><span class="o">/</span><span class="n">Seus</span><span class="o">/</span><span class="n">Arquivos</span><span class="o">/</span><span class="n">De</span><span class="o">/</span><span class="n">Trabalho</span><span class="o">/</span><span class="err">”</span><span class="p">)</span></code></pre></div></p>
-
-<p>Também pode ser realizado pelos menus do RStudio em <code>Session &gt; Set Working Directory &gt; Choose Directory...</code> e escolha a pasta onde seus arquivos de dado estarão.</p>
-
-<p><img src="/images/setwd.gif" alt="alt Definindo o diretório de trabalho" title="Definindo o diretório de trabalho" /></p>
-
-<p>Para saber qual o diretório de trabalho está atualmente definido, use o comando <code>getwd()</code>.</p>
-
-<p>Caso você não deseje alterar o diretório de trabalho, também há a opção de ser informado o caminho completo do arquivo (caminho absoluto).</p>
-
-<p>Ok! Agora sim!</p>
-
-<h1 id="tipos-de-carregamento">Tipos de carregamento</h1>
-
-<p>O R possui algumas funções básicas de carregamento. Essas funções tratam de alguns tipos de arquivo, basicamente diferenciados pelo <em>delimitador</em>. Outro aspecto importante é que essas funções básicas pressupõem que cada linha representa um novo registro de dados.</p>
-
-<p>Para ficar mais claro, delimitadores podem ser qualquer coisa que seja usada para separar dados. Por exemplo, os arquivos podem ser separados por vírgulas (<a href="https://pt.wikipedia.org/wiki/Comma-separated_values">CSV - Comma-separated values</a>), por ponto e vírgula (<code>;</code>), por espaçamento TAB (a tecla TAB do teclado mesmo!), por espaços simples ou qualquer outro tipo de símbolo.</p>
-
-<p>E quando não existe delimitador, ou seja, quando os campos estão “colados” uns nos outros? Em alguns casos, arquivos são confeccionados com um tamanho fixo para cada coluna (principalmente em arquivos gigantescos!), e cada linha respeita tamanhos específicos para separar os seus registros.</p>
-
-<p>Como dissemos antes, dados estruturados possuem colunas e linhas (ou atributos e registros, ou variáveis e observações… dá na mesma!). O delimitador é uma forma de separar o conteúdo de cada linha em uma coluna específica. Ficará mais claro a seguir.</p>
-
-<p>Para replicar os exemplos abaixo, baixe <a href="https://www.dropbox.com/s/4tedgnkd85c5q5s/desemprego_uf_pnad.zip?dl=0">este arquivo zip</a> com exemplos de dados em que foram usados diferentes delimitadores. Descompacte o arquivo em alguma pasta do seu computador. Defina esta pasta como o seu diretório de trabalho no RStudio. Além disso, dê uma olhada nos arquivos com o auxílio do bloco de notas ou outro programa para que você tenha ideia como o dado está inicialmente estruturado.</p>
-
-<h1 id="carregando-os-dados">Carregando os dados</h1>
-
-<p>Dividiremos este tópico em duas partes: dados delimitados e dados com campos de tamanho fixo.</p>
-
-<h4 id="dados-com-delimitadores">Dados com delimitadores</h4>
-
-<p>Para importar dados com delimitadores utilizaremos a função <code>read.table()</code>. Essa função permite definir qualquer delimitador para a leitura do arquivo, conforme os exemplos abaixo.</p>
-
-<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Separado por tabulação</span>
-<span class="n">dados.tab</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">read.table</span><span class="p">(</span><span class="err">‘</span><span class="n">desemprego_uf_tab.txt</span><span class="err">’</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="err">“\</span><span class="n">t</span><span class="err">”</span><span class="p">,</span> <span class="n">dec</span> <span class="o">=</span> <span class="err">“</span><span class="p">,</span><span class="err">”</span><span class="p">,</span> <span class="n">header</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span> 
-<span class="c1"># Separado por ;</span>
-<span class="n">dados.ponto.virgula</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">read.table</span><span class="p">(</span><span class="err">‘</span><span class="n">desemprego_uf_ponto_virgula.txt</span><span class="err">’</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="err">“</span><span class="p">;</span><span class="err">”</span><span class="p">,</span> <span class="n">dec</span> <span class="o">=</span> <span class="err">“</span><span class="p">,</span><span class="err">”</span><span class="p">,</span> <span class="n">header</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span> 
-<span class="c1"># Separado por espaço</span>
-<span class="n">dados.espaco</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">read.table</span><span class="p">(</span><span class="err">‘</span><span class="n">desemprego_uf_espaco.txt</span><span class="err">’</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="err">“</span> <span class="err">“</span><span class="p">,</span> <span class="n">dec</span> <span class="o">=</span> <span class="err">“</span><span class="p">,</span><span class="err">”</span><span class="p">,</span> <span class="n">header</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span></code></pre></div></p>
-
-<p>Reparem no parâmetro <code>header = TRUE</code>, isso significa dizer que a primeira linha do arquivo contem o nome das colunas, ou seja, não é um dado propriamente dito, e sim um metadado pois é uma informação sobre os registros. Caso seu arquivo não contenha o nome das colunas, basta usar <code>header = FALSE</code>.</p>
-
-<p>Após o carregamento, vamos usar a função <code>head()</code>para ver a “cara” dos nossos dados. Veja que eles são iguais nos três casos. Nessa função, você pode especificar o número de linhas que deseja ver. Por exemplo: <code>head(dados.tab, 10)</code>. Para visualizar as últimas linhas, você pode utilizar o <code>tail()</code> da mesma forma. Note que o RStudio tem funcionalidades que permitem que você visualize os dados como uma planilha. Basta clicar no nome do objeto que está listado na aba <em>Environment</em>.</p>
-
-<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">head</span><span class="p">(</span><span class="n">dados.tab</span><span class="p">)</span></code></pre></div></p>
-
-<p><div class="highlight"><pre><code class="language-text" data-lang="text">##    Ano   Trimestre       UF Taxa_Desemprego
-## 1 2012 jan-fev-mar Rondônia           8.008
-## 2 2012 abr-mai-jun Rondônia           6.224
-## 3 2012 jul-ago-set Rondônia           5.882
-## 4 2012 out-nov-dez Rondônia           5.274
-## 5 2013 jan-fev-mar Rondônia           6.114
-## 6 2013 abr-mai-jun Rondônia           4.771</code></pre></div></p>
-
-<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">head</span><span class="p">(</span><span class="n">dados.ponto.virgula</span><span class="p">)</span></code></pre></div></p>
-
-<p><div class="highlight"><pre><code class="language-text" data-lang="text">##    Ano   Trimestre       UF Taxa_Desemprego
-## 1 2012 jan-fev-mar Rondônia           8.008
-## 2 2012 abr-mai-jun Rondônia           6.224
-## 3 2012 jul-ago-set Rondônia           5.882
-## 4 2012 out-nov-dez Rondônia           5.274
-## 5 2013 jan-fev-mar Rondônia           6.114
-## 6 2013 abr-mai-jun Rondônia           4.771</code></pre></div></p>
-
-<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">head</span><span class="p">(</span><span class="n">dados.espaco</span><span class="p">)</span></code></pre></div></p>
-
-<p><div class="highlight"><pre><code class="language-text" data-lang="text">##    Ano   Trimestre       UF Taxa_Desemprego
-## 1 2012 jan-fev-mar Rondônia           8.008
-## 2 2012 abr-mai-jun Rondônia           6.224
-## 3 2012 jul-ago-set Rondônia           5.882
-## 4 2012 out-nov-dez Rondônia           5.274
-## 5 2013 jan-fev-mar Rondônia           6.114
-## 6 2013 abr-mai-jun Rondônia           4.771</code></pre></div></p>
-
-<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">tail</span><span class="p">(</span><span class="n">dados.espaco</span><span class="p">,</span> <span class="m">4</span><span class="p">)</span></code></pre></div></p>
-
-<p><div class="highlight"><pre><code class="language-text" data-lang="text">##      Ano   Trimestre               UF Taxa_Desemprego
-## 429 2015 jan-fev-mar Distrito Federal          10.784
-## 430 2015 abr-mai-jun Distrito Federal           9.627
-## 431 2015 jul-ago-set Distrito Federal          10.258
-## 432 2015 out-nov-dez Distrito Federal           9.707</code></pre></div></p>
-
-<h4 id="dados-com-campos-de-tamanho-fixo">Dados com campos de tamanho fixo</h4>
-
-<p>Para a leitura de dados desse tipo, você precisa saber previamente o tamanho de caracteres reservado para cada campo. Geralmente esse tipo de arquivo vem acompanhando de um arquivo auxiliar explicando o layout dos dados.</p>
-
-<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">dados.fwf</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">read.fwf</span><span class="p">(</span><span class="err">‘</span><span class="n">desemprego_uf_fwf.txt</span><span class="err">’</span><span class="p">,</span> <span class="n">widths</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="m">4</span><span class="p">,</span> <span class="m">11</span><span class="p">,</span> <span class="m">19</span><span class="p">,</span> <span class="m">6</span><span class="p">),</span>  <span class="n">header</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">,</span>  <span class="n">strip.white</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span></code></pre></div></p>
-
-<p>Reparem que o segundo parâmetro da função, <code>widths</code> é onde você especifica o tamanho de cada campo na ordem em que eles ocorrem na linha. Ou seja, o primeiro campo tem tamanho 4 e o segundo 11. O <code>strip.white = TRUE</code> é a opção para eliminar os espaços em branco que foram incluídos na criação do arquivo para que cada linha tivesse o tamanho total especificado para cada coluna.</p>
-
-<p>O que é esse <code>c()</code>? É uma função que cria um vetor. Explicaremos detalhadamente sobre isso em outro post!</p>
-
-<p>E onde está o <code>header = TRUE</code>? Geralmente arquivos com campos de tamanho fixo não possuem uma linha indicando o cabeçalho. Como dito, esses arquivos costumam vir acompanhados de um arquivo de layout explicando os dados, inclusive o que cada campo significa.</p>
-
-<p>Se olharmos os dados, veremos que o R atribuiu nomes genéricos para as variáveis.</p>
-
-<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">head</span><span class="p">(</span><span class="n">dados.fwf</span><span class="p">)</span></code></pre></div></p>
-
-<p><div class="highlight"><pre><code class="language-text" data-lang="text">##     V1          V2       V3    V4
-## 1 2012 jan-fev-mar Rondônia 8.008
-## 2 2012 abr-mai-jun Rondônia 6.224
-## 3 2012 jul-ago-set Rondônia 5.882
-## 4 2012 out-nov-dez Rondônia 5.274
-## 5 2013 jan-fev-mar Rondônia 6.114
-## 6 2013 abr-mai-jun Rondônia 4.771</code></pre></div></p>
-
-<p>Para definirmos os nomes das variáveis usaremos o comando <code>colnames()</code>. Basicamente, diremos que os nomes das colunas deverão ser os que estão especificados abaixo:</p>
-
-<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">colnames</span><span class="p">(</span><span class="n">dados.fwf</span><span class="p">)</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">c</span><span class="p">(</span><span class="err">‘</span><span class="n">Ano</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">Trimestre</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">UF</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">Taxa_Desemprego</span><span class="err">’</span><span class="p">)</span>
-<span class="n">head</span><span class="p">(</span><span class="n">dados.fwf</span><span class="p">)</span></code></pre></div></p>
-
-<p><div class="highlight"><pre><code class="language-text" data-lang="text">##    Ano   Trimestre       UF Taxa_Desemprego
-## 1 2012 jan-fev-mar Rondônia           8.008
-## 2 2012 abr-mai-jun Rondônia           6.224
-## 3 2012 jul-ago-set Rondônia           5.882
-## 4 2012 out-nov-dez Rondônia           5.274
-## 5 2013 jan-fev-mar Rondônia           6.114
-## 6 2013 abr-mai-jun Rondônia           4.771</code></pre></div></p>
-
-<h1 id="mais-opes-na-leitura">Mais opções na leitura</h1>
-
-<p>Apresentamos as funções básicas de leitura de arquivo com seu uso padrão mais simples. No entanto, existem muitos outros parâmetros que podem ser usados para especificar mais a leitura dos dados. Vale a pena conferir. Para conhecer mais sobre as funções apresentadas, lembrem-se de usar <code>?</code>.</p>
-
-<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="o">?</span><span class="n">read.table</span><span class="p">()</span>
-<span class="o">?</span><span class="n">read.fwf</span><span class="p">()</span>
-<span class="o">?</span><span class="n">read.delim</span><span class="p">()</span>
-<span class="o">?</span><span class="n">read.csv</span><span class="p">()</span></code></pre></div></p>
-
-<blockquote>
-  <p>Dica: Repare que <code>read.delim()</code> e <code>read.csv()</code> estão na mesma ajuda do <code>read.table()</code>. Na verdade todas as 3 funções são a mesma, e podem ser reproduzidas com o <code>read.table()</code> apenas mudando alguns parâmetros na chamada da função.</p>
-</blockquote>
-
-<h1 id="outras-formas-de-carregar-dados">Outras formas de carregar dados</h1>
-
-<p>Existe diversas outras formas de carregar dados. Mas nosso objetivo aqui é apenas criar uma introdução para conseguir carregar a grande maioria dos formatos de dados mais comuns.</p>
-
-<p>Em breve lançaremos posts explicando leitura de arquivos em excel, arquivos semi-estruturados e arquivos não estruturados.</p>
-
-<h1 id="desafio">Desafio</h1>
-
-<p>Que tal tentar carregar e visualizar no R os dados da série histórica das taxas de vendas de títulos do tesouro direto (<a href="http://www.tesourotransparente.gov.br/ckan/dataset/taxas-dos-titulos-ofertados-pelo-tesouro-direto">download Tesouro Direto</a>)?</p>
-
-<p>Tente também carregar e visualizar os dados do IPCA (Índice Nacional de Preço ao Consumidor Amplo), indicador oficial da inflação brasileira (<a href="http://dados.gov.br/dataset/indice-nacional-de-precos-ao-consumidor-amplo-ipca/resource/3292e931-5ed8-42fb-aa59-4386e115d619">download IPCA</a>).</p>
-
-<p>Teve alguma dificuldade? Comente abaixo para que possamos ajudar!</p>
-
-<h1 id="referncias">Referências:</h1>
-
-<ul>
-  <li><a href="https://cran.r-project.org/doc/manuals/r-release/R-data.pdf">R Data Import/Export</a></li>
-  <li><a href="http://blog.revolutionanalytics.com/2015/04/new-packages-for-reading-data-into-r-fast.html">New packages for reading data into R — fast</a></li>
-  <li><a href="https://www.datacamp.com/community/tutorials/r-tutorial-read-excel-into-r">Reading and Importing Files - DataCamp</a></li>
 </ul>
 
 <h2 id="demais-posts-da-sequncia">Demais posts da sequência:</h2>
