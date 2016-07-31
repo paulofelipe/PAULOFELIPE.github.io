@@ -27,7 +27,11 @@ Portanto, visualização de dados é um jeito mais simples e rápido de transmit
 
 O que temos notado é que as instituições mundo a fora que trabalham com divulgação de dados vem aderindo à tendência de visualização interativas de dados. 
 
-E como anda isso no Brasil? Felizmente parece estar indo bem!
+### E como anda esse tema no governo brasileiro? 
+
+Felizmente parece estar indo bem! A seguir comentaremos sobre algumas iniciativas que mostram que o tema está evoluindo e cada vez mais presente na administração pública. De certa forma isso é um avanço na transparência e na disseminação de dados públicos.
+
+### Comex Vis
 
 A SECEX (Secretaria de Comércio Exterior) lançou o [Comex Vis](http://www.mdic.gov.br/comercio-exterior/estatisticas-de-comercio-exterior/comex-vis): uma ferramenta de visualização interativa de dados do comércio exterior brasileiro. 
 
@@ -41,11 +45,15 @@ Para integrar o R com o D3Plus, foi utilizado o pacote [HTMLWidgets](http://www.
 
 O Comex Vis segue a mesma linha de outros portais que também utilizam o D3Plus, como por exemplo o [The Observatory of Economic Complexity](http://atlas.media.mit.edu/en/), o [Data USA](http://datausa.io/) e o excelente [Data VIVA](http://www.dataviva.info/pt/), desenvolvido inicialmente com o apoio do governo de minas gerais. Vale muito a pena conhecer todos eles.
 
-Sobre visualização de dados de comércio exterior, o Comtrade, da ONU, tem um portal com diversas divulgações interativas: o [Comtrade Labs](http://comtrade.un.org/labs/)
+Ainda sobre visualização de dados de comércio exterior, o Comtrade, da ONU, tem um portal com diversas divulgações interativas: o [Comtrade Labs](http://comtrade.un.org/labs/)
+
+### Outras iniciativas
 
 Falando sobre divulgação de visualizações interativas no governo, o BNDES também tem uma página com diversos gráficos: o [BNDES Transparente](http://www.bndes.gov.br/SiteBNDES/bndes/bndes_pt/Institucional/BNDES_Transparente/). Lá é possível navegar e explorar dados sobre financiamentos do BNDES, taxas, prazos e desembolsos. Os gráficos foram construidos em [Tableau](http://www.tableau.com/pt-br), uma poderosa ferramenta de BI, porém, não é gratuito.
 
 Existe também uma boa iniciativa do governo federal para criar uma plataforma com diversos tipos de visualizações sobre uma grande variedade de dados, o [VisPublica](http://vispublica.gov.br/vispublica/publico/catalogo.jsp). 
+
+Já a FGV, utilizando dados públicos, criou uma ferramenta de visualiação interativa de dados voltada para exploração dos desembolços públicos, chamada [Transparência Orçamentária](http://dapp.fgv.br/transparencia-orcamentaria/).
 
 
 Outros!?!?
