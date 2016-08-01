@@ -41,7 +41,7 @@ Dessa forma, os consumidores dos dados de comércio exterior brasileiro terão u
 
 O projeto foi completamente desenvolvido com plataformas livres e gratuitas, como o R e o [D3Plus](http://d3plus.org/), que é um pacote em javscript (baseado em [D3](https://d3js.org/)) capaz de criar visualizações interativas concisas, simples e bonitas. O D3Plus é responsivo, ou seja, se adapta e funciona bem em qualquer resolução de tela. Isso torna o Comex Vis funcional no computador, tablets e celulares.
 
-Para integrar o R com o D3Plus, foi utilizado o pacote [HTMLWidgets](http://www.htmlwidgets.org/) que é capaz de utilizar pacotes em javavscript para plotar visualizações com dados processados em R.
+Para integrar o R com o D3Plus, foi utilizado o pacote [HTMLWidgets](http://www.htmlwidgets.org/) que é capaz de utilizar pacotes em javascript para plotar visualizações com dados processados em R.
 
 O Comex Vis foi inspirando em outros portais que também utilizam o D3Plus, como por exemplo o [The Observatory of Economic Complexity](http://atlas.media.mit.edu/en/), o [Data USA](http://datausa.io/) e o excelente [Data VIVA](http://www.dataviva.info/pt/), desenvolvido inicialmente com o apoio do governo de minas gerais. Vale muito a pena conhecer todos eles.
 
@@ -49,13 +49,13 @@ Ainda sobre visualização de dados de comércio exterior, o Comtrade, da ONU, t
 
 ### Outras iniciativas
 
-Falando sobre divulgação de visualizações interativas no governo, o BNDES também tem uma página com diversos gráficos: o [BNDES Transparente](http://www.bndes.gov.br/SiteBNDES/bndes/bndes_pt/Institucional/BNDES_Transparente/). Lá é possível navegar e explorar dados sobre financiamentos do BNDES, taxas, prazos e desembolsos. Os gráficos foram construidos em [Tableau](http://www.tableau.com/pt-br), uma poderosa ferramenta de BI, porém, não é gratuito.
+Falando sobre divulgação de visualizações interativas no governo, o BNDES também tem uma página com diversos gráficos: o [BNDES Transparente](http://www.bndes.gov.br/SiteBNDES/bndes/bndes_pt/Institucional/BNDES_Transparente/). Lá é possível navegar e explorar dados sobre financiamentos do BNDES, taxas, prazos e desembolsos. Os gráficos foram construídos em [Tableau](http://www.tableau.com/pt-br), uma poderosa ferramenta de BI, porém, não é gratuito.
 
 Existe também uma boa iniciativa do governo federal para criar uma plataforma com diversos tipos de visualizações sobre uma grande variedade de dados, o [VisPublica](http://vispublica.gov.br/vispublica/publico/catalogo.jsp). 
 
-Já a FGV, utilizando dados públicos, criou uma ferramenta de visualiação interativa de dados voltada para exploração dos desembolços públicos, chamada [Transparência Orçamentária](http://dapp.fgv.br/transparencia-orcamentaria/).
+Já a FGV, utilizando dados públicos, criou uma ferramenta de visualização interativa de dados voltada para exploração dos desembolsos públicos, chamada [Transparência Orçamentária](http://dapp.fgv.br/transparencia-orcamentaria/).
 
-Outros!?!?
+O Banco Central também elaborou algumas visualizações para visualizar os dados do [Censo de Capitais Estrangeiros no Brasil](http://www.bcb.gov.br/Rex/CensoCE/port/resultados_censos.asp?idpai=CAMBIO). As visualizações foram geradas utilizando D3 e d3plus.
 
 ## Mais sobre visualização de dados
 
@@ -64,5 +64,3 @@ Se você está interessado em aprender mais sobre visualizações, assim como n�
 [DataViz Catalogue](http://www.datavizcatalogue.com/) - Um excelente catálogo explicativo sobre diversos tipos de visualizações, incluindo como e quando usá-las, seus pontos fortes e pontos fracos.
 
 [O`Reilly - Effective Data Visualization](https://player.oreilly.com/videos/9781491917015) - Uma sequência de videos explorando diversos aspectos sobre visualização de dados. Infelizmente nem todos os videos são gratuitos, mas os gratuitos já são excelentes.
-
-Outros!?!?
