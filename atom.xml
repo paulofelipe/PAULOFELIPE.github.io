@@ -4,7 +4,7 @@
   <title><![CDATA[Full Join]]></title>
   <link href="http://fulljoin.com.br/atom.xml" rel="self"/>
   <link href="http://fulljoin.com.br/"/>
-  <updated>2016-07-11T19:36:42-03:00</updated>
+  <updated>2016-08-01T22:26:35-03:00</updated>
   <id>http://fulljoin.com.br/</id>
   <author>
     <name><![CDATA[Full Join]]></name>
@@ -12,6 +12,73 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Comex Vis E a Visualização De Dados No Brasil]]></title>
+    <link href="http://fulljoin.com.br/blog/2016/07/30/comex-vis/"/>
+    <updated>2016-07-30T19:22:00-03:00</updated>
+    <id>http://fulljoin.com.br/blog/2016/07/30/comex-vis</id>
+    <content type="html"><![CDATA[<p>No dia 28/07/2016 a Secretaria de Comércio Exterior lançou o <a href="http://www.mdic.gov.br/comercio-exterior/estatisticas-de-comercio-exterior/comex-vis">Comex Vis</a>, uma ferramenta de visualização interativa de dados do comércio exterior brasileiro. Nesse post faremos alguns comentários sobre o Comex Vis e sobre a visualização de dados em geral.</p>
+
+<!-- More -->
+
+<h2 id="o-que--visualizao-de-dados">O que é visualização de dados?</h2>
+
+<p>Nada mais é do que representar graficamente uma informação. Em outras palavras, é pegar uma informação abstrata, seja numérica ou textual, e representá-la com padrões visuais e formas geométricas.</p>
+
+<p>Não se trata de uma novidade. Na verdade, isso é algo bem antigo, desde os primórdios da matemática já desenhavam gráficos e formas para representar dados. Porém, com os avanços tecnológicos e aprimoramentos no web design, as visualizações de dados estão alcançando outro patamar: deixando de ser apenas estáticas e passando a ser interativas.</p>
+
+<h2 id="por-que-isso--importante">Por que isso é importante?</h2>
+
+<p>De alguma forma o cérebro humano compreende melhor padrões visuais geométricos do que planilhas com diversas linhas de números ou textos. Ou seja, ao olhar um gráfico, é muito mais provável que você compreenda aspectos dos dados representados mais rapidamente do que olhando uma tabela com os mesmos dados desse gráfico.</p>
+
+<p>Portanto, a visualização de dados é um jeito mais simples e rápido de transmitir uma informação baseada em dados. Isso torna a visualização um artifício bastante poderoso para exploração, análise, insights e comunicação de dados, tornando os principais aspectos de um conjunto de dados algo mais rapidamente compreensivo e intuitivo.</p>
+
+<h2 id="visualizaes-interativas">Visualizações interativas</h2>
+
+<p>O que temos notado é que as instituições mundo a fora que trabalham com divulgação de dados estão extrapolando as visualizações estáticas e aderindo a uma nova tendência de visualização interativas de dados.</p>
+
+<h3 id="e-como-anda-esse-tema-no-governo-brasileiro">E como anda esse tema no governo brasileiro?</h3>
+
+<p>Felizmente parece estar indo bem! A seguir comentaremos sobre algumas iniciativas que mostram que o tema está evoluindo e cada vez mais presente na administração pública. De certa forma, isso é um avanço na transparência e na disseminação de dados públicos.</p>
+
+<h3 id="comex-vis">Comex Vis</h3>
+
+<p>A SECEX (Secretaria de Comércio Exterior) lançou o <a href="http://www.mdic.gov.br/comercio-exterior/estatisticas-de-comercio-exterior/comex-vis">Comex Vis</a>: uma ferramenta de visualização interativa de dados do comércio exterior brasileiro.</p>
+
+<p>O objetivo do projeto é disponibilizar visualizações interativas dos dados de importação e exportação brasileira, cobrindo diversos aspectos e variáveis: parceiros comerciais, continentes, blocos, produtos e classificações, unidade da federação, etc.</p>
+
+<p>Dessa forma, os consumidores dos dados de comércio exterior brasileiro terão uma alternativa para explorar e navegar nos dados de maneira fácil, sem precisar instalar ou conhecer nenhum outro tipo de ferramenta, bastando apenas internet e um navegador web.</p>
+
+<p>O projeto foi completamente desenvolvido com plataformas livres e gratuitas, como o R e o <a href="http://d3plus.org/">D3Plus</a>, que é um pacote em javscript (baseado em <a href="https://d3js.org/">D3</a>) capaz de criar visualizações interativas concisas, simples e bonitas. O D3Plus é responsivo, ou seja, se adapta e funciona bem em qualquer resolução de tela. Isso torna o Comex Vis funcional no computador, tablets e celulares.</p>
+
+<p>Para integrar o R com o D3Plus, foi utilizado o pacote <a href="http://www.htmlwidgets.org/">HTMLWidgets</a> que é capaz de utilizar pacotes em javascript para plotar visualizações com dados processados em R.</p>
+
+<p>O Comex Vis foi inspirando em outros portais que também utilizam o D3Plus, como por exemplo o <a href="http://atlas.media.mit.edu/en/">The Observatory of Economic Complexity</a>, o <a href="http://datausa.io/">Data USA</a> e o excelente <a href="http://www.dataviva.info/pt/">Data VIVA</a>, desenvolvido inicialmente com o apoio do governo de minas gerais. Vale muito a pena conhecer todos eles.</p>
+
+<p>Ainda sobre visualização de dados de comércio exterior, o Comtrade, da ONU, tem um portal com diversas divulgações interativas: o <a href="http://comtrade.un.org/labs/">Comtrade Labs</a></p>
+
+<h3 id="outras-iniciativas">Outras iniciativas</h3>
+
+<p>Falando sobre divulgação de visualizações interativas no governo, o BNDES também tem uma página com diversos gráficos: o <a href="http://www.bndes.gov.br/SiteBNDES/bndes/bndes_pt/Institucional/BNDES_Transparente/">BNDES Transparente</a>. Lá é possível navegar e explorar dados sobre financiamentos do BNDES, taxas, prazos e desembolsos. Os gráficos foram construídos em <a href="http://www.tableau.com/pt-br">Tableau</a>, uma poderosa ferramenta de BI, porém, não é gratuito.</p>
+
+<p>Existe também uma boa iniciativa do governo federal para criar uma plataforma com diversos tipos de visualizações sobre uma grande variedade de dados, o <a href="http://vispublica.gov.br/vispublica/publico/catalogo.jsp">VisPublica</a>.</p>
+
+<p>Já a FGV, utilizando dados públicos, criou uma ferramenta de visualização interativa de dados voltada para exploração dos desembolsos públicos, chamada <a href="http://dapp.fgv.br/transparencia-orcamentaria/">Transparência Orçamentária</a>.</p>
+
+<p>O Banco Central também elaborou algumas visualizações para visualizar os dados do <a href="http://www.bcb.gov.br/Rex/CensoCE/port/resultados_censos.asp?idpai=CAMBIO">Censo de Capitais Estrangeiros no Brasil</a>. As visualizações foram geradas utilizando D3 e d3plus.</p>
+
+<p>E você, conhece mais alguma iniciativa do setor público que utiliza visualização interativa de dados? Conte-nos nos comentários!</p>
+
+<h2 id="mais-sobre-visualizao-de-dados">Mais sobre visualização de dados</h2>
+
+<p>Se você está interessado em aprender mais sobre visualizações, assim como nós, recomendamos alguns sites que podem ajudar nessa jornada:</p>
+
+<p><a href="http://www.datavizcatalogue.com/">DataViz Catalogue</a> - Um excelente catálogo explicativo sobre diversos tipos de visualizações, incluindo como e quando usá-las, seus pontos fortes e pontos fracos.</p>
+
+<p><a href="https://player.oreilly.com/videos/9781491917015">O`Reilly - Effective Data Visualization</a> - Uma sequência de videos explorando diversos aspectos sobre visualização de dados. Infelizmente nem todos os videos são gratuitos, mas os gratuitos já são excelentes.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Introdução a Modelos No R]]></title>
