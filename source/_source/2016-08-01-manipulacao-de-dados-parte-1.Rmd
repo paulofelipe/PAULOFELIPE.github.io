@@ -1,0 +1,34 @@
+---
+layout: post
+title: "Manipulação de dados - Parte 1: dplyr básico"
+date: 2016-07-30 19:22:00 -0300
+comments: true
+categories: [geral]
+published: true
+---
+
+Manipulação de dados é uma das habilidades mais básicas que um analista de dados deve ter. Nesse post ensinaremos as principais atividades relacionadas a manipulação de dados utilizando o pacote dplyr, um dos melhores pacotes disponíveis no R para essa finalidade.
+
+<!-- More -->
+
+## O pacote
+
+O [dplyr](https://github.com/hadley/dplyr) é um pacote criado por [Hadley Wickham](https://github.com/hadley), um dos maiores colaboradores da comunidade R. Se você não o conhece e pretende seguir em frente com o R, certamente vai ouvir falar muito dele, pois ele criou diversos pacotes extremamente úteis e fáceis de usar (ggplot2, devtools, tidyr, strigr, etc...). O dplyr foi só um deles.
+
+Trata-se de um pacote otimizado para manipulação de dados, não só com boa performance, mas com sintaxe simples e concisa, facilitando o aprendizado e tornando o pacote um dos preferidos para as tarefas do dia a dia.
+
+O dplyr cobre praticamente todas as tarefas básicas da manipulação de dados: agregar, sumarizar, filtrar, ordenar, criar variáveis, joins, dentre outras.
+
+Para começar, instale, carregue, e dê uma rápida olhada na documentação. Em seguida cobriremos suas principais funcões:
+```{r}
+install.packages("dplyr")
+library(dplyr)
+?dplyr
+```
+
+
+## Título
+
+## Referências
+
+[teste](teste)
