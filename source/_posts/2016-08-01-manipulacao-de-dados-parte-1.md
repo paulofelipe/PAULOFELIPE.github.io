@@ -20,15 +20,14 @@ Trata-se de um pacote otimizado para manipulação de dados, não só com boa pe
 O dplyr cobre praticamente todas as tarefas básicas da manipulação de dados: agregar, sumarizar, filtrar, ordenar, criar variáveis, joins, dentre outras.
 
 Para começar, instale, carregue, e dê uma rápida olhada na documentação do dplyr. Em seguida cobriremos suas principais funcões:
-```{r, echo = FALSE, message = FALSE}
-library(dplyr)
-```
 
-```{r, eval = FALSE}
+
+
+{% highlight r %}
 install.packages("dplyr")
 library(dplyr)
 ?dplyr
-```
+{% endhighlight %}
 
 ## Verbetes do dplyr e o operador %>%
 
@@ -49,9 +48,7 @@ Passaremos todos os verbetes básicos encadeando um com o outro, explicando o us
 
 ## select()
 
-Usado para selecionar variáveis do seu data frame. Eventualmente você irá se deparar com conjuntos de dados com uma quantidade enorme de variáveis e não irá necessariamente querer todas.
-
-Use o `select()` e selecione somente as que você quer.
+Verbo usado para selecionar variáveis do seu data frame.
 
 ## filter()
 
@@ -62,6 +59,9 @@ Use o `select()` e selecione somente as que você quer.
 ## mutate()
 
 ## group_by()
+
+
+## Título
 
 ## Referências
 
