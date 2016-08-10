@@ -37,31 +37,121 @@ As principais tarefas de manipulação de dados podem ser resumidas em algumas s
 * select()
 * filter()
 * arrange()
-* distinct()
 * mutate()
 * group_by()
 
 Além de nomes de funcões intuitivos, o dplyr também faz uso de um recurso disponível em boa parte dos pacotes do Hadley, o operador `%>%`. 
 
-Esse operador encadeia as chamadas de funcões de forma que você não vai precisar ficar chamando uma função dentro da outra ou ficar fazendo atribuições para o fluxo de manipulações. Alias, podemos dizer que esse operador `%>%` literalmente cria um fluxo sequêncial bastante claro e legível para as atividades de manipulação. 
+Esse operador (originalmente do pacote [magrittr](https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html), que trataremos em outros posts) encadeia as chamadas de funcões de forma que você não vai precisar ficar chamando uma função dentro da outra ou ficar fazendo atribuições para o fluxo de manipulações. Alias, podemos dizer que esse operador `%>%` literalmente cria um fluxo sequêncial bastante claro e legível para as atividades de manipulação. 
 
 Passaremos todos os verbetes básicos encadeando um com o outro, explicando o uso das funções e do `%>%`, aos poucos seu uso ficará claro e intuitivo.
 
+## Dados 
+
+Vamos carregar uma pequena base de dados de testes para explicarmos os exemplos.
+
+Escolhemos os dados de exportação e importação da Argentina, terceiro maior parceiro comercial do Brasil, que podem ser obtidos no [Comex Vis](http://www.mdic.gov.br/comercio-exterior/estatisticas-de-comercio-exterior/comex-vis/frame-pais?pais=arg), clicando em dados brutos.
+
+Dando uma rapida olhada nos dados, temos:
+
+```{r, echo = FALSE}
+setwd("~/Development/R workspace")
+```
+
+```{r, warning=FALSE, message=FALSE}
+setwd("~/Development/R workspace")
+arg <- read.csv("arg.csv", sep = ';', encoding = 'latin1')
+str(arg)
+head(arg, 3)
+```
+
 ## select()
 
-Usado para selecionar variáveis do seu data frame. Eventualmente você irá se deparar com conjuntos de dados com uma quantidade enorme de variáveis e não irá necessariamente querer todas.
+O primeiro e mais simples verbete que comentaremos é usado para selecionar variáveis (colunas) do seu data frame. Não queremos todas as variáveis, queremos apenas os campos TIPO, PERIODO, NO_FAT_AGREG, VL_FOB, KG_LIQUIDO, para isso usaremos o select():
 
-Use o `select()` e selecione somente as que você quer.
+```{r, warning=FALSE, message=FALSE}
+arg.select <- arg %>% select(TIPO, PERIODO, NO_FAT_AGREG, VL_FOB, KG_LIQUIDO)
+str(arg.select)
+head(arg.select, 3)
+```
+
+Repare que o mesmo efeito seria alcançado com uma seleção "negativa", ou seja, selecionado todos que devem sair:
+
+```{r, warning=FALSE, message=FALSE}
+arg.select <- arg %>% select(-CO_ANO, -CO_PAIS, -NO_PAIS, -SG_PAIS, -CO_PAIS_ISOA3, -CO_NCM_TRANSFORMADA, -NO_NCM, -CO_PPE, -NO_PPE_PPI)
+head(arg.select, 3)
+```
+
+O resultado é exatamente o mesmo, use o que tiver que escrever menos, no nosso caso será a primeira opção.
+
+Comparando com o procedimento em R base para obtero mesmo resultado, temos:
+
+```{r, warning=FALSE, message=FALSE}
+arg.select.rbase <- arg[, c('TIPO', 'PERIODO', 'NO_FAT_AGREG', 'VL_FOB', 'KG_LIQUIDO')]
+head(arg.select.rbase, 3)
+```
 
 ## filter()
 
+Enquanto select diz respeito a quais campos você quer, o filter() diz respeito a quais linhas você quer. Em nosso exemplo, temos 2 ocorrências distintas em `TIPO`, vamos selecionar apenas exportação. Repare também que em `PERIODO` temos `Jan-Jul` e `Total`, queremos apenas o período `Jan-Jul` veja:
+
+```{r, warning=FALSE, message=FALSE}
+unique(as.character(arg.select$TIPO)) #ocorrências únicas de um vetor
+unique(as.character(arg.select$PERIODO)) #ocorrências únicas de um vetor
+arg.filter <- arg.select %>% filter(TIPO != 'IMPORTAÇÕES' & PERIODO == 'Jan-Jul')
+unique(as.character(arg.filter$TIPO)) #ocorrências únicas de um vetor
+unique(as.character(arg.filter$PERIODO)) #ocorrências únicas de um vetor
+```
+
+Para comparar, o mesmo resultado seria obtido com o R base da seguinte forma:
+
+```{r, warning=FALSE, message=FALSE}
+arg.filter.rbase <- arg.select[arg.select$TIPO != 'IMPORTAÇÕES' & arg.select$PERIODO == 'Jan-Jul', ]
+dim(arg.filter) #número de linhas e colunas
+dim(arg.filter.rbase) #número de linhas e colunas
+```
+
 ## arrange()
 
-## distinct()
+Selecionamos os campos com o select(), filtramos as linhas com o filter(), agora queremos ordenar os resultados e para isso usaremos o arrange().
+
+Queremos ordernar nossos dados filtrados por ordem alfabética de `NO_FAT_AGREG` e ordem decrescente de `VL_FOB`.
+
+```{r, warning=FALSE, message=FALSE}
+arg.arrange <- arg.filter %>% arrange(NO_FAT_AGREG, desc(VL_FOB))
+head(arg.arrange)
+tail(arg.arrange)
+```
+
+O mesmo restulado com o R base seria o seguinte:
+
+```{r, warning=FALSE, message=FALSE}
+arg.arrang.rbase <- arg.filter[order(NO_FAT_AGREG, -VL_FOB), ]
+head(arg.arrange)
+tail(arg.arrange)
+```
+
+## Entendendo o operador %>%
+
+Vimos até agora como fazer separadamente algumas operações básicas de manipulação e comparamos com o R base. Mas uma das grandes vantagens do pacote dplyr é justamente poder fazer uma operação "atrás da outra" sem precisar fazer novas atribuições. Como exemplo, refazendo tudo que fizemos até agora, em sequência, temos:
+
+```{r, warning=FALSE, message=FALSE}
+arg.dplyr <- arg %>% 
+      select(TIPO, PERIODO, NO_FAT_AGREG, VL_FOB, KG_LIQUIDO) %>%
+      filter(TIPO != 'IMPORTAÇÕES' & PERIODO == 'Jan-Jul') %>%
+      arrange(NO_FAT_AGREG, desc(VL_FOB))
+
+head(arg.dplyr)
+tail(arg.dplyr)
+```
+
+A primeira chamada `arg %>%` é o data frame que você irá trabalhar a manipulação. As chamadas seguintes `select() %>% filter() %>% arrange()` etc... são os encadeamentos de manipulação que você pode ir fazendo sem precisar reatribuir resultados ou criar novos objetos.
+
+Vamos ver a mesma sequência feita com o R base
 
 ## mutate()
 
-## group_by()
+## group_by() e summarise()
 
 ## Referências
 
