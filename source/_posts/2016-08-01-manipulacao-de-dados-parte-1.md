@@ -55,8 +55,6 @@ Escolhemos os dados de exportação e importação da Argentina, terceiro maior 
 Dando uma rapida olhada nos dados, temos:
 
 
-
-
 {% highlight r %}
 setwd("~/Development/R workspace")
 arg <- read.csv("arg.csv", sep = ';', encoding = 'latin1')
@@ -102,13 +100,18 @@ head(arg, 3)
 ## 3 Produtos Manufaturados 17367531    1197004
 {% endhighlight %}
 
+Em nosso exemplo, queremos manipular esses dados de forma que possamos avaliar as exportações de janeiro a julho, por fator agregado (`NO_FAT_AGREG`), comparando os valores do mesmo período entre os anos disponíveis.
+
+Vamos começar as operações para chegar nesse resultado!
+
 ## select()
 
-O primeiro e mais simples verbete que comentaremos é usado para selecionar variáveis (colunas) do seu data frame. Não queremos todas as variáveis, queremos apenas os campos TIPO, CO_ANO, PERIODO, NO_FAT_AGREG, VL_FOB, KG_LIQUIDO, para isso usaremos o select():
+A primeira e mais simples função que comentaremos é usada para selecionar variáveis (colunas) do seu data frame. Não queremos todas as variáveis, queremos apenas os campos TIPO, PERIODO, CO_ANO, NO_FAT_AGREG, NO_PPE_PPI, VL_FOB, KG_LIQUIDO. 
 
 
 {% highlight r %}
 arg.select <- arg %>% select(TIPO, PERIODO, CO_ANO, NO_FAT_AGREG, NO_PPE_PPI, VL_FOB, KG_LIQUIDO)
+
 str(arg.select)
 {% endhighlight %}
 
@@ -153,6 +156,7 @@ Repare que o mesmo efeito seria alcançado com uma seleção "negativa", ou seja
 
 {% highlight r %}
 arg.select <- arg %>% select(-CO_PAIS, -NO_PAIS, -CO_PAIS_ISOA3)
+
 head(arg.select, 3)
 {% endhighlight %}
 
@@ -173,13 +177,14 @@ head(arg.select, 3)
 ## 3 Produtos Manufaturados 17367531    1197004
 {% endhighlight %}
 
-O resultado é exatamente o mesmo, use o que tiver que escrever menos, no nosso caso será a primeira opção.
+O resultado é exatamente o mesmo. Use a forma que tiver que escrever menos, no nosso caso será a primeira opção.
 
 Comparando com o procedimento em R base para obtero mesmo resultado, temos:
 
 
 {% highlight r %}
 arg.select.rbase <- arg[, c('TIPO', 'PERIODO', 'CO_ANO', 'NO_FAT_AGREG', 'NO_PPE_PPI',  'VL_FOB', 'KG_LIQUIDO')]
+
 head(arg.select.rbase, 3)
 {% endhighlight %}
 
@@ -231,6 +236,7 @@ unique(as.character(arg.select$PERIODO)) #ocorrências únicas de um vetor
 
 {% highlight r %}
 arg.filter <- arg.select %>% filter(TIPO != 'IMPORTAÇÕES' & PERIODO == 'Jan-Jul')
+
 unique(as.character(arg.filter$TIPO)) #ocorrências únicas de um vetor
 {% endhighlight %}
 
@@ -257,6 +263,7 @@ Para comparar, o mesmo resultado seria obtido com o R base da seguinte forma:
 
 {% highlight r %}
 arg.filter.rbase <- arg.select[arg.select$TIPO != 'IMPORTAÇÕES' & arg.select$PERIODO == 'Jan-Jul', ]
+
 dim(arg.filter) #número de linhas e colunas
 {% endhighlight %}
 
@@ -278,137 +285,16 @@ dim(arg.filter.rbase) #número de linhas e colunas
 ## [1] 1012    7
 {% endhighlight %}
 
-## arrange()
-
-Selecionamos os campos com o select(), filtramos as linhas com o filter(), agora queremos ordenar os resultados e para isso usaremos o arrange().
-
-Queremos ordernar nossos dados filtrados por ordem alfabética de `NO_FAT_AGREG` e ordem decrescente de `VL_FOB`.
-
-
-{% highlight r %}
-arg.arrange <- arg.filter %>% arrange(NO_FAT_AGREG, desc(VL_FOB))
-head(arg.arrange)
-{% endhighlight %}
-
-
-
-{% highlight text %}
-##          TIPO PERIODO CO_ANO                              NO_PPE_PPI
-## 1 EXPORTAÇÕES Jan-Jul   2014 Consumo de bordo - óleos e combustíveis
-## 2 EXPORTAÇÕES Jan-Jul   2016                            Reexportação
-## 3 EXPORTAÇÕES Jan-Jul   2014                            Reexportação
-## 4 EXPORTAÇÕES Jan-Jul   2015 Consumo de bordo - óleos e combustíveis
-## 5 EXPORTAÇÕES Jan-Jul   2016 Consumo de bordo - óleos e combustíveis
-## 6 EXPORTAÇÕES Jan-Jul   2015                            Reexportação
-##          NO_FAT_AGREG  VL_FOB KG_LIQUIDO
-## 1 Operações Especiais 9023778    7894708
-## 2 Operações Especiais 7265362    1841428
-## 3 Operações Especiais 5964271    3392399
-## 4 Operações Especiais 5565702    8639868
-## 5 Operações Especiais 5057158   10482224
-## 6 Operações Especiais 4203581    2527950
-{% endhighlight %}
-
-
-
-{% highlight r %}
-tail(arg.arrange)
-{% endhighlight %}
-
-
-
-{% highlight text %}
-##             TIPO PERIODO CO_ANO
-## 1007 EXPORTAÇÕES Jan-Jul   2016
-## 1008 EXPORTAÇÕES Jan-Jul   2016
-## 1009 EXPORTAÇÕES Jan-Jul   2016
-## 1010 EXPORTAÇÕES Jan-Jul   2015
-## 1011 EXPORTAÇÕES Jan-Jul   2015
-## 1012 EXPORTAÇÕES Jan-Jul   2014
-##                                                  NO_PPE_PPI
-## 1007                                      Alumínio em bruto
-## 1008 Pedras p/calcetar, placas p/paviment. de pedra natural
-## 1009               Pimentões e pimentas trituradas ou em pó
-## 1010 Pedras p/calcetar, placas p/paviment. de pedra natural
-## 1011                               Açúcar de cana, em bruto
-## 1012                               Açúcar de cana, em bruto
-##                    NO_FAT_AGREG VL_FOB KG_LIQUIDO
-## 1007 Produtos Semimanufaturados  21868      12000
-## 1008 Produtos Semimanufaturados  19630      44425
-## 1009 Produtos Semimanufaturados  12373       1370
-## 1010 Produtos Semimanufaturados   8424      24455
-## 1011 Produtos Semimanufaturados   1200       1000
-## 1012 Produtos Semimanufaturados     98        200
-{% endhighlight %}
-
-O mesmo resultado com o R base seria o seguinte:
-
-
-{% highlight r %}
-arg.arrang.rbase <- arg.filter[order(arg.filter$NO_FAT_AGREG, -arg.filter$VL_FOB), ]
-head(arg.arrange)
-{% endhighlight %}
-
-
-
-{% highlight text %}
-##          TIPO PERIODO CO_ANO                              NO_PPE_PPI
-## 1 EXPORTAÇÕES Jan-Jul   2014 Consumo de bordo - óleos e combustíveis
-## 2 EXPORTAÇÕES Jan-Jul   2016                            Reexportação
-## 3 EXPORTAÇÕES Jan-Jul   2014                            Reexportação
-## 4 EXPORTAÇÕES Jan-Jul   2015 Consumo de bordo - óleos e combustíveis
-## 5 EXPORTAÇÕES Jan-Jul   2016 Consumo de bordo - óleos e combustíveis
-## 6 EXPORTAÇÕES Jan-Jul   2015                            Reexportação
-##          NO_FAT_AGREG  VL_FOB KG_LIQUIDO
-## 1 Operações Especiais 9023778    7894708
-## 2 Operações Especiais 7265362    1841428
-## 3 Operações Especiais 5964271    3392399
-## 4 Operações Especiais 5565702    8639868
-## 5 Operações Especiais 5057158   10482224
-## 6 Operações Especiais 4203581    2527950
-{% endhighlight %}
-
-
-
-{% highlight r %}
-tail(arg.arrange)
-{% endhighlight %}
-
-
-
-{% highlight text %}
-##             TIPO PERIODO CO_ANO
-## 1007 EXPORTAÇÕES Jan-Jul   2016
-## 1008 EXPORTAÇÕES Jan-Jul   2016
-## 1009 EXPORTAÇÕES Jan-Jul   2016
-## 1010 EXPORTAÇÕES Jan-Jul   2015
-## 1011 EXPORTAÇÕES Jan-Jul   2015
-## 1012 EXPORTAÇÕES Jan-Jul   2014
-##                                                  NO_PPE_PPI
-## 1007                                      Alumínio em bruto
-## 1008 Pedras p/calcetar, placas p/paviment. de pedra natural
-## 1009               Pimentões e pimentas trituradas ou em pó
-## 1010 Pedras p/calcetar, placas p/paviment. de pedra natural
-## 1011                               Açúcar de cana, em bruto
-## 1012                               Açúcar de cana, em bruto
-##                    NO_FAT_AGREG VL_FOB KG_LIQUIDO
-## 1007 Produtos Semimanufaturados  21868      12000
-## 1008 Produtos Semimanufaturados  19630      44425
-## 1009 Produtos Semimanufaturados  12373       1370
-## 1010 Produtos Semimanufaturados   8424      24455
-## 1011 Produtos Semimanufaturados   1200       1000
-## 1012 Produtos Semimanufaturados     98        200
-{% endhighlight %}
-
 ## mutate()
 
-O mutate() é um verbete usado para criar novas variáveis (colunas) no data.frame que você está manipulando. Por exemplo, em nossos dados temos o valor (VL_FOB) e o quilograma líquido (KG_LIQUIDO), mas estamos interessados em algum valor mais próximo do valor unitário. Podemos aproximar esse valor por dividindo VL_FOB por KG_LIQUIDO.
+O mutate() é uma função usada para criar novas variáveis (colunas) no data.frame que você está manipulando. Por exemplo, em nossos dados temos o valor (VL_FOB) e o quilograma líquido (KG_LIQUIDO), mas estamos interessados em algum valor mais próximo do valor unitário. Podemos aproximar esse valor dividindo VL_FOB por KG_LIQUIDO.
 
 A título de exemplo, criaremos também o log de KG_LIQUIDO e o VL_FOB ao quadrado.
 
 
 {% highlight r %}
 arg.mutate <- arg.filter %>% mutate(PRECO_VL_KG = VL_FOB/KG_LIQUIDO, LOG_KG = log(KG_LIQUIDO), VL_FOB_2 = VL_FOB^2)
+
 head(arg.mutate)
 {% endhighlight %}
 
@@ -492,6 +378,7 @@ arg.mutate.rbase <- arg.filter
 arg.mutate.rbase$PRECO_VL_KG = arg.mutate.rbase$VL_FOB/arg.mutate.rbase$KG_LIQUIDO
 arg.mutate.rbase$LOG_KG = log(arg.mutate.rbase$KG_LIQUIDO)
 arg.mutate.rbase$VL_FOB_2 = arg.mutate.rbase$VL_FOB^2
+
 head(arg.mutate)
 {% endhighlight %}
 
@@ -575,27 +462,19 @@ Agrupamento de dados geralmente é trabalhado em conjunção com sumarisações,
 
 Enquanto o group_by() separa seus dados nos grupos que você selecionar, o summarise() faz operações de agregação de linhas limitadas a esse grupo. Com o exemplo ficará mais claro. ***(essa explicação não ta mto legal, mas não to conseguindo melhorar mto)***
 
-Repare que, em relação ao produto, temos duas variáveis hierárquicas em nossos dados: NO_FAT_AGREG (nome do fator agregado) é uma classificação maior de de NO_PPE_PPI (nome do produto), além das outras variáveis de tempo e tipo de operação.
+Repare que, em relação ao produto, temos dois campos descritivos em nossos dados: NO_FAT_AGREG (nome do fator agregado) é uma classificação maior de de NO_PPE_PPI (nome do produto), além dos campos de valor e peso de produto.
 
-Em nossos dados temos o valor detalhado por produto, queremos agora o valor total por cada classificação de fator agregado. Além disso, queremos também a média de quilograma por cada fator agregado. Queremos tudo isso mantendo as variáveis de tempo e tipo de operação, ou seja, a unica coluna que será suprimida será o nome do produto NO_PPE_PPI.
+Queremos agora o valor total por cada classificação de fator agregado. Além disso, queremos também a média de quilograma por cada fator agregado. Queremos tudo isso mantendo as variáveis de tempo e tipo de operação, ou seja, a unica coluna que será suprimida será o nome do produto NO_PPE_PPI.
+
+As demais colunas de valores devem ser somadas (ou ter a média calculada) no nível da variável agrupada:
 
 
 {% highlight r %}
 arg.group <- arg.filter %>% group_by(TIPO, PERIODO, CO_ANO, NO_FAT_AGREG) %>% 
     summarise(SOMA_VL_FOB = sum(VL_FOB), 
               MEDIA_KG = mean(KG_LIQUIDO))
-str(agr.group)
-{% endhighlight %}
 
-
-
-{% highlight text %}
-## Error in str(agr.group): objeto 'agr.group' não encontrado
-{% endhighlight %}
-
-
-
-{% highlight r %}
+options(dplyr.width = Inf) #apenas para mostrat doas as colunas no output do dplyr
 head(arg.group)
 {% endhighlight %}
 
@@ -613,30 +492,81 @@ head(arg.group)
 ## 4 EXPORTAÇÕES Jan-Jul   2014 Produtos Semimanufaturados   204338219
 ## 5 EXPORTAÇÕES Jan-Jul   2015        Operações Especiais    13159527
 ## 6 EXPORTAÇÕES Jan-Jul   2015           Produtos Básicos   337227341
-## # ... with 1 more variables: MEDIA_KG <dbl>
+##    MEDIA_KG
+##       <dbl>
+## 1   2546025
+## 2 188459876
+## 3   8627696
+## 4   5847662
+## 5   2554621
+## 6 116532235
 {% endhighlight %}
 
+## arrange()
+
+Selecionamos os campos com o select(), filtramos as linhas com o filter(), criamos variáveis com o mutate() e agrupamos e sumarisamos com o group_by() e summarise(). Agora queremos ordenar os resultados por alguns critérios para começarmos a avaliar os dados. 
+
+Para isso usaremos o arrange(). Queremos ordernar nossos dados por ordem alfabética o nome do fator agregado com  `NO_FAT_AGREG` e ordem decrescente de valor de cada fator agregado `SUM_VL_FOB`.
 
 
 {% highlight r %}
-tail(arg.group)
+arg.arrange <- arg.group %>% arrange(NO_FAT_AGREG, desc(SOMA_VL_FOB))
+
+head(arg.arrange)
 {% endhighlight %}
 
 
 
 {% highlight text %}
 ## Source: local data frame [6 x 6]
-## Groups: TIPO, PERIODO, CO_ANO [2]
+## Groups: TIPO, PERIODO, CO_ANO [3]
+## 
+##          TIPO PERIODO CO_ANO        NO_FAT_AGREG SOMA_VL_FOB
+##        <fctr>  <fctr>  <int>              <fctr>       <dbl>
+## 1 EXPORTAÇÕES Jan-Jul   2014 Operações Especiais    18281140
+## 2 EXPORTAÇÕES Jan-Jul   2016 Operações Especiais    14967542
+## 3 EXPORTAÇÕES Jan-Jul   2015 Operações Especiais    13159527
+## 4 EXPORTAÇÕES Jan-Jul   2014    Produtos Básicos   754707560
+## 5 EXPORTAÇÕES Jan-Jul   2015    Produtos Básicos   337227341
+## 6 EXPORTAÇÕES Jan-Jul   2016    Produtos Básicos   244468757
+##    MEDIA_KG
+##       <dbl>
+## 1   2546025
+## 2   2788688
+## 3   2554621
+## 4 188459876
+## 5 116532235
+## 6  98083030
+{% endhighlight %}
+
+
+
+{% highlight r %}
+tail(arg.arrange)
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## Source: local data frame [6 x 6]
+## Groups: TIPO, PERIODO, CO_ANO [3]
 ## 
 ##          TIPO PERIODO CO_ANO               NO_FAT_AGREG SOMA_VL_FOB
 ##        <fctr>  <fctr>  <int>                     <fctr>       <dbl>
-## 1 EXPORTAÇÕES Jan-Jul   2015     Produtos Manufaturados  7153038358
-## 2 EXPORTAÇÕES Jan-Jul   2015 Produtos Semimanufaturados   186200525
-## 3 EXPORTAÇÕES Jan-Jul   2016        Operações Especiais    14967542
-## 4 EXPORTAÇÕES Jan-Jul   2016           Produtos Básicos   244468757
-## 5 EXPORTAÇÕES Jan-Jul   2016     Produtos Manufaturados  7062731046
-## 6 EXPORTAÇÕES Jan-Jul   2016 Produtos Semimanufaturados   231311143
-## # ... with 1 more variables: MEDIA_KG <dbl>
+## 1 EXPORTAÇÕES Jan-Jul   2014     Produtos Manufaturados  7680228246
+## 2 EXPORTAÇÕES Jan-Jul   2015     Produtos Manufaturados  7153038358
+## 3 EXPORTAÇÕES Jan-Jul   2016     Produtos Manufaturados  7062731046
+## 4 EXPORTAÇÕES Jan-Jul   2016 Produtos Semimanufaturados   231311143
+## 5 EXPORTAÇÕES Jan-Jul   2014 Produtos Semimanufaturados   204338219
+## 6 EXPORTAÇÕES Jan-Jul   2015 Produtos Semimanufaturados   186200525
+##   MEDIA_KG
+##      <dbl>
+## 1  8627696
+## 2  8303481
+## 3  9477421
+## 4 11577303
+## 5  5847662
+## 6  6275305
 {% endhighlight %}
 
 ## Entendendo o operador %>%
@@ -646,10 +576,12 @@ Vimos até agora como fazer separadamente algumas operações básicas de manipu
 
 {% highlight r %}
 arg.dplyr <- arg %>% 
-      select(TIPO, PERIODO, NO_FAT_AGREG, VL_FOB, KG_LIQUIDO) %>%
+      select(TIPO, PERIODO, CO_ANO, NO_FAT_AGREG, NO_PPE_PPI, VL_FOB, KG_LIQUIDO) %>%
       filter(TIPO != 'IMPORTAÇÕES' & PERIODO == 'Jan-Jul') %>%
       mutate(PRECO_VL_KG = VL_FOB/KG_LIQUIDO, LOG_KG = log(KG_LIQUIDO), VL_FOB_2 = VL_FOB^2) %>%
-      arrange(NO_FAT_AGREG, desc(VL_FOB))
+      group_by(TIPO, PERIODO, CO_ANO, NO_FAT_AGREG) %>% 
+      summarise(SOMA_VL_FOB = sum(VL_FOB), MEDIA_KG = mean(KG_LIQUIDO)) %>%
+      arrange(NO_FAT_AGREG, desc(SOMA_VL_FOB))
 
 head(arg.dplyr)
 {% endhighlight %}
@@ -657,20 +589,25 @@ head(arg.dplyr)
 
 
 {% highlight text %}
-##          TIPO PERIODO        NO_FAT_AGREG  VL_FOB KG_LIQUIDO
-## 1 EXPORTAÇÕES Jan-Jul Operações Especiais 9023778    7894708
-## 2 EXPORTAÇÕES Jan-Jul Operações Especiais 7265362    1841428
-## 3 EXPORTAÇÕES Jan-Jul Operações Especiais 5964271    3392399
-## 4 EXPORTAÇÕES Jan-Jul Operações Especiais 5565702    8639868
-## 5 EXPORTAÇÕES Jan-Jul Operações Especiais 5057158   10482224
-## 6 EXPORTAÇÕES Jan-Jul Operações Especiais 4203581    2527950
-##   PRECO_VL_KG   LOG_KG     VL_FOB_2
-## 1   1.1430161 15.88170 8.142857e+13
-## 2   3.9455042 14.42605 5.278548e+13
-## 3   1.7581278 15.03705 3.557253e+13
-## 4   0.6441883 15.97190 3.097704e+13
-## 5   0.4824509 16.16519 2.557485e+13
-## 6   1.6628418 14.74292 1.767009e+13
+## Source: local data frame [6 x 6]
+## Groups: TIPO, PERIODO, CO_ANO [3]
+## 
+##          TIPO PERIODO CO_ANO        NO_FAT_AGREG SOMA_VL_FOB
+##        <fctr>  <fctr>  <int>              <fctr>       <dbl>
+## 1 EXPORTAÇÕES Jan-Jul   2014 Operações Especiais    18281140
+## 2 EXPORTAÇÕES Jan-Jul   2016 Operações Especiais    14967542
+## 3 EXPORTAÇÕES Jan-Jul   2015 Operações Especiais    13159527
+## 4 EXPORTAÇÕES Jan-Jul   2014    Produtos Básicos   754707560
+## 5 EXPORTAÇÕES Jan-Jul   2015    Produtos Básicos   337227341
+## 6 EXPORTAÇÕES Jan-Jul   2016    Produtos Básicos   244468757
+##    MEDIA_KG
+##       <dbl>
+## 1   2546025
+## 2   2788688
+## 3   2554621
+## 4 188459876
+## 5 116532235
+## 6  98083030
 {% endhighlight %}
 
 
@@ -682,25 +619,34 @@ tail(arg.dplyr)
 
 
 {% highlight text %}
-##             TIPO PERIODO               NO_FAT_AGREG VL_FOB KG_LIQUIDO
-## 1007 EXPORTAÇÕES Jan-Jul Produtos Semimanufaturados  21868      12000
-## 1008 EXPORTAÇÕES Jan-Jul Produtos Semimanufaturados  19630      44425
-## 1009 EXPORTAÇÕES Jan-Jul Produtos Semimanufaturados  12373       1370
-## 1010 EXPORTAÇÕES Jan-Jul Produtos Semimanufaturados   8424      24455
-## 1011 EXPORTAÇÕES Jan-Jul Produtos Semimanufaturados   1200       1000
-## 1012 EXPORTAÇÕES Jan-Jul Produtos Semimanufaturados     98        200
-##      PRECO_VL_KG    LOG_KG  VL_FOB_2
-## 1007   1.8223333  9.392662 478209424
-## 1008   0.4418683 10.701558 385336900
-## 1009   9.0313869  7.222566 153091129
-## 1010   0.3444694 10.104590  70963776
-## 1011   1.2000000  6.907755   1440000
-## 1012   0.4900000  5.298317      9604
+## Source: local data frame [6 x 6]
+## Groups: TIPO, PERIODO, CO_ANO [3]
+## 
+##          TIPO PERIODO CO_ANO               NO_FAT_AGREG SOMA_VL_FOB
+##        <fctr>  <fctr>  <int>                     <fctr>       <dbl>
+## 1 EXPORTAÇÕES Jan-Jul   2014     Produtos Manufaturados  7680228246
+## 2 EXPORTAÇÕES Jan-Jul   2015     Produtos Manufaturados  7153038358
+## 3 EXPORTAÇÕES Jan-Jul   2016     Produtos Manufaturados  7062731046
+## 4 EXPORTAÇÕES Jan-Jul   2016 Produtos Semimanufaturados   231311143
+## 5 EXPORTAÇÕES Jan-Jul   2014 Produtos Semimanufaturados   204338219
+## 6 EXPORTAÇÕES Jan-Jul   2015 Produtos Semimanufaturados   186200525
+##   MEDIA_KG
+##      <dbl>
+## 1  8627696
+## 2  8303481
+## 3  9477421
+## 4 11577303
+## 5  5847662
+## 6  6275305
 {% endhighlight %}
 
-A primeira chamada `arg %>%` é o data frame que você irá trabalhar a manipulação. As chamadas seguintes `select() %>% filter() %>% arrange()` etc... são os encadeamentos de manipulação que você pode ir fazendo sem precisar reatribuir resultados ou criar novos objetos.
+A primeira chamada `arg %>%` é a passagem onde você informa o data.frame que você irá trabalhar a manipulação. A partir daí, as chamadas seguintes `select() %>% filter() %>% mutate()` etc, são os encadeamentos de manipulação que você pode ir fazendo sem precisar atribuir resultados ou criar novos objetos.
 
-Vamos ver a mesma sequência feita com o R base
+Usando o operador `%>%`, você estará informando que um resultado da operação anterior será a entrada para a nova operação. Esse encadeamento facilita muito as coisas, tornando a manipulação mais legível e intuitiva.
+
+Vamos ver a mesma sequência feita com o R base:
+
+***colocar a comparação***
 
 ## Próximos posts
 

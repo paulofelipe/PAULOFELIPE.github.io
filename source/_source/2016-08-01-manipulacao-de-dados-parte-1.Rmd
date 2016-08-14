@@ -55,10 +55,6 @@ Escolhemos os dados de exportação e importação da Argentina, terceiro maior 
 
 Dando uma rapida olhada nos dados, temos:
 
-```{r, echo = FALSE}
-setwd("~/Development/R workspace")
-```
-
 ```{r, warning=FALSE, message=FALSE}
 setwd("~/Development/R workspace")
 arg <- read.csv("arg.csv", sep = ';', encoding = 'latin1')
@@ -66,12 +62,17 @@ str(arg)
 head(arg, 3)
 ```
 
+Em nosso exemplo, queremos manipular esses dados de forma que possamos avaliar as exportações de janeiro a julho, por fator agregado (`NO_FAT_AGREG`), comparando os valores do mesmo período entre os anos disponíveis.
+
+Vamos começar as operações para chegar nesse resultado!
+
 ## select()
 
-O primeiro e mais simples verbete que comentaremos é usado para selecionar variáveis (colunas) do seu data frame. Não queremos todas as variáveis, queremos apenas os campos TIPO, CO_ANO, PERIODO, NO_FAT_AGREG, VL_FOB, KG_LIQUIDO, para isso usaremos o select():
+A primeira e mais simples função que comentaremos é usada para selecionar variáveis (colunas) do seu data frame. Não queremos todas as variáveis, queremos apenas os campos TIPO, PERIODO, CO_ANO, NO_FAT_AGREG, NO_PPE_PPI, VL_FOB, KG_LIQUIDO. 
 
 ```{r, warning=FALSE, message=FALSE}
 arg.select <- arg %>% select(TIPO, PERIODO, CO_ANO, NO_FAT_AGREG, NO_PPE_PPI, VL_FOB, KG_LIQUIDO)
+
 str(arg.select)
 head(arg.select, 3)
 ```
@@ -80,15 +81,17 @@ Repare que o mesmo efeito seria alcançado com uma seleção "negativa", ou seja
 
 ```{r, warning=FALSE, message=FALSE}
 arg.select <- arg %>% select(-CO_PAIS, -NO_PAIS, -CO_PAIS_ISOA3)
+
 head(arg.select, 3)
 ```
 
-O resultado é exatamente o mesmo, use o que tiver que escrever menos, no nosso caso será a primeira opção.
+O resultado é exatamente o mesmo. Use a forma que tiver que escrever menos, no nosso caso será a primeira opção.
 
 Comparando com o procedimento em R base para obtero mesmo resultado, temos:
 
 ```{r, warning=FALSE, message=FALSE}
 arg.select.rbase <- arg[, c('TIPO', 'PERIODO', 'CO_ANO', 'NO_FAT_AGREG', 'NO_PPE_PPI',  'VL_FOB', 'KG_LIQUIDO')]
+
 head(arg.select.rbase, 3)
 ```
 
@@ -99,7 +102,9 @@ Enquanto select diz respeito a quais campos você quer, o filter() diz respeito 
 ```{r, warning=FALSE, message=FALSE}
 unique(as.character(arg.select$TIPO)) #ocorrências únicas de um vetor
 unique(as.character(arg.select$PERIODO)) #ocorrências únicas de um vetor
+
 arg.filter <- arg.select %>% filter(TIPO != 'IMPORTAÇÕES' & PERIODO == 'Jan-Jul')
+
 unique(as.character(arg.filter$TIPO)) #ocorrências únicas de um vetor
 unique(as.character(arg.filter$PERIODO)) #ocorrências únicas de um vetor
 ```
@@ -108,18 +113,20 @@ Para comparar, o mesmo resultado seria obtido com o R base da seguinte forma:
 
 ```{r, warning=FALSE, message=FALSE}
 arg.filter.rbase <- arg.select[arg.select$TIPO != 'IMPORTAÇÕES' & arg.select$PERIODO == 'Jan-Jul', ]
+
 dim(arg.filter) #número de linhas e colunas
 dim(arg.filter.rbase) #número de linhas e colunas
 ```
 
 ## mutate()
 
-O mutate() é um verbete usado para criar novas variáveis (colunas) no data.frame que você está manipulando. Por exemplo, em nossos dados temos o valor (VL_FOB) e o quilograma líquido (KG_LIQUIDO), mas estamos interessados em algum valor mais próximo do valor unitário. Podemos aproximar esse valor por dividindo VL_FOB por KG_LIQUIDO.
+O mutate() é uma função usada para criar novas variáveis (colunas) no data.frame que você está manipulando. Por exemplo, em nossos dados temos o valor (VL_FOB) e o quilograma líquido (KG_LIQUIDO), mas estamos interessados em algum valor mais próximo do valor unitário. Podemos aproximar esse valor dividindo VL_FOB por KG_LIQUIDO.
 
 A título de exemplo, criaremos também o log de KG_LIQUIDO e o VL_FOB ao quadrado.
 
 ```{r, warning=FALSE, message=FALSE}
 arg.mutate <- arg.filter %>% mutate(PRECO_VL_KG = VL_FOB/KG_LIQUIDO, LOG_KG = log(KG_LIQUIDO), VL_FOB_2 = VL_FOB^2)
+
 head(arg.mutate)
 tail(arg.mutate)
 ```
@@ -131,6 +138,7 @@ arg.mutate.rbase <- arg.filter
 arg.mutate.rbase$PRECO_VL_KG = arg.mutate.rbase$VL_FOB/arg.mutate.rbase$KG_LIQUIDO
 arg.mutate.rbase$LOG_KG = log(arg.mutate.rbase$KG_LIQUIDO)
 arg.mutate.rbase$VL_FOB_2 = arg.mutate.rbase$VL_FOB^2
+
 head(arg.mutate)
 tail(arg.mutate)
 ```
@@ -143,36 +151,30 @@ Agrupamento de dados geralmente é trabalhado em conjunção com sumarisações,
 
 Enquanto o group_by() separa seus dados nos grupos que você selecionar, o summarise() faz operações de agregação de linhas limitadas a esse grupo. Com o exemplo ficará mais claro. ***(essa explicação não ta mto legal, mas não to conseguindo melhorar mto)***
 
-Repare que, em relação ao produto, temos duas variáveis hierárquicas em nossos dados: NO_FAT_AGREG (nome do fator agregado) é uma classificação maior de de NO_PPE_PPI (nome do produto), além das outras variáveis de tempo e tipo de operação.
+Repare que, em relação ao produto, temos dois campos descritivos em nossos dados: NO_FAT_AGREG (nome do fator agregado) é uma classificação maior de de NO_PPE_PPI (nome do produto), além dos campos de valor e peso de produto.
 
-Em nossos dados temos o valor detalhado por produto, queremos agora o valor total por cada classificação de fator agregado. Além disso, queremos também a média de quilograma por cada fator agregado. Queremos tudo isso mantendo as variáveis de tempo e tipo de operação, ou seja, a unica coluna que será suprimida será o nome do produto NO_PPE_PPI.
+Queremos agora o valor total por cada classificação de fator agregado. Além disso, queremos também a média de quilograma por cada fator agregado. Queremos tudo isso mantendo as variáveis de tempo e tipo de operação, ou seja, a unica coluna que será suprimida será o nome do produto NO_PPE_PPI.
+
+As demais colunas de valores devem ser somadas (ou ter a média calculada) no nível da variável agrupada:
 
 ```{r, warning=FALSE, message=FALSE}
 arg.group <- arg.filter %>% group_by(TIPO, PERIODO, CO_ANO, NO_FAT_AGREG) %>% 
     summarise(SOMA_VL_FOB = sum(VL_FOB), 
               MEDIA_KG = mean(KG_LIQUIDO))
-str(agr.group)
+
+options(dplyr.width = Inf) #apenas para mostrat doas as colunas no output do dplyr
 head(arg.group)
 ```
 
 ## arrange()
 
-Selecionamos os campos com o select(), filtramos as linhas com o filter(), criamos variáveis com o mutate() e agrupamos e sumarisamos com o group_by() e summarise(). Agora queremos ordenar os resultados e para isso usaremos o arrange().
+Selecionamos os campos com o select(), filtramos as linhas com o filter(), criamos variáveis com o mutate() e agrupamos e sumarisamos com o group_by() e summarise(). Agora queremos ordenar os resultados por alguns critérios para começarmos a avaliar os dados. 
 
-Queremos ordernar nossos dados por ordem alfabética de `NO_FAT_AGREG` e ordem decrescente de `VL_FOB`.
-
-***ajustar para pegar os dados do group by***
+Para isso usaremos o arrange(). Queremos ordernar nossos dados por ordem alfabética o nome do fator agregado com  `NO_FAT_AGREG` e ordem decrescente de valor de cada fator agregado `SUM_VL_FOB`.
 
 ```{r, warning=FALSE, message=FALSE}
-arg.arrange <- arg.filter %>% arrange(NO_FAT_AGREG, desc(VL_FOB))
-head(arg.arrange)
-tail(arg.arrange)
-```
+arg.arrange <- arg.group %>% arrange(NO_FAT_AGREG, desc(SOMA_VL_FOB))
 
-O mesmo resultado com o R base seria o seguinte:
-
-```{r, warning=FALSE, message=FALSE}
-arg.arrang.rbase <- arg.filter[order(arg.filter$NO_FAT_AGREG, -arg.filter$VL_FOB), ]
 head(arg.arrange)
 tail(arg.arrange)
 ```
@@ -183,18 +185,24 @@ Vimos até agora como fazer separadamente algumas operações básicas de manipu
 
 ```{r, warning=FALSE, message=FALSE}
 arg.dplyr <- arg %>% 
-      select(TIPO, PERIODO, NO_FAT_AGREG, VL_FOB, KG_LIQUIDO) %>%
+      select(TIPO, PERIODO, CO_ANO, NO_FAT_AGREG, NO_PPE_PPI, VL_FOB, KG_LIQUIDO) %>%
       filter(TIPO != 'IMPORTAÇÕES' & PERIODO == 'Jan-Jul') %>%
       mutate(PRECO_VL_KG = VL_FOB/KG_LIQUIDO, LOG_KG = log(KG_LIQUIDO), VL_FOB_2 = VL_FOB^2) %>%
-      arrange(NO_FAT_AGREG, desc(VL_FOB))
+      group_by(TIPO, PERIODO, CO_ANO, NO_FAT_AGREG) %>% 
+      summarise(SOMA_VL_FOB = sum(VL_FOB), MEDIA_KG = mean(KG_LIQUIDO)) %>%
+      arrange(NO_FAT_AGREG, desc(SOMA_VL_FOB))
 
 head(arg.dplyr)
 tail(arg.dplyr)
 ```
 
-A primeira chamada `arg %>%` é o data frame que você irá trabalhar a manipulação. As chamadas seguintes `select() %>% filter() %>% arrange()` etc... são os encadeamentos de manipulação que você pode ir fazendo sem precisar reatribuir resultados ou criar novos objetos.
+A primeira chamada `arg %>%` é a passagem onde você informa o data.frame que você irá trabalhar a manipulação. A partir daí, as chamadas seguintes `select() %>% filter() %>% mutate()` etc, são os encadeamentos de manipulação que você pode ir fazendo sem precisar atribuir resultados ou criar novos objetos.
 
-Vamos ver a mesma sequência feita com o R base
+Usando o operador `%>%`, você estará informando que um resultado da operação anterior será a entrada para a nova operação. Esse encadeamento facilita muito as coisas, tornando a manipulação mais legível e intuitiva.
+
+Vamos ver a mesma sequência feita com o R base:
+
+***colocar a comparação***
 
 ## Próximos posts
 
