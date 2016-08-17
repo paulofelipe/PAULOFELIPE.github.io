@@ -1,9 +1,9 @@
 ---
 layout: post
 title: "Manipulação de dados - Parte 1: dplyr básico"
-date: 2016-07-30 19:22:00 -0300
+date: 2016-08-16 19:22:00 -0300
 comments: true
-categories: [geral]
+categories: [dplyr, manipulação de dados]
 published: true
 ---
 
@@ -13,13 +13,13 @@ Dominar a manipulação de dados é uma das habilidades mais básicas que um ana
 
 ## O pacote
 
-O [dplyr](https://github.com/hadley/dplyr) é um pacote criado por [Hadley Wickham](https://github.com/hadley), um dos maiores colaboradores da comunidade R. Se você não o conhece e pretende seguir em frente com o R, certamente vai ouvir falar muito dele, pois ele criou diversos pacotes extremamente úteis e fáceis de usar (ggplot2, devtools, tidyr, strigr, etc...). O dplyr foi só um deles.
+O [dplyr](https://github.com/hadley/dplyr) é um pacote criado por [Hadley Wickham](https://github.com/hadley), um dos maiores colaboradores da comunidade R. Se você não o conhece e pretende seguir em frente com o R, certamente vai ouvir falar muito dele, pois ele criou diversos pacotes extremamente úteis e fáceis de usar (ggplot2, devtools, tidyr, stringr, etc...). O dplyr foi só um deles.
 
 Trata-se de um pacote otimizado para manipulação de dados, não só com boa performance, mas com sintaxe simples e concisa, facilitando o aprendizado e tornando o pacote um dos preferidos para as tarefas do dia a dia.
 
 O dplyr cobre praticamente todas as tarefas básicas da manipulação de dados: agregar, sumarizar, filtrar, ordenar, criar variáveis, joins, dentre outras.
 
-Para começar, instale, carregue, e dê uma rápida olhada na documentação do dplyr. Em seguida cobriremos suas principais funcões:
+Para começar, instale, carregue e dê uma rápida olhada na documentação do dplyr. Em seguida cobriremos suas principais funções:
 ```{r, echo = FALSE, message = FALSE}
 library(dplyr)
 ```
@@ -32,7 +32,7 @@ library(dplyr)
 
 ## Verbetes do dplyr e o operador %>%
 
-As principais tarefas de manipulação de dados podem ser resumidas em algumas simpels palavras, tal qual mencionamos na introdução do post. As funcões do dplyr simplesmente reproduzem essas palavras de forma bastante intuitiva. Veja só:
+As principais tarefas de manipulação de dados podem ser resumidas em algumas simples palavras, tal qual mencionamos na introdução do post. As funções do dplyr simplesmente reproduzem essas palavras de forma bastante intuitiva. Veja só:
 
 * select()
 * filter()
@@ -41,21 +41,26 @@ As principais tarefas de manipulação de dados podem ser resumidas em algumas s
 * group_by()
 * summarise()
 
-Além de nomes de funcões intuitivos, o dplyr também faz uso de um recurso disponível em boa parte dos pacotes do Hadley, o operador `%>%`. 
+Esses são os principais verbetes, mas existem outros disponíveis como, por exemplo, `slice()`, `rename()` e `transmute()`. Como já dito, é importante dar uma olhada na documentação para ver as funções disponíveis.
 
-Esse operador (originalmente do pacote [magrittr](https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html), que trataremos em outros posts) encadeia as chamadas de funcões de forma que você não vai precisar ficar chamando uma função dentro da outra ou ficar fazendo atribuições para o fluxo de manipulações. Alias, podemos dizer que esse operador `%>%` literalmente cria um fluxo sequêncial bastante claro e legível para as atividades de manipulação. 
+Além de nomes de funções intuitivos, o dplyr também faz uso de um recurso disponível em boa parte dos pacotes do Hadley, o operador `%>%`. 
+
+Esse operador (originalmente do pacote [magrittr](https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html), que trataremos em outros posts) encadeia as chamadas de funções de forma que você não vai precisar ficar chamando uma função dentro da outra ou ficar fazendo atribuições para o fluxo de manipulações. Aliás, podemos dizer que esse operador `%>%` literalmente cria um fluxo sequencial bastante claro e legível para as atividades de manipulação. 
 
 Passaremos todos os verbetes básicos encadeando um com o outro, explicando o uso das funções e do `%>%`, aos poucos seu uso ficará claro e intuitivo.
+
 
 ## Dados 
 
 Vamos carregar uma pequena base de dados de testes para explicarmos os exemplos.
 
-Escolhemos os dados de exportação e importação da Argentina, terceiro maior parceiro comercial do Brasil, que podem ser obtidos no [Comex Vis](http://www.mdic.gov.br/comercio-exterior/estatisticas-de-comercio-exterior/comex-vis/frame-pais?pais=arg), clicando em dados brutos.
+Escolhemos os dados brasileiros de comércio exterior (exportações e importações) com a Argentina, terceiro maior parceiro comercial do Brasil, que podem ser obtidos no [Comex Vis](http://www.mdic.gov.br/comercio-exterior/estatisticas-de-comercio-exterior/comex-vis/frame-pais?pais=arg), clicando em dados brutos.
 
-Dando uma rapida olhada nos dados, temos:
+Dando uma rápida olhada nos dados, temos:
 
 ```{r, warning=FALSE, message=FALSE}
+# Lembre-se de definir o diretório de trabalho para o 
+# local que você salvou o arquivo.
 setwd("~/Development/R workspace")
 arg <- read.csv("arg.csv", sep = ';', encoding = 'latin1')
 str(arg)
@@ -85,9 +90,22 @@ arg.select <- arg %>% select(-CO_PAIS, -NO_PAIS, -CO_PAIS_ISOA3)
 head(arg.select, 3)
 ```
 
-O resultado é exatamente o mesmo. Use a forma que tiver que escrever menos, no nosso caso será a primeira opção.
+Além disso, o dplyr ainda possui algumas funções que podem ser úteis na seleção de variáveis. Veja:
+```{r, eval = FALSE}
+?select_helpers
+```
 
-Comparando com o procedimento em R base para obtero mesmo resultado, temos:
+Você notou que todas as variáveis que excluímos continham`PAIS` no nome? E se fossem 50 variáveis com essa características? Seria complicado escrever os 50 nomes. Contudo, tudo pode ser feito mais facilmente com o uso dessas funções auxiliares. Vamos utilizar o `contains()`:
+
+```{r}
+arg.select <- arg %>% select(-contains("PAIS"))
+
+head(arg.select, 3)
+```
+
+Excluímos todas as variáveis que contêm `PAIS` no nome. O resultado é exatamente o mesmo. Como quase tudo no R, existe mais de uma forma para obter o mesmo resultado. Geralmente, opta-se pela forma mais concisa.
+
+Comparando com o procedimento em R base para obter o mesmo resultado, temos:
 
 ```{r, warning=FALSE, message=FALSE}
 arg.select.rbase <- arg[, c('TIPO', 'PERIODO', 'CO_ANO', 'NO_FAT_AGREG', 'NO_PPE_PPI',  'VL_FOB', 'KG_LIQUIDO')]
@@ -97,13 +115,13 @@ head(arg.select.rbase, 3)
 
 ## filter()
 
-Enquanto select diz respeito a quais campos você quer, o filter() diz respeito a quais linhas você quer. Em nosso exemplo, temos 2 ocorrências distintas em `TIPO`, vamos selecionar apenas exportação. Repare também que em `PERIODO` temos `Jan-Jul` e `Total`, queremos apenas o período `Jan-Jul` veja:
+Enquanto o `select()` diz respeito a quais campos você quer, o filter() diz respeito a quais linhas você deseja selecionar. Em nosso exemplo, temos duas ocorrências distintas em `TIPO`, vamos selecionar apenas as exportações. Repare também que em `PERIODO` temos `Jan-Jul` e `Total`, queremos apenas o período `Jan-Jul` veja:
 
 ```{r, warning=FALSE, message=FALSE}
 unique(as.character(arg.select$TIPO)) #ocorrências únicas de um vetor
 unique(as.character(arg.select$PERIODO)) #ocorrências únicas de um vetor
 
-arg.filter <- arg.select %>% filter(TIPO != 'IMPORTAÇÕES' & PERIODO == 'Jan-Jul')
+arg.filter <- arg.select %>% filter(TIPO == 'EXPORTAÇÕES' & PERIODO == 'Jan-Jul')
 
 unique(as.character(arg.filter$TIPO)) #ocorrências únicas de um vetor
 unique(as.character(arg.filter$PERIODO)) #ocorrências únicas de um vetor
@@ -112,7 +130,7 @@ unique(as.character(arg.filter$PERIODO)) #ocorrências únicas de um vetor
 Para comparar, o mesmo resultado seria obtido com o R base da seguinte forma:
 
 ```{r, warning=FALSE, message=FALSE}
-arg.filter.rbase <- arg.select[arg.select$TIPO != 'IMPORTAÇÕES' & arg.select$PERIODO == 'Jan-Jul', ]
+arg.filter.rbase <- arg.select[arg.select$TIPO == 'EXPORTAÇÕES' & arg.select$PERIODO == 'Jan-Jul', ]
 
 dim(arg.filter) #número de linhas e colunas
 dim(arg.filter.rbase) #número de linhas e colunas
@@ -120,7 +138,7 @@ dim(arg.filter.rbase) #número de linhas e colunas
 
 ## mutate()
 
-O mutate() é uma função usada para criar novas variáveis (colunas) no data.frame que você está manipulando. Por exemplo, em nossos dados temos o valor (VL_FOB) e o quilograma líquido (KG_LIQUIDO), mas estamos interessados em algum valor mais próximo do valor unitário. Podemos aproximar esse valor dividindo VL_FOB por KG_LIQUIDO.
+O `mutate()` é uma função usada para criar novas variáveis (colunas) no data.frame que você está manipulando. Por exemplo, em nossos dados temos o valor (VL_FOB) e o quilograma líquido (KG_LIQUIDO), mas estamos interessados em algum valor mais próximo do valor unitário. Podemos aproximar esse valor dividindo VL_FOB por KG_LIQUIDO.
 
 A título de exemplo, criaremos também o log de KG_LIQUIDO e o VL_FOB ao quadrado.
 
@@ -145,13 +163,13 @@ tail(arg.mutate)
 
 ## group_by() e summarise()
 
-O group_by() e o summarise() são operações que trabalham na agregação dos dados, ou seja, um dado mais detalhado passa a ser um dados mais agregado, agrupado. 
+O `group_by()` e o `summarise()` são operações que trabalham na agregação dos dados, ou seja, um dado mais detalhado passa a ser um dados mais agregado, agrupado. 
 
-Agrupamento de dados geralmente é trabalhado em conjunção com sumarisações, que usam funcões matemáticas do tipo soma, média, desvio padrão, etc.
+Agrupamento de dados geralmente é trabalhado em conjunção com sumarizações, que usam funções matemáticas do tipo soma, média, desvio padrão, etc.
 
-Enquanto o group_by() separa seus dados nos grupos que você selecionar, o summarise() faz operações de agregação de linhas limitadas a esse grupo. Com o exemplo ficará mais claro. ***(essa explicação não ta mto legal, mas não to conseguindo melhorar mto)***
+Enquanto o `group_by()` separa seus dados nos grupos que você selecionar, o summarise() faz operações de agregação de linhas limitadas a esse grupo. Com o exemplo ficará mais claro. 
 
-Repare que, em relação ao produto, temos dois campos descritivos em nossos dados: NO_FAT_AGREG (nome do fator agregado) é uma classificação maior de de NO_PPE_PPI (nome do produto), além dos campos de valor e peso de produto.
+Repare que, em relação ao produto, temos dois campos descritivos em nossos dados: NO_FAT_AGREG (nome do fator agregado) é uma classificação hierarquicamente superior ao NO_PPE_PPI (nome do produto), além dos campos de valor e peso de produto.
 
 Queremos agora o valor total por cada classificação de fator agregado. Além disso, queremos também a média de quilograma por cada fator agregado. Queremos tudo isso mantendo as variáveis de tempo e tipo de operação, ou seja, a unica coluna que será suprimida será o nome do produto NO_PPE_PPI.
 
@@ -162,15 +180,17 @@ arg.group <- arg.filter %>% group_by(TIPO, PERIODO, CO_ANO, NO_FAT_AGREG) %>%
     summarise(SOMA_VL_FOB = sum(VL_FOB), 
               MEDIA_KG = mean(KG_LIQUIDO))
 
-options(dplyr.width = Inf) #apenas para mostrat doas as colunas no output do dplyr
+options(dplyr.width = Inf) #apenas para mostrar todas as colunas no output do dplyr
 head(arg.group)
 ```
 
+Aqui fica uma observação. Apesar de o `group_by()` estar intimamente relacionada ao `summarise()`, é importante ressaltar que essa função também pode ser utilizada para criar, com o `mutate()`, novas variáveis, que apresentam valores sumarizados de outras.
+
 ## arrange()
 
-Selecionamos os campos com o select(), filtramos as linhas com o filter(), criamos variáveis com o mutate() e agrupamos e sumarisamos com o group_by() e summarise(). Agora queremos ordenar os resultados por alguns critérios para começarmos a avaliar os dados. 
+Selecionamos os campos com o `select()`, filtramos as linhas com o `filter()`, criamos variáveis com o `mutate()` e agrupamos e sumarizamos com o `group_by()` e `summarise()`. Agora queremos ordenar os resultados por alguns critérios para começarmos a avaliar os dados. 
 
-Para isso usaremos o arrange(). Queremos ordernar nossos dados por ordem alfabética o nome do fator agregado com  `NO_FAT_AGREG` e ordem decrescente de valor de cada fator agregado `SUM_VL_FOB`.
+Para isso usaremos o `arrange()`. Queremos ordenar nossos dados, em ordem alfabética, pelo nome do fator agregado `NO_FAT_AGREG` e em ordem decrescente de valor de cada fator agregado `SOMA_VL_FOB`.
 
 ```{r, warning=FALSE, message=FALSE}
 arg.arrange <- arg.group %>% arrange(NO_FAT_AGREG, desc(SOMA_VL_FOB))
@@ -181,12 +201,12 @@ tail(arg.arrange)
 
 ## Entendendo o operador %>%
 
-Vimos até agora como fazer separadamente algumas operações básicas de manipulação e comparamos com o R base. Mas uma das grandes vantagens do pacote dplyr é justamente poder fazer uma operação "atrás da outra" sem precisar fazer novas atribuições. Como exemplo, refazendo tudo que fizemos até agora, em sequência, temos:
+Vimos até agora como fazer separadamente algumas operações básicas de manipulação e comparamos com o R base. No entanto, uma das grandes vantagens do pacote dplyr é justamente poder fazer uma operação "atrás da outra" sem precisar fazer novas atribuições. Como exemplo, refazendo tudo que fizemos até agora, em sequência, temos:
 
 ```{r, warning=FALSE, message=FALSE}
 arg.dplyr <- arg %>% 
       select(TIPO, PERIODO, CO_ANO, NO_FAT_AGREG, NO_PPE_PPI, VL_FOB, KG_LIQUIDO) %>%
-      filter(TIPO != 'IMPORTAÇÕES' & PERIODO == 'Jan-Jul') %>%
+      filter(TIPO == 'EXPORTAÇÕES' & PERIODO == 'Jan-Jul') %>%
       mutate(PRECO_VL_KG = VL_FOB/KG_LIQUIDO, LOG_KG = log(KG_LIQUIDO), VL_FOB_2 = VL_FOB^2) %>%
       group_by(TIPO, PERIODO, CO_ANO, NO_FAT_AGREG) %>% 
       summarise(SOMA_VL_FOB = sum(VL_FOB), MEDIA_KG = mean(KG_LIQUIDO)) %>%
@@ -200,14 +220,21 @@ A primeira chamada `arg %>%` é a passagem onde você informa o data.frame que v
 
 Usando o operador `%>%`, você estará informando que um resultado da operação anterior será a entrada para a nova operação. Esse encadeamento facilita muito as coisas, tornando a manipulação mais legível e intuitiva.
 
-Vamos ver a mesma sequência feita com o R base:
+## Avaliação Não-Padrão (Non-standard evaluation - NSE)
 
-***colocar a comparação***
+O dplyr utiliza por padrão avaliação não-padrão. Na prática, isso significa que ao fazer alguma operação você não precisa utilizar as aspas, o que reduz a necessidade de digitação. No entanto, todo verbete possui uma versão com avaliação padrão. Para tal, adiciona-se `_` ao nome da função. Por exemplo, `filter_()` é a função com a avaliação padrão, enquanto `filter()` é a mesma função com avaliação não-padrão. 
+
+Talvez saber isso agora não pareça útil, mas poderá ser caso você esteja lendo um código escrito por outra pessoa ou estiver escrevendo uma função em que os nomes das variáveis são argumentos da função. Para mais detalhes:
+```{r, eval = FALSE}
+vignette('nse')
+```
 
 ## Próximos posts
 
-Como dissemos no começo, esse post inaugura uma nova sequência onde iremos tratar sobre manipulação de dados. O dplyr tem mais funções do que as apresentadas. Nos próximos posts vamos tratar mais detalhadamente essas funcões, bem como outro pacotes bastante usados também em  manipulação de dados, como o `data.table`, `tidyr`, `stringr` e outros.
+Como dissemos no começo, esse post inaugura uma nova sequência onde iremos tratar sobre manipulação de dados. O dplyr tem mais funções do que as apresentadas. Nos próximos posts vamos tratar mais detalhadamente essas funções, bem como outro pacotes bastante usados também em  manipulação de dados, como o `data.table`, `tidyr`, `stringr` e outros.
 
 ## Referências
 
-[teste](teste)
+* [Data Wrangling with dplyr and tidyr](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
+* [Introduction to dplyr](https://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html)
+* [Introduction to dplyr for Faster Data Manipulation in R](https://rpubs.com/justmarkham/dplyr-tutorial)
