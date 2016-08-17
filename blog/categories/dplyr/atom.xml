@@ -1,0 +1,550 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[dplyr | Full Join]]></title>
+  <link href="http://fulljoin.com.br/blog/categories/dplyr/atom.xml" rel="self"/>
+  <link href="http://fulljoin.com.br/"/>
+  <updated>2016-08-16T22:21:46-03:00</updated>
+  <id>http://fulljoin.com.br/</id>
+  <author>
+    <name><![CDATA[Full Join]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Manipulação de dados - Parte 1: dplyr básico]]></title>
+    <link href="http://fulljoin.com.br/blog/2016/08/16/manipulacao-de-dados-parte-1/"/>
+    <updated>2016-08-16T19:22:00-03:00</updated>
+    <id>http://fulljoin.com.br/blog/2016/08/16/manipulacao-de-dados-parte-1</id>
+    <content type="html"><![CDATA[<p>Dominar a manipulação de dados é uma das habilidades mais básicas que um analista de dados deve ter. Nesse post ensinaremos as principais atividades relacionadas a manipulação de dados utilizando o pacote dplyr, um dos melhores pacotes disponíveis no R para essa finalidade.</p>
+
+<!-- More -->
+
+<h2 id="o-pacote">O pacote</h2>
+
+<p>O <a href="https://github.com/hadley/dplyr">dplyr</a> é um pacote criado por <a href="https://github.com/hadley">Hadley Wickham</a>, um dos maiores colaboradores da comunidade R. Se você não o conhece e pretende seguir em frente com o R, certamente vai ouvir falar muito dele, pois ele criou diversos pacotes extremamente úteis e fáceis de usar (ggplot2, devtools, tidyr, stringr, etc…). O dplyr foi só um deles.</p>
+
+<p>Trata-se de um pacote otimizado para manipulação de dados, não só com boa performance, mas com sintaxe simples e concisa, facilitando o aprendizado e tornando o pacote um dos preferidos para as tarefas do dia a dia.</p>
+
+<p>O dplyr cobre praticamente todas as tarefas básicas da manipulação de dados: agregar, sumarizar, filtrar, ordenar, criar variáveis, joins, dentre outras.</p>
+
+<p>Para começar, instale, carregue e dê uma rápida olhada na documentação do dplyr. Em seguida cobriremos suas principais funções:</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">install.packages</span><span class="p">(</span><span class="err">“</span><span class="n">dplyr</span><span class="err">”</span><span class="p">)</span>
+<span class="n">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
+<span class="o">?</span><span class="n">dplyr</span></code></pre></div></p>
+
+<h2 id="verbetes-do-dplyr-e-o-operador-">Verbetes do dplyr e o operador %&gt;%</h2>
+
+<p>As principais tarefas de manipulação de dados podem ser resumidas em algumas simples palavras, tal qual mencionamos na introdução do post. As funções do dplyr simplesmente reproduzem essas palavras de forma bastante intuitiva. Veja só:</p>
+
+<ul>
+  <li>select()</li>
+  <li>filter()</li>
+  <li>arrange()</li>
+  <li>mutate()</li>
+  <li>group_by()</li>
+  <li>summarise()</li>
+</ul>
+
+<p>Esses são os principais verbetes, mas existem outros disponíveis como, por exemplo, <code>slice()</code>, <code>rename()</code> e <code>transmute()</code>. Como já dito, é importante dar uma olhada na documentação para ver as funções disponíveis.</p>
+
+<p>Além de nomes de funções intuitivos, o dplyr também faz uso de um recurso disponível em boa parte dos pacotes do Hadley, o operador <code>%&gt;%</code>.</p>
+
+<p>Esse operador (originalmente do pacote <a href="https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html">magrittr</a>, que trataremos em outros posts) encadeia as chamadas de funções de forma que você não vai precisar ficar chamando uma função dentro da outra ou ficar fazendo atribuições para o fluxo de manipulações. Aliás, podemos dizer que esse operador <code>%&gt;%</code> literalmente cria um fluxo sequencial bastante claro e legível para as atividades de manipulação.</p>
+
+<p>Passaremos todos os verbetes básicos encadeando um com o outro, explicando o uso das funções e do <code>%&gt;%</code>, aos poucos seu uso ficará claro e intuitivo.</p>
+
+<h2 id="dados">Dados</h2>
+
+<p>Vamos carregar uma pequena base de dados de testes para explicarmos os exemplos.</p>
+
+<p>Escolhemos os dados brasileiros de comércio exterior (exportações e importações) com a Argentina, terceiro maior parceiro comercial do Brasil, que podem ser obtidos no <a href="http://www.mdic.gov.br/comercio-exterior/estatisticas-de-comercio-exterior/comex-vis/frame-pais?pais=arg">Comex Vis</a>, clicando em dados brutos.</p>
+
+<p>Dando uma rápida olhada nos dados, temos:</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Lembre-se de definir o diretório de trabalho para o </span>
+<span class="c1"># local que você salvou o arquivo.</span>
+<span class="n">setwd</span><span class="p">(</span><span class="err">“</span><span class="o">~/</span><span class="n">Development</span><span class="o">/</span><span class="n">R</span> <span class="n">workspace</span><span class="err">”</span><span class="p">)</span>
+<span class="n">arg</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">read.csv</span><span class="p">(</span><span class="err">“</span><span class="n">arg.csv</span><span class="err">”</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="err">‘</span><span class="p">;</span><span class="err">’</span><span class="p">,</span> <span class="n">encoding</span> <span class="o">=</span> <span class="err">‘</span><span class="n">latin1</span><span class="err">’</span><span class="p">)</span>
+<span class="n">str</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## ‘data.frame’:	3286 obs. of  10 variables:
+##  $ TIPO         : Factor w/ 2 levels “EXPORTAÇÕES”,..: 1 1 1 1 1 1 1 1 1 1 …
+##  $ PERIODO      : Factor w/ 2 levels “Jan-Jul”,”Total”: 1 1 1 1 1 1 1 1 1 1 …
+##  $ CO_ANO       : int  2014 2014 2014 2014 2014 2014 2014 2014 2014 2014 …
+##  $ CO_PAIS      : int  63 63 63 63 63 63 63 63 63 63 …
+##  $ NO_PAIS      : Factor w/ 1 level “Argentina”: 1 1 1 1 1 1 1 1 1 1 …
+##  $ CO_PAIS_ISOA3: Factor w/ 1 level “ARG”: 1 1 1 1 1 1 1 1 1 1 …
+##  $ NO_PPE_PPI   : Factor w/ 593 levels “Abacaxis frescos ou secos”,..: 1 2 3 5 8 9 10 11 15 17 …
+##  $ NO_FAT_AGREG : Factor w/ 4 levels “Operações Especiais”,..: 2 3 3 3 3 4 3 3 3 2 …
+##  $ VL_FOB       : num  164490 5513295 17367531 4361844 77117330 …
+##  $ KG_LIQUIDO   : num  210336 716749 1197004 1155458 68853741 …</code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">head</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="m">3</span><span class="p">)</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">##          TIPO PERIODO CO_ANO CO_PAIS   NO_PAIS CO_PAIS_ISOA3
+## 1 EXPORTAÇÕES Jan-Jul   2014      63 Argentina           ARG
+## 2 EXPORTAÇÕES Jan-Jul   2014      63 Argentina           ARG
+## 3 EXPORTAÇÕES Jan-Jul   2014      63 Argentina           ARG
+##                                         NO_PPE_PPI
+## 1                        Abacaxis frescos ou secos
+## 2     Abrasivos e pedras para amolar e semelhantes
+## 3 Aceleradores de reação e preparações catalíticas
+##             NO_FAT_AGREG   VL_FOB KG_LIQUIDO
+## 1       Produtos Básicos   164490     210336
+## 2 Produtos Manufaturados  5513295     716749
+## 3 Produtos Manufaturados 17367531    1197004</code></pre></div></p>
+
+<p>Em nosso exemplo, queremos manipular esses dados de forma que possamos avaliar as exportações de janeiro a julho, por fator agregado (<code>NO_FAT_AGREG</code>), comparando os valores do mesmo período entre os anos disponíveis.</p>
+
+<p>Vamos começar as operações para chegar nesse resultado!</p>
+
+<h2 id="select">select()</h2>
+
+<p>A primeira e mais simples função que comentaremos é usada para selecionar variáveis (colunas) do seu data frame. Não queremos todas as variáveis, queremos apenas os campos TIPO, PERIODO, CO_ANO, NO_FAT_AGREG, NO_PPE_PPI, VL_FOB, KG_LIQUIDO.</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">arg.select</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">arg</span> <span class="o">%&amp;</span><span class="n">gt</span><span class="p">;</span><span class="o">%</span> <span class="n">select</span><span class="p">(</span><span class="n">TIPO</span><span class="p">,</span> <span class="n">PERIODO</span><span class="p">,</span> <span class="n">CO_ANO</span><span class="p">,</span> <span class="n">NO_FAT_AGREG</span><span class="p">,</span> <span class="n">NO_PPE_PPI</span><span class="p">,</span> <span class="n">VL_FOB</span><span class="p">,</span> <span class="n">KG_LIQUIDO</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">str</span><span class="p">(</span><span class="n">arg.select</span><span class="p">)</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## ‘data.frame’:	3286 obs. of  7 variables:
+##  $ TIPO        : Factor w/ 2 levels “EXPORTAÇÕES”,..: 1 1 1 1 1 1 1 1 1 1 …
+##  $ PERIODO     : Factor w/ 2 levels “Jan-Jul”,”Total”: 1 1 1 1 1 1 1 1 1 1 …
+##  $ CO_ANO      : int  2014 2014 2014 2014 2014 2014 2014 2014 2014 2014 …
+##  $ NO_FAT_AGREG: Factor w/ 4 levels “Operações Especiais”,..: 2 3 3 3 3 4 3 3 3 2 …
+##  $ NO_PPE_PPI  : Factor w/ 593 levels “Abacaxis frescos ou secos”,..: 1 2 3 5 8 9 10 11 15 17 …
+##  $ VL_FOB      : num  164490 5513295 17367531 4361844 77117330 …
+##  $ KG_LIQUIDO  : num  210336 716749 1197004 1155458 68853741 …</code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">head</span><span class="p">(</span><span class="n">arg.select</span><span class="p">,</span> <span class="m">3</span><span class="p">)</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">##          TIPO PERIODO CO_ANO           NO_FAT_AGREG
+## 1 EXPORTAÇÕES Jan-Jul   2014       Produtos Básicos
+## 2 EXPORTAÇÕES Jan-Jul   2014 Produtos Manufaturados
+## 3 EXPORTAÇÕES Jan-Jul   2014 Produtos Manufaturados
+##                                         NO_PPE_PPI   VL_FOB
+## 1                        Abacaxis frescos ou secos   164490
+## 2     Abrasivos e pedras para amolar e semelhantes  5513295
+## 3 Aceleradores de reação e preparações catalíticas 17367531
+##   KG_LIQUIDO
+## 1     210336
+## 2     716749
+## 3    1197004</code></pre></div></p>
+
+<p>Repare que o mesmo efeito seria alcançado com uma seleção “negativa”, ou seja, selecionado todos que devem sair:</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">arg.select</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">arg</span> <span class="o">%&amp;</span><span class="n">gt</span><span class="p">;</span><span class="o">%</span> <span class="n">select</span><span class="p">(</span><span class="o">-</span><span class="n">CO_PAIS</span><span class="p">,</span> <span class="o">-</span><span class="n">NO_PAIS</span><span class="p">,</span> <span class="o">-</span><span class="n">CO_PAIS_ISOA3</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">head</span><span class="p">(</span><span class="n">arg.select</span><span class="p">,</span> <span class="m">3</span><span class="p">)</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">##          TIPO PERIODO CO_ANO
+## 1 EXPORTAÇÕES Jan-Jul   2014
+## 2 EXPORTAÇÕES Jan-Jul   2014
+## 3 EXPORTAÇÕES Jan-Jul   2014
+##                                         NO_PPE_PPI
+## 1                        Abacaxis frescos ou secos
+## 2     Abrasivos e pedras para amolar e semelhantes
+## 3 Aceleradores de reação e preparações catalíticas
+##             NO_FAT_AGREG   VL_FOB KG_LIQUIDO
+## 1       Produtos Básicos   164490     210336
+## 2 Produtos Manufaturados  5513295     716749
+## 3 Produtos Manufaturados 17367531    1197004</code></pre></div></p>
+
+<p>Além disso, o dplyr ainda possui algumas funções que podem ser úteis na seleção de variáveis. Veja:</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="o">?</span><span class="n">select_helpers</span></code></pre></div></p>
+
+<p>Você notou que todas as variáveis que excluímos continham<code>PAIS</code> no nome? E se fossem 50 variáveis com essa características? Seria complicado escrever os 50 nomes. Contudo, tudo pode ser feito mais facilmente com o uso dessas funções auxiliares. Vamos utilizar o <code>contains()</code>:</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">arg.select</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">arg</span> <span class="o">%&amp;</span><span class="n">gt</span><span class="p">;</span><span class="o">%</span> <span class="n">select</span><span class="p">(</span><span class="o">-</span><span class="n">contains</span><span class="p">(</span><span class="err">“</span><span class="n">PAIS</span><span class="err">”</span><span class="p">))</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">head</span><span class="p">(</span><span class="n">arg.select</span><span class="p">,</span> <span class="m">3</span><span class="p">)</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">##          TIPO PERIODO CO_ANO
+## 1 EXPORTAÇÕES Jan-Jul   2014
+## 2 EXPORTAÇÕES Jan-Jul   2014
+## 3 EXPORTAÇÕES Jan-Jul   2014
+##                                         NO_PPE_PPI
+## 1                        Abacaxis frescos ou secos
+## 2     Abrasivos e pedras para amolar e semelhantes
+## 3 Aceleradores de reação e preparações catalíticas
+##             NO_FAT_AGREG   VL_FOB KG_LIQUIDO
+## 1       Produtos Básicos   164490     210336
+## 2 Produtos Manufaturados  5513295     716749
+## 3 Produtos Manufaturados 17367531    1197004</code></pre></div></p>
+
+<p>Excluímos todas as variáveis que contêm <code>PAIS</code> no nome. O resultado é exatamente o mesmo. Como quase tudo no R, existe mais de uma forma para obter o mesmo resultado. Geralmente, opta-se pela forma mais concisa.</p>
+
+<p>Comparando com o procedimento em R base para obter o mesmo resultado, temos:</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">arg.select.rbase</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">arg</span><span class="p">[,</span> <span class="n">c</span><span class="p">(</span><span class="err">‘</span><span class="n">TIPO</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">PERIODO</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">CO_ANO</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">NO_FAT_AGREG</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">NO_PPE_PPI</span><span class="err">’</span><span class="p">,</span>  <span class="err">‘</span><span class="n">VL_FOB</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">KG_LIQUIDO</span><span class="err">’</span><span class="p">)]</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">head</span><span class="p">(</span><span class="n">arg.select.rbase</span><span class="p">,</span> <span class="m">3</span><span class="p">)</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">##          TIPO PERIODO CO_ANO           NO_FAT_AGREG
+## 1 EXPORTAÇÕES Jan-Jul   2014       Produtos Básicos
+## 2 EXPORTAÇÕES Jan-Jul   2014 Produtos Manufaturados
+## 3 EXPORTAÇÕES Jan-Jul   2014 Produtos Manufaturados
+##                                         NO_PPE_PPI   VL_FOB
+## 1                        Abacaxis frescos ou secos   164490
+## 2     Abrasivos e pedras para amolar e semelhantes  5513295
+## 3 Aceleradores de reação e preparações catalíticas 17367531
+##   KG_LIQUIDO
+## 1     210336
+## 2     716749
+## 3    1197004</code></pre></div></p>
+
+<h2 id="filter">filter()</h2>
+
+<p>Enquanto o <code>select()</code> diz respeito a quais campos você quer, o filter() diz respeito a quais linhas você deseja selecionar. Em nosso exemplo, temos duas ocorrências distintas em <code>TIPO</code>, vamos selecionar apenas as exportações. Repare também que em <code>PERIODO</code> temos <code>Jan-Jul</code> e <code>Total</code>, queremos apenas o período <code>Jan-Jul</code> veja:</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">unique</span><span class="p">(</span><span class="n">as.character</span><span class="p">(</span><span class="n">arg.select</span><span class="o">$</span><span class="n">TIPO</span><span class="p">))</span> <span class="c1">#ocorrências únicas de um vetor</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## [1] “EXPORTAÇÕES” “IMPORTAÇÕES”</code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">unique</span><span class="p">(</span><span class="n">as.character</span><span class="p">(</span><span class="n">arg.select</span><span class="o">$</span><span class="n">PERIODO</span><span class="p">))</span> <span class="c1">#ocorrências únicas de um vetor</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## [1] “Jan-Jul” “Total”</code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">arg.filter</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">arg.select</span> <span class="o">%&amp;</span><span class="n">gt</span><span class="p">;</span><span class="o">%</span> <span class="n">filter</span><span class="p">(</span><span class="n">TIPO</span> <span class="o">==</span> <span class="err">‘</span><span class="n">EXPORTA</span><span class="err">ÇÕ</span><span class="n">ES</span><span class="err">’</span> <span class="o">&amp;</span><span class="n">amp</span><span class="p">;</span> <span class="n">PERIODO</span> <span class="o">==</span> <span class="err">‘</span><span class="n">Jan</span><span class="o">-</span><span class="n">Jul</span><span class="err">’</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">unique</span><span class="p">(</span><span class="n">as.character</span><span class="p">(</span><span class="n">arg.filter</span><span class="o">$</span><span class="n">TIPO</span><span class="p">))</span> <span class="c1">#ocorrências únicas de um vetor</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## [1] “EXPORTAÇÕES”</code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">unique</span><span class="p">(</span><span class="n">as.character</span><span class="p">(</span><span class="n">arg.filter</span><span class="o">$</span><span class="n">PERIODO</span><span class="p">))</span> <span class="c1">#ocorrências únicas de um vetor</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## [1] “Jan-Jul”</code></pre></div></p>
+
+<p>Para comparar, o mesmo resultado seria obtido com o R base da seguinte forma:</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">arg.filter.rbase</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">arg.select</span><span class="p">[</span><span class="n">arg.select</span><span class="o">$</span><span class="n">TIPO</span> <span class="o">==</span> <span class="err">‘</span><span class="n">EXPORTA</span><span class="err">ÇÕ</span><span class="n">ES</span><span class="err">’</span> <span class="o">&amp;</span><span class="n">amp</span><span class="p">;</span> <span class="n">arg.select</span><span class="o">$</span><span class="n">PERIODO</span> <span class="o">==</span> <span class="err">‘</span><span class="n">Jan</span><span class="o">-</span><span class="n">Jul</span><span class="err">’</span><span class="p">,</span> <span class="p">]</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">dim</span><span class="p">(</span><span class="n">arg.filter</span><span class="p">)</span> <span class="c1">#número de linhas e colunas</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 1012    7</code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">dim</span><span class="p">(</span><span class="n">arg.filter.rbase</span><span class="p">)</span> <span class="c1">#número de linhas e colunas</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 1012    7</code></pre></div></p>
+
+<h2 id="mutate">mutate()</h2>
+
+<p>O <code>mutate()</code> é uma função usada para criar novas variáveis (colunas) no data.frame que você está manipulando. Por exemplo, em nossos dados temos o valor (VL_FOB) e o quilograma líquido (KG_LIQUIDO), mas estamos interessados em algum valor mais próximo do valor unitário. Podemos aproximar esse valor dividindo VL_FOB por KG_LIQUIDO.</p>
+
+<p>A título de exemplo, criaremos também o log de KG_LIQUIDO e o VL_FOB ao quadrado.</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">arg.mutate</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">arg.filter</span> <span class="o">%&amp;</span><span class="n">gt</span><span class="p">;</span><span class="o">%</span> <span class="n">mutate</span><span class="p">(</span><span class="n">PRECO_VL_KG</span> <span class="o">=</span> <span class="n">VL_FOB</span><span class="o">/</span><span class="n">KG_LIQUIDO</span><span class="p">,</span> <span class="n">LOG_KG</span> <span class="o">=</span> <span class="n">log</span><span class="p">(</span><span class="n">KG_LIQUIDO</span><span class="p">),</span> <span class="n">VL_FOB_2</span> <span class="o">=</span> <span class="n">VL_FOB</span><span class="o">^</span><span class="m">2</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">head</span><span class="p">(</span><span class="n">arg.mutate</span><span class="p">)</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">##          TIPO PERIODO CO_ANO
+## 1 EXPORTAÇÕES Jan-Jul   2014
+## 2 EXPORTAÇÕES Jan-Jul   2014
+## 3 EXPORTAÇÕES Jan-Jul   2014
+## 4 EXPORTAÇÕES Jan-Jul   2014
+## 5 EXPORTAÇÕES Jan-Jul   2014
+## 6 EXPORTAÇÕES Jan-Jul   2014
+##                                                NO_PPE_PPI
+## 1                               Abacaxis frescos ou secos
+## 2            Abrasivos e pedras para amolar e semelhantes
+## 3        Aceleradores de reação e preparações catalíticas
+## 4 Acetatos,nitratos, éteres de celulose e outs. derivados
+## 5  Ácidos carboxílicos, seus anidridos, halogenetos, etc.
+## 6                                Açúcar de cana, em bruto
+##                 NO_FAT_AGREG   VL_FOB KG_LIQUIDO PRECO_VL_KG
+## 1           Produtos Básicos   164490     210336   0.7820345
+## 2     Produtos Manufaturados  5513295     716749   7.6920861
+## 3     Produtos Manufaturados 17367531    1197004  14.5091671
+## 4     Produtos Manufaturados  4361844    1155458   3.7749914
+## 5     Produtos Manufaturados 77117330   68853741   1.1200166
+## 6 Produtos Semimanufaturados       98        200   0.4900000
+##      LOG_KG     VL_FOB_2
+## 1 12.256462 2.705696e+10
+## 2 13.482481 3.039642e+13
+## 3 13.995332 3.016311e+14
+## 4 13.960007 1.902568e+13
+## 5 18.047495 5.947083e+15
+## 6  5.298317 9.604000e+03</code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">tail</span><span class="p">(</span><span class="n">arg.mutate</span><span class="p">)</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">##             TIPO PERIODO CO_ANO
+## 1007 EXPORTAÇÕES Jan-Jul   2016
+## 1008 EXPORTAÇÕES Jan-Jul   2016
+## 1009 EXPORTAÇÕES Jan-Jul   2016
+## 1010 EXPORTAÇÕES Jan-Jul   2016
+## 1011 EXPORTAÇÕES Jan-Jul   2016
+## 1012 EXPORTAÇÕES Jan-Jul   2016
+##                                                   NO_PPE_PPI
+## 1007                         Vestuário para homens e meninos
+## 1008                       Vestuário para mulheres e meninas
+## 1009 Vidro em esferas,barras,varetas e tubos, não trabalhado
+## 1010 Vidro flotado,desbastado ou polido, em chapas ou folhas
+## 1011                                     Vidros de segurança
+## 1012                                          Zinco em bruto
+##                    NO_FAT_AGREG   VL_FOB KG_LIQUIDO PRECO_VL_KG
+## 1007     Produtos Manufaturados   811139      23278  34.8457342
+## 1008     Produtos Manufaturados   543358      26923  20.1819262
+## 1009     Produtos Manufaturados      874          1 874.0000000
+## 1010     Produtos Manufaturados 14823394   32236312   0.4598353
+## 1011     Produtos Manufaturados 10416982    5693081   1.8297618
+## 1012 Produtos Semimanufaturados 38057373   21823452   1.7438750
+##        LOG_KG     VL_FOB_2
+## 1007 10.05526 6.579465e+11
+## 1008 10.20074 2.952379e+11
+## 1009  0.00000 7.638760e+05
+## 1010 17.28860 2.197330e+14
+## 1011 15.55476 1.085135e+14
+## 1012 16.89850 1.448364e+15</code></pre></div></p>
+
+<p>O mesmo resultado com o R base seria o seguinte:</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">arg.mutate.rbase</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">arg.filter</span>
+<span class="n">arg.mutate.rbase</span><span class="o">$</span><span class="n">PRECO_VL_KG</span> <span class="o">=</span> <span class="n">arg.mutate.rbase</span><span class="o">$</span><span class="n">VL_FOB</span><span class="o">/</span><span class="n">arg.mutate.rbase</span><span class="o">$</span><span class="n">KG_LIQUIDO</span>
+<span class="n">arg.mutate.rbase</span><span class="o">$</span><span class="n">LOG_KG</span> <span class="o">=</span> <span class="n">log</span><span class="p">(</span><span class="n">arg.mutate.rbase</span><span class="o">$</span><span class="n">KG_LIQUIDO</span><span class="p">)</span>
+<span class="n">arg.mutate.rbase</span><span class="o">$</span><span class="n">VL_FOB_2</span> <span class="o">=</span> <span class="n">arg.mutate.rbase</span><span class="o">$</span><span class="n">VL_FOB</span><span class="o">^</span><span class="m">2</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">head</span><span class="p">(</span><span class="n">arg.mutate</span><span class="p">)</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">##          TIPO PERIODO CO_ANO
+## 1 EXPORTAÇÕES Jan-Jul   2014
+## 2 EXPORTAÇÕES Jan-Jul   2014
+## 3 EXPORTAÇÕES Jan-Jul   2014
+## 4 EXPORTAÇÕES Jan-Jul   2014
+## 5 EXPORTAÇÕES Jan-Jul   2014
+## 6 EXPORTAÇÕES Jan-Jul   2014
+##                                                NO_PPE_PPI
+## 1                               Abacaxis frescos ou secos
+## 2            Abrasivos e pedras para amolar e semelhantes
+## 3        Aceleradores de reação e preparações catalíticas
+## 4 Acetatos,nitratos, éteres de celulose e outs. derivados
+## 5  Ácidos carboxílicos, seus anidridos, halogenetos, etc.
+## 6                                Açúcar de cana, em bruto
+##                 NO_FAT_AGREG   VL_FOB KG_LIQUIDO PRECO_VL_KG
+## 1           Produtos Básicos   164490     210336   0.7820345
+## 2     Produtos Manufaturados  5513295     716749   7.6920861
+## 3     Produtos Manufaturados 17367531    1197004  14.5091671
+## 4     Produtos Manufaturados  4361844    1155458   3.7749914
+## 5     Produtos Manufaturados 77117330   68853741   1.1200166
+## 6 Produtos Semimanufaturados       98        200   0.4900000
+##      LOG_KG     VL_FOB_2
+## 1 12.256462 2.705696e+10
+## 2 13.482481 3.039642e+13
+## 3 13.995332 3.016311e+14
+## 4 13.960007 1.902568e+13
+## 5 18.047495 5.947083e+15
+## 6  5.298317 9.604000e+03</code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">tail</span><span class="p">(</span><span class="n">arg.mutate</span><span class="p">)</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">##             TIPO PERIODO CO_ANO
+## 1007 EXPORTAÇÕES Jan-Jul   2016
+## 1008 EXPORTAÇÕES Jan-Jul   2016
+## 1009 EXPORTAÇÕES Jan-Jul   2016
+## 1010 EXPORTAÇÕES Jan-Jul   2016
+## 1011 EXPORTAÇÕES Jan-Jul   2016
+## 1012 EXPORTAÇÕES Jan-Jul   2016
+##                                                   NO_PPE_PPI
+## 1007                         Vestuário para homens e meninos
+## 1008                       Vestuário para mulheres e meninas
+## 1009 Vidro em esferas,barras,varetas e tubos, não trabalhado
+## 1010 Vidro flotado,desbastado ou polido, em chapas ou folhas
+## 1011                                     Vidros de segurança
+## 1012                                          Zinco em bruto
+##                    NO_FAT_AGREG   VL_FOB KG_LIQUIDO PRECO_VL_KG
+## 1007     Produtos Manufaturados   811139      23278  34.8457342
+## 1008     Produtos Manufaturados   543358      26923  20.1819262
+## 1009     Produtos Manufaturados      874          1 874.0000000
+## 1010     Produtos Manufaturados 14823394   32236312   0.4598353
+## 1011     Produtos Manufaturados 10416982    5693081   1.8297618
+## 1012 Produtos Semimanufaturados 38057373   21823452   1.7438750
+##        LOG_KG     VL_FOB_2
+## 1007 10.05526 6.579465e+11
+## 1008 10.20074 2.952379e+11
+## 1009  0.00000 7.638760e+05
+## 1010 17.28860 2.197330e+14
+## 1011 15.55476 1.085135e+14
+## 1012 16.89850 1.448364e+15</code></pre></div></p>
+
+<h2 id="groupby-e-summarise">group_by() e summarise()</h2>
+
+<p>O <code>group_by()</code> e o <code>summarise()</code> são operações que trabalham na agregação dos dados, ou seja, um dado mais detalhado passa a ser um dados mais agregado, agrupado.</p>
+
+<p>Agrupamento de dados geralmente é trabalhado em conjunção com sumarizações, que usam funções matemáticas do tipo soma, média, desvio padrão, etc.</p>
+
+<p>Enquanto o <code>group_by()</code> separa seus dados nos grupos que você selecionar, o summarise() faz operações de agregação de linhas limitadas a esse grupo. Com o exemplo ficará mais claro.</p>
+
+<p>Repare que, em relação ao produto, temos dois campos descritivos em nossos dados: NO_FAT_AGREG (nome do fator agregado) é uma classificação hierarquicamente superior ao NO_PPE_PPI (nome do produto), além dos campos de valor e peso de produto.</p>
+
+<p>Queremos agora o valor total por cada classificação de fator agregado. Além disso, queremos também a média de quilograma por cada fator agregado. Queremos tudo isso mantendo as variáveis de tempo e tipo de operação, ou seja, a unica coluna que será suprimida será o nome do produto NO_PPE_PPI.</p>
+
+<p>As demais colunas de valores devem ser somadas (ou ter a média calculada) no nível da variável agrupada:</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">arg.group</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">arg.filter</span> <span class="o">%&amp;</span><span class="n">gt</span><span class="p">;</span><span class="o">%</span> <span class="n">group_by</span><span class="p">(</span><span class="n">TIPO</span><span class="p">,</span> <span class="n">PERIODO</span><span class="p">,</span> <span class="n">CO_ANO</span><span class="p">,</span> <span class="n">NO_FAT_AGREG</span><span class="p">)</span> <span class="o">%&amp;</span><span class="n">gt</span><span class="p">;</span><span class="o">%</span> 
+    <span class="n">summarise</span><span class="p">(</span><span class="n">SOMA_VL_FOB</span> <span class="o">=</span> <span class="n">sum</span><span class="p">(</span><span class="n">VL_FOB</span><span class="p">),</span> 
+              <span class="n">MEDIA_KG</span> <span class="o">=</span> <span class="n">mean</span><span class="p">(</span><span class="n">KG_LIQUIDO</span><span class="p">))</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">options</span><span class="p">(</span><span class="n">dplyr.width</span> <span class="o">=</span> <span class="n">Inf</span><span class="p">)</span> <span class="c1">#apenas para mostrar todas as colunas no output do dplyr</span>
+<span class="n">head</span><span class="p">(</span><span class="n">arg.group</span><span class="p">)</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## Source: local data frame [6 x 6]
+## Groups: TIPO, PERIODO, CO_ANO [2]
+## 
+##          TIPO PERIODO CO_ANO               NO_FAT_AGREG SOMA_VL_FOB
+##        &lt;fctr&gt;  &lt;fctr&gt;  &lt;int&gt;                     &lt;fctr&gt;       &lt;dbl&gt;
+## 1 EXPORTAÇÕES Jan-Jul   2014        Operações Especiais    18281140
+## 2 EXPORTAÇÕES Jan-Jul   2014           Produtos Básicos   754707560
+## 3 EXPORTAÇÕES Jan-Jul   2014     Produtos Manufaturados  7680228246
+## 4 EXPORTAÇÕES Jan-Jul   2014 Produtos Semimanufaturados   204338219
+## 5 EXPORTAÇÕES Jan-Jul   2015        Operações Especiais    13159527
+## 6 EXPORTAÇÕES Jan-Jul   2015           Produtos Básicos   337227341
+##    MEDIA_KG
+##       &lt;dbl&gt;
+## 1   2546025
+## 2 188459876
+## 3   8627696
+## 4   5847662
+## 5   2554621
+## 6 116532235</code></pre></div></dbl></dbl></fctr></int></fctr></fctr></p>
+
+<p>Aqui fica uma observação. Apesar de o <code>group_by()</code> estar intimamente relacionada ao <code>summarise()</code>, é importante ressaltar que essa função também pode ser utilizada para criar, com o <code>mutate()</code>, novas variáveis, que apresentam valores sumarizados de outras.</p>
+
+<h2 id="arrange">arrange()</h2>
+
+<p>Selecionamos os campos com o <code>select()</code>, filtramos as linhas com o <code>filter()</code>, criamos variáveis com o <code>mutate()</code> e agrupamos e sumarizamos com o <code>group_by()</code> e <code>summarise()</code>. Agora queremos ordenar os resultados por alguns critérios para começarmos a avaliar os dados.</p>
+
+<p>Para isso usaremos o <code>arrange()</code>. Queremos ordenar nossos dados, em ordem alfabética, pelo nome do fator agregado <code>NO_FAT_AGREG</code> e em ordem decrescente de valor de cada fator agregado <code>SOMA_VL_FOB</code>.</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">arg.arrange</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">arg.group</span> <span class="o">%&amp;</span><span class="n">gt</span><span class="p">;</span><span class="o">%</span> <span class="n">arrange</span><span class="p">(</span><span class="n">NO_FAT_AGREG</span><span class="p">,</span> <span class="n">desc</span><span class="p">(</span><span class="n">SOMA_VL_FOB</span><span class="p">))</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">head</span><span class="p">(</span><span class="n">arg.arrange</span><span class="p">)</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## Source: local data frame [6 x 6]
+## Groups: TIPO, PERIODO, CO_ANO [3]
+## 
+##          TIPO PERIODO CO_ANO        NO_FAT_AGREG SOMA_VL_FOB
+##        &lt;fctr&gt;  &lt;fctr&gt;  &lt;int&gt;              &lt;fctr&gt;       &lt;dbl&gt;
+## 1 EXPORTAÇÕES Jan-Jul   2014 Operações Especiais    18281140
+## 2 EXPORTAÇÕES Jan-Jul   2016 Operações Especiais    14967542
+## 3 EXPORTAÇÕES Jan-Jul   2015 Operações Especiais    13159527
+## 4 EXPORTAÇÕES Jan-Jul   2014    Produtos Básicos   754707560
+## 5 EXPORTAÇÕES Jan-Jul   2015    Produtos Básicos   337227341
+## 6 EXPORTAÇÕES Jan-Jul   2016    Produtos Básicos   244468757
+##    MEDIA_KG
+##       &lt;dbl&gt;
+## 1   2546025
+## 2   2788688
+## 3   2554621
+## 4 188459876
+## 5 116532235
+## 6  98083030</code></pre></div></dbl></dbl></fctr></int></fctr></fctr></p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">tail</span><span class="p">(</span><span class="n">arg.arrange</span><span class="p">)</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## Source: local data frame [6 x 6]
+## Groups: TIPO, PERIODO, CO_ANO [3]
+## 
+##          TIPO PERIODO CO_ANO               NO_FAT_AGREG SOMA_VL_FOB
+##        &lt;fctr&gt;  &lt;fctr&gt;  &lt;int&gt;                     &lt;fctr&gt;       &lt;dbl&gt;
+## 1 EXPORTAÇÕES Jan-Jul   2014     Produtos Manufaturados  7680228246
+## 2 EXPORTAÇÕES Jan-Jul   2015     Produtos Manufaturados  7153038358
+## 3 EXPORTAÇÕES Jan-Jul   2016     Produtos Manufaturados  7062731046
+## 4 EXPORTAÇÕES Jan-Jul   2016 Produtos Semimanufaturados   231311143
+## 5 EXPORTAÇÕES Jan-Jul   2014 Produtos Semimanufaturados   204338219
+## 6 EXPORTAÇÕES Jan-Jul   2015 Produtos Semimanufaturados   186200525
+##   MEDIA_KG
+##      &lt;dbl&gt;
+## 1  8627696
+## 2  8303481
+## 3  9477421
+## 4 11577303
+## 5  5847662
+## 6  6275305</code></pre></div></dbl></dbl></fctr></int></fctr></fctr></p>
+
+<h2 id="entendendo-o-operador-">Entendendo o operador %&gt;%</h2>
+
+<p>Vimos até agora como fazer separadamente algumas operações básicas de manipulação e comparamos com o R base. No entanto, uma das grandes vantagens do pacote dplyr é justamente poder fazer uma operação “atrás da outra” sem precisar fazer novas atribuições. Como exemplo, refazendo tudo que fizemos até agora, em sequência, temos:</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">arg.dplyr</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">-</span> <span class="n">arg</span> <span class="o">%&amp;</span><span class="n">gt</span><span class="p">;</span><span class="o">%</span> 
+      <span class="n">select</span><span class="p">(</span><span class="n">TIPO</span><span class="p">,</span> <span class="n">PERIODO</span><span class="p">,</span> <span class="n">CO_ANO</span><span class="p">,</span> <span class="n">NO_FAT_AGREG</span><span class="p">,</span> <span class="n">NO_PPE_PPI</span><span class="p">,</span> <span class="n">VL_FOB</span><span class="p">,</span> <span class="n">KG_LIQUIDO</span><span class="p">)</span> <span class="o">%&amp;</span><span class="n">gt</span><span class="p">;</span><span class="o">%</span>
+      <span class="n">filter</span><span class="p">(</span><span class="n">TIPO</span> <span class="o">==</span> <span class="err">‘</span><span class="n">EXPORTA</span><span class="err">ÇÕ</span><span class="n">ES</span><span class="err">’</span> <span class="o">&amp;</span><span class="n">amp</span><span class="p">;</span> <span class="n">PERIODO</span> <span class="o">==</span> <span class="err">‘</span><span class="n">Jan</span><span class="o">-</span><span class="n">Jul</span><span class="err">’</span><span class="p">)</span> <span class="o">%&amp;</span><span class="n">gt</span><span class="p">;</span><span class="o">%</span>
+      <span class="n">mutate</span><span class="p">(</span><span class="n">PRECO_VL_KG</span> <span class="o">=</span> <span class="n">VL_FOB</span><span class="o">/</span><span class="n">KG_LIQUIDO</span><span class="p">,</span> <span class="n">LOG_KG</span> <span class="o">=</span> <span class="n">log</span><span class="p">(</span><span class="n">KG_LIQUIDO</span><span class="p">),</span> <span class="n">VL_FOB_2</span> <span class="o">=</span> <span class="n">VL_FOB</span><span class="o">^</span><span class="m">2</span><span class="p">)</span> <span class="o">%&amp;</span><span class="n">gt</span><span class="p">;</span><span class="o">%</span>
+      <span class="n">group_by</span><span class="p">(</span><span class="n">TIPO</span><span class="p">,</span> <span class="n">PERIODO</span><span class="p">,</span> <span class="n">CO_ANO</span><span class="p">,</span> <span class="n">NO_FAT_AGREG</span><span class="p">)</span> <span class="o">%&amp;</span><span class="n">gt</span><span class="p">;</span><span class="o">%</span> 
+      <span class="n">summarise</span><span class="p">(</span><span class="n">SOMA_VL_FOB</span> <span class="o">=</span> <span class="n">sum</span><span class="p">(</span><span class="n">VL_FOB</span><span class="p">),</span> <span class="n">MEDIA_KG</span> <span class="o">=</span> <span class="n">mean</span><span class="p">(</span><span class="n">KG_LIQUIDO</span><span class="p">))</span> <span class="o">%&amp;</span><span class="n">gt</span><span class="p">;</span><span class="o">%</span>
+      <span class="n">arrange</span><span class="p">(</span><span class="n">NO_FAT_AGREG</span><span class="p">,</span> <span class="n">desc</span><span class="p">(</span><span class="n">SOMA_VL_FOB</span><span class="p">))</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">head</span><span class="p">(</span><span class="n">arg.dplyr</span><span class="p">)</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## Source: local data frame [6 x 6]
+## Groups: TIPO, PERIODO, CO_ANO [3]
+## 
+##          TIPO PERIODO CO_ANO        NO_FAT_AGREG SOMA_VL_FOB
+##        &lt;fctr&gt;  &lt;fctr&gt;  &lt;int&gt;              &lt;fctr&gt;       &lt;dbl&gt;
+## 1 EXPORTAÇÕES Jan-Jul   2014 Operações Especiais    18281140
+## 2 EXPORTAÇÕES Jan-Jul   2016 Operações Especiais    14967542
+## 3 EXPORTAÇÕES Jan-Jul   2015 Operações Especiais    13159527
+## 4 EXPORTAÇÕES Jan-Jul   2014    Produtos Básicos   754707560
+## 5 EXPORTAÇÕES Jan-Jul   2015    Produtos Básicos   337227341
+## 6 EXPORTAÇÕES Jan-Jul   2016    Produtos Básicos   244468757
+##    MEDIA_KG
+##       &lt;dbl&gt;
+## 1   2546025
+## 2   2788688
+## 3   2554621
+## 4 188459876
+## 5 116532235
+## 6  98083030</code></pre></div></dbl></dbl></fctr></int></fctr></fctr></p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">tail</span><span class="p">(</span><span class="n">arg.dplyr</span><span class="p">)</span></code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-text" data-lang="text">## Source: local data frame [6 x 6]
+## Groups: TIPO, PERIODO, CO_ANO [3]
+## 
+##          TIPO PERIODO CO_ANO               NO_FAT_AGREG SOMA_VL_FOB
+##        &lt;fctr&gt;  &lt;fctr&gt;  &lt;int&gt;                     &lt;fctr&gt;       &lt;dbl&gt;
+## 1 EXPORTAÇÕES Jan-Jul   2014     Produtos Manufaturados  7680228246
+## 2 EXPORTAÇÕES Jan-Jul   2015     Produtos Manufaturados  7153038358
+## 3 EXPORTAÇÕES Jan-Jul   2016     Produtos Manufaturados  7062731046
+## 4 EXPORTAÇÕES Jan-Jul   2016 Produtos Semimanufaturados   231311143
+## 5 EXPORTAÇÕES Jan-Jul   2014 Produtos Semimanufaturados   204338219
+## 6 EXPORTAÇÕES Jan-Jul   2015 Produtos Semimanufaturados   186200525
+##   MEDIA_KG
+##      &lt;dbl&gt;
+## 1  8627696
+## 2  8303481
+## 3  9477421
+## 4 11577303
+## 5  5847662
+## 6  6275305</code></pre></div></dbl></dbl></fctr></int></fctr></fctr></p>
+
+<p>A primeira chamada <code>arg %&gt;%</code> é a passagem onde você informa o data.frame que você irá trabalhar a manipulação. A partir daí, as chamadas seguintes <code>select() %&gt;% filter() %&gt;% mutate()</code> etc, são os encadeamentos de manipulação que você pode ir fazendo sem precisar atribuir resultados ou criar novos objetos.</p>
+
+<p>Usando o operador <code>%&gt;%</code>, você estará informando que um resultado da operação anterior será a entrada para a nova operação. Esse encadeamento facilita muito as coisas, tornando a manipulação mais legível e intuitiva.</p>
+
+<h2 id="avaliao-no-padro-non-standard-evaluation---nse">Avaliação Não-Padrão (Non-standard evaluation - NSE)</h2>
+
+<p>O dplyr utiliza por padrão avaliação não-padrão. Na prática, isso significa que ao fazer alguma operação você não precisa utilizar as aspas, o que reduz a necessidade de digitação. No entanto, todo verbete possui uma versão com avaliação padrão. Para tal, adiciona-se <code>_</code> ao nome da função. Por exemplo, <code>filter_()</code> é a função com a avaliação padrão, enquanto <code>filter()</code> é a mesma função com avaliação não-padrão.</p>
+
+<p>Talvez saber isso agora não pareça útil, mas poderá ser caso você esteja lendo um código escrito por outra pessoa ou estiver escrevendo uma função em que os nomes das variáveis são argumentos da função. Para mais detalhes:</p>
+
+<p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">vignette</span><span class="p">(</span><span class="err">‘</span><span class="n">nse</span><span class="err">’</span><span class="p">)</span></code></pre></div></p>
+
+<h2 id="prximos-posts">Próximos posts</h2>
+
+<p>Como dissemos no começo, esse post inaugura uma nova sequência onde iremos tratar sobre manipulação de dados. O dplyr tem mais funções do que as apresentadas. Nos próximos posts vamos tratar mais detalhadamente essas funções, bem como outro pacotes bastante usados também em  manipulação de dados, como o <code>data.table</code>, <code>tidyr</code>, <code>stringr</code> e outros.</p>
+
+<h2 id="referncias">Referências</h2>
+
+<ul>
+  <li><a href="https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf">Data Wrangling with dplyr and tidyr</a></li>
+  <li><a href="https://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html">Introduction to dplyr</a></li>
+  <li><a href="https://rpubs.com/justmarkham/dplyr-tutorial">Introduction to dplyr for Faster Data Manipulation in R</a></li>
+</ul>
+]]></content>
+  </entry>
+  
+</feed>
