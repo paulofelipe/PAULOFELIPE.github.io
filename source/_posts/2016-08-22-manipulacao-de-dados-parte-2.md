@@ -1,0 +1,54 @@
+---
+layout: post
+title: "Manipulação de dados - Parte 2: tidyr"
+date: 2016-08-30 20:00:00 -0300
+comments: true
+categories: [tidyr, manipulação de dados]
+published: true
+---
+
+Dando continuidade à série sobre manipulação de dados, hoje falaremos sobre o pacote tidyr. Trata-se de um pacote muito bom para manipular a estrutura do seus dados e "arrumá-los" de um jeito mais apropriado de acordo com seu objetivo.
+
+<!-- More -->
+
+## O pacote
+
+O [tidyr](https://github.com/hadley/tidyr) é a evolução do pacote reshape2, mais um pacote criado pelo genial [Hadley Wickham](https://github.com/hadley).
+
+Se a principal fonte dos seus dados é um banco de dados bem estruturado, então você é uma pessoa de sorte. Ainda assim, é muito provável que em sua carreira de analista de dados você vá se deparar com dados "mal estruturados". Acredite, lidar com dados assim é extremamente comum.
+
+> It is often said that 80% of data analysis is spent on the process of cleaning and preparing the data (Dasu and Johnson 2003).
+
+Para efeitos didáticos, vamos lançar uma simples definição de dados bem estruturados (que pode ser conferida [nesse artigo sobre limpeza de dados](http://vita.had.co.nz/papers/tidy-data.pdf))
+
+* Cada coluna deve ser uma única variável;
+* Cada linha deve ser uma única observação;
+
+Considere que essa é a definição de estrutura de dados ideal para a grande maioria das análises, modelos, algorítmos relacionados à dados. Porém, nem sempre é a melhor estrutura para um relatório final ou para apresentar conclusões. Veja:
+
+IMAGEM TABELA RELATORIO
+IMAGEM TABELA ESTRUTURADA
+
+Para começar, instale, carregue e dê uma rápida olhada na documentação do dplyr. Em seguida cobriremos suas principais funções:
+
+{% highlight text %}
+## Error in library(tidyr): there is no package called 'tidyr'
+{% endhighlight %}
+
+
+{% highlight r %}
+install.packages("tidyr")
+library(tidyr)
+?tidyr
+{% endhighlight %}
+
+## Principais verbetes do tidyr
+
+* gather()
+* separate()
+* spread()
+* unite()
+
+## Referências
+
+* [Tidy Data](http://vita.had.co.nz/papers/tidy-data.pdf)
