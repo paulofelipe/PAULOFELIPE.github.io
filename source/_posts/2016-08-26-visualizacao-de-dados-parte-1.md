@@ -1,0 +1,338 @@
+---
+layout: post
+title: "Visualização de dados - Parte 1: Introdução ao ggplot2"
+date: 2016-08-26 19:22:00 -0300
+comments: true
+categories: [ggplot2, visualizações]
+published: true
+---
+
+
+
+
+## Visualização de dados
+
+A visualização de dados é parte fundamental do _workflow_ de um analista de dados. Essa tarefa é importante tanto para explorar os dados, como para comunicar resultados. Nesse último caso, os mínimos detalhes tornam-se importantes. Assim, ter acesso a ferramentas flexíveis é imprescindível.  
+
+Nesse sentido, o ggplot2 é um pacote essencial para quem deseja trabalhar com análise de dados no R. Apesar de existirem funções para visualizações no código base do R, essas funções, quando usadas, são usadas mais para uma exploração rápida dos dados. Por sua vez, o ggplot2 pode ser usado tanto para criação rápida de gráficos quanto para criar gráficos complexos e detalhados.
+
+<!-- More -->
+
+
+## Sobre o ggplot2
+
+O ggplot2 foi desenvolvido pelo [Hadley Wickham](http://hadley.nz/) que é o mesmo autor do dplyr e outros pacotes fundamentais para analistas de dados. A filosofia por trás do pacote vem da obra [_The Grammar of Graphics_](https://www.amazon.com/Grammar-Graphics-Statistics-Computing/dp/0387245448). 
+
+A ideia do _Grammar of Graphics_ é que um gráfico pode ser elaborado a partir da combinação de vários componentes independentes. Assim, um gráfico pode ser criado de maneiras bastante distintas, o que aumenta consideravelmente as possibilidades do analista. Ou seja, você não está limitado às opções de um gráfico específico.
+
+O gráfico e construído a partir de camadas, que pode, por exemplo, ser uma camada de pontos, barras ou linhas. Textos e marcações de áreas também podem ser incluídos como camadas e assim por diante. Dessa forma, o analista pode iniciar a partir de um gráfico simples e ir adicionando camadas para enriquecer a visualização.
+
+Para ver o que pode ser adicionado/combinado em um gráfico, entre [neste link](http://docs.ggplot2.org/current/). O uso dos componentes ficará claro mais a frente nesse post e em posts futuros.
+
+Feita essa introdução, iremos construir alguns exemplos para demonstrar o funcionamento do pacote.
+
+## Dados do Banco Mundial - _World Development Indicators_ 
+
+Antes de partir para criação dos gráficos, precisamos dos dados. Neste post, utilizaremos dados do Banco Mundial, mais especificamente, o _World Development Indicators_. O interessante é que existe um pacote em R, o `WDI`, que torna a importação desses dados direta, sem que seja necessário ir no site do Banco Mundial e baixar os dados.
+
+
+{% highlight r %}
+library(WDI)
+library(dplyr)
+library(ggplot2)
+{% endhighlight %}
+
+Essa base de dados possui uma infinidade de indicadores. Aqui serão utilizadas dois indicadores: grau de abertura (exportações + importações sobre o PIB) e PIB per capita calculado pela Paridade de Poder Compra (PPP) em US$. A escolha desses indicadores deve-se ao fato de querermos elaborar um gráfico similar ao elaborado na página 16 do [A Practical Guide do Trade Policy Analysis](https://www.wto.org/english/res_e/publications_e/wto_unctad12_e.pdf).
+
+Utilizaremos a função `WDIsearch()` para encontrar os nomes dos indicadores desejados. 
+
+{% highlight r %}
+WDIsearch("Trade \\(% of GDP\\)")
+{% endhighlight %}
+
+
+
+{% highlight text %}
+##      indicator           name                          
+## [1,] "NE.TRD.GNFS.ZS"    "Trade (% of GDP)"            
+## [2,] "TG.VAL.TOTL.GD.ZS" "Merchandise trade (% of GDP)"
+{% endhighlight %}
+
+
+
+{% highlight r %}
+WDIsearch("GDP per capita \\(current US\\$\\)")
+{% endhighlight %}
+
+
+
+{% highlight text %}
+##                      indicator                           name 
+##               "NY.GDP.PCAP.CD" "GDP per capita (current US$)"
+{% endhighlight %}
+
+Utilizaremos o `NE.TRD.GNFS.ZS` e `NY.GDP.PCAP.CD`. Os dados são obtidos a partir da `WDI()`
+
+
+{% highlight r %}
+abertura <- WDI(country = 'all', indicator = 'NE.TRD.GNFS.ZS', start = 2000, end = 2000,
+                extra = TRUE)
+abertura <- abertura %>% filter(!is.na(capital) & capital != "")
+head(abertura)
+{% endhighlight %}
+
+
+
+{% highlight text %}
+##   iso2c              country NE.TRD.GNFS.ZS year iso3c
+## 1    AD              Andorra             NA 2000   AND
+## 2    AE United Arab Emirates             NA 2000   ARE
+## 3    AF          Afghanistan             NA 2000   AFG
+## 4    AG  Antigua and Barbuda      123.15347 2000   ATG
+## 5    AL              Albania       55.92043 2000   ALB
+## 6    AM              Armenia       73.91857 2000   ARM
+##                                           region          capital
+## 1      Europe & Central Asia (all income levels) Andorra la Vella
+## 2 Middle East & North Africa (all income levels)        Abu Dhabi
+## 3                                     South Asia            Kabul
+## 4  Latin America & Caribbean (all income levels)     Saint John's
+## 5      Europe & Central Asia (all income levels)           Tirane
+## 6      Europe & Central Asia (all income levels)          Yerevan
+##   longitude latitude               income        lending
+## 1    1.5218  42.5075 High income: nonOECD Not classified
+## 2   54.3705  24.4764 High income: nonOECD Not classified
+## 3   69.1761  34.5228           Low income            IDA
+## 4  -61.8456  17.1175  Upper middle income           IBRD
+## 5   19.8172  41.3317  Upper middle income           IBRD
+## 6    44.509  40.1596  Lower middle income          Blend
+{% endhighlight %}
+
+
+
+{% highlight r %}
+gdp.percapita <- WDI(country = 'all', indicator = 'NY.GDP.PCAP.CD', start = 2000, end = 2000,
+                     extra = TRUE)
+gdp.percapita <- gdp.percapita %>% filter(!is.na(capital) & capital != "")
+head(gdp.percapita)
+{% endhighlight %}
+
+
+
+{% highlight text %}
+##   iso2c              country NY.GDP.PCAP.CD year iso3c
+## 1    AD              Andorra     21432.9601 2000   AND
+## 2    AE United Arab Emirates     34207.5389 2000   ARE
+## 3    AF          Afghanistan             NA 2000   AFG
+## 4    AG  Antigua and Barbuda     10094.7591 2000   ATG
+## 5    AL              Albania      1175.7890 2000   ALB
+## 6    AM              Armenia       621.4248 2000   ARM
+##                                           region          capital
+## 1      Europe & Central Asia (all income levels) Andorra la Vella
+## 2 Middle East & North Africa (all income levels)        Abu Dhabi
+## 3                                     South Asia            Kabul
+## 4  Latin America & Caribbean (all income levels)     Saint John's
+## 5      Europe & Central Asia (all income levels)           Tirane
+## 6      Europe & Central Asia (all income levels)          Yerevan
+##   longitude latitude               income        lending
+## 1    1.5218  42.5075 High income: nonOECD Not classified
+## 2   54.3705  24.4764 High income: nonOECD Not classified
+## 3   69.1761  34.5228           Low income            IDA
+## 4  -61.8456  17.1175  Upper middle income           IBRD
+## 5   19.8172  41.3317  Upper middle income           IBRD
+## 6    44.509  40.1596  Lower middle income          Blend
+{% endhighlight %}
+
+Agora, os dados serão unidos em um data.frame. Além disso, renomearemos as variáveis e selecionaremos somente aquelas de interesse:
+
+
+{% highlight r %}
+dados <- inner_join(abertura, gdp.percapita) %>%
+  select(country, year, NE.TRD.GNFS.ZS, NY.GDP.PCAP.CD, region) %>%
+  rename(abertura = NE.TRD.GNFS.ZS, 
+         gdp.percapita = NY.GDP.PCAP.CD) %>%
+  na.omit() %>%
+  filter(abertura < 200)
+
+head(dados)
+{% endhighlight %}
+
+
+
+{% highlight text %}
+##               country year  abertura gdp.percapita
+## 1 Antigua and Barbuda 2000 123.15347    10094.7591
+## 2             Albania 2000  55.92043     1175.7890
+## 3             Armenia 2000  73.91857      621.4248
+## 4              Angola 2000 152.45565      606.2723
+## 5           Argentina 2000  22.62250     7669.2737
+## 6             Austria 2000  85.47378    24517.2674
+##                                          region
+## 1 Latin America & Caribbean (all income levels)
+## 2     Europe & Central Asia (all income levels)
+## 3     Europe & Central Asia (all income levels)
+## 4        Sub-Saharan Africa (all income levels)
+## 5 Latin America & Caribbean (all income levels)
+## 6     Europe & Central Asia (all income levels)
+{% endhighlight %}
+
+
+
+{% highlight r %}
+dim(dados)
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## [1] 171   5
+{% endhighlight %}
+
+## Usando o qplot (Quick Plot)
+
+No ggplot2, há duas maneiras de gerar gráficos. Utilizando a função `qplot()` ou usando `ggplot()` e ir adicionando camadas. Primeiramente, será introduzida a função `qplot()` que é uma maneira mais rápida de criar uma visualização, porém com menos flexibilidade. Essa função funciona com uma espécie de substituto ao `plot()` do R base. Para ver os detalhes desta função digite: `?qplot`.
+
+No gráfico abaixo, como não passamos nada no parâmetro `geom`, o `qplot()` automaticamente atribui uma forma geométrica para o gráfico. Se x e y são informados, adiciona-se pontos. Caso apenas `x` seja informado, será criado um histograma.
+
+
+{% highlight r %}
+qplot(x = gdp.percapita, y = abertura, data = dados)
+{% endhighlight %}
+
+<img src="/figures/source/2016-08-26-visualizacao-de-dados-parte-1/unnamed-chunk-5-1.png" title="plot of chunk unnamed-chunk-5" alt="plot of chunk unnamed-chunk-5" style="display: block; margin: auto;" />
+
+O mesmo resultado poderia ser obtido com:
+
+
+{% highlight r %}
+qplot(x = gdp.percapita, y = abertura, data = dados, geom = "point")
+{% endhighlight %}
+
+<img src="/figures/source/2016-08-26-visualizacao-de-dados-parte-1/unnamed-chunk-6-1.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" style="display: block; margin: auto;" />
+
+Agora, suponha que queremos coloria os pontos de acordo com a região de cada país. Basta dizeremos o nome da variável no parâmetro `color`. O mesmo pode ser feito, por exemplo, para os parâmetros `size` e `shape`. O `size` pode ser um tamanho fixo dos pontos ou pode ser dado por uma variável, usualmente, numérica. 
+
+
+{% highlight r %}
+qplot(x = gdp.percapita, y = abertura, data = dados, geom = "point",
+      color = region, size = I(4))
+{% endhighlight %}
+
+<img src="/figures/source/2016-08-26-visualizacao-de-dados-parte-1/unnamed-chunk-7-1.png" title="plot of chunk unnamed-chunk-7" alt="plot of chunk unnamed-chunk-7" style="display: block; margin: auto;" />
+
+Usamos a função `I()` para evitar que a função entenda o `5` como uma nova variável.
+
+## Usando o ggplot()
+
+Na prática, vendo os códigos de outras pessoas, será mais comumente encontrado gráficos utilizando a função `ggplot()`. Na verdade, essa função inicia um gráfico. A adição de camadas é que farão o seu gráfico tornar-se uma visualização de verdade.
+
+Vamos iniciar o gráfico informando os dados e no `aes()` descreve como as variáveis dos dados são mapeadas na visualização. Só foi informado que o eixo x e o eixo y são dados, respectivamente, pelas variáveis `gdp.percapita` e `abertura`. Como não adicionados nenhum objeto geométrico, nada mais é mostrado.
+
+
+{% highlight r %}
+ggplot(dados, aes(x = gdp.percapita, y = abertura))
+{% endhighlight %}
+
+<img src="/figures/source/2016-08-26-visualizacao-de-dados-parte-1/unnamed-chunk-8-1.png" title="plot of chunk unnamed-chunk-8" alt="plot of chunk unnamed-chunk-8" style="display: block; margin: auto;" />
+
+Agora, vamos adicionar uma camada de pontos e definir o seu tamnanho igual a 3. Além disso, vamos mapear as cores dos pontos à variável `region`.
+
+
+{% highlight r %}
+ggplot(dados, aes(x = gdp.percapita, y = abertura)) +
+  geom_point(aes(color = region), size = 3)
+{% endhighlight %}
+
+<img src="/figures/source/2016-08-26-visualizacao-de-dados-parte-1/unnamed-chunk-9-1.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" style="display: block; margin: auto;" />
+
+No gráfico que nos baseamos nesse post, os autores adicionam uma curva estimada para evidenciar a possível relação entre a renda per capita e o grau de abertura. No caso, os autores incluem uma curva obtida a partir da estimação de um modelo polinomial de ordem 2. Ou seja, $y_i = \beta_{0} + \beta_1 x_i + \beta_2 x_i^2 + u_i$.
+
+
+{% highlight r %}
+ggplot(dados, aes(x = gdp.percapita, y = abertura)) +
+  geom_point(aes(color = region), size = 3) + 
+  geom_smooth(method = 'lm', formula = y ~ poly(x, 2), se = FALSE)
+{% endhighlight %}
+
+<img src="/figures/source/2016-08-26-visualizacao-de-dados-parte-1/unnamed-chunk-10-1.png" title="plot of chunk unnamed-chunk-10" alt="plot of chunk unnamed-chunk-10" style="display: block; margin: auto;" />
+
+Agora, iremos alterar alguns detalhes do gráfico anterior. Podemos criar um objeto com um gráfico do ggplot2 e ir adicionando/alterando partes do gráfico de maneira incremental.
+
+* Usar o logaritmo do PIB per capita no eixo x  
+
+    
+    {% highlight r %}
+    p <- ggplot(dados, aes(x = log(gdp.percapita), y = abertura)) +
+         geom_point(aes(color = region), size = 3) + 
+         geom_smooth(method = 'lm', formula = y ~ poly(x, 2), se = FALSE)
+    {% endhighlight %}
+
+* Adicionar o título do gráfico  
+
+    
+    {% highlight r %}
+    p <- p +
+         ggtitle("Relação entre grau de abertura e PIB per capita - 2000")
+    {% endhighlight %}
+
+* Alterar os rótulos dos eixos x e y  
+
+    
+    {% highlight r %}
+    p <- p +
+         ylab("Grau de Abertura") +
+         xlab("log do PIB per capita (PPP) US$")
+    {% endhighlight %}
+
+* Alterar o tema do gráfico  
+
+    
+    {% highlight r %}
+    p <- p +
+         theme_minimal()
+    {% endhighlight %}
+
+* Alterar a posição e o título da legenda  
+
+
+{% highlight r %}
+p <- p +
+     theme(legend.position = "bottom") +
+     guides(color = guide_legend(title = "Região", ncol = 3)) 
+p
+{% endhighlight %}
+
+<img src="/figures/source/2016-08-26-visualizacao-de-dados-parte-1/unnamed-chunk-15-1.png" title="plot of chunk unnamed-chunk-15" alt="plot of chunk unnamed-chunk-15" style="display: block; margin: auto;" />
+
+Ou de uma só vez:
+
+
+
+{% highlight r %}
+p <- ggplot(dados, aes(x = log(gdp.percapita), y = abertura)) +
+  geom_point(aes(color = region), size = 3) + 
+  geom_smooth(method = 'lm', formula = y ~ poly(x, 2), se = FALSE) +
+  ggtitle("Relação entre grau de abertura e PIB per capita - 2000") +
+  ylab("Grau de Abertura") +
+  xlab("log do PIB per capita (PPP) US$") +
+  theme_minimal() +
+  theme(legend.position = "bottom") +
+  guides(color = guide_legend(title = "Região", ncol = 3))
+
+p
+{% endhighlight %}
+
+<img src="/figures/source/2016-08-26-visualizacao-de-dados-parte-1/unnamed-chunk-16-1.png" title="plot of chunk unnamed-chunk-16" alt="plot of chunk unnamed-chunk-16" style="display: block; margin: auto;" />
+
+
+## Considerações Finais
+
+Este primeiro post é uma introdução ao ggplot2. A melhor forma para aprender sobre o pacote é tentando criar os seus próprios gráficos. Todavia, continuaremos com posts sobre este pacote, elaborando outros exemplos e tratando de mais detalhes de customização, de objetos geométricos, de extensões etc. Se tiver alguma dúvida, deixe um comentário. 
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+<script>
+var replaced = $("body").html().replace("Ggplot2", "ggplot2");
+$("body").html(replaced);
+</script>
+
