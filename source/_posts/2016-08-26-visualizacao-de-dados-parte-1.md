@@ -12,22 +12,26 @@ published: true
 
 ## Visualização de dados
 
-A visualização de dados é parte fundamental do _workflow_ de um analista de dados. Essa tarefa é importante tanto para explorar os dados, como para comunicar resultados. Nesse último caso, os mínimos detalhes tornam-se importantes. Assim, ter acesso a ferramentas flexíveis é imprescindível.  
-
-Nesse sentido, o ggplot2 é um pacote essencial para quem deseja trabalhar com análise de dados no R. Apesar de existirem funções para visualizações no código base do R, essas funções, quando usadas, são usadas mais para uma exploração rápida dos dados. Por sua vez, o ggplot2 pode ser usado tanto para criação rápida de gráficos quanto para criar gráficos complexos e detalhados.
+A visualização de dados é parte fundamental do [_workflow_]({{root_url}}/blog/2016/03/14/como-aplicar-ciencia-de-dados/) de um analista de dados. Essa tarefa é muito importante tanto para explorar os dados, como para comunicar resultados. Ou seja, dominar ferramentas de visualização é imprescindível. E aí que entra o ggplot2.
 
 <!-- More -->
+
+[Ggplot2](http://ggplot2.org/) é um pacote essencial para quem deseja trabalhar com análise de dados no R. O código nativo do R até possui funcões básicas visualizações, mas essas funções, são mais usadas para uma exploração rápida dos dados, algo próximo de um rascunho. 
+
+Por sua vez, o ggplot2 pode ser usado tanto para criação rápida de gráficos quanto para criar gráficos complexos e detalhados. Tornando-se um pacote bastante versátil e completo.
 
 
 ## Sobre o ggplot2
 
-O ggplot2 foi desenvolvido pelo [Hadley Wickham](http://hadley.nz/) que é o mesmo autor do dplyr e outros pacotes fundamentais para analistas de dados. A filosofia por trás do pacote vem da obra [_The Grammar of Graphics_](https://www.amazon.com/Grammar-Graphics-Statistics-Computing/dp/0387245448). 
+O ggplot2 foi desenvolvido pelo [Hadley Wickham](http://hadley.nz/) que é o mesmo autor do dplyr, tidyr e outros pacotes fundamentais para analistas de dados. A filosofia por trás do pacote vem da obra [_The Grammar of Graphics_](https://www.amazon.com/Grammar-Graphics-Statistics-Computing/dp/0387245448). 
 
-A ideia do _Grammar of Graphics_ é que um gráfico pode ser elaborado a partir da combinação de vários componentes independentes. Assim, um gráfico pode ser criado de maneiras bastante distintas, o que aumenta consideravelmente as possibilidades do analista. Ou seja, você não está limitado às opções de um gráfico específico.
+A ideia original do pacote é de que um gráfico pode ser elaborado a partir da combinação de vários componentes independentes. Entenda esses componentes como camadas (_layers_), sendo que cada camada pode ter diversos parâmetros. Assim, um gráfico pode ser criado de maneiras bastante distintas, adicionando e misturando qualquer tipo de camada e escolhendo seus parâmetros.
 
-O gráfico e construído a partir de camadas, que pode, por exemplo, ser uma camada de pontos, barras ou linhas. Textos e marcações de áreas também podem ser incluídos como camadas e assim por diante. Dessa forma, o analista pode iniciar a partir de um gráfico simples e ir adicionando camadas para enriquecer a visualização.
+Essa combinação de camadas e parâmetros aumenta consideravelmente as possibilidades dos gráficos feitos com ggplot2.
 
-Para ver o que pode ser adicionado/combinado em um gráfico, entre [neste link](http://docs.ggplot2.org/current/). O uso dos componentes ficará claro mais a frente nesse post e em posts futuros.
+As camadas podem ser de pontos, barras ou linhas, textos, marcações de áreas, etc. Dessa forma, o analista pode iniciar a partir de um gráfico simples e ir adicionando camadas para enriquecer a visualização.
+
+Para ver o que pode ser adicionado/combinado em um gráfico, entre [neste link](http://docs.ggplot2.org/current/). O uso dos componentes (camadas) ficará claro mais a frente nesse post.
 
 Feita essa introdução, iremos construir alguns exemplos para demonstrar o funcionamento do pacote.
 
@@ -47,7 +51,7 @@ Essa base de dados possui uma infinidade de indicadores. Aqui serão utilizadas 
 Utilizaremos a função `WDIsearch()` para encontrar os nomes dos indicadores desejados. 
 
 {% highlight r %}
-WDIsearch("Trade \\(% of GDP\\)")
+WDIsearch("Trade \\(% of GDP\\)") 
 {% endhighlight %}
 
 
@@ -189,7 +193,9 @@ dim(dados)
 
 ## Usando o qplot (Quick Plot)
 
-No ggplot2, há duas maneiras de gerar gráficos. Utilizando a função `qplot()` ou usando `ggplot()` e ir adicionando camadas. Primeiramente, será introduzida a função `qplot()` que é uma maneira mais rápida de criar uma visualização, porém com menos flexibilidade. Essa função funciona com uma espécie de substituto ao `plot()` do R base. Para ver os detalhes desta função digite: `?qplot`.
+No ggplot2, há duas maneiras de gerar gráficos. Utilizando a função `qplot()` ou usando `ggplot()` e ir adicionando camadas. Primeiramente, será introduzida a função `qplot()`, que é uma maneira mais rápida de criar uma visualização, porém com menos flexibilidade. 
+
+Essa função funciona com uma espécie de substituto ao `plot()` do R base. Para ver os detalhes desta função digite: `?qplot`.
 
 No gráfico abaixo, como não passamos nada no parâmetro `geom`, o `qplot()` automaticamente atribui uma forma geométrica para o gráfico. Se x e y são informados, adiciona-se pontos. Caso apenas `x` seja informado, será criado um histograma.
 
@@ -223,9 +229,13 @@ Usamos a função `I()` para evitar que a função entenda o `5` como uma nova v
 
 ## Usando o ggplot()
 
-Na prática, vendo os códigos de outras pessoas, será mais comumente encontrado gráficos utilizando a função `ggplot()`. Na verdade, essa função inicia um gráfico. A adição de camadas é que farão o seu gráfico tornar-se uma visualização de verdade.
+Na prática, a função `ggplot()` é muito mais utilizada que o `qplot()`. 
 
-Vamos iniciar o gráfico informando os dados e no `aes()` descreve como as variáveis dos dados são mapeadas na visualização. Só foi informado que o eixo x e o eixo y são dados, respectivamente, pelas variáveis `gdp.percapita` e `abertura`. Como não adicionados nenhum objeto geométrico, nada mais é mostrado.
+Essa função inicia um gráfico. A partir daí, a adição de camadas é que fará o seu gráfico tornar-se uma visualização de verdade.
+
+Vamos seguir passo à passo.
+
+Primeiramente inicamos um gráfico informando os dados e, no `aes()`, descrevendo como as variáveis dos dados são mapeadas na visualização. Só foi informado que o eixo x e o eixo y são dados, respectivamente, pelas variáveis `gdp.percapita` e `abertura`. Como não adicionados nenhum objeto geométrico, nada mais é mostrado.
 
 
 {% highlight r %}
@@ -234,7 +244,7 @@ ggplot(dados, aes(x = gdp.percapita, y = abertura))
 
 <img src="/figures/source/2016-08-26-visualizacao-de-dados-parte-1/unnamed-chunk-8-1.png" title="plot of chunk unnamed-chunk-8" alt="plot of chunk unnamed-chunk-8" style="display: block; margin: auto;" />
 
-Agora, vamos adicionar uma camada de pontos e definir o seu tamnanho igual a 3. Além disso, vamos mapear as cores dos pontos à variável `region`.
+Seguindo, vamos adicionar uma camada de pontos e definir o seu tamnanho igual a 3. Além disso, vamos mapear as cores dos pontos à variável `region`.
 
 
 {% highlight r %}
@@ -255,7 +265,7 @@ ggplot(dados, aes(x = gdp.percapita, y = abertura)) +
 
 <img src="/figures/source/2016-08-26-visualizacao-de-dados-parte-1/unnamed-chunk-10-1.png" title="plot of chunk unnamed-chunk-10" alt="plot of chunk unnamed-chunk-10" style="display: block; margin: auto;" />
 
-Agora, iremos alterar alguns detalhes do gráfico anterior. Podemos criar um objeto com um gráfico do ggplot2 e ir adicionando/alterando partes do gráfico de maneira incremental.
+Em seguida, iremos alterar alguns detalhes do gráfico anterior. Podemos criar um objeto com um gráfico do ggplot2 e ir adicionando/alterando partes do gráfico de maneira incremental.
 
 * Usar o logaritmo do PIB per capita no eixo x  
 
@@ -303,7 +313,7 @@ p
 
 <img src="/figures/source/2016-08-26-visualizacao-de-dados-parte-1/unnamed-chunk-15-1.png" title="plot of chunk unnamed-chunk-15" alt="plot of chunk unnamed-chunk-15" style="display: block; margin: auto;" />
 
-Ou de uma só vez:
+Ou então podemos fazer tudo de uma só vez:
 
 
 
@@ -326,8 +336,11 @@ p
 
 ## Considerações Finais
 
-Este primeiro post é uma introdução ao ggplot2. A melhor forma para aprender sobre o pacote é tentando criar os seus próprios gráficos. Todavia, continuaremos com posts sobre este pacote, elaborando outros exemplos e tratando de mais detalhes de customização, de objetos geométricos, de extensões etc. Se tiver alguma dúvida, deixe um comentário. 
+Este primeiro post é uma introdução ao ggplot2. Esperamos que tenha entendido a ideia geral de um gráfico no ggplot2, o conceito de camadas e como é o processo de incrementar os elementos um gráfico.
 
+A melhor forma para aprender sobre o pacote é tentando criar os seus próprios gráficos. Todavia, continuaremos com posts sobre este pacote, elaborando outros exemplos mais avançados e tratando de detalhes de customização, de objetos geométricos, de extensões etc. 
+
+Se tiver alguma dúvida, deixe um comentário.
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
@@ -335,4 +348,8 @@ Este primeiro post é uma introdução ao ggplot2. A melhor forma para aprender 
 var replaced = $("body").html().replace("Ggplot2", "ggplot2");
 $("body").html(replaced);
 </script>
+
+## Referências
+
+* []()
 
