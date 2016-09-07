@@ -4,7 +4,7 @@ title: "Manipulação de dados - Parte 2: tidyr"
 date: 2016-08-30 20:00:00 -0300
 comments: true
 categories: [tidyr, manipulação de dados]
-published: true
+published: false
 ---
 
 Dando continuidade à série sobre manipulação de dados, hoje falaremos sobre o pacote tidyr. Trata-se de um pacote muito bom para manipular a estrutura do seus dados e "arrumá-los" de um jeito mais apropriado de acordo com seu objetivo.
@@ -31,9 +31,6 @@ IMAGEM TABELA ESTRUTURADA
 
 Para começar, instale, carregue e dê uma rápida olhada na documentação do dplyr. Em seguida cobriremos suas principais funções:
 
-{% highlight text %}
-## Error in library(tidyr): there is no package called 'tidyr'
-{% endhighlight %}
 
 
 {% highlight r %}

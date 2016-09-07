@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Visualização de dados - Parte 1: Introdução ao ggplot2"
-date: 2016-08-26 19:22:00 -0300
+date: 2016-09-07 19:01:00 -0300
 comments: true
 categories: [ggplot2, visualizações]
 published: true
@@ -10,13 +10,12 @@ published: true
 
 
 
-## Visualização de dados
 
-A visualização de dados é parte fundamental do [_workflow_]({{root_url}}/blog/2016/03/14/como-aplicar-ciencia-de-dados/) de um analista de dados. Essa tarefa é muito importante tanto para explorar os dados, como para comunicar resultados. Ou seja, dominar ferramentas de visualização é imprescindível. E aí que entra o ggplot2.
+A visualização de dados é parte fundamental do [_workflow_]({{root_url}}/blog/2016/03/14/como-aplicar-ciencia-de-dados/) de um analista de dados. Essa tarefa é muito importante tanto para explorar os dados, como para comunicar resultados. Ou seja, dominar ferramentas de visualização é imprescindível. E é aí que entra o ggplot2.
 
 <!-- More -->
 
-[Ggplot2](http://ggplot2.org/) é um pacote essencial para quem deseja trabalhar com análise de dados no R. O código nativo do R até possui funcões básicas visualizações, mas essas funções, são mais usadas para uma exploração rápida dos dados, algo próximo de um rascunho. 
+O [ggplot2](http://ggplot2.org/) é um pacote essencial para quem deseja trabalhar com análise de dados no R. O código nativo do R até possui funções básicas de visualizações, mas essas funções são mais usadas para uma exploração rápida dos dados, algo próximo de um rascunho. 
 
 Por sua vez, o ggplot2 pode ser usado tanto para criação rápida de gráficos quanto para criar gráficos complexos e detalhados. Tornando-se um pacote bastante versátil e completo.
 
@@ -39,18 +38,14 @@ Feita essa introdução, iremos construir alguns exemplos para demonstrar o func
 
 Antes de partir para criação dos gráficos, precisamos dos dados. Neste post, utilizaremos dados do Banco Mundial, mais especificamente, o _World Development Indicators_. O interessante é que existe um pacote em R, o `WDI`, que torna a importação desses dados direta, sem que seja necessário ir no site do Banco Mundial e baixar os dados.
 
-
-{% highlight r %}
-library(WDI)
-library(dplyr)
-library(ggplot2)
-{% endhighlight %}
-
 Essa base de dados possui uma infinidade de indicadores. Aqui serão utilizadas dois indicadores: grau de abertura (exportações + importações sobre o PIB) e PIB per capita calculado pela Paridade de Poder Compra (PPP) em US$. A escolha desses indicadores deve-se ao fato de querermos elaborar um gráfico similar ao elaborado na página 16 do [A Practical Guide do Trade Policy Analysis](https://www.wto.org/english/res_e/publications_e/wto_unctad12_e.pdf).
 
 Utilizaremos a função `WDIsearch()` para encontrar os nomes dos indicadores desejados. 
 
 {% highlight r %}
+library(WDI)
+library(dplyr)
+library(ggplot2)
 WDIsearch("Trade \\(% of GDP\\)") 
 {% endhighlight %}
 
@@ -204,7 +199,7 @@ No gráfico abaixo, como não passamos nada no parâmetro `geom`, o `qplot()` au
 qplot(x = gdp.percapita, y = abertura, data = dados)
 {% endhighlight %}
 
-<img src="/figures/source/2016-08-26-visualizacao-de-dados-parte-1/unnamed-chunk-5-1.png" title="plot of chunk unnamed-chunk-5" alt="plot of chunk unnamed-chunk-5" style="display: block; margin: auto;" />
+<img src="/figures/source/2016-08-26-visualizacao-de-dados-parte-1/unnamed-chunk-4-1.png" title="plot of chunk unnamed-chunk-4" alt="plot of chunk unnamed-chunk-4" style="display: block; margin: auto;" />
 
 O mesmo resultado poderia ser obtido com:
 
@@ -213,9 +208,9 @@ O mesmo resultado poderia ser obtido com:
 qplot(x = gdp.percapita, y = abertura, data = dados, geom = "point")
 {% endhighlight %}
 
-<img src="/figures/source/2016-08-26-visualizacao-de-dados-parte-1/unnamed-chunk-6-1.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" style="display: block; margin: auto;" />
+<img src="/figures/source/2016-08-26-visualizacao-de-dados-parte-1/unnamed-chunk-5-1.png" title="plot of chunk unnamed-chunk-5" alt="plot of chunk unnamed-chunk-5" style="display: block; margin: auto;" />
 
-Agora, suponha que queremos coloria os pontos de acordo com a região de cada país. Basta dizeremos o nome da variável no parâmetro `color`. O mesmo pode ser feito, por exemplo, para os parâmetros `size` e `shape`. O `size` pode ser um tamanho fixo dos pontos ou pode ser dado por uma variável, usualmente, numérica. 
+Agora, suponha que queremos colorir os pontos de acordo com a região de cada país. Basta informar o nome da variável no parâmetro `color`. O mesmo pode ser feito, por exemplo, para os parâmetros `size` e `shape`. O `size` pode ser um tamanho fixo dos pontos ou pode ser dado por uma variável, usualmente, numérica. 
 
 
 {% highlight r %}
@@ -223,7 +218,7 @@ qplot(x = gdp.percapita, y = abertura, data = dados, geom = "point",
       color = region, size = I(4))
 {% endhighlight %}
 
-<img src="/figures/source/2016-08-26-visualizacao-de-dados-parte-1/unnamed-chunk-7-1.png" title="plot of chunk unnamed-chunk-7" alt="plot of chunk unnamed-chunk-7" style="display: block; margin: auto;" />
+<img src="/figures/source/2016-08-26-visualizacao-de-dados-parte-1/unnamed-chunk-6-1.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" style="display: block; margin: auto;" />
 
 Usamos a função `I()` para evitar que a função entenda o `5` como uma nova variável.
 
@@ -235,16 +230,16 @@ Essa função inicia um gráfico. A partir daí, a adição de camadas é que fa
 
 Vamos seguir passo à passo.
 
-Primeiramente inicamos um gráfico informando os dados e, no `aes()`, descrevendo como as variáveis dos dados são mapeadas na visualização. Só foi informado que o eixo x e o eixo y são dados, respectivamente, pelas variáveis `gdp.percapita` e `abertura`. Como não adicionados nenhum objeto geométrico, nada mais é mostrado.
+Primeiramente inciamos um gráfico informando os dados e, no `aes()`, descrevendo como as variáveis dos dados são mapeadas na visualização. Só foi informado que o eixo x e o eixo y são dados, respectivamente, pelas variáveis `gdp.percapita` e `abertura`. Como não adicionados nenhum objeto geométrico, nada mais é mostrado.
 
 
 {% highlight r %}
 ggplot(dados, aes(x = gdp.percapita, y = abertura))
 {% endhighlight %}
 
-<img src="/figures/source/2016-08-26-visualizacao-de-dados-parte-1/unnamed-chunk-8-1.png" title="plot of chunk unnamed-chunk-8" alt="plot of chunk unnamed-chunk-8" style="display: block; margin: auto;" />
+<img src="/figures/source/2016-08-26-visualizacao-de-dados-parte-1/unnamed-chunk-7-1.png" title="plot of chunk unnamed-chunk-7" alt="plot of chunk unnamed-chunk-7" style="display: block; margin: auto;" />
 
-Seguindo, vamos adicionar uma camada de pontos e definir o seu tamnanho igual a 3. Além disso, vamos mapear as cores dos pontos à variável `region`.
+Seguindo, vamos adicionar uma camada de pontos e definir o seu tamanho igual a 3. Além disso, vamos mapear as cores dos pontos à variável `region`.
 
 
 {% highlight r %}
@@ -252,7 +247,7 @@ ggplot(dados, aes(x = gdp.percapita, y = abertura)) +
   geom_point(aes(color = region), size = 3)
 {% endhighlight %}
 
-<img src="/figures/source/2016-08-26-visualizacao-de-dados-parte-1/unnamed-chunk-9-1.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" style="display: block; margin: auto;" />
+<img src="/figures/source/2016-08-26-visualizacao-de-dados-parte-1/unnamed-chunk-8-1.png" title="plot of chunk unnamed-chunk-8" alt="plot of chunk unnamed-chunk-8" style="display: block; margin: auto;" />
 
 No gráfico que nos baseamos nesse post, os autores adicionam uma curva estimada para evidenciar a possível relação entre a renda per capita e o grau de abertura. No caso, os autores incluem uma curva obtida a partir da estimação de um modelo polinomial de ordem 2. Ou seja, $y_i = \beta_{0} + \beta_1 x_i + \beta_2 x_i^2 + u_i$.
 
@@ -263,7 +258,7 @@ ggplot(dados, aes(x = gdp.percapita, y = abertura)) +
   geom_smooth(method = 'lm', formula = y ~ poly(x, 2), se = FALSE)
 {% endhighlight %}
 
-<img src="/figures/source/2016-08-26-visualizacao-de-dados-parte-1/unnamed-chunk-10-1.png" title="plot of chunk unnamed-chunk-10" alt="plot of chunk unnamed-chunk-10" style="display: block; margin: auto;" />
+<img src="/figures/source/2016-08-26-visualizacao-de-dados-parte-1/unnamed-chunk-9-1.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" style="display: block; margin: auto;" />
 
 Em seguida, iremos alterar alguns detalhes do gráfico anterior. Podemos criar um objeto com um gráfico do ggplot2 e ir adicionando/alterando partes do gráfico de maneira incremental.
 
@@ -311,7 +306,7 @@ p <- p +
 p
 {% endhighlight %}
 
-<img src="/figures/source/2016-08-26-visualizacao-de-dados-parte-1/unnamed-chunk-15-1.png" title="plot of chunk unnamed-chunk-15" alt="plot of chunk unnamed-chunk-15" style="display: block; margin: auto;" />
+<img src="/figures/source/2016-08-26-visualizacao-de-dados-parte-1/unnamed-chunk-14-1.png" title="plot of chunk unnamed-chunk-14" alt="plot of chunk unnamed-chunk-14" style="display: block; margin: auto;" />
 
 Ou então podemos fazer tudo de uma só vez:
 
@@ -331,25 +326,21 @@ p <- ggplot(dados, aes(x = log(gdp.percapita), y = abertura)) +
 p
 {% endhighlight %}
 
-<img src="/figures/source/2016-08-26-visualizacao-de-dados-parte-1/unnamed-chunk-16-1.png" title="plot of chunk unnamed-chunk-16" alt="plot of chunk unnamed-chunk-16" style="display: block; margin: auto;" />
+<img src="/figures/source/2016-08-26-visualizacao-de-dados-parte-1/unnamed-chunk-15-1.png" title="plot of chunk unnamed-chunk-15" alt="plot of chunk unnamed-chunk-15" style="display: block; margin: auto;" />
 
 
 ## Considerações Finais
 
-Este primeiro post é uma introdução ao ggplot2. Esperamos que tenha entendido a ideia geral de um gráfico no ggplot2, o conceito de camadas e como é o processo de incrementar os elementos um gráfico.
+Este primeiro post é uma introdução ao ggplot2. Esperamos que tenha entendido a ideia geral de um gráfico no ggplot2, o conceito de camadas e como é o processo de incrementar os elementos de um gráfico.
 
 A melhor forma para aprender sobre o pacote é tentando criar os seus próprios gráficos. Todavia, continuaremos com posts sobre este pacote, elaborando outros exemplos mais avançados e tratando de detalhes de customização, de objetos geométricos, de extensões etc. 
 
 Se tiver alguma dúvida, deixe um comentário.
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-
-<script>
-var replaced = $("body").html().replace("Ggplot2", "ggplot2");
-$("body").html(replaced);
-</script>
 
 ## Referências
 
-* []()
-
+* [Site Oficial: ggplot2](http://ggplot2.org/)
+* [Cookbook for R - Graphs](http://www.cookbook-r.com/Graphs/)
+* [ggplot2 extensions](https://www.ggplot2-exts.org/)
+* [ggplot2 cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf)
