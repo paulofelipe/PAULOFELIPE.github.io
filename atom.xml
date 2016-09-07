@@ -4,7 +4,7 @@
   <title><![CDATA[Full Join]]></title>
   <link href="http://fulljoin.com.br/atom.xml" rel="self"/>
   <link href="http://fulljoin.com.br/"/>
-  <updated>2016-08-16T22:21:46-03:00</updated>
+  <updated>2016-09-07T19:01:38-03:00</updated>
   <id>http://fulljoin.com.br/</id>
   <author>
     <name><![CDATA[Full Join]]></name>
@@ -12,6 +12,275 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Visualização De Dados - Parte 1: Introdução Ao Ggplot2]]></title>
+    <link href="http://fulljoin.com.br/blog/2016/09/07/visualizacao-de-dados-parte-1/"/>
+    <updated>2016-09-07T19:01:00-03:00</updated>
+    <id>http://fulljoin.com.br/blog/2016/09/07/visualizacao-de-dados-parte-1</id>
+    <content type="html"><![CDATA[<p>A visualização de dados é parte fundamental do <a href="http://fulljoin.com.br/blog/2016/03/14/como-aplicar-ciencia-de-dados/"><em>workflow</em></a> de um analista de dados. Essa tarefa é muito importante tanto para explorar os dados, como para comunicar resultados. Ou seja, dominar ferramentas de visualização é imprescindível. E é aí que entra o ggplot2.</p>
+
+<!-- More -->
+
+<p>O <a href="http://ggplot2.org/">ggplot2</a> é um pacote essencial para quem deseja trabalhar com análise de dados no R. O código nativo do R até possui funções básicas de visualizações, mas essas funções são mais usadas para uma exploração rápida dos dados, algo próximo de um rascunho.</p>
+
+<p>Por sua vez, o ggplot2 pode ser usado tanto para criação rápida de gráficos quanto para criar gráficos complexos e detalhados. Tornando-se um pacote bastante versátil e completo.</p>
+
+<h2 id="sobre-o-ggplot2">Sobre o ggplot2</h2>
+
+<p>O ggplot2 foi desenvolvido pelo <a href="http://hadley.nz/">Hadley Wickham</a> que é o mesmo autor do dplyr, tidyr e outros pacotes fundamentais para analistas de dados. A filosofia por trás do pacote vem da obra <a href="https://www.amazon.com/Grammar-Graphics-Statistics-Computing/dp/0387245448"><em>The Grammar of Graphics</em></a>.</p>
+
+<p>A ideia original do pacote é de que um gráfico pode ser elaborado a partir da combinação de vários componentes independentes. Entenda esses componentes como camadas (<em>layers</em>), sendo que cada camada pode ter diversos parâmetros. Assim, um gráfico pode ser criado de maneiras bastante distintas, adicionando e misturando qualquer tipo de camada e escolhendo seus parâmetros.</p>
+
+<p>Essa combinação de camadas e parâmetros aumenta consideravelmente as possibilidades dos gráficos feitos com ggplot2.</p>
+
+<p>As camadas podem ser de pontos, barras ou linhas, textos, marcações de áreas, etc. Dessa forma, o analista pode iniciar a partir de um gráfico simples e ir adicionando camadas para enriquecer a visualização.</p>
+
+<p>Para ver o que pode ser adicionado/combinado em um gráfico, entre <a href="http://docs.ggplot2.org/current/">neste link</a>. O uso dos componentes (camadas) ficará claro mais a frente nesse post.</p>
+
+<p>Feita essa introdução, iremos construir alguns exemplos para demonstrar o funcionamento do pacote.</p>
+
+<h2 id="dados-do-banco-mundial---world-development-indicators">Dados do Banco Mundial - <em>World Development Indicators</em></h2>
+
+<p>Antes de partir para criação dos gráficos, precisamos dos dados. Neste post, utilizaremos dados do Banco Mundial, mais especificamente, o <em>World Development Indicators</em>. O interessante é que existe um pacote em R, o <code>WDI</code>, que torna a importação desses dados direta, sem que seja necessário ir no site do Banco Mundial e baixar os dados.</p>
+
+<p>Essa base de dados possui uma infinidade de indicadores. Aqui serão utilizadas dois indicadores: grau de abertura (exportações + importações sobre o PIB) e PIB per capita calculado pela Paridade de Poder Compra (PPP) em US$. A escolha desses indicadores deve-se ao fato de querermos elaborar um gráfico similar ao elaborado na página 16 do <a href="https://www.wto.org/english/res_e/publications_e/wto_unctad12_e.pdf">A Practical Guide do Trade Policy Analysis</a>.</p>
+
+<p>Utilizaremos a função <code>WDIsearch()</code> para encontrar os nomes dos indicadores desejados.</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">library</span><span class="p">(</span><span class="n">WDI</span><span class="p">)</span>
+<span class="n">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
+<span class="n">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span>
+<span class="n">WDIsearch</span><span class="p">(</span><span class="s2">"Trade \\(% of GDP\\)"</span><span class="p">)</span></code></pre></div>
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">##      indicator           name                          
+## [1,] "NE.TRD.GNFS.ZS"    "Trade (% of GDP)"            
+## [2,] "TG.VAL.TOTL.GD.ZS" "Merchandise trade (% of GDP)"</code></pre></div>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">WDIsearch</span><span class="p">(</span><span class="s2">"GDP per capita \\(current US\\$\\)"</span><span class="p">)</span></code></pre></div>
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">##                      indicator                           name 
+##               "NY.GDP.PCAP.CD" "GDP per capita (current US$)"</code></pre></div>
+
+<p>Utilizaremos o <code>NE.TRD.GNFS.ZS</code> e <code>NY.GDP.PCAP.CD</code>. Os dados são obtidos a partir da <code>WDI()</code></p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">abertura</span> <span class="o">&lt;-</span> <span class="n">WDI</span><span class="p">(</span><span class="n">country</span> <span class="o">=</span> <span class="s1">'all'</span><span class="p">,</span> <span class="n">indicator</span> <span class="o">=</span> <span class="s1">'NE.TRD.GNFS.ZS'</span><span class="p">,</span> <span class="n">start</span> <span class="o">=</span> <span class="m">2000</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="m">2000</span><span class="p">,</span>
+                <span class="n">extra</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span>
+<span class="n">abertura</span> <span class="o">&lt;-</span> <span class="n">abertura</span> <span class="o">%&gt;%</span> <span class="n">filter</span><span class="p">(</span><span class="o">!</span><span class="n">is.na</span><span class="p">(</span><span class="n">capital</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">capital</span> <span class="o">!=</span> <span class="s2">""</span><span class="p">)</span>
+<span class="n">head</span><span class="p">(</span><span class="n">abertura</span><span class="p">)</span></code></pre></div>
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">##   iso2c              country NE.TRD.GNFS.ZS year iso3c
+## 1    AD              Andorra             NA 2000   AND
+## 2    AE United Arab Emirates             NA 2000   ARE
+## 3    AF          Afghanistan             NA 2000   AFG
+## 4    AG  Antigua and Barbuda      123.15347 2000   ATG
+## 5    AL              Albania       55.92043 2000   ALB
+## 6    AM              Armenia       73.91857 2000   ARM
+##                                           region          capital
+## 1      Europe &amp; Central Asia (all income levels) Andorra la Vella
+## 2 Middle East &amp; North Africa (all income levels)        Abu Dhabi
+## 3                                     South Asia            Kabul
+## 4  Latin America &amp; Caribbean (all income levels)     Saint John's
+## 5      Europe &amp; Central Asia (all income levels)           Tirane
+## 6      Europe &amp; Central Asia (all income levels)          Yerevan
+##   longitude latitude               income        lending
+## 1    1.5218  42.5075 High income: nonOECD Not classified
+## 2   54.3705  24.4764 High income: nonOECD Not classified
+## 3   69.1761  34.5228           Low income            IDA
+## 4  -61.8456  17.1175  Upper middle income           IBRD
+## 5   19.8172  41.3317  Upper middle income           IBRD
+## 6    44.509  40.1596  Lower middle income          Blend</code></pre></div>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">gdp.percapita</span> <span class="o">&lt;-</span> <span class="n">WDI</span><span class="p">(</span><span class="n">country</span> <span class="o">=</span> <span class="s1">'all'</span><span class="p">,</span> <span class="n">indicator</span> <span class="o">=</span> <span class="s1">'NY.GDP.PCAP.CD'</span><span class="p">,</span> <span class="n">start</span> <span class="o">=</span> <span class="m">2000</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="m">2000</span><span class="p">,</span>
+                     <span class="n">extra</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span>
+<span class="n">gdp.percapita</span> <span class="o">&lt;-</span> <span class="n">gdp.percapita</span> <span class="o">%&gt;%</span> <span class="n">filter</span><span class="p">(</span><span class="o">!</span><span class="n">is.na</span><span class="p">(</span><span class="n">capital</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">capital</span> <span class="o">!=</span> <span class="s2">""</span><span class="p">)</span>
+<span class="n">head</span><span class="p">(</span><span class="n">gdp.percapita</span><span class="p">)</span></code></pre></div>
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">##   iso2c              country NY.GDP.PCAP.CD year iso3c
+## 1    AD              Andorra     21432.9601 2000   AND
+## 2    AE United Arab Emirates     34207.5389 2000   ARE
+## 3    AF          Afghanistan             NA 2000   AFG
+## 4    AG  Antigua and Barbuda     10094.7591 2000   ATG
+## 5    AL              Albania      1175.7890 2000   ALB
+## 6    AM              Armenia       621.4248 2000   ARM
+##                                           region          capital
+## 1      Europe &amp; Central Asia (all income levels) Andorra la Vella
+## 2 Middle East &amp; North Africa (all income levels)        Abu Dhabi
+## 3                                     South Asia            Kabul
+## 4  Latin America &amp; Caribbean (all income levels)     Saint John's
+## 5      Europe &amp; Central Asia (all income levels)           Tirane
+## 6      Europe &amp; Central Asia (all income levels)          Yerevan
+##   longitude latitude               income        lending
+## 1    1.5218  42.5075 High income: nonOECD Not classified
+## 2   54.3705  24.4764 High income: nonOECD Not classified
+## 3   69.1761  34.5228           Low income            IDA
+## 4  -61.8456  17.1175  Upper middle income           IBRD
+## 5   19.8172  41.3317  Upper middle income           IBRD
+## 6    44.509  40.1596  Lower middle income          Blend</code></pre></div>
+
+<p>Agora, os dados serão unidos em um data.frame. Além disso, renomearemos as variáveis e selecionaremos somente aquelas de interesse:</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">dados</span> <span class="o">&lt;-</span> <span class="n">inner_join</span><span class="p">(</span><span class="n">abertura</span><span class="p">,</span> <span class="n">gdp.percapita</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  <span class="n">select</span><span class="p">(</span><span class="n">country</span><span class="p">,</span> <span class="n">year</span><span class="p">,</span> <span class="n">NE.TRD.GNFS.ZS</span><span class="p">,</span> <span class="n">NY.GDP.PCAP.CD</span><span class="p">,</span> <span class="n">region</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  <span class="n">rename</span><span class="p">(</span><span class="n">abertura</span> <span class="o">=</span> <span class="n">NE.TRD.GNFS.ZS</span><span class="p">,</span> 
+         <span class="n">gdp.percapita</span> <span class="o">=</span> <span class="n">NY.GDP.PCAP.CD</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  <span class="n">na.omit</span><span class="p">()</span> <span class="o">%&gt;%</span>
+  <span class="n">filter</span><span class="p">(</span><span class="n">abertura</span> <span class="o">&lt;</span> <span class="m">200</span><span class="p">)</span>
+
+<span class="n">head</span><span class="p">(</span><span class="n">dados</span><span class="p">)</span></code></pre></div>
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">##               country year  abertura gdp.percapita
+## 1 Antigua and Barbuda 2000 123.15347    10094.7591
+## 2             Albania 2000  55.92043     1175.7890
+## 3             Armenia 2000  73.91857      621.4248
+## 4              Angola 2000 152.45565      606.2723
+## 5           Argentina 2000  22.62250     7669.2737
+## 6             Austria 2000  85.47378    24517.2674
+##                                          region
+## 1 Latin America &amp; Caribbean (all income levels)
+## 2     Europe &amp; Central Asia (all income levels)
+## 3     Europe &amp; Central Asia (all income levels)
+## 4        Sub-Saharan Africa (all income levels)
+## 5 Latin America &amp; Caribbean (all income levels)
+## 6     Europe &amp; Central Asia (all income levels)</code></pre></div>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">dim</span><span class="p">(</span><span class="n">dados</span><span class="p">)</span></code></pre></div>
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">## [1] 171   5</code></pre></div>
+
+<h2 id="usando-o-qplot-quick-plot">Usando o qplot (Quick Plot)</h2>
+
+<p>No ggplot2, há duas maneiras de gerar gráficos. Utilizando a função <code>qplot()</code> ou usando <code>ggplot()</code> e ir adicionando camadas. Primeiramente, será introduzida a função <code>qplot()</code>, que é uma maneira mais rápida de criar uma visualização, porém com menos flexibilidade.</p>
+
+<p>Essa função funciona com uma espécie de substituto ao <code>plot()</code> do R base. Para ver os detalhes desta função digite: <code>?qplot</code>.</p>
+
+<p>No gráfico abaixo, como não passamos nada no parâmetro <code>geom</code>, o <code>qplot()</code> automaticamente atribui uma forma geométrica para o gráfico. Se x e y são informados, adiciona-se pontos. Caso apenas <code>x</code> seja informado, será criado um histograma.</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">qplot</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">gdp.percapita</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">abertura</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">dados</span><span class="p">)</span></code></pre></div>
+
+<p><img src="http://fulljoin.com.br/figures/source/2016-08-26-visualizacao-de-dados-parte-1/unnamed-chunk-4-1.png" title="plot of chunk unnamed-chunk-4" alt="plot of chunk unnamed-chunk-4" style="display: block; margin: auto;" /></p>
+
+<p>O mesmo resultado poderia ser obtido com:</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">qplot</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">gdp.percapita</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">abertura</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">dados</span><span class="p">,</span> <span class="n">geom</span> <span class="o">=</span> <span class="s2">"point"</span><span class="p">)</span></code></pre></div>
+
+<p><img src="http://fulljoin.com.br/figures/source/2016-08-26-visualizacao-de-dados-parte-1/unnamed-chunk-5-1.png" title="plot of chunk unnamed-chunk-5" alt="plot of chunk unnamed-chunk-5" style="display: block; margin: auto;" /></p>
+
+<p>Agora, suponha que queremos colorir os pontos de acordo com a região de cada país. Basta informar o nome da variável no parâmetro <code>color</code>. O mesmo pode ser feito, por exemplo, para os parâmetros <code>size</code> e <code>shape</code>. O <code>size</code> pode ser um tamanho fixo dos pontos ou pode ser dado por uma variável, usualmente, numérica.</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">qplot</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">gdp.percapita</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">abertura</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">dados</span><span class="p">,</span> <span class="n">geom</span> <span class="o">=</span> <span class="s2">"point"</span><span class="p">,</span>
+      <span class="n">color</span> <span class="o">=</span> <span class="n">region</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="n">I</span><span class="p">(</span><span class="m">4</span><span class="p">))</span></code></pre></div>
+
+<p><img src="http://fulljoin.com.br/figures/source/2016-08-26-visualizacao-de-dados-parte-1/unnamed-chunk-6-1.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" style="display: block; margin: auto;" /></p>
+
+<p>Usamos a função <code>I()</code> para evitar que a função entenda o <code>5</code> como uma nova variável.</p>
+
+<h2 id="usando-o-ggplot">Usando o ggplot()</h2>
+
+<p>Na prática, a função <code>ggplot()</code> é muito mais utilizada que o <code>qplot()</code>.</p>
+
+<p>Essa função inicia um gráfico. A partir daí, a adição de camadas é que fará o seu gráfico tornar-se uma visualização de verdade.</p>
+
+<p>Vamos seguir passo à passo.</p>
+
+<p>Primeiramente inciamos um gráfico informando os dados e, no <code>aes()</code>, descrevendo como as variáveis dos dados são mapeadas na visualização. Só foi informado que o eixo x e o eixo y são dados, respectivamente, pelas variáveis <code>gdp.percapita</code> e <code>abertura</code>. Como não adicionados nenhum objeto geométrico, nada mais é mostrado.</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">ggplot</span><span class="p">(</span><span class="n">dados</span><span class="p">,</span> <span class="n">aes</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">gdp.percapita</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">abertura</span><span class="p">))</span></code></pre></div>
+
+<p><img src="http://fulljoin.com.br/figures/source/2016-08-26-visualizacao-de-dados-parte-1/unnamed-chunk-7-1.png" title="plot of chunk unnamed-chunk-7" alt="plot of chunk unnamed-chunk-7" style="display: block; margin: auto;" /></p>
+
+<p>Seguindo, vamos adicionar uma camada de pontos e definir o seu tamanho igual a 3. Além disso, vamos mapear as cores dos pontos à variável <code>region</code>.</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">ggplot</span><span class="p">(</span><span class="n">dados</span><span class="p">,</span> <span class="n">aes</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">gdp.percapita</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">abertura</span><span class="p">))</span> <span class="o">+</span>
+  <span class="n">geom_point</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">color</span> <span class="o">=</span> <span class="n">region</span><span class="p">),</span> <span class="n">size</span> <span class="o">=</span> <span class="m">3</span><span class="p">)</span></code></pre></div>
+
+<p><img src="http://fulljoin.com.br/figures/source/2016-08-26-visualizacao-de-dados-parte-1/unnamed-chunk-8-1.png" title="plot of chunk unnamed-chunk-8" alt="plot of chunk unnamed-chunk-8" style="display: block; margin: auto;" /></p>
+
+<p>No gráfico que nos baseamos nesse post, os autores adicionam uma curva estimada para evidenciar a possível relação entre a renda per capita e o grau de abertura. No caso, os autores incluem uma curva obtida a partir da estimação de um modelo polinomial de ordem 2. Ou seja, $y_i = \beta_{0} + \beta_1 x_i + \beta_2 x_i^2 + u_i$.</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">ggplot</span><span class="p">(</span><span class="n">dados</span><span class="p">,</span> <span class="n">aes</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">gdp.percapita</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">abertura</span><span class="p">))</span> <span class="o">+</span>
+  <span class="n">geom_point</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">color</span> <span class="o">=</span> <span class="n">region</span><span class="p">),</span> <span class="n">size</span> <span class="o">=</span> <span class="m">3</span><span class="p">)</span> <span class="o">+</span> 
+  <span class="n">geom_smooth</span><span class="p">(</span><span class="n">method</span> <span class="o">=</span> <span class="s1">'lm'</span><span class="p">,</span> <span class="n">formula</span> <span class="o">=</span> <span class="n">y</span> <span class="o">~</span> <span class="n">poly</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="m">2</span><span class="p">),</span> <span class="n">se</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">)</span></code></pre></div>
+
+<p><img src="http://fulljoin.com.br/figures/source/2016-08-26-visualizacao-de-dados-parte-1/unnamed-chunk-9-1.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" style="display: block; margin: auto;" /></p>
+
+<p>Em seguida, iremos alterar alguns detalhes do gráfico anterior. Podemos criar um objeto com um gráfico do ggplot2 e ir adicionando/alterando partes do gráfico de maneira incremental.</p>
+
+<ul>
+  <li>Usar o logaritmo do PIB per capita no eixo x</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">p</span> <span class="o">&lt;-</span> <span class="n">ggplot</span><span class="p">(</span><span class="n">dados</span><span class="p">,</span> <span class="n">aes</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">log</span><span class="p">(</span><span class="n">gdp.percapita</span><span class="p">),</span> <span class="n">y</span> <span class="o">=</span> <span class="n">abertura</span><span class="p">))</span> <span class="o">+</span>
+         <span class="n">geom_point</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">color</span> <span class="o">=</span> <span class="n">region</span><span class="p">),</span> <span class="n">size</span> <span class="o">=</span> <span class="m">3</span><span class="p">)</span> <span class="o">+</span> 
+         <span class="n">geom_smooth</span><span class="p">(</span><span class="n">method</span> <span class="o">=</span> <span class="s1">'lm'</span><span class="p">,</span> <span class="n">formula</span> <span class="o">=</span> <span class="n">y</span> <span class="o">~</span> <span class="n">poly</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="m">2</span><span class="p">),</span> <span class="n">se</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">)</span></code></pre></div>
+
+<ul>
+  <li>Adicionar o título do gráfico</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">p</span> <span class="o">&lt;-</span> <span class="n">p</span> <span class="o">+</span>
+         <span class="n">ggtitle</span><span class="p">(</span><span class="s2">"Relação entre grau de abertura e PIB per capita - 2000"</span><span class="p">)</span></code></pre></div>
+
+<ul>
+  <li>Alterar os rótulos dos eixos x e y</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">p</span> <span class="o">&lt;-</span> <span class="n">p</span> <span class="o">+</span>
+         <span class="n">ylab</span><span class="p">(</span><span class="s2">"Grau de Abertura"</span><span class="p">)</span> <span class="o">+</span>
+         <span class="n">xlab</span><span class="p">(</span><span class="s2">"log do PIB per capita (PPP) US$"</span><span class="p">)</span></code></pre></div>
+
+<ul>
+  <li>Alterar o tema do gráfico</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">p</span> <span class="o">&lt;-</span> <span class="n">p</span> <span class="o">+</span>
+         <span class="n">theme_minimal</span><span class="p">()</span></code></pre></div>
+
+<ul>
+  <li>Alterar a posição e o título da legenda</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">p</span> <span class="o">&lt;-</span> <span class="n">p</span> <span class="o">+</span>
+     <span class="n">theme</span><span class="p">(</span><span class="n">legend.position</span> <span class="o">=</span> <span class="s2">"bottom"</span><span class="p">)</span> <span class="o">+</span>
+     <span class="n">guides</span><span class="p">(</span><span class="n">color</span> <span class="o">=</span> <span class="n">guide_legend</span><span class="p">(</span><span class="n">title</span> <span class="o">=</span> <span class="s2">"Região"</span><span class="p">,</span> <span class="n">ncol</span> <span class="o">=</span> <span class="m">3</span><span class="p">))</span> 
+<span class="n">p</span></code></pre></div>
+
+<p><img src="http://fulljoin.com.br/figures/source/2016-08-26-visualizacao-de-dados-parte-1/unnamed-chunk-14-1.png" title="plot of chunk unnamed-chunk-14" alt="plot of chunk unnamed-chunk-14" style="display: block; margin: auto;" /></p>
+
+<p>Ou então podemos fazer tudo de uma só vez:</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">p</span> <span class="o">&lt;-</span> <span class="n">ggplot</span><span class="p">(</span><span class="n">dados</span><span class="p">,</span> <span class="n">aes</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">log</span><span class="p">(</span><span class="n">gdp.percapita</span><span class="p">),</span> <span class="n">y</span> <span class="o">=</span> <span class="n">abertura</span><span class="p">))</span> <span class="o">+</span>
+  <span class="n">geom_point</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">color</span> <span class="o">=</span> <span class="n">region</span><span class="p">),</span> <span class="n">size</span> <span class="o">=</span> <span class="m">3</span><span class="p">)</span> <span class="o">+</span> 
+  <span class="n">geom_smooth</span><span class="p">(</span><span class="n">method</span> <span class="o">=</span> <span class="s1">'lm'</span><span class="p">,</span> <span class="n">formula</span> <span class="o">=</span> <span class="n">y</span> <span class="o">~</span> <span class="n">poly</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="m">2</span><span class="p">),</span> <span class="n">se</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">)</span> <span class="o">+</span>
+  <span class="n">ggtitle</span><span class="p">(</span><span class="s2">"Relação entre grau de abertura e PIB per capita - 2000"</span><span class="p">)</span> <span class="o">+</span>
+  <span class="n">ylab</span><span class="p">(</span><span class="s2">"Grau de Abertura"</span><span class="p">)</span> <span class="o">+</span>
+  <span class="n">xlab</span><span class="p">(</span><span class="s2">"log do PIB per capita (PPP) US$"</span><span class="p">)</span> <span class="o">+</span>
+  <span class="n">theme_minimal</span><span class="p">()</span> <span class="o">+</span>
+  <span class="n">theme</span><span class="p">(</span><span class="n">legend.position</span> <span class="o">=</span> <span class="s2">"bottom"</span><span class="p">)</span> <span class="o">+</span>
+  <span class="n">guides</span><span class="p">(</span><span class="n">color</span> <span class="o">=</span> <span class="n">guide_legend</span><span class="p">(</span><span class="n">title</span> <span class="o">=</span> <span class="s2">"Região"</span><span class="p">,</span> <span class="n">ncol</span> <span class="o">=</span> <span class="m">3</span><span class="p">))</span>
+
+<span class="n">p</span></code></pre></div>
+
+<p><img src="http://fulljoin.com.br/figures/source/2016-08-26-visualizacao-de-dados-parte-1/unnamed-chunk-15-1.png" title="plot of chunk unnamed-chunk-15" alt="plot of chunk unnamed-chunk-15" style="display: block; margin: auto;" /></p>
+
+<h2 id="consideraes-finais">Considerações Finais</h2>
+
+<p>Este primeiro post é uma introdução ao ggplot2. Esperamos que tenha entendido a ideia geral de um gráfico no ggplot2, o conceito de camadas e como é o processo de incrementar os elementos de um gráfico.</p>
+
+<p>A melhor forma para aprender sobre o pacote é tentando criar os seus próprios gráficos. Todavia, continuaremos com posts sobre este pacote, elaborando outros exemplos mais avançados e tratando de detalhes de customização, de objetos geométricos, de extensões etc.</p>
+
+<p>Se tiver alguma dúvida, deixe um comentário.</p>
+
+<h2 id="referncias">Referências</h2>
+
+<ul>
+  <li><a href="http://ggplot2.org/">Site Oficial: ggplot2</a></li>
+  <li><a href="http://www.cookbook-r.com/Graphs/">Cookbook for R - Graphs</a></li>
+  <li><a href="https://www.ggplot2-exts.org/">ggplot2 extensions</a></li>
+  <li><a href="https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf">ggplot2 cheatsheet</a></li>
+</ul>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Manipulação De Dados - Parte 1: Dplyr Básico]]></title>
