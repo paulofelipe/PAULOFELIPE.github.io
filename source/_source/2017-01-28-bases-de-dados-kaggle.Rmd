@@ -1,0 +1,37 @@
+---
+layout: post
+title: "Bases de Dados Públicas - Kaggle"
+date: 2017-01-28 15:01:00 -0300
+comments: true
+categories: [pacotes, séries temporais]
+published: true
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Durante o processo de aprendizagem de análise de dados é fundamental aplicar os conhecimentos adquiridos aos dados. Todavia, muitas vezes nos vemos obrigados a trabalhar com dados de exemplos que não apresentam as dificuldades do mundo real ou não guardam nenhuma relação com os dados que serão enfrentados no dia a dia. Nesse sentido, a possibilidade de acesso a outras base de dados pode ser bastante útil. 
+
+<!-- More -->
+
+O [Kaggle](https://www.kaggle.com/) disponibiliza um conjunto de dados abertos que podem ser usados por quem deseja exercitar alguma técnica ou conhecimento específico. Porém, antes de mais nada, vamos falar um pouco sobre o Kaggle para quem não conhece.
+
+
+## Sobre o Kaggle
+
+O Kaggle é, provavelmente, a principal plataforma de competições de ciência de dados. Lá, são disponibilizadas competições que podem ter como objetivo unicamente o aprendizado, como também recrutamento e prêmios em dinheiro. Como exemplo, atualmente, está ocorrendo uma competição para melhoria de diagnóstico de câncer de pulmão em que o total de prêmios chega a US$ 1 milhão.
+
+Apesar de algumas competições envolverem dinheiro, o grande ponto de plataforma é o aprendizado. Nela, é possível aprender com grandes especialistas, através de scripts públicos e fóruns. Vale ressaltar que, atualmente, um brasileiro é o número 1 do [ranking](https://www.kaggle.com/rankings).
+
+## Dados Públicos
+
+Voltando aos dados públicos, [neste link](https://www.kaggle.com/datasets) estão disponíveis uma série de bases de dados que podem ser publicadas por qualquer usuário. Hoje, estão disponíveis mais de 300 conjuntos de dados.
+
+Por exemplo, se o seu interesse é exercitar algum conhecimento sobre mineração de textos, é possível analisar os dados e metadados dos [tweets da Hillary Clinton e Donald Trump](https://www.kaggle.com/benhamner/clinton-trump-tweets) durante a corrida presidencial de 2016.
+
+Recentemente, foi adicionada uma base de dados com informações sobre os [reembolso realizados por deputados federais brasileiros](https://www.kaggle.com/epattaro/brazils-house-of-deputies-reimbursements). Por sinal, vale ressaltar que existe um projeto ([Operação Serenata de Amor](https://serenata.datasciencebr.com/)) que está fazendo bastante sucesso em que os reembolsos do deputados são analisados e é realizada uma predição sobre a possibilidade daquele reembolso ser ilegal. 
+
+Vale a pena explorar o Kaggle e checar se alguma base pode ser usada para auxiliar o seu aprendizado ou até mesmo para desenvolvimento de portfólio.
+
