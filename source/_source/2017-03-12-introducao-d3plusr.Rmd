@@ -52,8 +52,8 @@ if(!require(D3plusR)){
 
 A função `d3plus` é a função principal do pacote. Ela é responsável por inicializar a visualização e nela são passados alguns argumentos que são comuns à maioria das visualizações. Depois de inicializada, outras funções são encadeadas. Por exemplo:
 
-* `d3plusSize`: define a variável/coluna responsável por definir o tamanho do retângulo de um _treemap_ por exemplo, além de outros parâmetros referentes a essa característica do gráfico;
-* `d3plusLabel`: define a variável/coluna responsável pelos rótulos e outras opções, como o tamanho da fonte.
+* `d3plusSize`: define a variável/coluna responsável por definir o tamanho do retângulo de um _treemap_ por exemplo, além de outros parâmetros referentes a essa característica do gráfico. `.size()` no pacote original;
+* `d3plusLabel`: define a variável/coluna responsável pelos rótulos e outras opções, como o tamanho da fonte. `.label()` no pacote original.
 
 Para quem não conhece o D3plus pode ser um confuso em um primeiro momento, mas talvez com o exemplo abaixo fique mais claro.
 
