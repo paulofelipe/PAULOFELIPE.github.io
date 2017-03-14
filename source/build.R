@@ -1,4 +1,8 @@
 local({
+  
+  if(!require(brocks)){
+    devtools::install_github("brendan-R/brocks")
+  }
   # fall back on '/' if baseurl is not specified
   baseurl = servr:::jekyll_config('.', 'baseurl', '/')
   knitr::opts_knit$set(base.url = baseurl)
@@ -27,4 +31,8 @@ local({
   }
   knitr::opts_knit$set(width = 70)
   knitr::knit(a[1], a[2], quiet = TRUE, encoding = 'UTF-8', envir = .GlobalEnv)
+  htmlwidgets_deps(a, always = TRUE)
 })
+
+brocks::htmlwidgets_deps(a = '_source/2017-03-12-introducao-d3plusr.Rmd')
+ 

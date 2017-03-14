@@ -45,3 +45,8 @@ single: true
   {% endif %}
 </aside>
 {% endunless %}
+
+<!-- htmlwidgets dependencies --> 
+{% assign dep_file = page.url | split: '/' | last | prepend : 'htmlwidgets/' %}
+{% assign dep_file = dep_file | append: ".html" %}
+{% include {{dep_file}} %}
