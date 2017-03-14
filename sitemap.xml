@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>http://fulljoin.com.br/blog/2017/03/12/introducao-d3plusr/</loc>
+<lastmod>2017-03-12T15:01:00-03:00</lastmod>
+</url>
+<url>
 <loc>http://fulljoin.com.br/blog/2017/01/28/bases-de-dados-kaggle/</loc>
 <lastmod>2017-01-28T16:01:00-02:00</lastmod>
 </url>
@@ -122,5 +126,18 @@
 </url>
 <url>
 <loc>http://fulljoin.com.br/blog/categories/series-temporais/</loc>
+</url>
+<url>
+<loc>http://fulljoin.com.br/blog/categories/htmlwidgets/</loc>
+</url>
+<url>
+<loc>http://fulljoin.com.br/blog/categories/visualizacao/</loc>
+</url>
+<url>
+<loc>http://fulljoin.com.br/blog/categories/d3/</loc>
+</url>
+<url>
+<loc>http://fulljoin.com.br/htmlwidgets_deps/d3plus-1.9.6/index.html</loc>
+<lastmod>2017-03-13T21:46:35-03:00</lastmod>
 </url>
 </urlset>
